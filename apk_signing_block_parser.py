@@ -117,10 +117,10 @@ def parse_signer(data, v3):
     sigdata, data = _len_prefixed_field(data)
     yield from parse_signed_data(sigdata, v3)
     if v3:
-      minSDK, maxSDK = struct.unpack("<LL", data[:8])
-      data = data[8:]
-      yield ID.MIN_SDK, minSDK
-      yield ID.MAX_SDK, maxSDK
+        minSDK, maxSDK = struct.unpack("<LL", data[:8])
+        data = data[8:]
+        yield ID.MIN_SDK, minSDK
+        yield ID.MAX_SDK, maxSDK
     sigs, data = _len_prefixed_field(data)
     yield from parse_signatures(sigs)
     pubkey, data = _len_prefixed_field(data)
@@ -134,10 +134,10 @@ def parse_signed_data(data, v3):
     certs, data = _len_prefixed_field(data)
     yield from parse_certificates(certs)
     if v3:
-      minSDK, maxSDK = struct.unpack("<LL", data[:8])
-      data = data[8:]
-      yield ID.MIN_SDK, minSDK
-      yield ID.MAX_SDK, maxSDK
+        minSDK, maxSDK = struct.unpack("<LL", data[:8])
+        data = data[8:]
+        yield ID.MIN_SDK, minSDK
+        yield ID.MAX_SDK, maxSDK
     attrs, data = _len_prefixed_field(data)
     yield from parse_additional_attributes(attrs)
     assert all(b == 0 for b in data)
