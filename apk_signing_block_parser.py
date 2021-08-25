@@ -17,7 +17,10 @@ class ID(Enum):
     ADDITIONAL_ATTRIBUTE_VALUE = auto()
     APK_SIGNATURE_SCHEME_V2_BLOCK = auto()
     APK_SIGNATURE_SCHEME_V3_BLOCK = auto()
+    BLOCK_DATA = auto()
+    DEPENDENCY_INFO_BLOCK = auto()
     DIGEST = auto()
+    GOOGLE_PLAY_METADATA_BLOCK = auto()
     MAX_SDK = auto()
     MIN_SDK = auto()
     PAIR_ID = auto()
@@ -28,15 +31,18 @@ class ID(Enum):
     SIGNATURE_ALGORITHM_ID = auto()
     SIGNER = auto()
     UNKNOWN_BLOCK = auto()
-    UNKNOWN_BLOCK_DATA = auto()
     VERITY_PADDING_BLOCK = auto()
     X509_CERTIFICATE = auto()
 
 
 APK_SIGNATURE_SCHEME_V2_BLOCK_ID = 0x7109871a
 APK_SIGNATURE_SCHEME_V3_BLOCK_ID = 0xf05368c0
-PROOF_OF_ROTATION_STRUCT_ID = 0x3ba06f8c
 VERITY_PADDING_BLOCK_ID = 0x42726577
+
+DEPENDENCY_INFO_BLOCK_ID = 0x504b4453
+GOOGLE_PLAY_METADATA_BLOCK_ID = 0x2146444e
+
+PROOF_OF_ROTATION_STRUCT_ID = 0x3ba06f8c
 
 SIGNATURE_ALGORITHM_IDS = {
     0x0101: "RSASSA-PSS with SHA2-256 digest, SHA2-256 MGF1, 32 bytes of salt, trailer: 0xbc",
@@ -70,9 +76,15 @@ def parse_apk_signing_block(data):
         elif pair_id == VERITY_PADDING_BLOCK_ID:
             yield ID.PAIR_TYPE, ID.VERITY_PADDING_BLOCK
             assert all(b == 0 for b in pair_val)
+        elif pair_id == DEPENDENCY_INFO_BLOCK_ID:
+            yield ID.PAIR_TYPE, ID.DEPENDENCY_INFO_BLOCK
+            yield ID.BLOCK_DATA, pair_val
+        elif pair_id == GOOGLE_PLAY_METADATA_BLOCK_ID:
+            yield ID.PAIR_TYPE, ID.GOOGLE_PLAY_METADATA_BLOCK
+            yield ID.BLOCK_DATA, pair_val
         else:
             yield ID.PAIR_TYPE, ID.UNKNOWN_BLOCK
-            yield ID.UNKNOWN_BLOCK_DATA, pair_val
+            yield ID.BLOCK_DATA, pair_val
 
 
 def _len_prefixed_field(data):
