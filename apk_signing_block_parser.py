@@ -18,17 +18,25 @@ class ID(Enum):
     APK_SIGNATURE_SCHEME_V2_BLOCK = auto()
     APK_SIGNATURE_SCHEME_V3_BLOCK = auto()
     DIGEST = auto()
+    MAX_SDK = auto()
+    MIN_SDK = auto()
     PAIR_ID = auto()
     PAIR_LENGTH = auto()
     PAIR_TYPE = auto()
     PUBLIC_KEY = auto()
     SIGNATURE = auto()
     SIGNATURE_ALGORITHM_ID = auto()
+    SIGNER = auto()
+    UNKNOWN_BLOCK = auto()
+    UNKNOWN_BLOCK_DATA = auto()
+    VERITY_PADDING_BLOCK = auto()
     X509_CERTIFICATE = auto()
 
 
 APK_SIGNATURE_SCHEME_V2_BLOCK_ID = 0x7109871a
 APK_SIGNATURE_SCHEME_V3_BLOCK_ID = 0xf05368c0
+PROOF_OF_ROTATION_STRUCT_ID = 0x3ba06f8c
+VERITY_PADDING_BLOCK_ID = 0x42726577
 
 SIGNATURE_ALGORITHM_IDS = {
     0x0101: "RSASSA-PSS with SHA2-256 digest, SHA2-256 MGF1, 32 bytes of salt, trailer: 0xbc",
@@ -41,7 +49,6 @@ SIGNATURE_ALGORITHM_IDS = {
 }
 
 
-# FIXME
 def parse_apk_signing_block(data):
     magic = data[-16:]
     sb_size1 = int.from_bytes(data[:8], "little")
@@ -60,8 +67,12 @@ def parse_apk_signing_block(data):
         elif pair_id == APK_SIGNATURE_SCHEME_V3_BLOCK_ID:
             yield ID.PAIR_TYPE, ID.APK_SIGNATURE_SCHEME_V3_BLOCK
             yield from parse_apk_signature_scheme_v3_block(pair_val)
+        elif pair_id == VERITY_PADDING_BLOCK_ID:
+            yield ID.PAIR_ID, ID.VERITY_PADDING_BLOCK
+            assert all(b == 0 for b in pair_val)
         else:
-            pass    # FIXME
+            yield ID.PAIR_ID, ID.UNKNOWN_BLOCK
+            yield ID.UNKNOWN_BLOCK_DATA, pair_val
 
 
 def _len_prefixed_field(data):
@@ -72,31 +83,52 @@ def _len_prefixed_field(data):
 
 
 def parse_apk_signature_scheme_v2_block(data):
+    yield from parse_apk_signature_scheme_block(data, False)
+
+
+def parse_apk_signature_scheme_v3_block(data):
+    yield from parse_apk_signature_scheme_block(data, True)
+
+
+def parse_apk_signature_scheme_block(data, v3):
     seq_len, data = int.from_bytes(data[:4], "little"), data[4:]
     assert seq_len == len(data)
+    i = 0
     while data:
         signer, data = _len_prefixed_field(data)
-        yield from parse_signer(signer)
+        yield ID.SIGNER, i
+        yield from parse_signer(signer, v3)
+        i += 1
 
 
-def parse_signer(data):
+def parse_signer(data, v3):
     sigdata, data = _len_prefixed_field(data)
-    yield from parse_signed_data(sigdata)
+    yield from parse_signed_data(sigdata, v3)
+    if v3:
+      minSDK, maxSDK = struct.unpack("<LL", data[:8])
+      data = data[8:]
+      yield ID.MIN_SDK, minSDK
+      yield ID.MAX_SDK, maxSDK
     sigs, data = _len_prefixed_field(data)
     yield from parse_signatures(sigs)
     pubkey, data = _len_prefixed_field(data)
     yield ID.PUBLIC_KEY, pubkey
-    assert not data or all(b == 0 for b in data)
+    assert all(b == 0 for b in data)
 
 
-def parse_signed_data(data):
+def parse_signed_data(data, v3):
     digests, data = _len_prefixed_field(data)
     yield from parse_digests(digests)
     certs, data = _len_prefixed_field(data)
     yield from parse_certificates(certs)
+    if v3:
+      minSDK, maxSDK = struct.unpack("<LL", data[:8])
+      data = data[8:]
+      yield ID.MIN_SDK, minSDK
+      yield ID.MAX_SDK, maxSDK
     attrs, data = _len_prefixed_field(data)
     yield from parse_additional_attributes(attrs)
-    assert not data or all(b == 0 for b in data)
+    assert all(b == 0 for b in data)
 
 
 def parse_digests(data):
@@ -130,39 +162,44 @@ def parse_signatures(data):
 
 
 # FIXME
-def parse_apk_signature_scheme_v3_block(_data):
-    return []
-
-
-# FIXME
 def main(apk_signing_block_file):
     with open(apk_signing_block_file, "rb") as fh:
         data = fh.read()
+    padding = ""
     for k, v in parse_apk_signing_block(data):
-        if k is ID.SIGNATURE_ALGORITHM_ID:
-            s = "{} ({})".format(hex(v), SIGNATURE_ALGORITHM_IDS[v]) \
-                if v in SIGNATURE_ALGORITHM_IDS else hex(v)
-        elif isinstance(v, int) and "LENGTH" not in k.name:
-            s = hex(v)
+        if k is ID.PAIR_LENGTH:
+            padding = ""
+        s = v
+        if isinstance(v, int) and k is not ID.SIGNER:
+            if "LENGTH" not in k.name and "SDK" not in k.name:
+                s = hex(v)
         elif isinstance(v, bytes):
             s = binascii.hexlify(v).decode()
-        else:
-            s = v
-        print(k.name, s)
+        elif isinstance(v, ID):
+            s = v.name
+        if k is ID.SIGNATURE_ALGORITHM_ID and v in SIGNATURE_ALGORITHM_IDS:
+            s = "{} ({})".format(s, SIGNATURE_ALGORITHM_IDS[v])
+        elif k is ID.ADDITIONAL_ATTRIBUTE_ID and v == PROOF_OF_ROTATION_STRUCT_ID:
+            s = "{} (Proof-of-rotation struct)".format(s)       # FIXME
+        print(padding + k.name, s)
         if x509 is not None:
             if k is ID.X509_CERTIFICATE:
                 cert = x509.Certificate.load(v)
                 fpr = cert.sha256_fingerprint.replace(" ", "").lower()
-                print("  X509_SUBJECT", cert.subject.human_friendly)
-                print("  X509_SHA256_FINGERPRINT", fpr)
+                print("      X509_SUBJECT", cert.subject.human_friendly)
+                print("      X509_SHA256_FINGERPRINT", fpr)
                 key = cert.public_key
             elif k is ID.PUBLIC_KEY:
                 key = keys.PublicKeyInfo.load(v)
             if k is ID.X509_CERTIFICATE or k is ID.PUBLIC_KEY:
                 fpr = binascii.hexlify(key.sha256).decode()     # FIXME
-                print("  PUBLIC_KEY_ALGORITHM", key.algorithm.upper())
-                print("  PUBLIC_KEY_BIT_SIZE", key.bit_size)
-                print("  PUBLIC_KEY_SHA256_FINGERPRINT", fpr)
+                print("      PUBLIC_KEY_ALGORITHM", key.algorithm.upper())
+                print("      PUBLIC_KEY_BIT_SIZE", key.bit_size)
+                print("      PUBLIC_KEY_SHA256_FINGERPRINT", fpr)
+        if k is ID.PAIR_TYPE:
+            padding = "  "
+        elif k is ID.SIGNER:
+            padding = "    "
 
 
 if __name__ == "__main__":
