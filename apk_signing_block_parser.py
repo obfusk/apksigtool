@@ -68,10 +68,10 @@ def parse_apk_signing_block(data):
             yield ID.PAIR_TYPE, ID.APK_SIGNATURE_SCHEME_V3_BLOCK
             yield from parse_apk_signature_scheme_v3_block(pair_val)
         elif pair_id == VERITY_PADDING_BLOCK_ID:
-            yield ID.PAIR_ID, ID.VERITY_PADDING_BLOCK
+            yield ID.PAIR_TYPE, ID.VERITY_PADDING_BLOCK
             assert all(b == 0 for b in pair_val)
         else:
-            yield ID.PAIR_ID, ID.UNKNOWN_BLOCK
+            yield ID.PAIR_TYPE, ID.UNKNOWN_BLOCK
             yield ID.UNKNOWN_BLOCK_DATA, pair_val
 
 
