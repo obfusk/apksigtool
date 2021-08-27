@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 import binascii
+import hashlib
 import struct
 
 from collections import namedtuple
@@ -288,9 +289,8 @@ if have_asn1crypto:
     def show_public_key(value, indent):
         _show_public_key(asn1crypto.keys.PublicKeyInfo.load(value), indent)
 
-    # FIXME: fpr doesn't match apksigner output
     def _show_public_key(key, indent):
-        fpr = binascii.hexlify(key.sha256).decode()
+        fpr = hashlib.sha256(key.dump()).hexdigest()
         print(" " * indent + "PUBLIC KEY ALGORITHM:", key.algorithm.upper())
         print(" " * indent + "PUBLIC KEY BIT SIZE:", key.bit_size)
         print(" " * indent + "PUBLIC KEY SHA256 FINGERPRINT (HEX):", fpr)
