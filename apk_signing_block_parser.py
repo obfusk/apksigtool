@@ -11,6 +11,8 @@ from collections import namedtuple
 
 import click
 
+from apksigcopier import extract_v2_sig
+
 try:
     import asn1crypto.keys
     import asn1crypto.x509
@@ -215,9 +217,8 @@ def _len_prefixed_field(data):
 @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
 @click.version_option(__version__)
 def cli(apk, verbose):
-    with open(apk, "rb") as fh:
-        data = fh.read()
-    for pair in parse_apk_signing_block(data).pairs:
+    sb_offset, sig_block = extract_v2_sig(apk)
+    for pair in parse_apk_signing_block(sig_block).pairs:
         b = pair.value
         if verbose:
             print("PAIR LENGTH:", pair.length)
@@ -277,7 +278,7 @@ def _show_aid(x, indent):
 
 
 if have_asn1crypto:
-    # FIXME: show more?
+    # FIXME: show more? s/Common Name:/CN=/ etc?
     def show_x509_certificate(value, indent):
         cert = asn1crypto.x509.Certificate.load(value)
         fpr = cert.sha256_fingerprint.replace(" ", "").lower()
