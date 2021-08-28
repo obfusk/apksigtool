@@ -5,6 +5,7 @@
 
 import binascii
 import hashlib
+import os
 import struct
 import sys
 
@@ -19,10 +20,9 @@ from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.hazmat.primitives.asymmetric import utils
 
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 
 # FIXME: incomplete
 APK_SIGNATURE_SCHEME_V2_BLOCK_ID = 0x7109871a
@@ -37,22 +37,37 @@ PROOF_OF_ROTATION_STRUCT_ID = 0x3ba06f8c
 
 # FIXME: incomplete
 SIGNATURE_ALGORITHM_IDS = {
-    0x0101: "RSASSA-PSS with SHA2-256 digest, SHA2-256 MGF1, 32 bytes of salt, trailer: 0xbc",
-    0x0102: "RSASSA-PSS with SHA2-512 digest, SHA2-512 MGF1, 64 bytes of salt, trailer: 0xbc",
-    0x0103: "RSASSA-PKCS1-v1_5 with SHA2-256 digest",   # This is for build systems which require deterministic signatures.
-    0x0104: "RSASSA-PKCS1-v1_5 with SHA2-512 digest",   # This is for build systems which require deterministic signatures.
-    0x0201: "ECDSA with SHA2-256 digest",
-    0x0202: "ECDSA with SHA2-512 digest",
-    0x0301: "DSA with SHA2-256 digest",
+    0x0101: "RSASSA-PSS with SHA2-256 digest, SHA2-256 MGF1, 32 bytes of salt, trailer: 0xbc, content digested using SHA2-256 in 1 MB chunks.",
+    0x0102: "RSASSA-PSS with SHA2-512 digest, SHA2-512 MGF1, 64 bytes of salt, trailer: 0xbc, content digested using SHA2-512 in 1 MB chunks.",
+    0x0103: "RSASSA-PKCS1-v1_5 with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks.",  # This is for build systems which require deterministic signatures.
+    0x0104: "RSASSA-PKCS1-v1_5 with SHA2-512 digest, content digested using SHA2-512 in 1 MB chunks.",  # This is for build systems which require deterministic signatures.
+    0x0201: "ECDSA with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks.",
+    0x0202: "ECDSA with SHA2-512 digest, content digested using SHA2-512 in 1 MB chunks.",
+    0x0301: "DSA with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks.",
+#   0x0301: "DSA with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks. Signing is done deterministically according to RFC 6979.",   # noqa: E122
+    0x0421: "RSASSA-PKCS1-v1_5 with SHA2-256 digest, content digested using SHA2-256 in 4 KB chunks, in the same way fsverity operates. This digest and the content length (before digestion, 8 bytes in little endian) construct the final digest.",
+    0x0423: "ECDSA with SHA2-256 digest, content digested using SHA2-256 in 4 KB chunks, in the same way fsverity operates. This digest and the content length (before digestion, 8 bytes in little endian) construct the final digest.",
+    0x0425: "DSA with SHA2-256 digest, content digested using SHA2-256 in 4 KB chunks, in the same way fsverity operates. This digest and the content length (before digestion, 8 bytes in little endian) construct the final digest.",
 }
+
+CHUNKED, VERITY = 1, 2
 
 # FIXME: incomplete
 HASHERS = {
-    0x0103: (hashlib.sha256, hashes.SHA256),
-    0x0104: (hashlib.sha512, hashes.SHA512),
+    0x0103: (hashlib.sha256, hashes.SHA256, padding.PKCS1v15, CHUNKED),
+    0x0104: (hashlib.sha512, hashes.SHA512, padding.PKCS1v15, CHUNKED),
+    0x0421: (hashlib.sha256, hashes.SHA256, padding.PKCS1v15, VERITY),
 }
 
 CHUNK_SIZE = 1048576
+VERITY_BLOCK_SIZE = 4096
+
+# FIXME
+VERITY_SALT = b"\x00" * 8
+
+
+class VerificationError(Exception):
+    pass
 
 
 APKSigningBlock = namedtuple("APKSigningBlock", ("pairs",))
@@ -212,7 +227,8 @@ def _parse_signatures(data):
     while data:
         sig, data = _len_prefixed_field(data)
         sig_algo_id = int.from_bytes(sig[:4], "little")
-        yield Signature(sig_algo_id, sig[4:])
+        assert int.from_bytes(sig[4:8], "little") == len(sig) - 8
+        yield Signature(sig_algo_id, sig[8:])
 
 
 def _len_prefixed_field(data):
@@ -222,34 +238,49 @@ def _len_prefixed_field(data):
     return data[4:4 + field_len], data[4 + field_len:]
 
 
-# FIXME: unfinished
-def verify_apk_signature_scheme_v2(apk, block):
+# FIXME
+# https://source.android.com/security/apksigning/v2#v2-verification
+def verify_apk_signature_scheme_v2(apk, sb_offset, block):
     for signer in block.signers:
+        if not signer.signed_data.certificates:
+            raise VerificationError("No certificates")
+        c0 = signer.signed_data.certificates[0].data
         pk = signer.public_key.data
         da = sorted(d.signature_algorithm_id for d in signer.signed_data.digests)
         sa = sorted(s.signature_algorithm_id for s in signer.signatures)
-        if not _pubkey_matches_cert(signer.signed_data.certificates[0].data, pk):
-            return False
+        if asn1crypto.x509.Certificate.load(c0).public_key.dump() != pk:
+            raise VerificationError("Public key does not match first certificate")
         if da != sa:
-            return False
+            raise VerificationError("Signature algorithm IDs of digests and signatures "
+                                    "are not identical")
         for dig in signer.signed_data.digests:
-            h = HASHERS[dig.signature_algorithm_id][0]
-            if apk_digest(apk, h) != dig.digest:
-                return False
+            h, _, _, t = HASHERS[dig.signature_algorithm_id]
+            digest = apk_digest(apk, sb_offset, h, t)
+            if digest != dig.digest:
+                raise VerificationError("Digest mismatch: expected {}, got {}"
+                                        .format(dig.digest, digest))
         for sig in signer.signatures:
-            h, a = HASHERS[sig.signature_algorithm_id]
-            if not rsa_pkcs1v15_verify(pk, sig.signature, signer.signed_data.raw, h, a):
-                return False
-    return len(block.signers) > 0
+            _, a, p, _ = HASHERS[sig.signature_algorithm_id]
+            verify_signature(pk, sig.signature, signer.signed_data.raw, a, p)
+    if not block.signers:
+        raise VerificationError("No signers")
 
 
 # FIXME
-def verify_apk_signature_scheme_v3(_apk, _block):
-    ...
+def verify_apk_signature_scheme_v3(apk, sb_offset, block):
+    verify_apk_signature_scheme_v2(apk, sb_offset, block)
 
 
-# FIXME
-def apk_digest(apk, hasher):
+def apk_digest(apk, sb_offset, hasher, chunk_type):
+    if chunk_type == CHUNKED:
+        return _apk_digest_chunked(apk, sb_offset, hasher)
+    elif chunk_type == VERITY:
+        return _apk_digest_verity(apk, sb_offset, hasher)
+    else:
+        raise ValueError("Unknown chunk type: {}".format(chunk_type))
+
+
+def _apk_digest_chunked(apk, sb_offset, hasher):
     def f(size):
         while size > 0:
             data = fh.read(min(size, CHUNK_SIZE))
@@ -258,7 +289,6 @@ def apk_digest(apk, hasher):
             size -= len(data)
             digests.append(_chunk_digest(data, hasher))
     digests = []
-    sb_offset, _ = extract_v2_sig(apk)
     cd_offset, eocd_offset, _ = zip_data(apk)
     with open(apk, "rb") as fh:
         f(sb_offset)
@@ -267,12 +297,29 @@ def apk_digest(apk, hasher):
         fh.seek(eocd_offset)
         data = fh.read()
         data = data[:16] + int.to_bytes(sb_offset, 4, "little") + data[20:]
-        digests.extend(_chunk_digest(c, hasher) for c in _chunks(data))
-    return _top_level_digest(digests, hasher)
+        digests.extend(_chunk_digest(c, hasher) for c in _chunks(data, CHUNK_SIZE))
+    return _top_level_chunked_digest(digests, hasher)
 
 
-def chunked_sha(msgs, hasher):
-    return _top_level_digest((_chunk_digest(c, hasher) for m in msgs for c in _chunks(m)), hasher)
+def _apk_digest_verity(apk, sb_offset, hasher):
+    assert sb_offset % VERITY_BLOCK_SIZE == 0
+    digests = []
+    cd_offset, eocd_offset, cd_and_eocd = zip_data(apk)
+    with open(apk, "rb") as fh:
+        size = sb_offset
+        while size > 0:
+            data = fh.read(min(size, VERITY_BLOCK_SIZE))
+            if not data:
+                break
+            size -= len(data)
+            digests.append(_verity_block_digest(data, hasher))
+        fh.seek(0, os.SEEK_END)
+        total_size = fh.tell() - (cd_offset - sb_offset)
+    off = eocd_offset - cd_offset
+    sbo = int.to_bytes(sb_offset, 4, "little")
+    data = _verity_pad(cd_and_eocd[:off + 16] + sbo + cd_and_eocd[off + 20:])
+    digests.extend(_verity_block_digest(c, hasher) for c in _chunks(data, VERITY_BLOCK_SIZE))
+    return _top_level_verity_digest(digests, total_size, hasher)
 
 
 def _chunk_digest(chunk, hasher):
@@ -280,32 +327,43 @@ def _chunk_digest(chunk, hasher):
     return hasher(data).digest()
 
 
-def _top_level_digest(digests, hasher):
+def _top_level_chunked_digest(digests, hasher):
     digests = tuple(digests)
     data = b"\x5a" + int.to_bytes(len(digests), 4, "little") + b"".join(digests)
     return hasher(data).digest()
 
 
-def _chunks(msg, size=CHUNK_SIZE):
+def _verity_block_digest(block, hasher):
+    assert len(block) == VERITY_BLOCK_SIZE
+    return hasher(VERITY_SALT + block).digest()
+
+
+def _top_level_verity_digest(digests, total_size, hasher):
+    data = _verity_pad(b"".join(digests))
+    while len(data) > VERITY_BLOCK_SIZE:
+        data = _verity_pad(b"".join(_verity_block_digest(c, hasher)
+                                    for c in _chunks(data, VERITY_BLOCK_SIZE)))
+    return hasher(VERITY_SALT + data).digest() + int.to_bytes(total_size, 8, "little")
+
+
+def _verity_pad(data):
+    if len(data) % VERITY_BLOCK_SIZE != 0:
+        data += b"\x00" * (VERITY_BLOCK_SIZE - (len(data) % VERITY_BLOCK_SIZE))
+    return data
+
+
+def _chunks(msg, blocksize):
     while msg:
-        chunk, msg = msg[:size], msg[size:]
+        chunk, msg = msg[:blocksize], msg[blocksize:]
         yield chunk
 
 
-def _pubkey_matches_cert(cert, pubkey):
-    return asn1crypto.x509.Certificate.load(cert).public_key.dump() == pubkey
-
-
-# FIXME
-def rsa_pkcs1v15_verify(key, sig, msg, hasher, algo):
+def verify_signature(key, sig, msg, algo, pad):
     k = serialization.load_der_public_key(key)
-    d = chunked_sha([msg], hasher)
     try:
-        k.verify(sig, d, padding.PKCS1v15(), utils.Prehashed(algo()))
+        k.verify(sig, msg, pad(), algo())
     except InvalidSignature:
-        return False
-    else:
-        return True
+        raise VerificationError("Invalid signature")
 
 
 # FIXME: show more? s/Common Name:/CN=/ etc?
@@ -335,7 +393,7 @@ def _show_hex(data, indent):
 
 def _show_aid(x, indent):
     aid = x.signature_algorithm_id
-    aid_s = SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN")
+    aid_s = SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN").split(",")[0]
     print(" " * indent + "SIGNATURE ALGORITHM ID: {} ({})".format(hex(aid), aid_s))
 
 
@@ -344,7 +402,7 @@ def _show_aid(x, indent):
 @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
 @click.version_option(__version__)
 def cli(apk, verbose):
-    failures = 0
+    failed = False
     sb_offset, sig_block = extract_v2_sig(apk)
     for pair in parse_apk_signing_block(sig_block).pairs:
         b = pair.value
@@ -383,15 +441,16 @@ def cli(apk, verbose):
                     _show_hex(sig.signature, 6)
                 print("    PUBLIC KEY")
                 show_public_key(signer.public_key.data, 6)
-            if b.is_v3():
-                verified = verify_apk_signature_scheme_v3(apk, b)
+            try:
+                if b.is_v3():
+                    verify_apk_signature_scheme_v3(apk, sb_offset, b)
+                else:
+                    verify_apk_signature_scheme_v2(apk, sb_offset, b)
+            except VerificationError as e:
+                failed = True
+                print("  NOT VERIFIED ({})".format(e))
             else:
-                verified = verify_apk_signature_scheme_v2(apk, b)
-            if verified:
                 print("  VERIFIED")
-            else:
-                failures += 1
-                print("  NOT VERIFIED")
         elif isinstance(b, VerityPaddingBlock):
             print("  VERITY PADDING BLOCK")
         elif isinstance(b, DependencyInfoBlock):
@@ -402,7 +461,7 @@ def cli(apk, verbose):
             print("  UNKNOWN BLOCK")
         if verbose and hasattr(b, "data"):
             _show_hex(b.data, 2)
-    if failures:
+    if failed:
         sys.exit(1)
 
 
