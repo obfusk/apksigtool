@@ -3,6 +3,13 @@
 # SPDX-FileCopyrightText: 2021 Felix C. Stegerman <flx@obfusk.net>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+# Dependencies:
+# $ apt install apksigcopier python3-{asn1crypto,click,cryptography,simplejson}
+
+"""
+FIXME: docstrings
+"""
+
 import binascii
 import hashlib
 import os
@@ -21,8 +28,8 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 
-
 __version__ = "0.1.0"
+NAME = "apksigtool"
 
 # FIXME: incomplete
 APK_SIGNATURE_SCHEME_V2_BLOCK_ID = 0x7109871a
@@ -255,7 +262,7 @@ def verify_apk_signature_scheme_v2(apk, sb_offset, block):
                                     "are not identical")
         for dig in signer.signed_data.digests:
             h, _, _, t = HASHERS[dig.signature_algorithm_id]
-            digest = apk_digest(apk, sb_offset, h, t)
+            digest = _apk_digest(apk, sb_offset, h, t)
             if digest != dig.digest:
                 raise VerificationError("Digest mismatch: expected {}, got {}"
                                         .format(dig.digest, digest))
@@ -271,16 +278,16 @@ def verify_apk_signature_scheme_v3(apk, sb_offset, block):
     verify_apk_signature_scheme_v2(apk, sb_offset, block)
 
 
-def apk_digest(apk, sb_offset, hasher, chunk_type):
+def _apk_digest(apk, sb_offset, hasher, chunk_type):
     if chunk_type == CHUNKED:
-        return _apk_digest_chunked(apk, sb_offset, hasher)
+        return apk_digest_chunked(apk, sb_offset, hasher)
     elif chunk_type == VERITY:
-        return _apk_digest_verity(apk, sb_offset, hasher)
+        return apk_digest_verity(apk, sb_offset, hasher)
     else:
         raise ValueError("Unknown chunk type: {}".format(chunk_type))
 
 
-def _apk_digest_chunked(apk, sb_offset, hasher):
+def apk_digest_chunked(apk, sb_offset, hasher):
     def f(size):
         while size > 0:
             data = fh.read(min(size, CHUNK_SIZE))
@@ -301,7 +308,7 @@ def _apk_digest_chunked(apk, sb_offset, hasher):
     return _top_level_chunked_digest(digests, hasher)
 
 
-def _apk_digest_verity(apk, sb_offset, hasher):
+def apk_digest_verity(apk, sb_offset, hasher):
     assert sb_offset % VERITY_BLOCK_SIZE == 0
     digests = []
     cd_offset, eocd_offset, cd_and_eocd = zip_data(apk)
@@ -371,7 +378,6 @@ def show_x509_certificate(value, indent):
     cert = asn1crypto.x509.Certificate.load(value)
     fpr = cert.sha256_fingerprint.replace(" ", "").lower()
     print(" " * indent + "X.509 SUBJECT:", cert.subject.human_friendly)
-    print(" " * indent + "X.509 ISSUER:", cert.issuer.human_friendly)
     print(" " * indent + "X.509 SHA256 FINGERPRINT (HEX):", fpr)
     _show_public_key(cert.public_key, indent)
 
@@ -397,75 +403,123 @@ def _show_aid(x, indent):
     print(" " * indent + "SIGNATURE ALGORITHM ID: {} ({})".format(hex(aid), aid_s))
 
 
-@click.command()
+@click.group(help="""
+    apksigtool - ...
+""")
+@click.version_option(__version__)
+def cli():
+    pass
+
+
+@cli.command(help="""
+    ...
+""")
+@click.option("--json", is_flag=True)
 @click.option("-v", "--verbose", is_flag=True)
 @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
-@click.version_option(__version__)
-def cli(apk, verbose):
-    failed = False
+def parse(apk, json, verbose):
+    sb_offset, sig_block = extract_v2_sig(apk)
+    if json:
+        def encode_bytes(obj):
+            if isinstance(obj, bytes):
+                return binascii.hexlify(obj).decode()
+            raise TypeError(repr(obj) + " is not JSON serializable")
+        import simplejson
+        simplejson.dump(parse_apk_signing_block(sig_block), sys.stdout, indent=2,
+                        sort_keys=True, encoding=None, default=encode_bytes)
+    else:
+        for pair in parse_apk_signing_block(sig_block).pairs:
+            b = pair.value
+            if verbose:
+                print("PAIR LENGTH:", pair.length)
+            print("PAIR ID:", hex(pair.id))
+            if isinstance(b, APKSignatureSchemeBlock):
+                print("  APK SIGNATURE SCHEME v{} BLOCK".format(b.version))
+                for i, signer in enumerate(b.signers):
+                    print("  SIGNER", i)
+                    print("    SIGNED DATA")
+                    for j, digest in enumerate(signer.signed_data.digests):
+                        print("      DIGEST", j)
+                        _show_aid(digest, 8)
+                        _show_hex(digest.digest, 8)
+                    for j, cert in enumerate(signer.signed_data.certificates):
+                        print("      CERTIFICATE", j)
+                        show_x509_certificate(cert.data, 8)
+                    if b.is_v3():
+                        print("      MIN SDK:", signer.signed_data.min_sdk)
+                        print("      MAX SDK:", signer.signed_data.max_sdk)
+                    for j, attr in enumerate(signer.signed_data.additional_attributes):
+                        print("      ADDITIONAL ATTRIBUTE", j)
+                        print("        ADDITIONAL ATTRIBUTE ID:", hex(attr.id))
+                        if attr.is_stripping_protection():
+                            print("        STRIPPING PROTECTION ATTR")
+                        elif attr.is_proof_of_rotation_struct():
+                            print("        PROOF OF ROTATION STRUCT")
+                        _show_hex(attr.value, 8)
+                    if b.is_v3():
+                        print("    MIN SDK:", signer.min_sdk)
+                        print("    MAX SDK:", signer.max_sdk)
+                    for j, sig in enumerate(signer.signatures):
+                        print("    SIGNATURE", j)
+                        _show_aid(sig, 6)
+                        _show_hex(sig.signature, 6)
+                    print("    PUBLIC KEY")
+                    show_public_key(signer.public_key.data, 6)
+                try:
+                    if b.is_v3():
+                        verify_apk_signature_scheme_v3(apk, sb_offset, b)
+                    else:
+                        verify_apk_signature_scheme_v2(apk, sb_offset, b)
+                except VerificationError as e:
+                    print("  NOT VERIFIED ({})".format(e))
+                else:
+                    print("  VERIFIED")
+            elif isinstance(b, VerityPaddingBlock):
+                print("  VERITY PADDING BLOCK")
+            elif isinstance(b, DependencyInfoBlock):
+                print("  DEPENDENCY INFO BLOCK")
+            elif isinstance(b, GooglePlayFrostingBlock):
+                print("  GOOGLE PLAY FROSTING BLOCK")
+            else:
+                print("  UNKNOWN BLOCK")
+            if verbose and hasattr(b, "data"):
+                _show_hex(b.data, 2)
+
+
+@cli.command(help="""
+    ...
+""")
+@click.argument("apk", type=click.Path(exists=True, dir_okay=False))
+def verify(apk):
+    verified, failed = 0, 0
     sb_offset, sig_block = extract_v2_sig(apk)
     for pair in parse_apk_signing_block(sig_block).pairs:
         b = pair.value
-        if verbose:
-            print("PAIR LENGTH:", pair.length)
-        print("PAIR ID:", hex(pair.id))
         if isinstance(b, APKSignatureSchemeBlock):
-            print("  APK SIGNATURE SCHEME v{} BLOCK".format(b.version))
-            for i, signer in enumerate(b.signers):
-                print("  SIGNER", i)
-                print("    SIGNED DATA")
-                for j, digest in enumerate(signer.signed_data.digests):
-                    print("      DIGEST", j)
-                    _show_aid(digest, 8)
-                    _show_hex(digest.digest, 8)
-                for j, cert in enumerate(signer.signed_data.certificates):
-                    print("      CERTIFICATE", j)
-                    show_x509_certificate(cert.data, 8)
-                if b.is_v3():
-                    print("      MIN SDK:", signer.signed_data.min_sdk)
-                    print("      MAX SDK:", signer.signed_data.max_sdk)
-                for j, attr in enumerate(signer.signed_data.additional_attributes):
-                    print("      ADDITIONAL ATTRIBUTE", j)
-                    print("        ADDITIONAL ATTRIBUTE ID:", hex(attr.id))
-                    if attr.is_stripping_protection():
-                        print("        STRIPPING PROTECTION ATTR")
-                    elif attr.is_proof_of_rotation_struct():
-                        print("        PROOF OF ROTATION STRUCT")
-                    _show_hex(attr.value, 8)
-                if b.is_v3():
-                    print("    MIN SDK:", signer.min_sdk)
-                    print("    MAX SDK:", signer.max_sdk)
-                for j, sig in enumerate(signer.signatures):
-                    print("    SIGNATURE", j)
-                    _show_aid(sig, 6)
-                    _show_hex(sig.signature, 6)
-                print("    PUBLIC KEY")
-                show_public_key(signer.public_key.data, 6)
             try:
                 if b.is_v3():
                     verify_apk_signature_scheme_v3(apk, sb_offset, b)
                 else:
                     verify_apk_signature_scheme_v2(apk, sb_offset, b)
             except VerificationError as e:
-                failed = True
-                print("  NOT VERIFIED ({})".format(e))
+                failed += 1
+                print("v{} not verified ({})".format(b.version, e))
             else:
-                print("  VERIFIED")
-        elif isinstance(b, VerityPaddingBlock):
-            print("  VERITY PADDING BLOCK")
-        elif isinstance(b, DependencyInfoBlock):
-            print("  DEPENDENCY INFO BLOCK")
-        elif isinstance(b, GooglePlayFrostingBlock):
-            print("  GOOGLE PLAY FROSTING BLOCK")
-        else:
-            print("  UNKNOWN BLOCK")
-        if verbose and hasattr(b, "data"):
-            _show_hex(b.data, 2)
-    if failed:
+                verified += 1
+                print("v{} verified".format(b.version))
+    if failed or not verified:
         sys.exit(1)
 
 
+@cli.command(help="""
+    ...
+""")
+@click.argument("apk", type=click.Path(exists=True, dir_okay=False))
+def sign(apk):
+    raise NotImplementedError("FIXME")
+
+
 if __name__ == "__main__":
-    cli()
+    cli(prog_name=NAME)
 
 # vim: set tw=80 sw=4 sts=4 et fdm=marker :
