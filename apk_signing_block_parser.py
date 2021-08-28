@@ -6,20 +6,20 @@
 import binascii
 import hashlib
 import struct
+import sys
 
 from collections import namedtuple
 
+import asn1crypto.keys
+import asn1crypto.x509
 import click
 
-from apksigcopier import extract_v2_sig
-
-try:
-    import asn1crypto.keys
-    import asn1crypto.x509
-except ImportError:
-    have_asn1crypto = False
-else:
-    have_asn1crypto = True
+from apksigcopier import extract_v2_sig, zip_data
+from cryptography.exceptions import InvalidSignature
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric import utils
 
 
 __version__ = "0.0.1"
@@ -46,6 +46,14 @@ SIGNATURE_ALGORITHM_IDS = {
     0x0301: "DSA with SHA2-256 digest",
 }
 
+# FIXME: incomplete
+HASHERS = {
+    0x0103: (hashlib.sha256, hashes.SHA256),
+    0x0104: (hashlib.sha512, hashes.SHA512),
+}
+
+CHUNK_SIZE = 1048576
+
 
 APKSigningBlock = namedtuple("APKSigningBlock", ("pairs",))
 Pair = namedtuple("Pair", ("length", "id", "value"))
@@ -60,9 +68,10 @@ V2Signer = namedtuple("V2Signer", ("signed_data", "signatures", "public_key"))
 V3Signer = namedtuple("V3Signer", ("signed_data", "min_sdk", "max_sdk", "signatures",
                                    "public_key"))
 
-V2SignedData = namedtuple("V2SignedData", ("digests", "certificates", "additional_attributes"))
-V3SignedData = namedtuple("V3SignedData", ("digests", "certificates", "min_sdk", "max_sdk",
+V2SignedData = namedtuple("V2SignedData", ("raw", "digests", "certificates",
                                            "additional_attributes"))
+V3SignedData = namedtuple("V3SignedData", ("raw", "digests", "certificates", "min_sdk",
+                                           "max_sdk", "additional_attributes"))
 
 Digest = namedtuple("Digest", ("signature_algorithm_id", "digest"))
 Certificate = namedtuple("Certificate", ("data",))
@@ -146,7 +155,7 @@ def parse_signer(data, v3):
 
 
 def parse_signed_data(data, v3):
-    result = []
+    result = [data]
     digests, data = _len_prefixed_field(data)
     result.append(parse_digests(digests))
     certs, data = _len_prefixed_field(data)
@@ -170,7 +179,8 @@ def _parse_digests(data):
     while data:
         digest, data = _len_prefixed_field(data)
         sig_algo_id = int.from_bytes(digest[:4], "little")
-        yield Digest(sig_algo_id, digest[4:])
+        assert int.from_bytes(digest[4:8], "little") == len(digest) - 8
+        yield Digest(sig_algo_id, digest[8:])
 
 
 def parse_certificates(data):
@@ -212,11 +222,129 @@ def _len_prefixed_field(data):
     return data[4:4 + field_len], data[4 + field_len:]
 
 
+# FIXME: unfinished
+def verify_apk_signature_scheme_v2(apk, block):
+    for signer in block.signers:
+        pk = signer.public_key.data
+        da = sorted(d.signature_algorithm_id for d in signer.signed_data.digests)
+        sa = sorted(s.signature_algorithm_id for s in signer.signatures)
+        if not _pubkey_matches_cert(signer.signed_data.certificates[0].data, pk):
+            return False
+        if da != sa:
+            return False
+        for dig in signer.signed_data.digests:
+            h = HASHERS[dig.signature_algorithm_id][0]
+            if apk_digest(apk, h) != dig.digest:
+                return False
+        for sig in signer.signatures:
+            h, a = HASHERS[sig.signature_algorithm_id]
+            if not rsa_pkcs1v15_verify(pk, sig.signature, signer.signed_data.raw, h, a):
+                return False
+    return len(block.signers) > 0
+
+
+# FIXME
+def verify_apk_signature_scheme_v3(_apk, _block):
+    ...
+
+
+# FIXME
+def apk_digest(apk, hasher):
+    def f(size):
+        while size > 0:
+            data = fh.read(min(size, CHUNK_SIZE))
+            if not data:
+                break
+            size -= len(data)
+            digests.append(_chunk_digest(data, hasher))
+    digests = []
+    sb_offset, _ = extract_v2_sig(apk)
+    cd_offset, eocd_offset, _ = zip_data(apk)
+    with open(apk, "rb") as fh:
+        f(sb_offset)
+        fh.seek(cd_offset)
+        f(eocd_offset - cd_offset)
+        fh.seek(eocd_offset)
+        data = fh.read()
+        data = data[:16] + int.to_bytes(sb_offset, 4, "little") + data[20:]
+        digests.extend(_chunk_digest(c, hasher) for c in _chunks(data))
+    return _top_level_digest(digests, hasher)
+
+
+def chunked_sha(msgs, hasher):
+    return _top_level_digest((_chunk_digest(c, hasher) for m in msgs for c in _chunks(m)), hasher)
+
+
+def _chunk_digest(chunk, hasher):
+    data = b"\xa5" + int.to_bytes(len(chunk), 4, "little") + chunk
+    return hasher(data).digest()
+
+
+def _top_level_digest(digests, hasher):
+    digests = tuple(digests)
+    data = b"\x5a" + int.to_bytes(len(digests), 4, "little") + b"".join(digests)
+    return hasher(data).digest()
+
+
+def _chunks(msg, size=CHUNK_SIZE):
+    while msg:
+        chunk, msg = msg[:size], msg[size:]
+        yield chunk
+
+
+def _pubkey_matches_cert(cert, pubkey):
+    return asn1crypto.x509.Certificate.load(cert).public_key.dump() == pubkey
+
+
+# FIXME
+def rsa_pkcs1v15_verify(key, sig, msg, hasher, algo):
+    k = serialization.load_der_public_key(key)
+    d = chunked_sha([msg], hasher)
+    try:
+        k.verify(sig, d, padding.PKCS1v15(), utils.Prehashed(algo()))
+    except InvalidSignature:
+        return False
+    else:
+        return True
+
+
+# FIXME: show more? s/Common Name:/CN=/ etc?
+def show_x509_certificate(value, indent):
+    cert = asn1crypto.x509.Certificate.load(value)
+    fpr = cert.sha256_fingerprint.replace(" ", "").lower()
+    print(" " * indent + "X.509 SUBJECT:", cert.subject.human_friendly)
+    print(" " * indent + "X.509 ISSUER:", cert.issuer.human_friendly)
+    print(" " * indent + "X.509 SHA256 FINGERPRINT (HEX):", fpr)
+    _show_public_key(cert.public_key, indent)
+
+
+def show_public_key(value, indent):
+    _show_public_key(asn1crypto.keys.PublicKeyInfo.load(value), indent)
+
+
+def _show_public_key(key, indent):
+    fpr = hashlib.sha256(key.dump()).hexdigest()
+    print(" " * indent + "PUBLIC KEY ALGORITHM:", key.algorithm.upper())
+    print(" " * indent + "PUBLIC KEY BIT SIZE:", key.bit_size)
+    print(" " * indent + "PUBLIC KEY SHA256 FINGERPRINT (HEX):", fpr)
+
+
+def _show_hex(data, indent):
+    print(" " * indent + "VALUE (HEX):", binascii.hexlify(data).decode())
+
+
+def _show_aid(x, indent):
+    aid = x.signature_algorithm_id
+    aid_s = SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN")
+    print(" " * indent + "SIGNATURE ALGORITHM ID: {} ({})".format(hex(aid), aid_s))
+
+
 @click.command()
 @click.option("-v", "--verbose", is_flag=True)
 @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
 @click.version_option(__version__)
 def cli(apk, verbose):
+    failures = 0
     sb_offset, sig_block = extract_v2_sig(apk)
     for pair in parse_apk_signing_block(sig_block).pairs:
         b = pair.value
@@ -255,6 +383,15 @@ def cli(apk, verbose):
                     _show_hex(sig.signature, 6)
                 print("    PUBLIC KEY")
                 show_public_key(signer.public_key.data, 6)
+            if b.is_v3():
+                verified = verify_apk_signature_scheme_v3(apk, b)
+            else:
+                verified = verify_apk_signature_scheme_v2(apk, b)
+            if verified:
+                print("  VERIFIED")
+            else:
+                failures += 1
+                print("  NOT VERIFIED")
         elif isinstance(b, VerityPaddingBlock):
             print("  VERITY PADDING BLOCK")
         elif isinstance(b, DependencyInfoBlock):
@@ -265,39 +402,11 @@ def cli(apk, verbose):
             print("  UNKNOWN BLOCK")
         if verbose and hasattr(b, "data"):
             _show_hex(b.data, 2)
-
-
-def _show_hex(data, indent):
-    print(" " * indent + "VALUE (HEX):", binascii.hexlify(data).decode())
-
-
-def _show_aid(x, indent):
-    aid = x.signature_algorithm_id
-    aid_s = SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN")
-    print(" " * indent + "SIGNATURE ALGORITHM ID: {} ({})".format(hex(aid), aid_s))
-
-
-if have_asn1crypto:
-    # FIXME: show more? s/Common Name:/CN=/ etc?
-    def show_x509_certificate(value, indent):
-        cert = asn1crypto.x509.Certificate.load(value)
-        fpr = cert.sha256_fingerprint.replace(" ", "").lower()
-        print(" " * indent + "X.509 SUBJECT:", cert.subject.human_friendly)
-        print(" " * indent + "X.509 ISSUER:", cert.issuer.human_friendly)
-        print(" " * indent + "X.509 SHA256 FINGERPRINT (HEX):", fpr)
-        _show_public_key(cert.public_key, indent)
-
-    def show_public_key(value, indent):
-        _show_public_key(asn1crypto.keys.PublicKeyInfo.load(value), indent)
-
-    def _show_public_key(key, indent):
-        fpr = hashlib.sha256(key.dump()).hexdigest()
-        print(" " * indent + "PUBLIC KEY ALGORITHM:", key.algorithm.upper())
-        print(" " * indent + "PUBLIC KEY BIT SIZE:", key.bit_size)
-        print(" " * indent + "PUBLIC KEY SHA256 FINGERPRINT (HEX):", fpr)
-else:
-    show_x509_certificate = show_public_key = _show_hex
+    if failures:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
     cli()
+
+# vim: set tw=80 sw=4 sts=4 et fdm=marker :
