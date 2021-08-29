@@ -22,7 +22,8 @@ lint:
 	pylint apksigtool.py
 
 lint-extra:
-	mypy apksigtool.py
+	# TODO
+	mypy --ignore-missing-imports apksigtool.py
 
 clean: cleanup
 	rm -fr apksigtool.egg-info/

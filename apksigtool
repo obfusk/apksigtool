@@ -428,6 +428,7 @@ def _show_aid(x, indent):
     print(" " * indent + "SIGNATURE ALGORITHM ID: {} ({})".format(hex(aid), aid_s))
 
 
+# FIXME
 @click.group(help="""
     apksigtool - ...
 """)
@@ -436,6 +437,7 @@ def cli():
     pass
 
 
+# FIXME
 @cli.command(help="""
     ...
 """)
@@ -513,11 +515,13 @@ def parse(apk, json, verbose):
                 _show_hex(b.data, 2)
 
 
+# FIXME
 @cli.command(help="""
     ...
 """)
 @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
 def verify(apk):
+    print("WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!", file=sys.stderr)
     verified, failed = 0, 0
     _, sig_block = extract_v2_sig(apk)
     for pair in parse_apk_signing_block(sig_block).pairs:
@@ -538,6 +542,7 @@ def verify(apk):
         sys.exit(1)
 
 
+# FIXME
 # @cli.command(help="""
 #     ...
 # """)
