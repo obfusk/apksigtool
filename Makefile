@@ -19,9 +19,11 @@ test-cli:
 
 test-apks:
 	cd test && diff -Naur test-verify.out <( ./test-verify.sh \
-	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions )
+	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions \
+	             -e 'WARNING: THIS IS A PROTOTYPE' )
 	cd test && diff -Naur test-parse.out <( ./test-parse.sh \
-	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions )
+	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions \
+	             -e 'WARNING: THIS IS A PROTOTYPE' )
 
 lint:
 	flake8 apksigtool.py
