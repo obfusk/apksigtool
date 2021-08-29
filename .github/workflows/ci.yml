@@ -40,3 +40,5 @@ jobs:
         ${{ contains(matrix.python-version, 'alpha') ||
             contains(matrix.python-version, 'pypy') ||
             matrix.python-version == '3.5' }}
+    - name: test APKs
+      run: make test-apks

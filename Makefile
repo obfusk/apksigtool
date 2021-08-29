@@ -3,7 +3,7 @@ PYTHON  ?= python3
 
 export PYTHONWARNINGS := default
 
-.PHONY: all install test test-cli lint lint-extra clean cleanup
+.PHONY: all install test test-cli test-apks lint lint-extra clean cleanup
 
 all: apksigtool.1
 
@@ -16,6 +16,9 @@ test-cli:
 	# TODO
 	apksigtool --version
 	$(PYTHON) -m doctest apksigtool
+
+test-apks:
+	cd test && diff -Naur test-verify.out <( ./test-verify.sh )
 
 lint:
 	flake8 apksigtool.py
