@@ -1,0 +1,10 @@
+__pycache__
+
+/build
+/dist
+/apksigtool.egg-info
+
+.coverage
+/htmlcov
+
+/apksigtool.1
