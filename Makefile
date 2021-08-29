@@ -1,7 +1,8 @@
 SHELL   := /bin/bash
 PYTHON  ?= python3
 
-export PYTHONWARNINGS := default
+# FIXME: CryptographyDeprecationWarning: Python 3.5 support ...
+# export PYTHONWARNINGS := default
 
 .PHONY: all install test test-cli test-apks lint lint-extra clean cleanup
 
