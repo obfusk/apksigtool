@@ -304,6 +304,9 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
         da = sorted(d.signature_algorithm_id for d in signer.signed_data.digests)
         sa = sorted(s.signature_algorithm_id for s in signer.signatures)
         for sig in signer.signatures:
+            if sig.signature_algorithm_id not in HASHERS:
+                raise VerificationError("Unknown signature algorithm ID: {}"
+                                        .format(hex(sig.signature_algorithm_id)))
             _, a, p, _ = HASHERS[sig.signature_algorithm_id]
             verify_signature(pk, sig.signature, signer.signed_data.raw, a, p)
         if X509Cert.load(c0).public_key.dump() != pk:
@@ -312,6 +315,9 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
             raise VerificationError("Signature algorithm IDs of digests and signatures "
                                     "are not identical")
         for dig in signer.signed_data.digests:
+            if dig.signature_algorithm_id not in HASHERS:
+                raise VerificationError("Unknown signature algorithm ID: {}"
+                                        .format(hex(dig.signature_algorithm_id)))
             h, _, _, t = HASHERS[dig.signature_algorithm_id]
             digest = _apk_digest(apkfile, sb_offset, h, t)
             if digest != dig.digest:
