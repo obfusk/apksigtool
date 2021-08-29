@@ -7,23 +7,24 @@
 FIXME: docstrings
 """
 
-import binascii
-import hashlib
 import os
 import struct
 import sys
 
+from binascii import hexlify
 from collections import namedtuple
+from hashlib import sha256, sha512
 
-import asn1crypto.keys
-import asn1crypto.x509
 import click
 
-from apksigcopier import extract_v2_sig, zip_data
+from apksigcopier import extract_v2_sig, zip_data, APKSigCopierError
+from asn1crypto.keys import PublicKeyInfo
+from asn1crypto.x509 import Certificate as X509Cert
 from cryptography.exceptions import InvalidSignature
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric.ec import ECDSA
+from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15, PSS, MGF1
+from cryptography.hazmat.primitives.hashes import SHA256, SHA512
+from cryptography.hazmat.primitives.serialization import load_der_public_key
 
 __version__ = "0.1.0"
 NAME = "apksigtool"
@@ -58,9 +59,16 @@ CHUNKED, VERITY = 1, 2
 
 # FIXME: incomplete
 HASHERS = {
-    0x0103: (hashlib.sha256, hashes.SHA256, padding.PKCS1v15, CHUNKED),
-    0x0104: (hashlib.sha512, hashes.SHA512, padding.PKCS1v15, CHUNKED),
-    0x0421: (hashlib.sha256, hashes.SHA256, padding.PKCS1v15, VERITY),
+    0x0101: (sha256, SHA256, lambda: PSS(mgf=MGF1(SHA256()), salt_length=32), CHUNKED),
+    0x0102: (sha512, SHA512, lambda: PSS(mgf=MGF1(SHA512()), salt_length=64), CHUNKED),
+    0x0103: (sha256, SHA256, PKCS1v15, CHUNKED),
+    0x0104: (sha512, SHA512, PKCS1v15, CHUNKED),
+    0x0201: (sha256, lambda: ECDSA(SHA256()), None, CHUNKED),
+    0x0202: (sha512, lambda: ECDSA(SHA512()), None, CHUNKED),
+    0x0301: (sha256, SHA256, None, CHUNKED),
+    0x0421: (sha256, SHA256, PKCS1v15, VERITY),
+    0x0423: (sha256, lambda: ECDSA(SHA256()), None, VERITY),    # NB: untested
+    0x0425: (sha256, SHA256, None, VERITY),                     # NB: untested
 }
 
 CHUNK_SIZE = 1048576
@@ -70,8 +78,21 @@ VERITY_BLOCK_SIZE = 4096
 VERITY_SALT = b"\x00" * 8
 
 
-class VerificationError(Exception):
-    pass
+class APKSigToolError(Exception):
+    """Base class for errors."""
+
+
+class VerificationError(APKSigToolError):
+    """Verification failure."""
+
+
+class AssertionFailed(APKSigToolError):
+    """Assertion failure."""
+
+
+def _assert(b):
+    if not b:
+        raise AssertionFailed("assertion failed")
 
 
 def _namedtuple(name, fields):
@@ -123,8 +144,8 @@ def _parse_apk_signing_block(data, apkfile=None):
     magic = data[-16:]
     sb_size1 = int.from_bytes(data[:8], "little")
     sb_size2 = int.from_bytes(data[-24:-16], "little")
-    assert magic == b"APK Sig Block 42"
-    assert sb_size1 == sb_size2 == len(data) - 8
+    _assert(magic == b"APK Sig Block 42")
+    _assert(sb_size1 == sb_size2 == len(data) - 8)
     data = data[8:-24]
     while data:
         pair_len, pair_id = struct.unpack("<QL", data[:12])
@@ -134,7 +155,7 @@ def _parse_apk_signing_block(data, apkfile=None):
         elif pair_id == APK_SIGNATURE_SCHEME_V3_BLOCK_ID:
             value = parse_apk_signature_scheme_v3_block(pair_val, apkfile)
         elif pair_id == VERITY_PADDING_BLOCK_ID:
-            assert all(b == 0 for b in pair_val)
+            _assert(all(b == 0 for b in pair_val))
             value = VerityPaddingBlock()
         elif pair_id == DEPENDENCY_INFO_BLOCK_ID:
             value = DependencyInfoBlock(pair_val)
@@ -173,7 +194,7 @@ def parse_apk_signature_scheme_v3_block(data, apkfile=None):
 
 def _parse_apk_signature_scheme_block(data, v3):
     seq_len, data = int.from_bytes(data[:4], "little"), data[4:]
-    assert seq_len == len(data)
+    _assert(seq_len == len(data))
     while data:
         signer, data = _len_prefixed_field(data)
         yield parse_signer(signer, v3)
@@ -192,7 +213,7 @@ def parse_signer(data, v3):
     result.append(parse_signatures(sigs))
     pubkey, data = _len_prefixed_field(data)
     result.append(PublicKey(pubkey))
-    assert all(b == 0 for b in data)
+    _assert(all(b == 0 for b in data))
     return (V3Signer if v3 else V2Signer)(*result)
 
 
@@ -209,7 +230,7 @@ def parse_signed_data(data, v3):
         result.append(maxSDK)
     attrs, data = _len_prefixed_field(data)
     result.append(parse_additional_attributes(attrs))
-    assert all(b == 0 for b in data)
+    _assert(all(b == 0 for b in data))
     return (V3SignedData if v3 else V2SignedData)(*result)
 
 
@@ -221,7 +242,7 @@ def _parse_digests(data):
     while data:
         digest, data = _len_prefixed_field(data)
         sig_algo_id = int.from_bytes(digest[:4], "little")
-        assert int.from_bytes(digest[4:8], "little") == len(digest) - 8
+        _assert(int.from_bytes(digest[4:8], "little") == len(digest) - 8)
         yield Digest(sig_algo_id, digest[8:])
 
 
@@ -254,14 +275,14 @@ def _parse_signatures(data):
     while data:
         sig, data = _len_prefixed_field(data)
         sig_algo_id = int.from_bytes(sig[:4], "little")
-        assert int.from_bytes(sig[4:8], "little") == len(sig) - 8
+        _assert(int.from_bytes(sig[4:8], "little") == len(sig) - 8)
         yield Signature(sig_algo_id, sig[8:])
 
 
 def _len_prefixed_field(data):
-    assert len(data) >= 4
+    _assert(len(data) >= 4)
     field_len = int.from_bytes(data[:4], "little")
-    assert len(data) >= 4 + field_len
+    _assert(len(data) >= 4 + field_len)
     return data[4:4 + field_len], data[4 + field_len:]
 
 
@@ -282,7 +303,7 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
         pk = signer.public_key.data
         da = sorted(d.signature_algorithm_id for d in signer.signed_data.digests)
         sa = sorted(s.signature_algorithm_id for s in signer.signatures)
-        if asn1crypto.x509.Certificate.load(c0).public_key.dump() != pk:
+        if X509Cert.load(c0).public_key.dump() != pk:
             raise VerificationError("Public key does not match first certificate")
         if da != sa:
             raise VerificationError("Signature algorithm IDs of digests and signatures "
@@ -292,7 +313,8 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
             digest = _apk_digest(apkfile, sb_offset, h, t)
             if digest != dig.digest:
                 raise VerificationError("Digest mismatch: expected {}, got {}"
-                                        .format(dig.digest, digest))
+                                        .format(hexlify(dig.digest).decode(),
+                                                hexlify(digest).decode()))
         for sig in signer.signatures:
             _, a, p, _ = HASHERS[sig.signature_algorithm_id]
             verify_signature(pk, sig.signature, signer.signed_data.raw, a, p)
@@ -334,7 +356,7 @@ def apk_digest_chunked(apkfile, sb_offset, hasher):
 
 
 def apk_digest_verity(apkfile, sb_offset, hasher):
-    assert sb_offset % VERITY_BLOCK_SIZE == 0
+    _assert(sb_offset % VERITY_BLOCK_SIZE == 0)
     digests = []
     cd_offset, eocd_offset, cd_and_eocd = zip_data(apkfile)
     with open(apkfile, "rb") as fh:
@@ -366,7 +388,7 @@ def _top_level_chunked_digest(digests, hasher):
 
 
 def _verity_block_digest(block, hasher):
-    assert len(block) == VERITY_BLOCK_SIZE
+    _assert(len(block) == VERITY_BLOCK_SIZE)
     return hasher(VERITY_SALT + block).digest()
 
 
@@ -391,35 +413,49 @@ def _chunks(msg, blocksize):
 
 
 def verify_signature(key, sig, msg, algo, pad):
-    k = serialization.load_der_public_key(key)
+    k = load_der_public_key(key)
     try:
-        k.verify(sig, msg, pad(), algo())
+        if pad is None:
+            k.verify(sig, msg, algo())
+        else:
+            k.verify(sig, msg, pad(), algo())
     except InvalidSignature:
         raise VerificationError("Invalid signature")
 
 
 # FIXME: show more? s/Common Name:/CN=/ etc?
-def show_x509_certificate(value, indent):
-    cert = asn1crypto.x509.Certificate.load(value)
+def show_x509_certificate(value, indent, verbose):
+    cert = X509Cert.load(value)
     fpr = cert.sha256_fingerprint.replace(" ", "").lower()
     print(" " * indent + "X.509 SUBJECT:", cert.subject.human_friendly)
+    if verbose:
+        print(" " * indent + "X.509 ISSUER:", cert.issuer.human_friendly)
+        print(" " * indent + "X.509 SERIAL NUMBER:", hex(cert.serial_number))
+        print(" " * indent + "X.509 HASH ALGORITHM:", cert.hash_algo.upper())
+        print(" " * indent + "X.509 SIGNATURE ALGORITHM:", cert.signature_algo.upper())
+        print(" " * indent + "X.509 NOT VALID BEFORE:", cert.not_valid_before)
+        print(" " * indent + "X.509 NOT VALID AFTER:", cert.not_valid_after)
     print(" " * indent + "X.509 SHA256 FINGERPRINT (HEX):", fpr)
     _show_public_key(cert.public_key, indent)
 
 
 def show_public_key(value, indent):
-    _show_public_key(asn1crypto.keys.PublicKeyInfo.load(value), indent)
+    _show_public_key(PublicKeyInfo.load(value), indent)
 
 
 def _show_public_key(key, indent):
-    fpr = hashlib.sha256(key.dump()).hexdigest()
+    fpr = sha256(key.dump()).hexdigest()
     print(" " * indent + "PUBLIC KEY ALGORITHM:", key.algorithm.upper())
     print(" " * indent + "PUBLIC KEY BIT SIZE:", key.bit_size)
     print(" " * indent + "PUBLIC KEY SHA256 FINGERPRINT (HEX):", fpr)
+    try:
+        print(" " * indent + "PUBLIC KEY HASH ALGORITHM:", key.hash_algo.upper())
+    except ValueError:
+        pass
 
 
 def _show_hex(data, indent):
-    print(" " * indent + "VALUE (HEX):", binascii.hexlify(data).decode())
+    print(" " * indent + "VALUE (HEX):", hexlify(data).decode())
 
 
 def _show_aid(x, indent):
@@ -449,7 +485,7 @@ def parse(apk, json, verbose):
     if json:
         def encode_bytes(obj):
             if isinstance(obj, bytes):
-                return binascii.hexlify(obj).decode()
+                return hexlify(obj).decode()
             raise TypeError(repr(obj) + " is not JSON serializable")
         import simplejson
         data = parse_apk_signing_block(sig_block, apk)
@@ -473,7 +509,7 @@ def parse(apk, json, verbose):
                         _show_hex(digest.digest, 8)
                     for j, cert in enumerate(signer.signed_data.certificates):
                         print("      CERTIFICATE", j)
-                        show_x509_certificate(cert.data, 8)
+                        show_x509_certificate(cert.data, 8, verbose)
                     if b.is_v3():
                         print("      MIN SDK:", signer.signed_data.min_sdk)
                         print("      MAX SDK:", signer.signed_data.max_sdk)
@@ -552,7 +588,11 @@ def verify(apk):
 
 
 def main():
-    cli(prog_name=NAME)
+    try:
+        cli(prog_name=NAME)
+    except (APKSigToolError, APKSigCopierError) as e:
+        print("Error: {}.".format(e), file=sys.stderr)
+        sys.exit(2)
 
 
 if __name__ == "__main__":
