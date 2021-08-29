@@ -1,8 +1,7 @@
 SHELL   := /bin/bash
 PYTHON  ?= python3
 
-# FIXME: CryptographyDeprecationWarning: Python 3.5 support ...
-# export PYTHONWARNINGS := default
+export PYTHONWARNINGS := default
 
 .PHONY: all install test test-cli test-apks lint lint-extra clean cleanup
 
@@ -19,8 +18,8 @@ test-cli:
 	$(PYTHON) -m doctest apksigtool
 
 test-apks:
-	cd test && diff -Naur test-verify.out <( ./test-verify.sh )
-	cd test && diff -Naur test-parse.out <( ./test-parse.sh )
+	cd test && diff -Naur test-verify.out <( ./test-verify.sh | grep -vF CryptographyDeprecationWarning )
+	cd test && diff -Naur test-parse.out  <( ./test-parse.sh  | grep -vF CryptographyDeprecationWarning )
 
 lint:
 	flake8 apksigtool.py
