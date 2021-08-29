@@ -3,9 +3,6 @@
 # SPDX-FileCopyrightText: 2021 Felix C. Stegerman <flx@obfusk.net>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Dependencies:
-# $ apt install apksigcopier python3-{asn1crypto,click,cryptography,simplejson}
-
 """
 FIXME: docstrings
 """
@@ -77,29 +74,36 @@ class VerificationError(Exception):
     pass
 
 
-APKSigningBlock = namedtuple("APKSigningBlock", ("pairs",))
-Pair = namedtuple("Pair", ("length", "id", "value"))
+def _namedtuple(name, fields):
+    nt = namedtuple(name, fields)
+    nt.for_json = lambda self: {**self._asdict(), **dict(_type=name)}
+    return nt
 
-APKSignatureSchemeBlock = namedtuple("APKSignatureSchemeBlock", ("version", "signers"))
-VerityPaddingBlock = namedtuple("VerityPaddingBlock", ())
-DependencyInfoBlock = namedtuple("DependencyInfoBlock", ("data",))
-GooglePlayFrostingBlock = namedtuple("GooglePlayFrostingBlock", ("data",))
-UnknownBlock = namedtuple("UnknownBlock", ("data",))
 
-V2Signer = namedtuple("V2Signer", ("signed_data", "signatures", "public_key"))
-V3Signer = namedtuple("V3Signer", ("signed_data", "min_sdk", "max_sdk", "signatures",
-                                   "public_key"))
+APKSigningBlock = _namedtuple("APKSigningBlock", ("pairs",))
+Pair = _namedtuple("Pair", ("length", "id", "value"))
 
-V2SignedData = namedtuple("V2SignedData", ("raw", "digests", "certificates",
-                                           "additional_attributes"))
-V3SignedData = namedtuple("V3SignedData", ("raw", "digests", "certificates", "min_sdk",
-                                           "max_sdk", "additional_attributes"))
+APKSignatureSchemeBlock = _namedtuple("APKSignatureSchemeBlock",
+                                      ("version", "signers", "verified"))
+VerityPaddingBlock = _namedtuple("VerityPaddingBlock", ())
+DependencyInfoBlock = _namedtuple("DependencyInfoBlock", ("data",))
+GooglePlayFrostingBlock = _namedtuple("GooglePlayFrostingBlock", ("data",))
+UnknownBlock = _namedtuple("UnknownBlock", ("data",))
 
-Digest = namedtuple("Digest", ("signature_algorithm_id", "digest"))
-Certificate = namedtuple("Certificate", ("data",))
-AdditionalAttribute = namedtuple("AdditionalAttribute", ("id", "value"))
-Signature = namedtuple("Signature", ("signature_algorithm_id", "signature"))
-PublicKey = namedtuple("PublicKey", ("data",))
+V2Signer = _namedtuple("V2Signer", ("signed_data", "signatures", "public_key"))
+V3Signer = _namedtuple("V3Signer", ("signed_data", "min_sdk", "max_sdk", "signatures",
+                                    "public_key"))
+
+V2SignedData = _namedtuple("V2SignedData", ("raw", "digests", "certificates",
+                                            "additional_attributes"))
+V3SignedData = _namedtuple("V3SignedData", ("raw", "digests", "certificates", "min_sdk",
+                                            "max_sdk", "additional_attributes"))
+
+Digest = _namedtuple("Digest", ("signature_algorithm_id", "digest"))
+Certificate = _namedtuple("Certificate", ("data",))
+AdditionalAttribute = _namedtuple("AdditionalAttribute", ("id", "value"))
+Signature = _namedtuple("Signature", ("signature_algorithm_id", "signature"))
+PublicKey = _namedtuple("PublicKey", ("data",))
 
 
 APKSignatureSchemeBlock.is_v2 = lambda self: self.version == 2
@@ -111,11 +115,11 @@ AdditionalAttribute.is_proof_of_rotation_struct = lambda self: \
     self.id == PROOF_OF_ROTATION_STRUCT_ID
 
 
-def parse_apk_signing_block(data):
-    return APKSigningBlock(tuple(_parse_apk_signing_block(data)))
+def parse_apk_signing_block(data, apkfile=None):
+    return APKSigningBlock(tuple(_parse_apk_signing_block(data, apkfile)))
 
 
-def _parse_apk_signing_block(data):
+def _parse_apk_signing_block(data, apkfile=None):
     magic = data[-16:]
     sb_size1 = int.from_bytes(data[:8], "little")
     sb_size2 = int.from_bytes(data[-24:-16], "little")
@@ -126,9 +130,9 @@ def _parse_apk_signing_block(data):
         pair_len, pair_id = struct.unpack("<QL", data[:12])
         pair_val, data = data[12:8 + pair_len], data[8 + pair_len:]
         if pair_id == APK_SIGNATURE_SCHEME_V2_BLOCK_ID:
-            value = parse_apk_signature_scheme_v2_block(pair_val)
+            value = parse_apk_signature_scheme_v2_block(pair_val, apkfile)
         elif pair_id == APK_SIGNATURE_SCHEME_V3_BLOCK_ID:
-            value = parse_apk_signature_scheme_v3_block(pair_val)
+            value = parse_apk_signature_scheme_v3_block(pair_val, apkfile)
         elif pair_id == VERITY_PADDING_BLOCK_ID:
             assert all(b == 0 for b in pair_val)
             value = VerityPaddingBlock()
@@ -141,14 +145,30 @@ def _parse_apk_signing_block(data):
         yield Pair(pair_len, pair_id, value)
 
 
-def parse_apk_signature_scheme_v2_block(data):
-    signers = _parse_apk_signature_scheme_block(data, False)
-    return APKSignatureSchemeBlock(2, tuple(signers))
+def parse_apk_signature_scheme_v2_block(data, apkfile=None):
+    signers = tuple(_parse_apk_signature_scheme_block(data, False))
+    verified = None
+    if apkfile is not None:
+        try:
+            verify_apk_signature_scheme_v2(signers, apkfile)
+        except VerificationError:
+            verified = False
+        else:
+            verified = True
+    return APKSignatureSchemeBlock(2, signers, verified)
 
 
-def parse_apk_signature_scheme_v3_block(data):
-    signers = _parse_apk_signature_scheme_block(data, True)
-    return APKSignatureSchemeBlock(3, tuple(signers))
+def parse_apk_signature_scheme_v3_block(data, apkfile=None):
+    signers = tuple(_parse_apk_signature_scheme_block(data, True))
+    verified = None
+    if apkfile is not None:
+        try:
+            verify_apk_signature_scheme_v3(signers, apkfile)
+        except VerificationError:
+            verified = False
+        else:
+            verified = True
+    return APKSignatureSchemeBlock(3, signers, verified)
 
 
 def _parse_apk_signature_scheme_block(data, v3):
@@ -247,10 +267,17 @@ def _len_prefixed_field(data):
 
 # FIXME
 # https://source.android.com/security/apksigning/v2#v2-verification
-def verify_apk_signature_scheme_v2(apk, sb_offset, block):
-    for signer in block.signers:
+def verify_apk_signature_scheme_v2(signers, apkfile):
+    sb_offset, _ = extract_v2_sig(apkfile)
+    if not signers:
+        raise VerificationError("No signers")
+    for signer in signers:
         if not signer.signed_data.certificates:
             raise VerificationError("No certificates")
+        if not signer.signed_data.digests:
+            raise VerificationError("No digests")
+        if not signer.signatures:
+            raise VerificationError("No signatures")
         c0 = signer.signed_data.certificates[0].data
         pk = signer.public_key.data
         da = sorted(d.signature_algorithm_id for d in signer.signed_data.digests)
@@ -262,32 +289,30 @@ def verify_apk_signature_scheme_v2(apk, sb_offset, block):
                                     "are not identical")
         for dig in signer.signed_data.digests:
             h, _, _, t = HASHERS[dig.signature_algorithm_id]
-            digest = _apk_digest(apk, sb_offset, h, t)
+            digest = _apk_digest(apkfile, sb_offset, h, t)
             if digest != dig.digest:
                 raise VerificationError("Digest mismatch: expected {}, got {}"
                                         .format(dig.digest, digest))
         for sig in signer.signatures:
             _, a, p, _ = HASHERS[sig.signature_algorithm_id]
             verify_signature(pk, sig.signature, signer.signed_data.raw, a, p)
-    if not block.signers:
-        raise VerificationError("No signers")
 
 
 # FIXME
-def verify_apk_signature_scheme_v3(apk, sb_offset, block):
-    verify_apk_signature_scheme_v2(apk, sb_offset, block)
+def verify_apk_signature_scheme_v3(signers, apkfile):
+    verify_apk_signature_scheme_v2(signers, apkfile)
 
 
-def _apk_digest(apk, sb_offset, hasher, chunk_type):
+def _apk_digest(apkfile, sb_offset, hasher, chunk_type):
     if chunk_type == CHUNKED:
-        return apk_digest_chunked(apk, sb_offset, hasher)
+        return apk_digest_chunked(apkfile, sb_offset, hasher)
     elif chunk_type == VERITY:
-        return apk_digest_verity(apk, sb_offset, hasher)
+        return apk_digest_verity(apkfile, sb_offset, hasher)
     else:
         raise ValueError("Unknown chunk type: {}".format(chunk_type))
 
 
-def apk_digest_chunked(apk, sb_offset, hasher):
+def apk_digest_chunked(apkfile, sb_offset, hasher):
     def f(size):
         while size > 0:
             data = fh.read(min(size, CHUNK_SIZE))
@@ -296,8 +321,8 @@ def apk_digest_chunked(apk, sb_offset, hasher):
             size -= len(data)
             digests.append(_chunk_digest(data, hasher))
     digests = []
-    cd_offset, eocd_offset, _ = zip_data(apk)
-    with open(apk, "rb") as fh:
+    cd_offset, eocd_offset, _ = zip_data(apkfile)
+    with open(apkfile, "rb") as fh:
         f(sb_offset)
         fh.seek(cd_offset)
         f(eocd_offset - cd_offset)
@@ -308,11 +333,11 @@ def apk_digest_chunked(apk, sb_offset, hasher):
     return _top_level_chunked_digest(digests, hasher)
 
 
-def apk_digest_verity(apk, sb_offset, hasher):
+def apk_digest_verity(apkfile, sb_offset, hasher):
     assert sb_offset % VERITY_BLOCK_SIZE == 0
     digests = []
-    cd_offset, eocd_offset, cd_and_eocd = zip_data(apk)
-    with open(apk, "rb") as fh:
+    cd_offset, eocd_offset, cd_and_eocd = zip_data(apkfile)
+    with open(apkfile, "rb") as fh:
         size = sb_offset
         while size > 0:
             data = fh.read(min(size, VERITY_BLOCK_SIZE))
@@ -418,15 +443,17 @@ def cli():
 @click.option("-v", "--verbose", is_flag=True)
 @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
 def parse(apk, json, verbose):
-    sb_offset, sig_block = extract_v2_sig(apk)
+    _, sig_block = extract_v2_sig(apk)
     if json:
         def encode_bytes(obj):
             if isinstance(obj, bytes):
                 return binascii.hexlify(obj).decode()
             raise TypeError(repr(obj) + " is not JSON serializable")
         import simplejson
-        simplejson.dump(parse_apk_signing_block(sig_block), sys.stdout, indent=2,
-                        sort_keys=True, encoding=None, default=encode_bytes)
+        data = parse_apk_signing_block(sig_block, apk)
+        simplejson.dump(data, sys.stdout, indent=2, sort_keys=True, encoding=None,
+                        default=encode_bytes, for_json=True)
+        print()
     else:
         for pair in parse_apk_signing_block(sig_block).pairs:
             b = pair.value
@@ -466,10 +493,10 @@ def parse(apk, json, verbose):
                     print("    PUBLIC KEY")
                     show_public_key(signer.public_key.data, 6)
                 try:
-                    if b.is_v3():
-                        verify_apk_signature_scheme_v3(apk, sb_offset, b)
+                    if b.is_v2():
+                        verify_apk_signature_scheme_v2(b.signers, apk)
                     else:
-                        verify_apk_signature_scheme_v2(apk, sb_offset, b)
+                        verify_apk_signature_scheme_v3(b.signers, apk)
                 except VerificationError as e:
                     print("  NOT VERIFIED ({})".format(e))
                 else:
@@ -492,15 +519,15 @@ def parse(apk, json, verbose):
 @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
 def verify(apk):
     verified, failed = 0, 0
-    sb_offset, sig_block = extract_v2_sig(apk)
+    _, sig_block = extract_v2_sig(apk)
     for pair in parse_apk_signing_block(sig_block).pairs:
         b = pair.value
         if isinstance(b, APKSignatureSchemeBlock):
             try:
-                if b.is_v3():
-                    verify_apk_signature_scheme_v3(apk, sb_offset, b)
+                if b.is_v2():
+                    verify_apk_signature_scheme_v2(b.signers, apk)
                 else:
-                    verify_apk_signature_scheme_v2(apk, sb_offset, b)
+                    verify_apk_signature_scheme_v3(b.signers, apk)
             except VerificationError as e:
                 failed += 1
                 print("v{} not verified ({})".format(b.version, e))
@@ -511,15 +538,19 @@ def verify(apk):
         sys.exit(1)
 
 
-@cli.command(help="""
-    ...
-""")
-@click.argument("apk", type=click.Path(exists=True, dir_okay=False))
-def sign(apk):
-    raise NotImplementedError("FIXME")
+# @cli.command(help="""
+#     ...
+# """)
+# @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
+# def sign(apk):
+#     ...
+
+
+def main():
+    cli(prog_name=NAME)
 
 
 if __name__ == "__main__":
-    cli(prog_name=NAME)
+    main()
 
 # vim: set tw=80 sw=4 sts=4 et fdm=marker :
