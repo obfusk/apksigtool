@@ -18,8 +18,10 @@ test-cli:
 	$(PYTHON) -m doctest apksigtool
 
 test-apks:
-	cd test && diff -Naur test-verify.out <( ./test-verify.sh | grep -vF CryptographyDeprecationWarning )
-	cd test && diff -Naur test-parse.out  <( ./test-parse.sh  | grep -vF CryptographyDeprecationWarning )
+	cd test && diff -Naur test-verify.out <( ./test-verify.sh \
+	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions )
+	cd test && diff -Naur test-parse.out <( ./test-parse.sh \
+	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions )
 
 lint:
 	flake8 apksigtool.py
