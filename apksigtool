@@ -92,7 +92,7 @@ class AssertionFailed(APKSigToolError):
 
 def _assert(b):
     if not b:
-        raise AssertionFailed("assertion failed")
+        raise AssertionFailed("Assertion failed")
 
 
 def _namedtuple(name, fields):
