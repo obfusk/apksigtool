@@ -293,16 +293,19 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
     if not signers:
         raise VerificationError("No signers")
     for signer in signers:
+        if not signer.signatures:
+            raise VerificationError("No signatures")
         if not signer.signed_data.certificates:
             raise VerificationError("No certificates")
         if not signer.signed_data.digests:
             raise VerificationError("No digests")
-        if not signer.signatures:
-            raise VerificationError("No signatures")
-        c0 = signer.signed_data.certificates[0].data
         pk = signer.public_key.data
+        c0 = signer.signed_data.certificates[0].data
         da = sorted(d.signature_algorithm_id for d in signer.signed_data.digests)
         sa = sorted(s.signature_algorithm_id for s in signer.signatures)
+        for sig in signer.signatures:
+            _, a, p, _ = HASHERS[sig.signature_algorithm_id]
+            verify_signature(pk, sig.signature, signer.signed_data.raw, a, p)
         if X509Cert.load(c0).public_key.dump() != pk:
             raise VerificationError("Public key does not match first certificate")
         if da != sa:
@@ -315,14 +318,16 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
                 raise VerificationError("Digest mismatch: expected {}, got {}"
                                         .format(hexlify(dig.digest).decode(),
                                                 hexlify(digest).decode()))
-        for sig in signer.signatures:
-            _, a, p, _ = HASHERS[sig.signature_algorithm_id]
-            verify_signature(pk, sig.signature, signer.signed_data.raw, a, p)
 
 
 # FIXME
 def verify_apk_signature_scheme_v3(signers, apkfile):
     verify_apk_signature_scheme_v2(signers, apkfile)
+    for signer in signers:
+        if signer.min_sdk != signer.signed_data.min_sdk:
+            raise VerificationError("Min SDK of signer and signed data are not identical")
+        if signer.max_sdk != signer.signed_data.max_sdk:
+            raise VerificationError("Max SDK of signer and signed data are not identical")
 
 
 def _apk_digest(apkfile, sb_offset, hasher, chunk_type):
