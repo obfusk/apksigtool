@@ -43,3 +43,5 @@ jobs:
             matrix.python-version == '3.5' }}
     - name: test APKs
       run: make test-apks
+      continue-on-error:
+        ${{ matrix.python-version == '3.5' }}
