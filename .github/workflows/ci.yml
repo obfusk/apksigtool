@@ -26,9 +26,7 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install flake8 pylint
     - name: Install mypy
-      run: |
-        python3 -m pip install mypy
-        mypy --install-types
+      run: python3 -m pip install mypy
       continue-on-error:
         ${{ contains(matrix.python-version, 'alpha') ||
             contains(matrix.python-version, 'pypy') }}
@@ -37,7 +35,7 @@ jobs:
     - name: Test & lint
       run: make test-cli lint
     - name: Extra lint
-      run: make lint-extra
+      run: mypy --install-types apksigtool.py
       continue-on-error:
         ${{ contains(matrix.python-version, 'alpha') ||
             contains(matrix.python-version, 'pypy') ||
