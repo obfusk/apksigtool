@@ -26,7 +26,9 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install flake8 pylint
     - name: Install mypy
-      run: python3 -m pip install mypy
+      run: |
+        python3 -m pip install mypy
+        mypy --install-types
       continue-on-error:
         ${{ contains(matrix.python-version, 'alpha') ||
             contains(matrix.python-version, 'pypy') }}
