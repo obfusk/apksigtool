@@ -528,14 +528,6 @@ v3 verified
 apksigtool: verified
 apksigner == apksigtool
 
-apks/v1v2v3-rsa-2048-negmod-in-cert.apk
-apksigner: verified
-WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
-v2 not verified (Public key does not match first certificate)
-v3 not verified (Public key does not match first certificate)
-apksigtool: not verified
-apksigner != apksigtool
-
 apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-lineage-attr.apk
 apksigner: not verified
 WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
