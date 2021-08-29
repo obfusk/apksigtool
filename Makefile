@@ -20,6 +20,7 @@ test-cli:
 
 test-apks:
 	cd test && diff -Naur test-verify.out <( ./test-verify.sh )
+	cd test && diff -Naur test-parse.out <( ./test-parse.sh )
 
 lint:
 	flake8 apksigtool.py

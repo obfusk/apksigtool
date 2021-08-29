@@ -989,7 +989,7 @@ apksigner == apksigtool
 apks/v2v3-signed-v3-block-stripped.apk
 apksigner: not verified
 WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
-Error: assertion failed.
+Error: Assertion failed.
 apksigtool: not verified
 apksigner == apksigtool
 
@@ -1263,7 +1263,7 @@ apksigner == apksigtool
 apks/v3-stripped.apk
 apksigner: not verified
 WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
-Error: assertion failed.
+Error: Assertion failed.
 apksigtool: not verified
 apksigner == apksigtool
 
