@@ -321,6 +321,7 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
 
 
 # FIXME
+# https://source.android.com/security/apksigning/v3#v3-verification
 def verify_apk_signature_scheme_v3(signers, apkfile):
     verify_apk_signature_scheme_v2(signers, apkfile)
     for signer in signers:
