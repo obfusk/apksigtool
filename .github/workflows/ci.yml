@@ -23,6 +23,7 @@ jobs:
       run: |
         sudo apt-get update || sudo apt-get update
         # sudo apt-get upgrade -y
+        sudo apt-get install -y apksigner
         python3 -m pip install --upgrade pip
         python3 -m pip install flake8 pylint
     - name: Install mypy
