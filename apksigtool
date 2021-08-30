@@ -59,16 +59,17 @@ CHUNKED, VERITY = 1, 2
 
 # FIXME: incomplete
 HASHERS = {
-    0x0101: (sha256, SHA256, lambda: PSS(mgf=MGF1(SHA256()), salt_length=32), CHUNKED),
-    0x0102: (sha512, SHA512, lambda: PSS(mgf=MGF1(SHA512()), salt_length=64), CHUNKED),
-    0x0103: (sha256, SHA256, PKCS1v15, CHUNKED),
-    0x0104: (sha512, SHA512, PKCS1v15, CHUNKED),
-    0x0201: (sha256, lambda: ECDSA(SHA256()), None, CHUNKED),
-    0x0202: (sha512, lambda: ECDSA(SHA512()), None, CHUNKED),
-    0x0301: (sha256, SHA256, None, CHUNKED),
-    0x0421: (sha256, SHA256, PKCS1v15, VERITY),
-    0x0423: (sha256, lambda: ECDSA(SHA256()), None, VERITY),    # NB: untested
-    0x0425: (sha256, SHA256, None, VERITY),                     # NB: untested
+    #        algo   hasher  halgo   pad                                              chunk_type
+    0x0101: ("rsa", sha256, SHA256, lambda: PSS(mgf=MGF1(SHA256()), salt_length=32), CHUNKED),
+    0x0102: ("rsa", sha512, SHA512, lambda: PSS(mgf=MGF1(SHA512()), salt_length=64), CHUNKED),
+    0x0103: ("rsa", sha256, SHA256, PKCS1v15, CHUNKED),
+    0x0104: ("rsa", sha512, SHA512, PKCS1v15, CHUNKED),
+    0x0201: ("ec" , sha256, lambda: ECDSA(SHA256()), None, CHUNKED),
+    0x0202: ("ec" , sha512, lambda: ECDSA(SHA512()), None, CHUNKED),
+    0x0301: ("dsa", sha256, SHA256, None, CHUNKED),
+    0x0421: ("dsa", sha256, SHA256, PKCS1v15, VERITY),
+    0x0423: ("ec" , sha256, lambda: ECDSA(SHA256()), None, VERITY),     # NB: untested
+    0x0425: ("dsa", sha256, SHA256, None, VERITY),                      # NB: untested
 }
 
 CHUNK_SIZE = 1048576
@@ -303,12 +304,16 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
         c0 = signer.signed_data.certificates[0].data
         da = sorted(d.signature_algorithm_id for d in signer.signed_data.digests)
         sa = sorted(s.signature_algorithm_id for s in signer.signatures)
+        pk_algo = PublicKeyInfo.load(pk).algorithm
         for sig in signer.signatures:
             if sig.signature_algorithm_id not in HASHERS:
                 raise VerificationError("Unknown signature algorithm ID: {}"
                                         .format(hex(sig.signature_algorithm_id)))
-            _, a, p, _ = HASHERS[sig.signature_algorithm_id]
-            verify_signature(pk, sig.signature, signer.signed_data.raw, a, p)
+            algo, _, halgo, pad, _ = HASHERS[sig.signature_algorithm_id]
+            if pk_algo != algo:
+                raise VerificationError("Public key algorithm mismatch: expected {}, got {}"
+                                        .format(algo, pk_algo))
+            verify_signature(pk, sig.signature, signer.signed_data.raw, halgo, pad)
         if X509Cert.load(c0).public_key.dump() != pk:
             raise VerificationError("Public key does not match first certificate")
         if da != sa:
@@ -318,8 +323,8 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
             if dig.signature_algorithm_id not in HASHERS:
                 raise VerificationError("Unknown signature algorithm ID: {}"
                                         .format(hex(dig.signature_algorithm_id)))
-            h, _, _, t = HASHERS[dig.signature_algorithm_id]
-            digest = _apk_digest(apkfile, sb_offset, h, t)
+            _, hasher, _, _, chunk_type = HASHERS[dig.signature_algorithm_id]
+            digest = _apk_digest(apkfile, sb_offset, hasher, chunk_type)
             if digest != dig.digest:
                 raise VerificationError("Digest mismatch: expected {}, got {}"
                                         .format(hexlify(dig.digest).decode(),
@@ -424,13 +429,13 @@ def _chunks(msg, blocksize):
         yield chunk
 
 
-def verify_signature(key, sig, msg, algo, pad):
+def verify_signature(key, sig, msg, halgo, pad):
     k = load_der_public_key(key)
     try:
         if pad is None:
-            k.verify(sig, msg, algo())
+            k.verify(sig, msg, halgo())
         else:
-            k.verify(sig, msg, pad(), algo())
+            k.verify(sig, msg, pad(), halgo())
     except InvalidSignature:
         raise VerificationError("Invalid signature")
 
