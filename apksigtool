@@ -167,6 +167,34 @@ def _parse_apk_signing_block(data, apkfile=None):
         yield Pair(pair_len, pair_id, value)
 
 
+# FIXME
+def _clean_apk_signing_block(data):
+    magic = data[-16:]
+    sb_size1 = int.from_bytes(data[:8], "little")
+    sb_size2 = int.from_bytes(data[-24:-16], "little")
+    _assert(magic == b"APK Sig Block 42")
+    _assert(sb_size1 == sb_size2 == len(data) - 8)
+    data = data[8:-24]
+    cleaned = b""
+    while data:
+        pair_len, pair_id = struct.unpack("<QL", data[:12])
+        pair, data = data[:8 + pair_len], data[8 + pair_len:]
+        if pair_id == APK_SIGNATURE_SCHEME_V2_BLOCK_ID:
+            pass
+        elif pair_id == APK_SIGNATURE_SCHEME_V3_BLOCK_ID:
+            pass
+        elif pair_id == VERITY_PADDING_BLOCK_ID:
+            _assert(all(b == 0 for b in pair[12:]))
+            pass
+        elif pair_id == DEPENDENCY_INFO_BLOCK_ID:
+            pass
+        else:
+            continue
+        cleaned += pair
+    c_size = int.to_bytes(len(cleaned) + 24, 8, "little")
+    return c_size + cleaned + c_size + magic
+
+
 def parse_apk_signature_scheme_v2_block(data, apkfile=None):
     signers = tuple(_parse_apk_signature_scheme_block(data, False))
     verified = None
@@ -481,9 +509,24 @@ def _show_aid(x, indent):
     print(" " * indent + "SIGNATURE ALGORITHM ID: {} ({})".format(hex(aid), aid_s))
 
 
+# NB: modifies in-place!
+def clean_apk(apkfile):
+    sb_offset, sig_block = extract_v2_sig(apkfile)
+    sig_block_cleaned = _clean_apk_signing_block(sig_block)
+    data_out = zip_data(apkfile)
+    offset = len(sig_block_cleaned) - len(sig_block)
+    with open(apkfile, "r+b") as fh:
+        fh.seek(sb_offset)
+        fh.write(sig_block_cleaned)
+        fh.write(data_out.cd_and_eocd)
+        fh.truncate()
+        fh.seek(data_out.eocd_offset + offset + 16)
+        fh.write(int.to_bytes(data_out.cd_offset + offset, 4, "little"))
+
+
 # FIXME
 @click.group(help="""
-    apksigtool - ...
+    apksigtool - parse & verify android apk signing blocks
 """)
 @click.version_option(__version__)
 def cli():
@@ -593,6 +636,15 @@ def verify(apk):
                 print("v{} verified".format(b.version))
     if failed or not verified:
         sys.exit(1)
+
+
+# FIXME
+@cli.command(help="""
+    ...
+""")
+@click.argument("apk", type=click.Path(exists=True, dir_okay=False))
+def clean(apk):
+    clean_apk(apk)
 
 
 # FIXME
