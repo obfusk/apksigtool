@@ -59,16 +59,16 @@ CHUNKED, VERITY = 1, 2
 
 # FIXME: incomplete
 HASHERS = {
-    #        algo   hasher  halgo   pad                                              chunk_type
+    # id     algo   hasher  halgo   pad                                              chunk_type
     0x0101: ("rsa", sha256, SHA256, lambda: PSS(mgf=MGF1(SHA256()), salt_length=32), CHUNKED),
     0x0102: ("rsa", sha512, SHA512, lambda: PSS(mgf=MGF1(SHA512()), salt_length=64), CHUNKED),
     0x0103: ("rsa", sha256, SHA256, PKCS1v15, CHUNKED),
     0x0104: ("rsa", sha512, SHA512, PKCS1v15, CHUNKED),
-    0x0201: ("ec" , sha256, lambda: ECDSA(SHA256()), None, CHUNKED),
-    0x0202: ("ec" , sha512, lambda: ECDSA(SHA512()), None, CHUNKED),
+    0x0201: ("ec", sha256, lambda: ECDSA(SHA256()), None, CHUNKED),
+    0x0202: ("ec", sha512, lambda: ECDSA(SHA512()), None, CHUNKED),
     0x0301: ("dsa", sha256, SHA256, None, CHUNKED),
     0x0421: ("dsa", sha256, SHA256, PKCS1v15, VERITY),
-    0x0423: ("ec" , sha256, lambda: ECDSA(SHA256()), None, VERITY),     # NB: untested
+    0x0423: ("ec", sha256, lambda: ECDSA(SHA256()), None, VERITY),      # NB: untested
     0x0425: ("dsa", sha256, SHA256, None, VERITY),                      # NB: untested
 }
 
