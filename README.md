@@ -1,10 +1,10 @@
 <!-- {{{1
 
     File        : README.md
-    Maintainer  : Felix C. Stegerman <flx@obfusk.net>
-    Date        : 2021-08-29
+    Maintainer  : FC Stegerman <flx@obfusk.net>
+    Date        : 2022-08-01
 
-    Copyright   : Copyright (C) 2021  Felix C. Stegerman
+    Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
     License     : AGPLv3+
 
