@@ -44,7 +44,7 @@ setuptools.setup(
     keywords          = "android apk signing",
     py_modules        = ["apksigtool"],
     entry_points      = dict(console_scripts = ["apksigtool = apksigtool:main"]),
-    python_requires   = ">=3.7",
+    python_requires   = ">=3.5",
     install_requires  = ["apksigcopier", "asn1crypto", "click>=6.0",
                          "cryptography", "simplejson"],
 )
