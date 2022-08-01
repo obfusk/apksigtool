@@ -32,8 +32,7 @@ jobs:
     - name: Install mypy
       run: python3 -m pip install mypy types-simplejson
       continue-on-error:
-        ${{ contains(matrix.python-version, 'alpha') ||
-            contains(matrix.python-version, 'pypy') }}
+        ${{ contains(matrix.python-version, 'pypy3.7') }}
     - name: Install
       run: make install
     - name: Test & lint
@@ -41,10 +40,9 @@ jobs:
     - name: Extra lint
       run: make lint-extra
       continue-on-error:
-        ${{ contains(matrix.python-version, 'alpha') ||
-            contains(matrix.python-version, 'pypy') ||
-            matrix.python-version == '3.5' }}
+        ${{ contains(matrix.python-version, 'pypy3.7') }}
     - name: test APKs
       run: make test-apks
       continue-on-error:
-        ${{ matrix.python-version == '3.5' }}
+        ${{ matrix.python-version == '3.5' ||
+            matrix.python-version == '3.6' }}
