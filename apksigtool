@@ -465,7 +465,7 @@ def verify_signature(key, sig, msg, halgo, pad):
         else:
             k.verify(sig, msg, pad(), halgo())
     except InvalidSignature:
-        raise VerificationError("Invalid signature")
+        raise VerificationError("Invalid signature")  # pylint: disable=W0707
 
 
 # FIXME: show more? s/Common Name:/CN=/ etc?
