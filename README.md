@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-08-01
+    Date        : 2022-08-07
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -44,22 +44,25 @@
 
 ## Tab Completion
 
+NB: the syntax for the environment variable changed in click >= 8.0,
+use e.g. `source_bash` instead of `bash_source` for older versions.
+
 For Bash, add this to `~/.bashrc`:
 
 ```bash
-eval "$(_APKSIGCOPIER_COMPLETE=source_bash apksigtool)"
+eval "$(_APKSIGCOPIER_COMPLETE=bash_source apksigtool)"
 ```
 
 For Zsh, add this to `~/.zshrc`:
 
 ```zsh
-eval "$(_APKSIGCOPIER_COMPLETE=source_zsh apksigtool)"
+eval "$(_APKSIGCOPIER_COMPLETE=zsh_source apksigtool)"
 ```
 
 For Fish, add this to `~/.config/fish/completions/apksigtool.fish`:
 
 ```fish
-eval (env _APKSIGCOPIER_COMPLETE=source_fish apksigtool)
+eval (env _APKSIGCOPIER_COMPLETE=fish_source apksigtool)
 ```
 
 ## Installing
