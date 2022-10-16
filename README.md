@@ -50,19 +50,19 @@ use e.g. `source_bash` instead of `bash_source` for older versions.
 For Bash, add this to `~/.bashrc`:
 
 ```bash
-eval "$(_APKSIGCOPIER_COMPLETE=bash_source apksigtool)"
+eval "$(_APKSIGTOOL_COMPLETE=bash_source apksigtool)"
 ```
 
 For Zsh, add this to `~/.zshrc`:
 
 ```zsh
-eval "$(_APKSIGCOPIER_COMPLETE=zsh_source apksigtool)"
+eval "$(_APKSIGTOOL_COMPLETE=zsh_source apksigtool)"
 ```
 
 For Fish, add this to `~/.config/fish/completions/apksigtool.fish`:
 
 ```fish
-eval (env _APKSIGCOPIER_COMPLETE=fish_source apksigtool)
+eval (env _APKSIGTOOL_COMPLETE=fish_source apksigtool)
 ```
 
 ## Installing
