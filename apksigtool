@@ -35,6 +35,7 @@ APK_SIGNATURE_SCHEME_V3_BLOCK_ID = 0xf05368c0
 VERITY_PADDING_BLOCK_ID = 0x42726577
 DEPENDENCY_INFO_BLOCK_ID = 0x504b4453
 GOOGLE_PLAY_FROSTING_BLOCK_ID = 0x2146444e
+SOURCE_STAMP_BLOCK_ID = 0x6dff800d
 
 # FIXME: unused
 STRIPPING_PROTECTION_ATTR_ID = 0xbeeff00d
@@ -110,6 +111,7 @@ APKSignatureSchemeBlock = _namedtuple("APKSignatureSchemeBlock",
 VerityPaddingBlock = _namedtuple("VerityPaddingBlock", ())
 DependencyInfoBlock = _namedtuple("DependencyInfoBlock", ("data",))
 GooglePlayFrostingBlock = _namedtuple("GooglePlayFrostingBlock", ("data",))
+SourceStampBlock = _namedtuple("SourceStampBlock", ("data",))
 UnknownBlock = _namedtuple("UnknownBlock", ("data",))
 
 V2Signer = _namedtuple("V2Signer", ("signed_data", "signatures", "public_key"))
@@ -162,6 +164,8 @@ def _parse_apk_signing_block(data, apkfile=None):
             value = DependencyInfoBlock(pair_val)
         elif pair_id == GOOGLE_PLAY_FROSTING_BLOCK_ID:
             value = GooglePlayFrostingBlock(pair_val)
+        elif pair_id == SOURCE_STAMP_BLOCK_ID:
+            value = SourceStampBlock(pair_val)
         else:
             value = UnknownBlock(pair_val)
         yield Pair(pair_len, pair_id, value)
@@ -605,6 +609,8 @@ def parse(apk, json, verbose):
                 print("  DEPENDENCY INFO BLOCK")
             elif isinstance(b, GooglePlayFrostingBlock):
                 print("  GOOGLE PLAY FROSTING BLOCK")
+            elif isinstance(b, SourceStampBlock):
+                print("  SOURCE STAMP BLOCK")
             else:
                 print("  UNKNOWN BLOCK")
             if verbose and hasattr(b, "data"):
