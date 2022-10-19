@@ -29,7 +29,6 @@ setuptools.setup(
         "Operating System :: POSIX",
         "Operating System :: Unix",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
@@ -42,7 +41,7 @@ setuptools.setup(
     keywords          = "android apk signing",
     py_modules        = ["apksigtool"],
     entry_points      = dict(console_scripts = ["apksigtool = apksigtool:main"]),
-    python_requires   = ">=3.7",
+    python_requires   = ">=3.8",
     install_requires  = ["apksigcopier", "asn1crypto", "click>=6.0",
                          "cryptography", "simplejson"],
 )

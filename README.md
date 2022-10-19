@@ -90,7 +90,7 @@ $ git pull --rebase
 
 ## Dependencies
 
-* Python >= 3.7 + apksigcopier + asn1crypto + click + cryptography + simplejson.
+* Python >= 3.8 + apksigcopier + asn1crypto + click + cryptography + simplejson.
 
 ### Debian/Ubuntu
 

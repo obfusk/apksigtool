@@ -6,12 +6,10 @@ jobs:
     strategy:
       matrix:
         python-version:
-        - '3.7'
         - '3.8'
         - '3.9'
         - '3.10'
         - '3.11.0-alpha - 3.11'
-        - pypy3.7
         - pypy3.8
         - pypy3.9
     steps:
@@ -29,15 +27,11 @@ jobs:
         python3 -m pip install flake8 pylint
     - name: Install mypy
       run: python3 -m pip install mypy types-simplejson
-      continue-on-error:
-        ${{ contains(matrix.python-version, 'pypy3.7') }}
     - name: Install
       run: make install
     - name: Test & lint
       run: make test-cli lint
     - name: Extra lint
       run: make lint-extra
-      continue-on-error:
-        ${{ contains(matrix.python-version, 'pypy3.7') }}
     - name: test APKs
       run: make test-apks
