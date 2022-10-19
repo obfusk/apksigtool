@@ -516,6 +516,8 @@ def _show_aid(x, indent):
 def clean_apk(apkfile, strict=True):
     sb_offset, sig_block = extract_v2_sig(apkfile)
     sig_block_cleaned = _clean_apk_signing_block(sig_block, strict=strict)
+    if sig_block == sig_block_cleaned:
+        return False
     data_out = zip_data(apkfile)
     offset = len(sig_block_cleaned) - len(sig_block)
     with open(apkfile, "r+b") as fh:
@@ -525,6 +527,7 @@ def clean_apk(apkfile, strict=True):
         fh.truncate()
         fh.seek(data_out.eocd_offset + offset + 16)
         fh.write(int.to_bytes(data_out.cd_offset + offset, 4, "little"))
+    return True
 
 
 # FIXME
@@ -667,10 +670,15 @@ def clean(apk_or_block, block, strict):
         with open(apk_or_block, "rb") as fh:
             sig_block = fh.read()
         sig_block_cleaned = _clean_apk_signing_block(sig_block, strict=strict)
-        with open(apk_or_block, "wb") as fh:
-            fh.write(sig_block_cleaned)
+        if cleaned := (sig_block != sig_block_cleaned):
+            with open(apk_or_block, "wb") as fh:
+                fh.write(sig_block_cleaned)
     else:
-        clean_apk(apk_or_block, strict=strict)
+        cleaned = clean_apk(apk_or_block, strict=strict)
+    if cleaned:
+        print("cleaned")
+    else:
+        print("nothing to clean")
 
 
 # FIXME
