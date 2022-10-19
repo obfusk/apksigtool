@@ -172,7 +172,7 @@ def _parse_apk_signing_block(data, apkfile=None):
 
 
 # FIXME
-def _clean_apk_signing_block(data):
+def _clean_apk_signing_block(data, strict=True):
     magic = data[-16:]
     sb_size1 = int.from_bytes(data[:8], "little")
     sb_size2 = int.from_bytes(data[-24:-16], "little")
@@ -189,8 +189,7 @@ def _clean_apk_signing_block(data):
             pass
         elif pair_id == VERITY_PADDING_BLOCK_ID:
             _assert(all(b == 0 for b in pair[12:]))
-            pass
-        elif pair_id == DEPENDENCY_INFO_BLOCK_ID:
+        elif not strict and pair_id == DEPENDENCY_INFO_BLOCK_ID:
             pass
         else:
             continue
@@ -514,9 +513,9 @@ def _show_aid(x, indent):
 
 
 # NB: modifies in-place!
-def clean_apk(apkfile):
+def clean_apk(apkfile, strict=True):
     sb_offset, sig_block = extract_v2_sig(apkfile)
-    sig_block_cleaned = _clean_apk_signing_block(sig_block)
+    sig_block_cleaned = _clean_apk_signing_block(sig_block, strict=strict)
     data_out = zip_data(apkfile)
     offset = len(sig_block_cleaned) - len(sig_block)
     with open(apkfile, "r+b") as fh:
@@ -661,16 +660,17 @@ def verify(apk):
     NB: modifies in-place!
 """)
 @click.option("--block", is_flag=True)
+@click.option("--strict/--no-strict", default=True, show_default=True)
 @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
-def clean(apk_or_block, block):
+def clean(apk_or_block, block, strict):
     if block:
         with open(apk_or_block, "rb") as fh:
             sig_block = fh.read()
-        sig_block_cleaned = _clean_apk_signing_block(sig_block)
+        sig_block_cleaned = _clean_apk_signing_block(sig_block, strict=strict)
         with open(apk_or_block, "wb") as fh:
             fh.write(sig_block_cleaned)
     else:
-        clean_apk(apk_or_block)
+        clean_apk(apk_or_block, strict=strict)
 
 
 # FIXME
