@@ -541,18 +541,25 @@ def cli():
 @cli.command(help="""
     ...
 """)
+@click.option("--block", is_flag=True)
 @click.option("--json", is_flag=True)
 @click.option("-v", "--verbose", is_flag=True)
-@click.argument("apk", type=click.Path(exists=True, dir_okay=False))
-def parse(apk, json, verbose):
-    _, sig_block = extract_v2_sig(apk)
+@click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
+def parse(apk_or_block, block, json, verbose):
+    if block:
+        apkfile = None
+        with open(apk_or_block, "rb") as fh:
+            sig_block = fh.read()
+    else:
+        apkfile = apk_or_block
+        _, sig_block = extract_v2_sig(apkfile)
     if json:
         def encode_bytes(obj):
             if isinstance(obj, bytes):
                 return hexlify(obj).decode()
             raise TypeError(repr(obj) + " is not JSON serializable")
         import simplejson
-        data = parse_apk_signing_block(sig_block, apk)
+        data = parse_apk_signing_block(sig_block, apkfile)
         simplejson.dump(data, sys.stdout, indent=2, sort_keys=True, encoding=None,
                         default=encode_bytes, for_json=True)
         print()
@@ -594,15 +601,18 @@ def parse(apk, json, verbose):
                         _show_hex(sig.signature, 6)
                     print("    PUBLIC KEY")
                     show_public_key(signer.public_key.data, 6)
-                try:
-                    if b.is_v2():
-                        verify_apk_signature_scheme_v2(b.signers, apk)
+                if apkfile is not None:
+                    try:
+                        if b.is_v2():
+                            verify_apk_signature_scheme_v2(b.signers, apkfile)
+                        else:
+                            verify_apk_signature_scheme_v3(b.signers, apkfile)
+                    except VerificationError as e:
+                        print("  NOT VERIFIED ({})".format(e))
                     else:
-                        verify_apk_signature_scheme_v3(b.signers, apk)
-                except VerificationError as e:
-                    print("  NOT VERIFIED ({})".format(e))
+                        print("  VERIFIED")
                 else:
-                    print("  VERIFIED")
+                    print("  NOT VERIFIED (No APK file)")
             elif isinstance(b, VerityPaddingBlock):
                 print("  VERITY PADDING BLOCK")
             elif isinstance(b, DependencyInfoBlock):
@@ -647,10 +657,20 @@ def verify(apk):
 # FIXME
 @cli.command(help="""
     ...
+
+    NB: modifies in-place!
 """)
-@click.argument("apk", type=click.Path(exists=True, dir_okay=False))
-def clean(apk):
-    clean_apk(apk)
+@click.option("--block", is_flag=True)
+@click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
+def clean(apk_or_block, block):
+    if block:
+        with open(apk_or_block, "rb") as fh:
+            sig_block = fh.read()
+        sig_block_cleaned = _clean_apk_signing_block(sig_block)
+        with open(apk_or_block, "wb") as fh:
+            fh.write(sig_block_cleaned)
+    else:
+        clean_apk(apk_or_block)
 
 
 # FIXME
