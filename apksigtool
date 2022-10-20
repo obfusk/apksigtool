@@ -109,9 +109,9 @@ class AssertionFailed(APKSigToolError):
     """Assertion failure."""
 
 
-def _assert(b):
+def _assert(b, what=None):
     if not b:
-        raise AssertionFailed("Assertion failed")
+        raise AssertionFailed("Assertion failed" + (f": {what}" if what else ""))
 
 
 def _namedtuple(name, fields):
@@ -161,8 +161,8 @@ def _parse_apk_signing_block(data, apkfile=None):
     magic = data[-16:]
     sb_size1 = int.from_bytes(data[:8], "little")
     sb_size2 = int.from_bytes(data[-24:-16], "little")
-    _assert(magic == b"APK Sig Block 42")
-    _assert(sb_size1 == sb_size2 == len(data) - 8)
+    _assert(magic == b"APK Sig Block 42", "APK Sig Block magic")
+    _assert(sb_size1 == sb_size2 == len(data) - 8, "APK Sig Block size")
     data = data[8:-24]
     while data:
         pair_len, pair_id = struct.unpack("<QL", data[:12])
@@ -172,7 +172,7 @@ def _parse_apk_signing_block(data, apkfile=None):
         elif pair_id == APK_SIGNATURE_SCHEME_V3_BLOCK_ID:
             value = parse_apk_signature_scheme_v3_block(pair_val, apkfile)
         elif pair_id == VERITY_PADDING_BLOCK_ID:
-            _assert(all(b == 0 for b in pair_val))
+            _assert(all(b == 0 for b in pair_val), "verity zero padding")
             value = VerityPaddingBlock()
         elif pair_id == DEPENDENCY_INFO_BLOCK_ID:
             value = DependencyInfoBlock(pair_val)
@@ -192,8 +192,8 @@ def _clean_apk_signing_block(data, keep=()):
     magic = data[-16:]
     sb_size1 = int.from_bytes(data[:8], "little")
     sb_size2 = int.from_bytes(data[-24:-16], "little")
-    _assert(magic == b"APK Sig Block 42")
-    _assert(sb_size1 == sb_size2 == len(data) - 8)
+    _assert(magic == b"APK Sig Block 42", "APK Sig Block magic")
+    _assert(sb_size1 == sb_size2 == len(data) - 8, "APK Sig Block size")
     data = data[8:-24]
     cleaned = b""
     while data:
@@ -204,7 +204,7 @@ def _clean_apk_signing_block(data, keep=()):
         elif pair_id == APK_SIGNATURE_SCHEME_V3_BLOCK_ID:
             pass
         elif pair_id == VERITY_PADDING_BLOCK_ID:
-            _assert(all(b == 0 for b in pair[12:]))
+            _assert(all(b == 0 for b in pair[12:]), "verity zero padding")
         elif pair_id in keep:
             pass
         else:
@@ -242,7 +242,7 @@ def parse_apk_signature_scheme_v3_block(data, apkfile=None):
 
 def _parse_apk_signature_scheme_block(data, v3):
     seq_len, data = int.from_bytes(data[:4], "little"), data[4:]
-    _assert(seq_len == len(data))
+    _assert(seq_len == len(data), "APK Signature Scheme Block size")
     while data:
         signer, data = _len_prefixed_field(data)
         yield parse_signer(signer, v3)
@@ -261,7 +261,7 @@ def parse_signer(data, v3):
     result.append(parse_signatures(sigs))
     pubkey, data = _len_prefixed_field(data)
     result.append(PublicKey(pubkey))
-    _assert(all(b == 0 for b in data))
+    _assert(all(b == 0 for b in data), "signer zero padding")
     return (V3Signer if v3 else V2Signer)(*result)
 
 
@@ -278,7 +278,7 @@ def parse_signed_data(data, v3):
         result.append(maxSDK)
     attrs, data = _len_prefixed_field(data)
     result.append(parse_additional_attributes(attrs))
-    _assert(all(b == 0 for b in data))
+    _assert(all(b == 0 for b in data), "signed data zero padding")
     return (V3SignedData if v3 else V2SignedData)(*result)
 
 
@@ -290,7 +290,7 @@ def _parse_digests(data):
     while data:
         digest, data = _len_prefixed_field(data)
         sig_algo_id = int.from_bytes(digest[:4], "little")
-        _assert(int.from_bytes(digest[4:8], "little") == len(digest) - 8)
+        _assert(int.from_bytes(digest[4:8], "little") == len(digest) - 8, "digest size")
         yield Digest(sig_algo_id, digest[8:])
 
 
@@ -323,14 +323,14 @@ def _parse_signatures(data):
     while data:
         sig, data = _len_prefixed_field(data)
         sig_algo_id = int.from_bytes(sig[:4], "little")
-        _assert(int.from_bytes(sig[4:8], "little") == len(sig) - 8)
+        _assert(int.from_bytes(sig[4:8], "little") == len(sig) - 8, "signature size")
         yield Signature(sig_algo_id, sig[8:])
 
 
 def _len_prefixed_field(data):
-    _assert(len(data) >= 4)
+    _assert(len(data) >= 4, "prefixed field must be at least 4 bytes")
     field_len = int.from_bytes(data[:4], "little")
-    _assert(len(data) >= 4 + field_len)
+    _assert(len(data) >= 4 + field_len, "prefixed field size")
     return data[4:4 + field_len], data[4 + field_len:]
 
 
@@ -414,7 +414,8 @@ def apk_digest_chunked(apkfile, sb_offset, hasher):
 
 
 def apk_digest_verity(apkfile, sb_offset, hasher):
-    _assert(sb_offset % VERITY_BLOCK_SIZE == 0)
+    _assert(sb_offset % VERITY_BLOCK_SIZE == 0,
+            "APK Sig Block offset must be a multiple of verity block size")
     digests = []
     cd_offset, eocd_offset, cd_and_eocd = zip_data(apkfile)
     with open(apkfile, "rb") as fh:
@@ -446,7 +447,7 @@ def _top_level_chunked_digest(digests, hasher):
 
 
 def _verity_block_digest(block, hasher):
-    _assert(len(block) == VERITY_BLOCK_SIZE)
+    _assert(len(block) == VERITY_BLOCK_SIZE, "verity block size")
     return hasher(VERITY_SALT + block).digest()
 
 
@@ -522,9 +523,32 @@ def _show_aid(x, indent):
     print(" " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})")
 
 
+def verify_apk(apk, sig_block=None):
+    verified, failed = [], []
+    if sig_block is None:
+        _, sig_block = extract_v2_sig(apk)
+    for pair in parse_apk_signing_block(sig_block).pairs:
+        b = pair.value
+        if isinstance(b, APKSignatureSchemeBlock):
+            try:
+                if b.is_v2():
+                    verify_apk_signature_scheme_v2(b.signers, apk)
+                else:
+                    verify_apk_signature_scheme_v3(b.signers, apk)
+            except VerificationError as e:
+                failed.append((b.version, e))
+            else:
+                verified.append(b.version)
+    return verified, failed
+
+
 # NB: modifies in-place!
-def clean_apk(apkfile, keep=()):
+def clean_apk(apkfile, keep=(), check=False):
     sb_offset, sig_block = extract_v2_sig(apkfile)
+    if check:
+        verified, failed = verify_apk(apkfile, sig_block)
+        if failed or not verified:
+            raise VerificationError("Verification failed")
     sig_block_cleaned = _clean_apk_signing_block(sig_block, keep=keep)
     if sig_block == sig_block_cleaned:
         return False
@@ -646,22 +670,11 @@ def parse(apk_or_block, block, json, verbose):
 @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
 def verify(apk):
     print("WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!", file=sys.stderr)
-    verified, failed = 0, 0
-    _, sig_block = extract_v2_sig(apk)
-    for pair in parse_apk_signing_block(sig_block).pairs:
-        b = pair.value
-        if isinstance(b, APKSignatureSchemeBlock):
-            try:
-                if b.is_v2():
-                    verify_apk_signature_scheme_v2(b.signers, apk)
-                else:
-                    verify_apk_signature_scheme_v3(b.signers, apk)
-            except VerificationError as e:
-                failed += 1
-                print(f"v{b.version} not verified ({e})")
-            else:
-                verified += 1
-                print(f"v{b.version} verified")
+    verified, failed = verify_apk(apk)
+    for version in verified:
+        print(f"v{version} verified")
+    for version, e in failed:
+        print(f"v{version} not verified ({e})")
     if failed or not verified:
         sys.exit(1)
 
@@ -674,9 +687,10 @@ def verify(apk):
 """)
 @click.option("--block", is_flag=True)
 @click.option("--keep", multiple=True, default=(), metavar="HEXID")
+@click.option("--check", is_flag=True)
 @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
 @click.pass_context
-def clean(ctx, apk_or_block, block, keep):
+def clean(ctx, apk_or_block, block, keep, check):
     try:
         keep = tuple(int(x, 16) for p in keep for x in p.split(","))
     except ValueError as e:
@@ -685,12 +699,14 @@ def clean(ctx, apk_or_block, block, keep):
     if block:
         with open(apk_or_block, "rb") as fh:
             sig_block = fh.read()
+        if check:
+            parse_apk_signing_block(sig_block)  # try parsing, ignore result
         sig_block_cleaned = _clean_apk_signing_block(sig_block, keep=keep)
         if cleaned := (sig_block != sig_block_cleaned):
             with open(apk_or_block, "wb") as fh:
                 fh.write(sig_block_cleaned)
     else:
-        cleaned = clean_apk(apk_or_block, keep=keep)
+        cleaned = clean_apk(apk_or_block, keep=keep, check=check)
     if cleaned:
         print("cleaned")
     else:
