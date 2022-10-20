@@ -29,19 +29,36 @@ from cryptography.hazmat.primitives.serialization import load_der_public_key
 __version__ = "0.1.0"
 NAME = "apksigtool"
 
-# FIXME: incomplete
+# FIXME: list of block type IDs is incomplete
+# https://source.android.com/docs/security/features/apksigning/v2#apk-signing-block-format
 APK_SIGNATURE_SCHEME_V2_BLOCK_ID = 0x7109871a
 APK_SIGNATURE_SCHEME_V3_BLOCK_ID = 0xf05368c0
+
+# zero padding
 VERITY_PADDING_BLOCK_ID = 0x42726577
+
+# FIXME: opaque
+# https://developer.android.com/studio/releases/gradle-plugin#dependency-metadata
+#   "[...] data is compressed, encrypted by a Google Play signing key [...]"
+# https://android.googlesource.com/platform/tools/apkzlib
+#   src/main/java/com/android/tools/build/apkzlib/sign/SigningExtension.java
 DEPENDENCY_INFO_BLOCK_ID = 0x504b4453
+
+# FIXME: opaque
+# https://bi-zone.medium.com/easter-egg-in-apk-files-what-is-frosting-f356aa9f4d1
 GOOGLE_PLAY_FROSTING_BLOCK_ID = 0x2146444e
-SOURCE_STAMP_BLOCK_ID = 0x6dff800d
+
+# FIXME: opaque
+SOURCE_STAMP_V1_BLOCK_ID = 0x2b09189e
+SOURCE_STAMP_V2_BLOCK_ID = 0x6dff800d
 
 # FIXME: unused
 STRIPPING_PROTECTION_ATTR_ID = 0xbeeff00d
 PROOF_OF_ROTATION_STRUCT_ID = 0x3ba06f8c
 
 # FIXME: incomplete
+# https://android.googlesource.com/platform/tools/apksig
+#   src/main/java/com/android/apksig/internal/apk/SignatureAlgorithm.java
 SIGNATURE_ALGORITHM_IDS = {
     0x0101: "RSASSA-PSS with SHA2-256 digest, SHA2-256 MGF1, 32 bytes of salt, trailer: 0xbc, content digested using SHA2-256 in 1 MB chunks.",
     0x0102: "RSASSA-PSS with SHA2-512 digest, SHA2-512 MGF1, 64 bytes of salt, trailer: 0xbc, content digested using SHA2-512 in 1 MB chunks.",
@@ -106,22 +123,18 @@ def _namedtuple(name, fields):
 APKSigningBlock = _namedtuple("APKSigningBlock", ("pairs",))
 Pair = _namedtuple("Pair", ("length", "id", "value"))
 
-APKSignatureSchemeBlock = _namedtuple("APKSignatureSchemeBlock",
-                                      ("version", "signers", "verified"))
+APKSignatureSchemeBlock = _namedtuple("APKSignatureSchemeBlock", ("version", "signers", "verified"))
 VerityPaddingBlock = _namedtuple("VerityPaddingBlock", ())
 DependencyInfoBlock = _namedtuple("DependencyInfoBlock", ("data",))
 GooglePlayFrostingBlock = _namedtuple("GooglePlayFrostingBlock", ("data",))
-SourceStampBlock = _namedtuple("SourceStampBlock", ("data",))
+SourceStampBlock = _namedtuple("SourceStampBlock", ("data", "version"))
 UnknownBlock = _namedtuple("UnknownBlock", ("data",))
 
 V2Signer = _namedtuple("V2Signer", ("signed_data", "signatures", "public_key"))
-V3Signer = _namedtuple("V3Signer", ("signed_data", "min_sdk", "max_sdk", "signatures",
-                                    "public_key"))
+V3Signer = _namedtuple("V3Signer", ("signed_data", "min_sdk", "max_sdk", "signatures", "public_key"))
 
-V2SignedData = _namedtuple("V2SignedData", ("raw", "digests", "certificates",
-                                            "additional_attributes"))
-V3SignedData = _namedtuple("V3SignedData", ("raw", "digests", "certificates", "min_sdk",
-                                            "max_sdk", "additional_attributes"))
+V2SignedData = _namedtuple("V2SignedData", ("raw", "digests", "certificates", "additional_attributes"))
+V3SignedData = _namedtuple("V3SignedData", ("raw", "digests", "certificates", "min_sdk", "max_sdk", "additional_attributes"))
 
 Digest = _namedtuple("Digest", ("signature_algorithm_id", "digest"))
 Certificate = _namedtuple("Certificate", ("data",))
@@ -143,6 +156,7 @@ def parse_apk_signing_block(data, apkfile=None):
     return APKSigningBlock(tuple(_parse_apk_signing_block(data, apkfile)))
 
 
+# https://source.android.com/docs/security/features/apksigning/v2#apk-signing-block-format
 def _parse_apk_signing_block(data, apkfile=None):
     magic = data[-16:]
     sb_size1 = int.from_bytes(data[:8], "little")
@@ -164,8 +178,10 @@ def _parse_apk_signing_block(data, apkfile=None):
             value = DependencyInfoBlock(pair_val)
         elif pair_id == GOOGLE_PLAY_FROSTING_BLOCK_ID:
             value = GooglePlayFrostingBlock(pair_val)
-        elif pair_id == SOURCE_STAMP_BLOCK_ID:
-            value = SourceStampBlock(pair_val)
+        elif pair_id == SOURCE_STAMP_V1_BLOCK_ID:
+            value = SourceStampBlock(pair_val, 1)
+        elif pair_id == SOURCE_STAMP_V2_BLOCK_ID:
+            value = SourceStampBlock(pair_val, 2)
         else:
             value = UnknownBlock(pair_val)
         yield Pair(pair_len, pair_id, value)
@@ -319,7 +335,7 @@ def _len_prefixed_field(data):
 
 
 # FIXME
-# https://source.android.com/security/apksigning/v2#v2-verification
+# https://source.android.com/docs/security/features/apksigning/v2#v2-verification
 def verify_apk_signature_scheme_v2(signers, apkfile):
     sb_offset, _ = extract_v2_sig(apkfile)
     if not signers:
@@ -338,32 +354,26 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
         pk_algo = PublicKeyInfo.load(pk).algorithm
         for sig in signer.signatures:
             if sig.signature_algorithm_id not in HASHERS:
-                raise VerificationError("Unknown signature algorithm ID: {}"
-                                        .format(hex(sig.signature_algorithm_id)))
+                raise VerificationError(f"Unknown signature algorithm ID: {hex(sig.signature_algorithm_id)}")
             algo, _, halgo, pad, _ = HASHERS[sig.signature_algorithm_id]
             if pk_algo != algo:
-                raise VerificationError("Public key algorithm mismatch: expected {}, got {}"
-                                        .format(algo, pk_algo))
+                raise VerificationError(f"Public key algorithm mismatch: expected {algo}, got {pk_algo}")
             verify_signature(pk, sig.signature, signer.signed_data.raw, halgo, pad)
         if X509Cert.load(c0).public_key.dump() != pk:
             raise VerificationError("Public key does not match first certificate")
         if da != sa:
-            raise VerificationError("Signature algorithm IDs of digests and signatures "
-                                    "are not identical")
+            raise VerificationError("Signature algorithm IDs of digests and signatures are not identical")
         for dig in signer.signed_data.digests:
             if dig.signature_algorithm_id not in HASHERS:
-                raise VerificationError("Unknown signature algorithm ID: {}"
-                                        .format(hex(dig.signature_algorithm_id)))
+                raise VerificationError(f"Unknown signature algorithm ID: {hex(dig.signature_algorithm_id)}")
             _, hasher, _, _, chunk_type = HASHERS[dig.signature_algorithm_id]
             digest = _apk_digest(apkfile, sb_offset, hasher, chunk_type)
             if digest != dig.digest:
-                raise VerificationError("Digest mismatch: expected {}, got {}"
-                                        .format(hexlify(dig.digest).decode(),
-                                                hexlify(digest).decode()))
+                raise VerificationError(f"Digest mismatch: expected {hexlify(dig.digest).decode()}, got {hexlify(digest).decode()}")
 
 
 # FIXME
-# https://source.android.com/security/apksigning/v3#v3-verification
+# https://source.android.com/docs/security/features/apksigning/v3#v3-verification
 def verify_apk_signature_scheme_v3(signers, apkfile):
     verify_apk_signature_scheme_v2(signers, apkfile)
     for signer in signers:
@@ -379,7 +389,7 @@ def _apk_digest(apkfile, sb_offset, hasher, chunk_type):
     elif chunk_type == VERITY:
         return apk_digest_verity(apkfile, sb_offset, hasher)
     else:
-        raise ValueError("Unknown chunk type: {}".format(chunk_type))
+        raise ValueError(f"Unknown chunk type: {chunk_type}")
 
 
 def apk_digest_chunked(apkfile, sb_offset, hasher):
@@ -509,7 +519,7 @@ def _show_hex(data, indent):
 def _show_aid(x, indent):
     aid = x.signature_algorithm_id
     aid_s = SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN").split(",")[0]
-    print(" " * indent + "SIGNATURE ALGORITHM ID: {} ({})".format(hex(aid), aid_s))
+    print(" " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})")
 
 
 # NB: modifies in-place!
@@ -572,7 +582,7 @@ def parse(apk_or_block, block, json, verbose):
                 print("PAIR LENGTH:", pair.length)
             print("PAIR ID:", hex(pair.id))
             if isinstance(b, APKSignatureSchemeBlock):
-                print("  APK SIGNATURE SCHEME v{} BLOCK".format(b.version))
+                print(f"  APK SIGNATURE SCHEME v{b.version} BLOCK")
                 for i, signer in enumerate(b.signers):
                     print("  SIGNER", i)
                     print("    SIGNED DATA")
@@ -610,7 +620,7 @@ def parse(apk_or_block, block, json, verbose):
                         else:
                             verify_apk_signature_scheme_v3(b.signers, apkfile)
                     except VerificationError as e:
-                        print("  NOT VERIFIED ({})".format(e))
+                        print(f"  NOT VERIFIED ({e})")
                     else:
                         print("  VERIFIED")
                 else:
@@ -622,7 +632,7 @@ def parse(apk_or_block, block, json, verbose):
             elif isinstance(b, GooglePlayFrostingBlock):
                 print("  GOOGLE PLAY FROSTING BLOCK")
             elif isinstance(b, SourceStampBlock):
-                print("  SOURCE STAMP BLOCK")
+                print(f"  SOURCE STAMP v{b.version} BLOCK")
             else:
                 print("  UNKNOWN BLOCK")
             if verbose and hasattr(b, "data"):
@@ -648,10 +658,10 @@ def verify(apk):
                     verify_apk_signature_scheme_v3(b.signers, apk)
             except VerificationError as e:
                 failed += 1
-                print("v{} not verified ({})".format(b.version, e))
+                print(f"v{b.version} not verified ({e})")
             else:
                 verified += 1
-                print("v{} verified".format(b.version))
+                print(f"v{b.version} verified")
     if failed or not verified:
         sys.exit(1)
 
@@ -694,7 +704,7 @@ def main():
     try:
         cli(prog_name=NAME)
     except (APKSigToolError, APKSigCopierError) as e:
-        print("Error: {}.".format(e), file=sys.stderr)
+        print(f"Error: {e}.", file=sys.stderr)
         sys.exit(2)
 
 
