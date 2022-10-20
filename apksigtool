@@ -542,7 +542,7 @@ def clean_apk(apkfile, strict=True):
 
 # FIXME
 @click.group(help="""
-    apksigtool - parse & verify android apk signing blocks
+    apksigtool - parse/verify/clean android apk signing blocks
 """)
 @click.version_option(__version__)
 def cli():

@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-10-16
+    Date        : 2022-10-20
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -30,7 +30,7 @@
 
 # apksigtool
 
-## parse & verify android apk signing blocks
+## parse/verify/clean android apk signing blocks
 
 ... FIXME ...
 
