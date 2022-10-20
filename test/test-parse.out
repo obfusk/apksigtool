@@ -4297,7 +4297,7 @@ Error: No APK Signing Block.
 
 apks/v2v3-signed-v3-block-stripped.apk
 apksigner: not verified
-Error: Assertion failed.
+Error: Assertion failed: verity zero padding.
 
 apks/v2v3-unknown-additional-attr.apk
 apksigner: verified
@@ -5469,7 +5469,7 @@ PAIR ID: 0x42726577
 
 apks/v3-stripped.apk
 apksigner: not verified
-Error: Assertion failed.
+Error: Assertion failed: verity zero padding.
 
 apks/valid-stamp.apk
 apksigner: verified
