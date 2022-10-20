@@ -678,9 +678,9 @@ def verify(apk):
 @click.pass_context
 def clean(ctx, apk_or_block, block, keep):
     try:
-        keep = tuple( int(x, 16) for p in keep for x in p.split(",") )
+        keep = tuple(int(x, 16) for p in keep for x in p.split(","))
     except ValueError as e:
-        p, = [ x for x in clean.params if x.name == "keep" ]
+        p, = [x for x in clean.params if x.name == "keep"]
         raise click.exceptions.BadParameter(e.args[0], ctx, p)
     if block:
         with open(apk_or_block, "rb") as fh:
