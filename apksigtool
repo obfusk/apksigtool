@@ -188,7 +188,7 @@ def _parse_apk_signing_block(data, apkfile=None):
 
 
 # FIXME
-def _clean_apk_signing_block(data, strict=True):
+def _clean_apk_signing_block(data, keep=()):
     magic = data[-16:]
     sb_size1 = int.from_bytes(data[:8], "little")
     sb_size2 = int.from_bytes(data[-24:-16], "little")
@@ -205,7 +205,7 @@ def _clean_apk_signing_block(data, strict=True):
             pass
         elif pair_id == VERITY_PADDING_BLOCK_ID:
             _assert(all(b == 0 for b in pair[12:]))
-        elif not strict and pair_id == DEPENDENCY_INFO_BLOCK_ID:
+        elif pair_id in keep:
             pass
         else:
             continue
@@ -523,9 +523,9 @@ def _show_aid(x, indent):
 
 
 # NB: modifies in-place!
-def clean_apk(apkfile, strict=True):
+def clean_apk(apkfile, keep=()):
     sb_offset, sig_block = extract_v2_sig(apkfile)
-    sig_block_cleaned = _clean_apk_signing_block(sig_block, strict=strict)
+    sig_block_cleaned = _clean_apk_signing_block(sig_block, keep=keep)
     if sig_block == sig_block_cleaned:
         return False
     data_out = zip_data(apkfile)
@@ -673,18 +673,24 @@ def verify(apk):
     NB: modifies in-place!
 """)
 @click.option("--block", is_flag=True)
-@click.option("--strict/--no-strict", default=True, show_default=True)
+@click.option("--keep", multiple=True, default=(), metavar="HEXID")
 @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
-def clean(apk_or_block, block, strict):
+@click.pass_context
+def clean(ctx, apk_or_block, block, keep):
+    try:
+        keep = tuple( int(x, 16) for p in keep for x in p.split(",") )
+    except ValueError as e:
+        p, = [ x for x in clean.params if x.name == "keep" ]
+        raise click.exceptions.BadParameter(e.args[0], ctx, p)
     if block:
         with open(apk_or_block, "rb") as fh:
             sig_block = fh.read()
-        sig_block_cleaned = _clean_apk_signing_block(sig_block, strict=strict)
+        sig_block_cleaned = _clean_apk_signing_block(sig_block, keep=keep)
         if cleaned := (sig_block != sig_block_cleaned):
             with open(apk_or_block, "wb") as fh:
                 fh.write(sig_block_cleaned)
     else:
-        cleaned = clean_apk(apk_or_block, strict=strict)
+        cleaned = clean_apk(apk_or_block, keep=keep)
     if cleaned:
         print("cleaned")
     else:
