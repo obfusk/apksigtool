@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-10-20
+# Date        : 2022-10-21
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -737,10 +737,14 @@ def _show_aid(x, indent):
     print(" " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})")
 
 
+# FIXME
+# WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
 def verify_apk(apk, sig_block=None):
     """
     Verify APK file using the APK Signature Scheme v2/v3 Blocks found parsing
     the APK Signing Block.
+
+    WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
 
     If sig_block is None, it will be extracted from the APK using
     extract_v2_sig().
