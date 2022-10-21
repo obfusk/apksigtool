@@ -39,6 +39,7 @@ API
 ... FIXME ...
 """
 
+import datetime
 import os
 import struct
 import sys
@@ -155,11 +156,24 @@ def _assert(b, what=None):
         raise AssertionFailed("Assertion failed" + (f": {what}" if what else ""))
 
 
-def _namedtuple(name, fields):
-    """namedtuple with .for_json()."""
-    nt = namedtuple(name, fields)
-    nt.for_json = lambda self: {**self._asdict(), **dict(_type=name)}
+def _namedtuple(name, fields, extra={}):
+    """Custom namedtuple with .for_json() and lazy properties."""
+    class nt(namedtuple(name, fields)):
+        def for_json(self):
+            e = {k: getattr(self, k) for k in extra if not k.startswith("_")}
+            return {**self._asdict(), **dict(_type=name), **e}
+    for k, f in extra.items():
+        setattr(nt, k, _lazy_property(k, f))
     return nt
+
+
+def _lazy_property(k, f):
+    """Lazy property."""
+    def get(self):
+        if not hasattr(self, f"_lazy_{k}"):
+            setattr(self, f"_lazy_{k}", f(self))
+        return getattr(self, f"_lazy_{k}")
+    return property(get)
 
 
 APKSigningBlock = _namedtuple("APKSigningBlock", ("pairs",))
@@ -178,20 +192,30 @@ V3Signer = _namedtuple("V3Signer", ("signed_data", "min_sdk", "max_sdk", "signat
 V2SignedData = _namedtuple("V2SignedData", ("raw", "digests", "certificates", "additional_attributes"))
 V3SignedData = _namedtuple("V3SignedData", ("raw", "digests", "certificates", "min_sdk", "max_sdk", "additional_attributes"))
 
-Digest = _namedtuple("Digest", ("signature_algorithm_id", "digest"))
-Certificate = _namedtuple("Certificate", ("data",))
-AdditionalAttribute = _namedtuple("AdditionalAttribute", ("id", "value"))
-Signature = _namedtuple("Signature", ("signature_algorithm_id", "signature"))
-PublicKey = _namedtuple("PublicKey", ("data",))
+Digest = _namedtuple(
+    "Digest", ("signature_algorithm_id", "digest"),
+    dict(algoritm_id_info=lambda self: aid_info(self.signature_algorithm_id)))
+Certificate = _namedtuple(
+    "Certificate", ("data",),
+    dict(_certificate=lambda self: X509Cert.load(self.data),
+         _public_key=lambda self: self._certificate.public_key,
+         certificate_info=lambda self: x509_certificate_info(self._certificate),
+         public_key_info=lambda self: public_key_info(self._public_key)))
+AdditionalAttribute = _namedtuple(
+    "AdditionalAttribute", ("id", "value"),
+    dict(is_stripping_protection=lambda self: self.id == STRIPPING_PROTECTION_ATTR_ID,
+         is_proof_of_rotation_struct=lambda self: self.id == PROOF_OF_ROTATION_STRUCT_ID))
+Signature = _namedtuple(
+    "Signature", ("signature_algorithm_id", "signature"),
+    dict(algoritm_id_info=lambda self: aid_info(self.signature_algorithm_id)))
+PublicKey = _namedtuple(
+    "PublicKey", ("data",),
+    dict(_public_key=lambda self: PublicKeyInfo.load(self.data),
+         public_key_info=lambda self: public_key_info(self._public_key)))
 
 
 APKSignatureSchemeBlock.is_v2 = lambda self: self.version == 2
 APKSignatureSchemeBlock.is_v3 = lambda self: self.version == 3
-
-AdditionalAttribute.is_stripping_protection = lambda self: \
-    self.id == STRIPPING_PROTECTION_ATTR_ID
-AdditionalAttribute.is_proof_of_rotation_struct = lambda self: \
-    self.id == PROOF_OF_ROTATION_STRUCT_ID
 
 
 def parse_apk_signing_block(data, apkfile=None):
@@ -472,19 +496,19 @@ def verify_apk_signature_scheme_v2(signers, apkfile):
             raise VerificationError("No certificates")
         if not signer.signed_data.digests:
             raise VerificationError("No digests")
-        pk = signer.public_key.data
-        c0 = signer.signed_data.certificates[0].data
+        pk = signer.public_key
+        c0 = signer.signed_data.certificates[0]
         da = sorted(d.signature_algorithm_id for d in signer.signed_data.digests)
         sa = sorted(s.signature_algorithm_id for s in signer.signatures)
-        pk_algo = PublicKeyInfo.load(pk).algorithm
+        pk_algo = pk._public_key.algorithm
         for sig in signer.signatures:
             if sig.signature_algorithm_id not in HASHERS:
                 raise VerificationError(f"Unknown signature algorithm ID: {hex(sig.signature_algorithm_id)}")
             algo, _, halgo, pad, _ = HASHERS[sig.signature_algorithm_id]
             if pk_algo != algo:
                 raise VerificationError(f"Public key algorithm mismatch: expected {algo}, got {pk_algo}")
-            verify_signature(pk, sig.signature, signer.signed_data.raw, halgo, pad)
-        if X509Cert.load(c0).public_key.dump() != pk:
+            verify_signature(pk.data, sig.signature, signer.signed_data.raw, halgo, pad)
+        if c0._public_key.dump() != pk.data:
             raise VerificationError("Public key does not match first certificate")
         if da != sa:
             raise VerificationError("Signature algorithm IDs of digests and signatures are not identical")
@@ -622,6 +646,35 @@ def verify_signature(key, sig, msg, halgo, pad):
         raise VerificationError("Invalid signature")  # pylint: disable=W0707
 
 
+def x509_certificate_info(cert):
+    """X.509 certificate info (dict)."""
+    return dict(subject=cert.subject.human_friendly,
+                issuer=cert.issuer.human_friendly,
+                serial_number=hex(cert.serial_number),
+                hash_algorithm=cert.hash_algo.upper(),
+                signature_algorithm=cert.signature_algo.upper(),
+                not_valid_before=cert.not_valid_before,
+                not_valid_after=cert.not_valid_after,
+                fingerprint=cert.sha256_fingerprint.replace(" ", "").lower())
+
+
+def public_key_info(key):
+    """Public key info (dict)."""
+    try:
+        algo = key.hash_algo.upper()
+    except ValueError:
+        algo = None
+    return dict(algorithm=key.algorithm.upper(),
+                bit_size=key.bit_size,
+                fingerprint=sha256(key.dump()).hexdigest(),
+                hash_algorithm=algo)
+
+
+def aid_info(aid):
+    """Signature algorithm ID info (str)."""
+    return SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN").split(",")[0]
+
+
 def show_parse_tree(pairs, verbose=False, apkfile=None):
     """Print parse tree (w/ indent etc.) to stdout."""
     for pair in pairs:
@@ -657,16 +710,17 @@ def show_apk_signature_scheme_block(b, verbose=False, apkfile=None):
             _show_hex(digest.digest, 8)
         for j, cert in enumerate(signer.signed_data.certificates):
             print("      CERTIFICATE", j)
-            show_x509_certificate(cert.data, 8, verbose)
+            cert_info, pk_info = cert.certificate_info, cert.public_key_info
+            show_x509_certificate_info(cert_info, pk_info, 8, verbose)
         if b.is_v3():
             print("      MIN SDK:", signer.signed_data.min_sdk)
             print("      MAX SDK:", signer.signed_data.max_sdk)
         for j, attr in enumerate(signer.signed_data.additional_attributes):
             print("      ADDITIONAL ATTRIBUTE", j)
             print("        ADDITIONAL ATTRIBUTE ID:", hex(attr.id))
-            if attr.is_stripping_protection():
+            if attr.is_stripping_protection:
                 print("        STRIPPING PROTECTION ATTR")
-            elif attr.is_proof_of_rotation_struct():
+            elif attr.is_proof_of_rotation_struct:
                 print("        PROOF OF ROTATION STRUCT")
             _show_hex(attr.value, 8)
         if b.is_v3():
@@ -677,7 +731,7 @@ def show_apk_signature_scheme_block(b, verbose=False, apkfile=None):
             _show_aid(sig, 6)
             _show_hex(sig.signature, 6)
         print("    PUBLIC KEY")
-        show_public_key(signer.public_key.data, 6)
+        show_public_key_info(signer.public_key.public_key_info, 6)
     if apkfile is not None:
         try:
             if b.is_v2():
@@ -693,36 +747,27 @@ def show_apk_signature_scheme_block(b, verbose=False, apkfile=None):
 
 
 # FIXME: show more? s/Common Name:/CN=/ etc?
-def show_x509_certificate(value, indent, verbose):
+def show_x509_certificate_info(info, pk_info, indent, verbose):
     """Print X.509 certificate information to stdout."""
-    cert = X509Cert.load(value)
-    fpr = cert.sha256_fingerprint.replace(" ", "").lower()
-    print(" " * indent + "X.509 SUBJECT:", cert.subject.human_friendly)
+    print(" " * indent + "X.509 SUBJECT:", info["subject"])
     if verbose:
-        print(" " * indent + "X.509 ISSUER:", cert.issuer.human_friendly)
-        print(" " * indent + "X.509 SERIAL NUMBER:", hex(cert.serial_number))
-        print(" " * indent + "X.509 HASH ALGORITHM:", cert.hash_algo.upper())
-        print(" " * indent + "X.509 SIGNATURE ALGORITHM:", cert.signature_algo.upper())
-        print(" " * indent + "X.509 NOT VALID BEFORE:", cert.not_valid_before)
-        print(" " * indent + "X.509 NOT VALID AFTER:", cert.not_valid_after)
-    print(" " * indent + "X.509 SHA256 FINGERPRINT (HEX):", fpr)
-    _show_public_key(cert.public_key, indent)
+        print(" " * indent + "X.509 ISSUER:", info["issuer"])
+        print(" " * indent + "X.509 SERIAL NUMBER:", info["serial_number"])
+        print(" " * indent + "X.509 HASH ALGORITHM:", info["hash_algorithm"])
+        print(" " * indent + "X.509 SIGNATURE ALGORITHM:", info["signature_algorithm"])
+        print(" " * indent + "X.509 NOT VALID BEFORE:", info["not_valid_before"])
+        print(" " * indent + "X.509 NOT VALID AFTER:", info["not_valid_after"])
+    print(" " * indent + "X.509 SHA256 FINGERPRINT (HEX):", info["fingerprint"])
+    show_public_key_info(pk_info, indent)
 
 
-def show_public_key(value, indent):
+def show_public_key_info(info, indent):
     """Print public key information to stdout."""
-    _show_public_key(PublicKeyInfo.load(value), indent)
-
-
-def _show_public_key(key, indent):
-    fpr = sha256(key.dump()).hexdigest()
-    print(" " * indent + "PUBLIC KEY ALGORITHM:", key.algorithm.upper())
-    print(" " * indent + "PUBLIC KEY BIT SIZE:", key.bit_size)
-    print(" " * indent + "PUBLIC KEY SHA256 FINGERPRINT (HEX):", fpr)
-    try:
-        print(" " * indent + "PUBLIC KEY HASH ALGORITHM:", key.hash_algo.upper())
-    except ValueError:
-        pass
+    print(" " * indent + "PUBLIC KEY ALGORITHM:", info["algorithm"])
+    print(" " * indent + "PUBLIC KEY BIT SIZE:", info["bit_size"])
+    print(" " * indent + "PUBLIC KEY SHA256 FINGERPRINT (HEX):", info["fingerprint"])
+    if info["hash_algorithm"] is not None:
+        print(" " * indent + "PUBLIC KEY HASH ALGORITHM:", info["hash_algorithm"])
 
 
 def _show_hex(data, indent):
@@ -732,9 +777,16 @@ def _show_hex(data, indent):
 
 def _show_aid(x, indent):
     """Print signature algorithm ID (w/ indent etc.) to stdout."""
-    aid = x.signature_algorithm_id
-    aid_s = SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN").split(",")[0]
+    aid, aid_s = x.signature_algorithm_id, x.algoritm_id_info
     print(" " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})")
+
+
+def _json_encode_bytes(obj):
+    if isinstance(obj, bytes):
+        return hexlify(obj).decode()
+    if isinstance(obj, datetime.datetime):
+        return str(obj)
+    raise TypeError(repr(obj) + " is not JSON serializable")
 
 
 # FIXME
@@ -836,14 +888,10 @@ def parse(apk_or_block, block, json, verbose):
         apkfile = apk_or_block
         _, sig_block = extract_v2_sig(apkfile)
     if json:
-        def encode_bytes(obj):
-            if isinstance(obj, bytes):
-                return hexlify(obj).decode()
-            raise TypeError(repr(obj) + " is not JSON serializable")
         import simplejson
         data = parse_apk_signing_block(sig_block, apkfile)
         simplejson.dump(data, sys.stdout, indent=2, sort_keys=True, encoding=None,
-                        default=encode_bytes, for_json=True)
+                        default=_json_encode_bytes, for_json=True)
         print()
     else:
         show_parse_tree(parse_apk_signing_block(sig_block).pairs, verbose, apkfile)
