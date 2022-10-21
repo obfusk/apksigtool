@@ -630,49 +630,7 @@ def show_parse_tree(pairs, verbose=False, apkfile=None):
             print("PAIR LENGTH:", pair.length)
         print("PAIR ID:", hex(pair.id))
         if isinstance(b, APKSignatureSchemeBlock):
-            print(f"  APK SIGNATURE SCHEME v{b.version} BLOCK")
-            for i, signer in enumerate(b.signers):
-                print("  SIGNER", i)
-                print("    SIGNED DATA")
-                for j, digest in enumerate(signer.signed_data.digests):
-                    print("      DIGEST", j)
-                    _show_aid(digest, 8)
-                    _show_hex(digest.digest, 8)
-                for j, cert in enumerate(signer.signed_data.certificates):
-                    print("      CERTIFICATE", j)
-                    show_x509_certificate(cert.data, 8, verbose)
-                if b.is_v3():
-                    print("      MIN SDK:", signer.signed_data.min_sdk)
-                    print("      MAX SDK:", signer.signed_data.max_sdk)
-                for j, attr in enumerate(signer.signed_data.additional_attributes):
-                    print("      ADDITIONAL ATTRIBUTE", j)
-                    print("        ADDITIONAL ATTRIBUTE ID:", hex(attr.id))
-                    if attr.is_stripping_protection():
-                        print("        STRIPPING PROTECTION ATTR")
-                    elif attr.is_proof_of_rotation_struct():
-                        print("        PROOF OF ROTATION STRUCT")
-                    _show_hex(attr.value, 8)
-                if b.is_v3():
-                    print("    MIN SDK:", signer.min_sdk)
-                    print("    MAX SDK:", signer.max_sdk)
-                for j, sig in enumerate(signer.signatures):
-                    print("    SIGNATURE", j)
-                    _show_aid(sig, 6)
-                    _show_hex(sig.signature, 6)
-                print("    PUBLIC KEY")
-                show_public_key(signer.public_key.data, 6)
-            if apkfile is not None:
-                try:
-                    if b.is_v2():
-                        verify_apk_signature_scheme_v2(b.signers, apkfile)
-                    else:
-                        verify_apk_signature_scheme_v3(b.signers, apkfile)
-                except VerificationError as e:
-                    print(f"  NOT VERIFIED ({e})")
-                else:
-                    print("  VERIFIED")
-            else:
-                print("  NOT VERIFIED (No APK file)")
+            show_apk_signature_scheme_block(b, verbose, apkfile)
         elif isinstance(b, VerityPaddingBlock):
             print("  VERITY PADDING BLOCK")
         elif isinstance(b, DependencyInfoBlock):
@@ -685,6 +643,53 @@ def show_parse_tree(pairs, verbose=False, apkfile=None):
             print("  UNKNOWN BLOCK")
         if verbose and hasattr(b, "data"):
             _show_hex(b.data, 2)
+
+
+def show_apk_signature_scheme_block(b, verbose=False, apkfile=None):
+    """Print APKSignatureSchemeBlock parse tree to stdout."""
+    print(f"  APK SIGNATURE SCHEME v{b.version} BLOCK")
+    for i, signer in enumerate(b.signers):
+        print("  SIGNER", i)
+        print("    SIGNED DATA")
+        for j, digest in enumerate(signer.signed_data.digests):
+            print("      DIGEST", j)
+            _show_aid(digest, 8)
+            _show_hex(digest.digest, 8)
+        for j, cert in enumerate(signer.signed_data.certificates):
+            print("      CERTIFICATE", j)
+            show_x509_certificate(cert.data, 8, verbose)
+        if b.is_v3():
+            print("      MIN SDK:", signer.signed_data.min_sdk)
+            print("      MAX SDK:", signer.signed_data.max_sdk)
+        for j, attr in enumerate(signer.signed_data.additional_attributes):
+            print("      ADDITIONAL ATTRIBUTE", j)
+            print("        ADDITIONAL ATTRIBUTE ID:", hex(attr.id))
+            if attr.is_stripping_protection():
+                print("        STRIPPING PROTECTION ATTR")
+            elif attr.is_proof_of_rotation_struct():
+                print("        PROOF OF ROTATION STRUCT")
+            _show_hex(attr.value, 8)
+        if b.is_v3():
+            print("    MIN SDK:", signer.min_sdk)
+            print("    MAX SDK:", signer.max_sdk)
+        for j, sig in enumerate(signer.signatures):
+            print("    SIGNATURE", j)
+            _show_aid(sig, 6)
+            _show_hex(sig.signature, 6)
+        print("    PUBLIC KEY")
+        show_public_key(signer.public_key.data, 6)
+    if apkfile is not None:
+        try:
+            if b.is_v2():
+                verify_apk_signature_scheme_v2(b.signers, apkfile)
+            else:
+                verify_apk_signature_scheme_v3(b.signers, apkfile)
+        except VerificationError as e:
+            print(f"  NOT VERIFIED ({e})")
+        else:
+            print("  VERIFIED")
+    else:
+        print("  NOT VERIFIED (No APK file)")
 
 
 # FIXME: show more? s/Common Name:/CN=/ etc?
