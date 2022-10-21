@@ -2534,7 +2534,7 @@ apksigner: not verified
 Error: No APK Signing Block.
 
 apks/v1-ec-p256-targetSdk-30.apk
-apksigner: verified
+apksigner: not verified
 Error: No APK Signing Block.
 
 apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-manifest.apk
