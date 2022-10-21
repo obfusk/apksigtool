@@ -18,10 +18,10 @@ test-cli:
 	$(PYTHON) -m doctest apksigtool
 
 test-apks:
-	cd test && diff -Naur test-verify.out <( ./test-verify.sh \
+	cd test/apks && diff -Naur ../test-verify.out <( ../test-verify.sh \
 	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions \
 	             -e 'WARNING: THIS IS A PROTOTYPE' )
-	cd test && diff -Naur test-parse.out <( ./test-parse.sh \
+	cd test/apks && diff -Naur ../test-parse.out <( ../test-parse.sh \
 	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions \
 	             -e 'WARNING: THIS IS A PROTOTYPE' )
 
