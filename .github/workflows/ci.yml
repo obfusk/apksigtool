@@ -33,9 +33,7 @@ jobs:
       run: python3 -m pip install mypy types-simplejson
     - name: Install
       run: make install
-    - name: Test & lint
-      run: make test-cli lint
-    - name: Extra lint
-      run: make lint-extra
-    - name: test APKs
+    - name: Test
+      run: make test
+    - name: Test APKs
       run: make test-apks
