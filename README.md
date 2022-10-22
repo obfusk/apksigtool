@@ -203,8 +203,8 @@ $ git pull --rebase
 
 ## Dependencies
 
-* Python >= 3.8 + [apksigcopier](https://github.com/obfusk/apksigcopier)
-  + asn1crypto + click + cryptography + simplejson.
+* Python >= 3.8 + [apksigcopier](https://github.com/obfusk/apksigcopier) +
+  asn1crypto + click + cryptography + simplejson.
 
 ### Debian/Ubuntu
 
