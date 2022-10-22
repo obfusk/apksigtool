@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-10-21
+# Date        : 2022-10-22
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -47,7 +47,7 @@ import sys
 from binascii import hexlify
 from dataclasses import dataclass, field
 from hashlib import sha256, sha512
-from typing import Any, Iterator, List, Mapping, Optional, Union, Tuple
+from typing import Any, Iterator, List, Mapping, Optional, Tuple, Union
 
 from apksigcopier import extract_v2_sig, zip_data, APKSigCopierError
 from asn1crypto.keys import PublicKeyInfo as PKInfo
@@ -623,7 +623,7 @@ def verify_apk_signature_scheme_v2(signers: Tuple[Union[V2Signer, V3Signer], ...
 
     Raises VerificationError on failure.
     """
-    sb_offset, _ = extract_v2_sig(apkfile)
+    sb_offset, _ = _extract_v2_sig(apkfile)
     if not signers:
         raise VerificationError("No signers")
     for signer in signers:
@@ -944,6 +944,12 @@ def _json_encode_bytes(obj):
     raise TypeError(repr(obj) + " is not JSON serializable")
 
 
+def _extract_v2_sig(apkfile: str) -> Tuple[int, bytes]:
+    extracted_v2_sig = extract_v2_sig(apkfile)
+    assert extracted_v2_sig is not None
+    return extracted_v2_sig
+
+
 # FIXME
 # WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
 def verify_apk(apk: str, sig_block: Optional[bytes] = None) \
@@ -963,7 +969,7 @@ def verify_apk(apk: str, sig_block: Optional[bytes] = None) \
     """
     verified, failed = [], []
     if sig_block is None:
-        _, sig_block = extract_v2_sig(apk)
+        _, sig_block = _extract_v2_sig(apk)
     for pair in parse_apk_signing_block(sig_block).pairs:
         b = pair.value
         if isinstance(b, APKSignatureSchemeBlock):
@@ -996,7 +1002,7 @@ def clean_apk(apkfile: str, keep: Tuple[int, ...] = (), check: bool = False) -> 
 
     Returns True when the APK was modified, False otherwise.
     """
-    sb_offset, sig_block = extract_v2_sig(apkfile)
+    sb_offset, sig_block = _extract_v2_sig(apkfile)
     if check:
         verified, failed = verify_apk(apkfile, sig_block)
         if failed or not verified:
@@ -1046,7 +1052,7 @@ def main():
                 sig_block = fh.read()
         else:
             apkfile = apk_or_block
-            _, sig_block = extract_v2_sig(apkfile)
+            _, sig_block = _extract_v2_sig(apkfile)
         if json:
             show_json(parse_apk_signing_block(sig_block, apkfile))
         else:
