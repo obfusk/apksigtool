@@ -768,6 +768,7 @@ def _chunks(data: bytes, blocksize: int) -> Iterator[bytes]:
         yield chunk
 
 
+# FIXME: type checking?!
 def verify_signature(key: bytes, sig: bytes, msg: bytes, halgo, pad) -> None:
     """
     Verify signature (sig) from key on message (msg) using appropriate hashing

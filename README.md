@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-10-20
+    Date        : 2022-10-21
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -203,7 +203,8 @@ $ git pull --rebase
 
 ## Dependencies
 
-* Python >= 3.8 + apksigcopier + asn1crypto + click + cryptography + simplejson.
+* Python >= 3.8 + [apksigcopier](https://github.com/obfusk/apksigcopier)
+  + asn1crypto + click + cryptography + simplejson.
 
 ### Debian/Ubuntu
 
