@@ -147,7 +147,8 @@ class APKSigToolBase:
 
     def for_json(self) -> Mapping[str, Any]:
         """Convert to JSON: dict of all attributes not starting with _."""
-        return {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
+        d = {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
+        return dict(_type=self.__class__.__name__, **d)
 
 
 @dataclass(frozen=True)
