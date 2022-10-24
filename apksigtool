@@ -92,17 +92,17 @@ PROOF_OF_ROTATION_STRUCT_ID = 0x3ba06f8c
 # https://android.googlesource.com/platform/tools/apksig
 #   src/main/java/com/android/apksig/internal/apk/SignatureAlgorithm.java
 SIGNATURE_ALGORITHM_IDS = {
-    0x0101: "RSASSA-PSS with SHA2-256 digest, SHA2-256 MGF1, 32 bytes of salt, trailer: 0xbc, content digested using SHA2-256 in 1 MB chunks.",
-    0x0102: "RSASSA-PSS with SHA2-512 digest, SHA2-512 MGF1, 64 bytes of salt, trailer: 0xbc, content digested using SHA2-512 in 1 MB chunks.",
-    0x0103: "RSASSA-PKCS1-v1_5 with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks.",  # This is for build systems which require deterministic signatures.
-    0x0104: "RSASSA-PKCS1-v1_5 with SHA2-512 digest, content digested using SHA2-512 in 1 MB chunks.",  # This is for build systems which require deterministic signatures.
-    0x0201: "ECDSA with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks.",
-    0x0202: "ECDSA with SHA2-512 digest, content digested using SHA2-512 in 1 MB chunks.",
-    0x0301: "DSA with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks.",
-#   0x0301: "DSA with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks. Signing is done deterministically according to RFC 6979.",   # noqa: E122
-    0x0421: "RSASSA-PKCS1-v1_5 with SHA2-256 digest, content digested using SHA2-256 in 4 KB chunks, in the same way fsverity operates. This digest and the content length (before digestion, 8 bytes in little endian) construct the final digest.",
-    0x0423: "ECDSA with SHA2-256 digest, content digested using SHA2-256 in 4 KB chunks, in the same way fsverity operates. This digest and the content length (before digestion, 8 bytes in little endian) construct the final digest.",
-    0x0425: "DSA with SHA2-256 digest, content digested using SHA2-256 in 4 KB chunks, in the same way fsverity operates. This digest and the content length (before digestion, 8 bytes in little endian) construct the final digest.",
+    0x0101: "RSASSA-PSS with SHA2-256 digest, SHA2-256 MGF1, 32 bytes of salt, trailer: 0xbc, content digested using SHA2-256 in 1 MB chunks",
+    0x0102: "RSASSA-PSS with SHA2-512 digest, SHA2-512 MGF1, 64 bytes of salt, trailer: 0xbc, content digested using SHA2-512 in 1 MB chunks",
+    0x0103: "RSASSA-PKCS1-v1_5 with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks",   # for build systems which require deterministic signatures
+    0x0104: "RSASSA-PKCS1-v1_5 with SHA2-512 digest, content digested using SHA2-512 in 1 MB chunks",   # for build systems which require deterministic signatures
+    0x0201: "ECDSA with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks",
+    0x0202: "ECDSA with SHA2-512 digest, content digested using SHA2-512 in 1 MB chunks",
+    0x0301: "DSA with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks",
+#   0x0301: "DSA with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks. Signing is done deterministically according to RFC 6979",    # noqa: E122
+    0x0421: "RSASSA-PKCS1-v1_5 with SHA2-256 digest, content digested using SHA2-256 in 4 KB chunks, in the same way fsverity operates; this digest and the content length (before digestion, 8 bytes in little endian) construct the final digest",
+    0x0423: "ECDSA with SHA2-256 digest, content digested using SHA2-256 in 4 KB chunks, in the same way fsverity operates; this digest and the content length (before digestion, 8 bytes in little endian) construct the final digest",
+    0x0425: "DSA with SHA2-256 digest, content digested using SHA2-256 in 4 KB chunks, in the same way fsverity operates; this digest and the content length (before digestion, 8 bytes in little endian) construct the final digest",
 }
 
 CHUNKED, VERITY = 1, 2
@@ -121,6 +121,8 @@ HASHERS = {
     0x0423: ("ec", sha256, lambda: ECDSA(SHA256()), None, VERITY),      # NB: untested
     0x0425: ("dsa", sha256, SHA256, None, VERITY),                      # NB: untested
 }
+
+assert set(SIGNATURE_ALGORITHM_IDS.keys()) == set(HASHERS.keys())
 
 CHUNK_SIZE = 1048576
 VERITY_BLOCK_SIZE = 4096
@@ -815,7 +817,7 @@ def public_key_info(key: PKInfo) -> PublicKeyInfo:
 
 def aid_info(aid: int) -> str:
     """Signature algorithm ID info."""
-    return SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN")
+    return SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN").split(";")[0]
 
 
 def show_parse_tree(pairs: Tuple[Pair, ...], verbose: bool = False,
