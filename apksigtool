@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-10-22
+# Date        : 2022-10-24
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -815,7 +815,7 @@ def public_key_info(key: PKInfo) -> PublicKeyInfo:
 
 def aid_info(aid: int) -> str:
     """Signature algorithm ID info."""
-    return SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN").split(",")[0]
+    return SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN")
 
 
 def show_parse_tree(pairs: Tuple[Pair, ...], verbose: bool = False,
@@ -851,7 +851,7 @@ def show_apk_signature_scheme_block(b: APKSignatureSchemeBlock, verbose: bool = 
         print("    SIGNED DATA")
         for j, digest in enumerate(signer.signed_data.digests):
             print("      DIGEST", j)
-            _show_aid(digest, 8)
+            _show_aid(digest, 8, verbose)
             _show_hex(digest.digest, 8)
         for j, cert in enumerate(signer.signed_data.certificates):
             print("      CERTIFICATE", j)
@@ -875,7 +875,7 @@ def show_apk_signature_scheme_block(b: APKSignatureSchemeBlock, verbose: bool = 
             print("    MAX SDK:", signer.max_sdk)
         for j, sig in enumerate(signer.signatures):
             print("    SIGNATURE", j)
-            _show_aid(sig, 6)
+            _show_aid(sig, 6, verbose)
             _show_hex(sig.signature, 6)
         print("    PUBLIC KEY")
         show_public_key_info(signer.public_key.public_key_info, 6)
@@ -923,9 +923,11 @@ def _show_hex(data: bytes, indent: int) -> None:
     print(" " * indent + "VALUE (HEX):", hexlify(data).decode())
 
 
-def _show_aid(x: Union[Digest, Signature], indent: int) -> None:
+def _show_aid(x: Union[Digest, Signature], indent: int, verbose: bool) -> None:
     """Print signature algorithm ID (w/ indent etc.) to stdout."""
     aid, aid_s = x.signature_algorithm_id, x.algoritm_id_info
+    if not verbose:
+        aid_s = aid_s.split(",")[0]
     print(" " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})")
 
 
