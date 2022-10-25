@@ -321,6 +321,7 @@ class APKSignatureSchemeBlock(Block):
     version: int
     signers: Tuple[Union[V2Signer, V3Signer], ...]
     verified: Optional[bool]
+    verification_error: Optional[str]
 
     @property
     def is_v2(self) -> bool:
@@ -461,18 +462,19 @@ def parse_apk_signature_scheme_v2_block(data: bytes, apkfile: Optional[str] = No
     Parse APK Signature Scheme v2 Block (and attempt to verify -- setting
     .verified to True or False instead of None -- if apkfile is not None).
 
-    Returns APKSignatureSchemeBlock (with .version == 2, .signers, .verified).
+    Returns APKSignatureSchemeBlock (with .version == 2, .signers, .verified,
+    .verification_error).
     """
     signers = tuple(_parse_apk_signature_scheme_block(data, False))
-    verified = None
+    verified, verification_error = None, None
     if apkfile is not None:
         try:
             verify_apk_signature_scheme_v2(signers, apkfile)
-        except VerificationError:
-            verified = False
+        except VerificationError as e:
+            verified, verification_error = False, str(e)
         else:
             verified = True
-    return APKSignatureSchemeBlock(2, signers, verified)
+    return APKSignatureSchemeBlock(2, signers, verified, verification_error)
 
 
 def parse_apk_signature_scheme_v3_block(data: bytes, apkfile: Optional[str] = None) -> APKSignatureSchemeBlock:
@@ -480,18 +482,19 @@ def parse_apk_signature_scheme_v3_block(data: bytes, apkfile: Optional[str] = No
     Parse APK Signature Scheme v3 Block (and attempt to verify -- setting
     .verified to True or False instead of None -- if apkfile is not None).
 
-    Returns APKSignatureSchemeBlock (with .version == 3, .signers, .verified).
+    Returns APKSignatureSchemeBlock (with .version == 3, .signers, .verified,
+    .verification_error).
     """
     signers = tuple(_parse_apk_signature_scheme_block(data, True))
-    verified = None
+    verified, verification_error = None, None
     if apkfile is not None:
         try:
             verify_apk_signature_scheme_v3(signers, apkfile)
-        except VerificationError:
-            verified = False
+        except VerificationError as e:
+            verified, verification_error = False, str(e)
         else:
             verified = True
-    return APKSignatureSchemeBlock(3, signers, verified)
+    return APKSignatureSchemeBlock(3, signers, verified, verification_error)
 
 
 def _parse_apk_signature_scheme_block(data: bytes, v3: bool) -> Iterator[Union[V2Signer, V3Signer]]:
