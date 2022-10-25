@@ -229,6 +229,12 @@ class AdditionalAttribute(APKSigToolBase):
     def is_proof_of_rotation_struct(self) -> bool:
         return self.id == PROOF_OF_ROTATION_STRUCT_ID
 
+    def for_json(self) -> Mapping[str, Any]:
+        x = super().for_json()
+        y = dict(is_stripping_protection=self.is_stripping_protection,
+                 is_proof_of_rotation_struct=self.is_proof_of_rotation_struct)
+        return {**x, **y}
+
 
 @dataclass(frozen=True)
 class Signature(APKSigToolBase):

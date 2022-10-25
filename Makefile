@@ -3,9 +3,10 @@ PYTHON  ?= python3
 
 export PYTHONWARNINGS := default
 
-.PHONY: all install test test-cli test-apks lint lint-extra clean cleanup
+.PHONY: all install test test-cli lint lint-extra clean cleanup
+.PHONY: test-apks test-apks-verify test-apks-parse test-apks-parse-json
 
-all: apksigtool.1
+all: # TODO: apksigtool.1
 
 install:
 	$(PYTHON) -mpip install -e .
@@ -17,13 +18,19 @@ test-cli:
 	apksigtool --version
 	$(PYTHON) -m doctest apksigtool
 
-test-apks:
+test-apks: test-apks-verify test-apks-parse test-apks-parse-json
+
+test-apks-verify:
 	cd test/apks && diff -Naur ../test-verify.out <( ../test-verify.sh \
 	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions \
 	             -e 'WARNING: THIS IS A PROTOTYPE' )
+
+test-apks-parse:
 	cd test/apks && diff -Naur ../test-parse.out <( ../test-parse.sh \
 	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions \
 	             -e 'WARNING: THIS IS A PROTOTYPE' )
+
+test-apks-parse-json:
 	cd test/apks && diff -Naur ../test-parse-json.out <( ../test-parse-json.sh \
 	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions \
 	             -e 'WARNING: THIS IS A PROTOTYPE' )
