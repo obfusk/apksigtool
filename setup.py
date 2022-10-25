@@ -9,7 +9,7 @@ info = Path(__file__).with_name("README.md").read_text(encoding = "utf8")
 setuptools.setup(
     name              = "apksigtool",
     url               = "https://github.com/obfusk/apksigtool",
-    description       = "parse & verify android apk signing blocks",
+    description       = "parse/verify/clean android apk signing blocks & apks",
     long_description  = info,
     long_description_content_type = "text/markdown",
     version           = __version__,

@@ -16,9 +16,15 @@
 # --                                                            ; }}}1
 
 """
-parse/verify/clean android apk signing blocks
+parse/verify/clean android apk signing blocks & apks
 
-... FIXME ...
+apksigtool is a tool for parsing android APK Signing Blocks (either embedded in
+an APK or extracted as a separate file, e.g. using apksigcopier) and verifying
+APK signatures.  It can also clean them (i.e. remove everything that's not an
+APK Signature Scheme v2/v3 Block or verity padding block), which can be useful
+for reproducible builds.
+
+WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
 
 
 CLI
@@ -28,15 +34,25 @@ $ apksigtool parse [--block] [--json] [--verbose] APK_OR_BLOCK
 $ apksigtool verify APK
 $ apksigtool clean [--block] [--check] [--keep HEXID] APK_OR_BLOCK
 
-... FIXME ...
-
 
 API
 ===
 
 >> from apksigtool import ...
+>> apk_signing_block = parse_apk_signing_block(data, apkfile=None, sdk=None)
 
-... FIXME ...
+>> show_parse_tree(apk_signing_block, verbose=False, apkfile=None, sdk=None)
+>> show_json(apk_signing_block)
+
+>> apk_signing_block.verify(apkfile, sdk=None)                  # raises on failure
+>> verified, failed = apk_signing_block.verify_results(apkfile, sdk=None)
+>> verify_apk(apkfile, sig_block=None, sdk=None)                # verify APK (uses the above)
+
+>> verify_apk_signature_scheme(signers, apkfile, sdk=None)      # does the verification
+>> APKSignatureSchemeBlock(...).verify(apkfile, sdk=None)       # uses the above
+
+>> data_cleaned = clean_apk_signing_block(data, keep=())        # clean block
+>> cleaned = clean_apk(apkfile, keep=(), check=False, sdk=None) # clean APK
 """
 
 import datetime
@@ -47,7 +63,7 @@ import sys
 from binascii import hexlify
 from dataclasses import dataclass, field
 from hashlib import sha256, sha512
-from typing import Any, Iterator, List, Mapping, Optional, Tuple, Union
+from typing import Any, Iterator, List, Literal, Mapping, Optional, Tuple, Union
 
 from apksigcopier import extract_v2_sig, zip_data, APKSigCopierError
 from asn1crypto.keys import PublicKeyInfo as X509CertPubKeyInfo
@@ -148,7 +164,7 @@ class APKSigToolBase:
     """Base class for dataclasses."""
 
     def for_json(self) -> Mapping[str, Any]:
-        """Convert to JSON: dict of all attributes not starting with _."""
+        """Convert to JSON: dict of all attributes not starting with _, plus _type."""
         d = {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
         return dict(_type=self.__class__.__name__, **d)
 
@@ -314,17 +330,61 @@ class APKSigningBlock(APKSigToolBase):
     """APK Signing Block."""
     pairs: Tuple[Pair, ...]
 
+    # FIXME
+    # WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+    def verify(self, apkfile: str, sdk: Optional[int] = None) -> None:
+        """
+        Verify APK file using the APK Signature Scheme v2/v3 Blocks found in
+        this APKSigningBlock.
+
+        WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+
+        Raises VerificationError on failure.
+        """
+        for pair in self.pairs:
+            if isinstance(b := pair.value, APKSignatureSchemeBlock):
+                b.verify(apkfile, sdk=sdk)
+
+    # FIXME
+    # WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+    def verify_results(self, apkfile: str, sdk: Optional[int] = None) \
+            -> Tuple[Tuple[int, ...], Tuple[Tuple[int, Exception], ...]]:
+        """
+        Verify APK file using the APK Signature Scheme v2/v3 Blocks found in
+        this APKSigningBlock.
+
+        WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+
+        Returns (verified, failed), where verified is a tuple of versions for
+        verification successes, and failed is a tuple of (version, exception) tuples
+        of verification failures.
+        """
+        verified, failed = [], []
+        for pair in self.pairs:
+            if isinstance(b := pair.value, APKSignatureSchemeBlock):
+                try:
+                    b.verify(apkfile, sdk=sdk)
+                except VerificationError as e:
+                    failed.append((b.version, e))
+                else:
+                    verified.append(b.version)
+        return tuple(verified), tuple(failed)
+
 
 @dataclass(frozen=True)
 class APKSignatureSchemeBlock(Block):
     """APK Signature Scheme v2/v3 Block."""
-    version: int
+    version: Literal[2, 3]
     signers: Tuple[Union[V2Signer, V3Signer], ...]
     verified: Optional[bool]
     verification_error: Optional[str]
 
     def __post_init__(self):
         assert (self.verification_error is not None) == (self.verified == False)  # noqa: E712
+        if self.is_v2:
+            assert all(isinstance(s, V2Signer) for s in self.signers)
+        else:
+            assert all(isinstance(s, V3Signer) for s in self.signers)
 
     @property
     def is_v2(self) -> bool:
@@ -334,15 +394,15 @@ class APKSignatureSchemeBlock(Block):
     def is_v3(self) -> bool:
         return self.version == 3
 
-    def verify(self, apkfile: str) -> None:
+    # FIXME
+    # WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+    def verify(self, apkfile: str, sdk: Optional[int] = None) -> None:
         """
-        Verify APK Signature Scheme using verify_apk_signature_scheme_v2() or
-        verify_apk_signature_scheme_v3(), depending on .version.
+        Verify APK Signature Scheme using verify_apk_signature_scheme().
+
+        WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
         """
-        if self.is_v2:
-            verify_apk_signature_scheme_v2(self.signers, apkfile)
-        else:
-            verify_apk_signature_scheme_v3(self.signers, apkfile)
+        verify_apk_signature_scheme(self.signers, apkfile=apkfile, sdk=sdk)
 
 
 @dataclass(frozen=True)
@@ -366,7 +426,7 @@ class GooglePlayFrostingBlock(Block):
 class SourceStampBlock(Block):
     """Google source stamp block (opaque)."""
     data: bytes
-    version: int
+    version: Literal[1, 2]
 
 
 @dataclass(frozen=True)
@@ -389,24 +449,26 @@ def _assert(b: bool, what: Optional[str] = None) -> None:
         raise AssertionFailed("Assertion failed" + (f": {what}" if what else ""))
 
 
-def parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None) -> APKSigningBlock:
+def parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None,
+                            sdk: Optional[int] = None) -> APKSigningBlock:
     """
     Parse APK Signing Block (a sequence of pairs).
 
-    The apkfile parameter is passed down to parse_apk_signature_scheme_v2_block() and
-    parse_apk_signature_scheme_v3_block(), which will attempt to verify the APK using
-    verify_apk_signature_scheme_v2() and verify_apk_signature_scheme_v3() when it is not None.
+    The apkfile parameter is passed down to parse_apk_signature_scheme_block()
+    (along with the sdk parameter), which will attempt to verify the APK using
+    verify_apk_signature_scheme() when it is not None.
 
     Returns APKSigningBlock with .pairs a tuple of Pair (with .length, .id,
-    .value; each .value is e.g. a APKSignatureSchemeBlock or other block type,
+    .value; each .value is e.g. an APKSignatureSchemeBlock or other block type,
     UnknownBlock if not identified).
     """
-    return APKSigningBlock(tuple(_parse_apk_signing_block(data, apkfile)))
+    return APKSigningBlock(tuple(_parse_apk_signing_block(data, apkfile=apkfile, sdk=sdk)))
 
 
 # https://source.android.com/docs/security/features/apksigning/v2#apk-signing-block-format
-def _parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None) -> Iterator[Pair]:
-    """Yield Pair(s) (with e.g. a APKSignatureSchemeBlock as .value)."""
+def _parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None,
+                             sdk: Optional[int] = None) -> Iterator[Pair]:
+    """Yield Pair(s) (with e.g. an APKSignatureSchemeBlock as .value)."""
     magic = data[-16:]
     sb_size1 = int.from_bytes(data[:8], "little")
     sb_size2 = int.from_bytes(data[-24:-16], "little")
@@ -418,9 +480,9 @@ def _parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None) -> Iter
         pair_len, pair_id = struct.unpack("<QL", data[:12])
         pair_val, data = data[12:8 + pair_len], data[8 + pair_len:]
         if pair_id == APK_SIGNATURE_SCHEME_V2_BLOCK_ID:
-            value = parse_apk_signature_scheme_v2_block(pair_val, apkfile)
+            value = parse_apk_signature_scheme_block(2, pair_val, apkfile=apkfile, sdk=sdk)
         elif pair_id == APK_SIGNATURE_SCHEME_V3_BLOCK_ID:
-            value = parse_apk_signature_scheme_v3_block(pair_val, apkfile)
+            value = parse_apk_signature_scheme_block(3, pair_val, apkfile=apkfile, sdk=sdk)
         elif pair_id == VERITY_PADDING_BLOCK_ID:
             _assert(all(b == 0 for b in pair_val), "verity zero padding")
             value = VerityPaddingBlock()
@@ -440,8 +502,8 @@ def _parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None) -> Iter
 # FIXME
 def clean_apk_signing_block(data: bytes, keep: Tuple[int, ...] = ()) -> bytes:
     """
-    Clean APK Signing Block: remove everything that's not a APK Signature Scheme
-    v2/v3 Block or verity padding block (or has a pair_id in keep).
+    Clean APK Signing Block: remove everything that's not an APK Signature
+    Scheme v2/v3 Block or verity padding block (or has a pair_id in keep).
 
     Returns cleaned block (bytes).
     """
@@ -470,44 +532,25 @@ def clean_apk_signing_block(data: bytes, keep: Tuple[int, ...] = ()) -> bytes:
     return c_size + cleaned + c_size + magic
 
 
-def parse_apk_signature_scheme_v2_block(data: bytes, apkfile: Optional[str] = None) -> APKSignatureSchemeBlock:
+def parse_apk_signature_scheme_block(version: Literal[2, 3], data: bytes, apkfile: Optional[str] = None,
+                                     sdk: Optional[int] = None) -> APKSignatureSchemeBlock:
     """
-    Parse APK Signature Scheme v2 Block (and attempt to verify -- setting
+    Parse APK Signature Scheme v2/v3 Block (and attempt to verify -- setting
     .verified to True or False instead of None -- if apkfile is not None).
 
-    Returns APKSignatureSchemeBlock (with .version == 2, .signers, .verified,
+    Returns APKSignatureSchemeBlock (with .version, .signers, .verified,
     .verification_error).
     """
-    signers = tuple(_parse_apk_signature_scheme_block(data, False))
+    signers = tuple(_parse_apk_signature_scheme_block(data, version == 3))
     verified, verification_error = None, None
     if apkfile is not None:
         try:
-            verify_apk_signature_scheme_v2(signers, apkfile)
+            verify_apk_signature_scheme(signers, apkfile=apkfile, sdk=sdk)
         except VerificationError as e:
             verified, verification_error = False, str(e)
         else:
             verified = True
-    return APKSignatureSchemeBlock(2, signers, verified, verification_error)
-
-
-def parse_apk_signature_scheme_v3_block(data: bytes, apkfile: Optional[str] = None) -> APKSignatureSchemeBlock:
-    """
-    Parse APK Signature Scheme v3 Block (and attempt to verify -- setting
-    .verified to True or False instead of None -- if apkfile is not None).
-
-    Returns APKSignatureSchemeBlock (with .version == 3, .signers, .verified,
-    .verification_error).
-    """
-    signers = tuple(_parse_apk_signature_scheme_block(data, True))
-    verified, verification_error = None, None
-    if apkfile is not None:
-        try:
-            verify_apk_signature_scheme_v3(signers, apkfile)
-        except VerificationError as e:
-            verified, verification_error = False, str(e)
-        else:
-            verified = True
-    return APKSignatureSchemeBlock(3, signers, verified, verification_error)
+    return APKSignatureSchemeBlock(version, signers, verified, verification_error)
 
 
 def _parse_apk_signature_scheme_block(data: bytes, v3: bool) -> Iterator[Union[V2Signer, V3Signer]]:
@@ -650,10 +693,15 @@ def _len_prefixed_field(data: bytes) -> Tuple[bytes, bytes]:
 
 
 # FIXME: check & audit!
+# WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
 # https://source.android.com/docs/security/features/apksigning/v2#v2-verification
-def verify_apk_signature_scheme_v2(signers: Tuple[Union[V2Signer, V3Signer], ...], apkfile: str) -> None:
+# https://source.android.com/docs/security/features/apksigning/v3#v3-verification
+def verify_apk_signature_scheme(signers: Tuple[Union[V2Signer, V3Signer], ...],
+                                apkfile: str, sdk: Optional[int] = None) -> None:
     """
-    Verify APK Signature Scheme v2.
+    Verify APK Signature Scheme v2/v3.
+
+    WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
 
     NB: currently verifies all signatures, not just the one with the strongest
     supported signature algorithm ID.
@@ -661,9 +709,19 @@ def verify_apk_signature_scheme_v2(signers: Tuple[Union[V2Signer, V3Signer], ...
     Raises VerificationError on failure.
     """
     sb_offset, _ = _extract_v2_sig(apkfile)
+    verified = 0
     if not signers:
         raise VerificationError("No signers")
+    if not any(all(isinstance(s, c) for s in signers) for c in (V2Signer, V3Signer)):
+        raise VerificationError("Mixed v2 and v3 signers")
     for signer in signers:
+        if isinstance(signer, V3Signer):
+            if signer.min_sdk != signer.signed_data.min_sdk:
+                raise VerificationError("Min SDK of signer and signed data are not identical")
+            if signer.max_sdk != signer.signed_data.max_sdk:
+                raise VerificationError("Max SDK of signer and signed data are not identical")
+            if sdk is not None and not (signer.min_sdk <= sdk <= signer.max_sdk):
+                continue
         if not signer.signatures:
             raise VerificationError("No signatures")
         if not signer.signed_data.certificates:
@@ -693,25 +751,9 @@ def verify_apk_signature_scheme_v2(signers: Tuple[Union[V2Signer, V3Signer], ...
             digest = _apk_digest(apkfile, sb_offset, hasher, chunk_type)
             if digest != dig.digest:
                 raise VerificationError(f"Digest mismatch: expected {hexlify(dig.digest).decode()}, got {hexlify(digest).decode()}")
-
-
-# FIXME: check!
-# FIXME: signer should be ignored if platform version < min_sdk
-# FIXME: signer should be ignored if platform version > max_sdk
-# https://source.android.com/docs/security/features/apksigning/v3#v3-verification
-def verify_apk_signature_scheme_v3(signers: Tuple[Union[V2Signer, V3Signer], ...], apkfile: str) -> None:
-    """
-    Verify APK Signature Scheme v3; extends verify_apk_signature_scheme_v2().
-
-    Raises VerificationError on failure.
-    """
-    verify_apk_signature_scheme_v2(signers, apkfile)
-    for signer in signers:
-        assert isinstance(signer, V3Signer)
-        if signer.min_sdk != signer.signed_data.min_sdk:
-            raise VerificationError("Min SDK of signer and signed data are not identical")
-        if signer.max_sdk != signer.signed_data.max_sdk:
-            raise VerificationError("Max SDK of signer and signed data are not identical")
+        verified += 1
+    if not verified:
+        raise VerificationError("No compatible signers")
 
 
 def _apk_digest(apkfile: str, sb_offset: int, hasher, chunk_type: int) -> bytes:
@@ -806,10 +848,13 @@ def _chunks(data: bytes, blocksize: int) -> Iterator[bytes]:
 
 
 # FIXME: type checking?!
+# WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
 def verify_signature(key: bytes, sig: bytes, msg: bytes, halgo, pad) -> None:
     """
     Verify signature (sig) from key on message (msg) using appropriate hashing
     algorithm and padding.
+
+    WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
 
     Raises VerificationError (as a result of InvalidSignature) on failure.
     """
@@ -854,16 +899,16 @@ def aid_info(aid: int) -> str:
     return SIGNATURE_ALGORITHM_IDS.get(aid, "UNKNOWN").split(";")[0]
 
 
-def show_parse_tree(pairs: Tuple[Pair, ...], verbose: bool = False,
-                    apkfile: Optional[str] = None) -> None:
+def show_parse_tree(apk_signing_block: APKSigningBlock, verbose: bool = False,
+                    apkfile: Optional[str] = None, sdk: Optional[int] = None) -> None:
     """Print parse tree (w/ indent etc.) to stdout."""
-    for pair in pairs:
+    for pair in apk_signing_block.pairs:
         b = pair.value
         if verbose:
             print("PAIR LENGTH:", pair.length)
         print("PAIR ID:", hex(pair.id))
         if isinstance(b, APKSignatureSchemeBlock):
-            show_apk_signature_scheme_block(b, verbose, apkfile)
+            show_apk_signature_scheme_block(b, verbose=verbose, apkfile=apkfile, sdk=sdk)
         elif isinstance(b, VerityPaddingBlock):
             print("  VERITY PADDING BLOCK")
         elif isinstance(b, DependencyInfoBlock):
@@ -878,22 +923,22 @@ def show_parse_tree(pairs: Tuple[Pair, ...], verbose: bool = False,
             _show_hex(b.data, 2)    # type: ignore
 
 
-def show_apk_signature_scheme_block(b: APKSignatureSchemeBlock, verbose: bool = False,
-                                    apkfile: Optional[str] = None) -> None:
+def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, verbose: bool,
+                                    apkfile: Optional[str] = None, sdk: Optional[int] = None) -> None:
     """Print APKSignatureSchemeBlock parse tree to stdout."""
-    print(f"  APK SIGNATURE SCHEME v{b.version} BLOCK")
-    for i, signer in enumerate(b.signers):
+    print(f"  APK SIGNATURE SCHEME v{block.version} BLOCK")
+    for i, signer in enumerate(block.signers):
         print("  SIGNER", i)
         print("    SIGNED DATA")
         for j, digest in enumerate(signer.signed_data.digests):
             print("      DIGEST", j)
-            _show_aid(digest, 8, verbose)
+            _show_aid(digest, 8, verbose=verbose)
             _show_hex(digest.digest, 8)
         for j, cert in enumerate(signer.signed_data.certificates):
             print("      CERTIFICATE", j)
             cert_info, pk_info = cert.certificate_info, cert.public_key_info
-            show_x509_certificate_info(cert_info, pk_info, 8, verbose)
-        if b.is_v3:
+            show_x509_certificate_info(cert_info, pk_info, 8, verbose=verbose)
+        if block.is_v3:
             assert isinstance(signer, V3Signer)
             print("      MIN SDK:", signer.signed_data.min_sdk)
             print("      MAX SDK:", signer.signed_data.max_sdk)
@@ -905,19 +950,19 @@ def show_apk_signature_scheme_block(b: APKSignatureSchemeBlock, verbose: bool = 
             elif attr.is_proof_of_rotation_struct:
                 print("        PROOF OF ROTATION STRUCT")
             _show_hex(attr.value, 8)
-        if b.is_v3:
+        if block.is_v3:
             assert isinstance(signer, V3Signer)
             print("    MIN SDK:", signer.min_sdk)
             print("    MAX SDK:", signer.max_sdk)
         for j, sig in enumerate(signer.signatures):
             print("    SIGNATURE", j)
-            _show_aid(sig, 6, verbose)
+            _show_aid(sig, 6, verbose=verbose)
             _show_hex(sig.signature, 6)
         print("    PUBLIC KEY")
         show_public_key_info(signer.public_key.public_key_info, 6)
     if apkfile is not None:
         try:
-            b.verify(apkfile)
+            block.verify(apkfile, sdk=sdk)
         except VerificationError as e:
             print(f"  NOT VERIFIED ({e})")
         else:
@@ -964,11 +1009,11 @@ def _show_aid(x: Union[Digest, Signature], indent: int, verbose: bool) -> None:
     print(" " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})")
 
 
-def show_json(data: APKSigningBlock) -> None:
+def show_json(apk_signing_block: APKSigningBlock) -> None:
     """Print parse tree as JSON to stdout."""
     import simplejson
-    simplejson.dump(data, sys.stdout, indent=2, sort_keys=True, encoding=None,
-                    default=_json_encode_bytes, for_json=True)
+    simplejson.dump(apk_signing_block, sys.stdout, indent=2, sort_keys=True,
+                    encoding=None, default=_json_encode_bytes, for_json=True)
     print()
 
 
@@ -988,7 +1033,7 @@ def _extract_v2_sig(apkfile: str) -> Tuple[int, bytes]:
 
 # FIXME
 # WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
-def verify_apk(apk: str, sig_block: Optional[bytes] = None) \
+def verify_apk(apkfile: str, sig_block: Optional[bytes] = None, sdk: Optional[int] = None) \
         -> Tuple[Tuple[int, ...], Tuple[Tuple[int, Exception], ...]]:
     """
     Verify APK file using the APK Signature Scheme v2/v3 Blocks found parsing
@@ -1003,25 +1048,16 @@ def verify_apk(apk: str, sig_block: Optional[bytes] = None) \
     verification successes, and failed is a tuple of (version, exception) tuples
     of verification failures.
     """
-    verified, failed = [], []
     if sig_block is None:
-        _, sig_block = _extract_v2_sig(apk)
-    for pair in parse_apk_signing_block(sig_block).pairs:
-        b = pair.value
-        if isinstance(b, APKSignatureSchemeBlock):
-            try:
-                b.verify(apk)
-            except VerificationError as e:
-                failed.append((b.version, e))
-            else:
-                verified.append(b.version)
-    return tuple(verified), tuple(failed)
+        _, sig_block = _extract_v2_sig(apkfile)
+    return parse_apk_signing_block(sig_block).verify_results(apkfile, sdk=sdk)
 
 
 # NB: modifies in-place!
-def clean_apk(apkfile: str, keep: Tuple[int, ...] = (), check: bool = False) -> bool:
+def clean_apk(apkfile: str, keep: Tuple[int, ...] = (), check: bool = False,
+              sdk: Optional[int] = None) -> bool:
     """
-    Clean APK file: remove everything that's not a APK Signature Scheme v2/v3
+    Clean APK file: remove everything that's not an APK Signature Scheme v2/v3
     Block or verity padding block (or has a pair_id in keep) from its APK
     Signing Block.
 
@@ -1037,7 +1073,7 @@ def clean_apk(apkfile: str, keep: Tuple[int, ...] = (), check: bool = False) -> 
     """
     sb_offset, sig_block = _extract_v2_sig(apkfile)
     if check:
-        verified, failed = verify_apk(apkfile, sig_block)
+        verified, failed = verify_apk(apkfile, sig_block, sdk=sdk)
         if failed or not verified:
             raise VerificationError("Verification failed")
     sig_block_cleaned = clean_apk_signing_block(sig_block, keep=keep)
@@ -1062,7 +1098,7 @@ def main():
 
     # FIXME
     @click.group(help="""
-        apksigtool - parse/verify/clean android apk signing blocks
+        apksigtool - parse/verify/clean android apk signing blocks & apks
     """)
     @click.version_option(__version__)
     def cli():
@@ -1076,9 +1112,11 @@ def main():
     @click.option("--block", is_flag=True,
                   help="APK_OR_BLOCK is an extracted block, not an APK.")
     @click.option("--json", is_flag=True, help="JSON output.")
+    @click.option("--sdk-version", type=click.INT,
+                  help="For v3 signers specifying min/max SDK.")
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
-    def parse(apk_or_block, block, json, verbose):
+    def parse(apk_or_block, block, json, sdk_version, verbose):
         if block:
             apkfile = None
             with open(apk_or_block, "rb") as fh:
@@ -1087,21 +1125,24 @@ def main():
             apkfile = apk_or_block
             _, sig_block = _extract_v2_sig(apkfile)
         if json:
-            show_json(parse_apk_signing_block(sig_block, apkfile))
+            show_json(parse_apk_signing_block(sig_block, apkfile=apkfile, sdk=sdk_version))
         else:
-            show_parse_tree(parse_apk_signing_block(sig_block).pairs, verbose, apkfile)
+            show_parse_tree(parse_apk_signing_block(sig_block), verbose=verbose,
+                            apkfile=apkfile, sdk=sdk_version)
 
     # FIXME
     @cli.command(help="""
-        Verify APK using the APK Signature Scheme v2/v3 Blocks in its APK Signing
-        Block.
+        Verify APK using the APK Signature Scheme v2/v3 Blocks in its APK
+        Signing Block.
 
         WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
     """)
+    @click.option("--sdk-version", type=click.INT,
+                  help="For v3 signers specifying min/max SDK.")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
-    def verify(apk):
+    def verify(apk, sdk_version):
         print("WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!", file=sys.stderr)
-        verified, failed = verify_apk(apk)
+        verified, failed = verify_apk(apk, sdk=sdk_version)
         for version in verified:
             print(f"v{version} verified")
         for version, e in failed:
@@ -1111,9 +1152,9 @@ def main():
 
     # FIXME
     @cli.command(help="""
-        Clean APK (or extracted block): remove everything that's not a APK Signature
-        Scheme v2/v3 Block or verity padding block (or has a pair_id in keep) from
-        its APK Signing Block.
+        Clean APK (or extracted block): remove everything that's not an APK
+        Signature Scheme v2/v3 Block or verity padding block (or has a pair_id
+        in keep) from its APK Signing Block.
 
         NB: modifies in-place!
     """)
@@ -1124,9 +1165,11 @@ def main():
     @click.option("--keep", multiple=True, default=(), metavar="HEXID",
                   help="Do not remove pairs with the specified hex ID(s); use multiple "
                        "times or separate IDs with commas to specify multiple IDs.")
+    @click.option("--sdk-version", type=click.INT,
+                  help="For v3 signers specifying min/max SDK.")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def clean(ctx, apk_or_block, block, check, keep):
+    def clean(ctx, apk_or_block, block, check, keep, sdk_version):
         try:
             keep = tuple(int(x, 16) for p in keep for x in p.split(","))
         except ValueError as e:
@@ -1142,7 +1185,7 @@ def main():
                 with open(apk_or_block, "wb") as fh:
                     fh.write(sig_block_cleaned)
         else:
-            cleaned = clean_apk(apk_or_block, keep=keep, check=check)
+            cleaned = clean_apk(apk_or_block, keep=keep, check=check, sdk=sdk_version)
         if cleaned:
             print("cleaned")
         else:

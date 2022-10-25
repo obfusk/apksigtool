@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-10-21
+    Date        : 2022-10-25
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -30,9 +30,18 @@
 
 # apksigtool
 
-## parse/verify/clean android apk signing blocks
+## parse/verify/clean android apk signing blocks & apks
 
-... FIXME ...
+`apksigtool` is a tool for parsing [android APK Signing
+Blocks](https://source.android.com/docs/security/features/apksigning/v2#apk-signing-block)
+(either embedded in an APK or extracted as a separate file, e.g. using
+[`apksigcopier`](https://github.com/obfusk/apksigcopier)) and verifying [APK
+signatures](https://source.android.com/docs/security/features/apksigning).  It
+can also clean them (i.e. remove everything that's not an APK Signature Scheme
+v2/v3 Block or verity padding block), which can be useful for [reproducible
+builds](https://reproducible-builds.org).
+
+WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
 
 ### Parse
 
@@ -134,15 +143,47 @@ $ man apksigtool                # requires the man page to be installed
 
 ## Python API
 
+Parse:
+
 ```python
 >>> from apksigtool import ...
+>>> apk_signing_block = parse_apk_signing_block(data, apkfile=None, sdk=None)
 ```
 
-... FIXME ...
+Parse tree & JSON:
 
+```python
+>>> show_parse_tree(apk_signing_block, verbose=False, apkfile=None, sdk=None)
+>>> show_json(apk_signing_block)
+```
+
+Verify:
+
+```python
+>>> apk_signing_block.verify(apkfile, sdk=None)                   # raises on failure
+>>> verified, failed = apk_signing_block.verify_results(apkfile, sdk=None)
+>>> verify_apk(apkfile, sig_block=None, sdk=None)                 # verify APK (uses the above)
+```
+
+Low-level verification API:
+
+```python
+>>> verify_apk_signature_scheme(signers, apkfile, sdk=None)       # does the verification
+>>> APKSignatureSchemeBlock(...).verify(apkfile, sdk=None)        # uses the above
+```
+
+Clean:
+
+```python
+>>> data_cleaned = clean_apk_signing_block(data, keep=())         # clean block
+>>> cleaned = clean_apk(apkfile, keep=(), check=False, sdk=None)  # clean APK
+```
+
+<!--
 ## FAQ
 
 ... FIXME ...
+-->
 
 ## Tab Completion
 
