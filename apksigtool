@@ -323,6 +323,9 @@ class APKSignatureSchemeBlock(Block):
     verified: Optional[bool]
     verification_error: Optional[str]
 
+    def __post_init__(self):
+        assert (self.verification_error is not None) == (self.verified == False)  # noqa: E712
+
     @property
     def is_v2(self) -> bool:
         return self.version == 2
