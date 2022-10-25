@@ -334,6 +334,16 @@ class APKSignatureSchemeBlock(Block):
     def is_v3(self) -> bool:
         return self.version == 3
 
+    def verify(self, apkfile: str) -> None:
+        """
+        Verify APK Signature Scheme using verify_apk_signature_scheme_v2() or
+        verify_apk_signature_scheme_v3(), depending on .version.
+        """
+        if self.is_v2:
+            verify_apk_signature_scheme_v2(self.signers, apkfile)
+        else:
+            verify_apk_signature_scheme_v3(self.signers, apkfile)
+
 
 @dataclass(frozen=True)
 class VerityPaddingBlock(Block):
@@ -907,10 +917,7 @@ def show_apk_signature_scheme_block(b: APKSignatureSchemeBlock, verbose: bool = 
         show_public_key_info(signer.public_key.public_key_info, 6)
     if apkfile is not None:
         try:
-            if b.is_v2:
-                verify_apk_signature_scheme_v2(b.signers, apkfile)
-            else:
-                verify_apk_signature_scheme_v3(b.signers, apkfile)
+            b.verify(apkfile)
         except VerificationError as e:
             print(f"  NOT VERIFIED ({e})")
         else:
@@ -1003,10 +1010,7 @@ def verify_apk(apk: str, sig_block: Optional[bytes] = None) \
         b = pair.value
         if isinstance(b, APKSignatureSchemeBlock):
             try:
-                if b.is_v2:
-                    verify_apk_signature_scheme_v2(b.signers, apk)
-                else:
-                    verify_apk_signature_scheme_v3(b.signers, apk)
+                b.verify(apk)
             except VerificationError as e:
                 failed.append((b.version, e))
             else:
