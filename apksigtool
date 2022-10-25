@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-10-24
+# Date        : 2022-10-25
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -50,7 +50,7 @@ from hashlib import sha256, sha512
 from typing import Any, Iterator, List, Mapping, Optional, Tuple, Union
 
 from apksigcopier import extract_v2_sig, zip_data, APKSigCopierError
-from asn1crypto.keys import PublicKeyInfo as PKInfo
+from asn1crypto.keys import PublicKeyInfo as X509CertPubKeyInfo
 from asn1crypto.x509 import Certificate as X509Cert
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives.asymmetric.ec import ECDSA
@@ -204,15 +204,23 @@ class Certificate(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> signed data -> certificate."""
     data: bytes
     _certificate: X509Cert = field(init=False)
-    _public_key: PKInfo = field(init=False)
+    _public_key: X509CertPubKeyInfo = field(init=False)
     certificate_info: CertificateInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
 
     def __post_init__(self):
         object.__setattr__(self, "_certificate", X509Cert.load(self.data))
-        object.__setattr__(self, "_public_key", self._certificate.public_key)
-        object.__setattr__(self, "certificate_info", x509_certificate_info(self._certificate))
-        object.__setattr__(self, "public_key_info", public_key_info(self._public_key))
+        object.__setattr__(self, "_public_key", self.certificate.public_key)
+        object.__setattr__(self, "certificate_info", x509_certificate_info(self.certificate))
+        object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
+
+    @property
+    def certificate(self) -> X509Cert:
+        return self._certificate
+
+    @property
+    def public_key(self) -> X509CertPubKeyInfo:
+        return self._public_key
 
 
 @dataclass(frozen=True)
@@ -251,12 +259,16 @@ class Signature(APKSigToolBase):
 class PublicKey(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> public key."""
     data: bytes
-    _public_key: PKInfo = field(init=False)
+    _public_key: X509CertPubKeyInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
 
     def __post_init__(self):
-        object.__setattr__(self, "_public_key", PKInfo.load(self.data))
-        object.__setattr__(self, "public_key_info", public_key_info(self._public_key))
+        object.__setattr__(self, "_public_key", X509CertPubKeyInfo.load(self.data))
+        object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
+
+    @property
+    def public_key(self) -> X509CertPubKeyInfo:
+        return self._public_key
 
 
 @dataclass(frozen=True)
@@ -646,7 +658,7 @@ def verify_apk_signature_scheme_v2(signers: Tuple[Union[V2Signer, V3Signer], ...
         c0 = signer.signed_data.certificates[0]
         da = sorted(d.signature_algorithm_id for d in signer.signed_data.digests)
         sa = sorted(s.signature_algorithm_id for s in signer.signatures)
-        pk_algo = pk._public_key.algorithm
+        pk_algo = pk.public_key.algorithm
         for sig in signer.signatures:
             if sig.signature_algorithm_id not in HASHERS:
                 raise VerificationError(f"Unknown signature algorithm ID: {hex(sig.signature_algorithm_id)}")
@@ -654,7 +666,7 @@ def verify_apk_signature_scheme_v2(signers: Tuple[Union[V2Signer, V3Signer], ...
             if pk_algo != algo:
                 raise VerificationError(f"Public key algorithm mismatch: expected {algo}, got {pk_algo}")
             verify_signature(pk.data, sig.signature, signer.signed_data.raw, halgo, pad)
-        if c0._public_key.dump() != pk.data:
+        if c0.public_key.dump() != pk.data:
             raise VerificationError("Public key does not match first certificate")
         if da != sa:
             raise VerificationError("Signature algorithm IDs of digests and signatures are not identical")
@@ -808,7 +820,7 @@ def x509_certificate_info(cert: X509Cert) -> CertificateInfo:
         fingerprint=cert.sha256_fingerprint.replace(" ", "").lower())
 
 
-def public_key_info(key: PKInfo) -> PublicKeyInfo:
+def public_key_info(key: X509CertPubKeyInfo) -> PublicKeyInfo:
     """Public key info."""
     try:
         algo = key.hash_algo.upper()
