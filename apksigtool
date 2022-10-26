@@ -56,6 +56,7 @@ API
 >> cleaned = clean_apk(apkfile, keep=(), check=False, sdk=None) # clean APK
 """
 
+import dataclasses
 import datetime
 import os
 import struct
@@ -220,8 +221,8 @@ class Digest(APKSigToolBase):
 class Certificate(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> signed data -> certificate."""
     raw_data: bytes
-    _certificate: X509Cert = field(init=False)
-    _public_key: X509CertPubKeyInfo = field(init=False)
+    _certificate: X509Cert = field(init=False, repr=False, compare=False)
+    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)
     certificate_info: CertificateInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
 
@@ -276,7 +277,7 @@ class Signature(APKSigToolBase):
 class PublicKey(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> public key."""
     raw_data: bytes
-    _public_key: X509CertPubKeyInfo = field(init=False)
+    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)
     public_key_info: PublicKeyInfo = field(init=False)
 
     def __post_init__(self):
@@ -1055,6 +1056,13 @@ def json_dump_default(obj):
     if isinstance(obj, datetime.datetime):
         return str(obj)
     raise TypeError(repr(obj) + " is not JSON serializable")
+
+
+def asdict(obj):
+    """dataclasses.asdict() with a dict_factory that skips attributes that start with _."""
+    def dict_factory(pairs):
+        return dict((k, v) for k, v in pairs if not k.startswith("_"))
+    return dataclasses.asdict(obj, dict_factory=dict_factory)
 
 
 def _extract_v2_sig(apkfile: str) -> Tuple[int, bytes]:
