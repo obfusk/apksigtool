@@ -174,7 +174,7 @@ class CertificateInfo(APKSigToolBase):
     """X.509 certificate info."""
     subject: str
     issuer: str
-    serial_number: str
+    serial_number: int
     hash_algorithm: str
     signature_algorithm: str
     not_valid_before: datetime.datetime
@@ -874,7 +874,7 @@ def x509_certificate_info(cert: X509Cert) -> CertificateInfo:
     return CertificateInfo(
         subject=cert.subject.human_friendly,
         issuer=cert.issuer.human_friendly,
-        serial_number=hex(cert.serial_number),
+        serial_number=cert.serial_number,
         hash_algorithm=cert.hash_algo.upper(),
         signature_algorithm=cert.signature_algo.upper(),
         not_valid_before=cert.not_valid_before,
@@ -988,7 +988,7 @@ def show_x509_certificate_info(info: CertificateInfo, pk_info: PublicKeyInfo,
     p(" " * indent + "X.509 SUBJECT:", info.subject)
     if verbose:
         p(" " * indent + "X.509 ISSUER:", info.issuer)
-        p(" " * indent + "X.509 SERIAL NUMBER:", info.serial_number)
+        p(" " * indent + "X.509 SERIAL NUMBER:", hex(info.serial_number))
         p(" " * indent + "X.509 HASH ALGORITHM:", info.hash_algorithm)
         p(" " * indent + "X.509 SIGNATURE ALGORITHM:", info.signature_algorithm)
         p(" " * indent + "X.509 NOT VALID BEFORE:", info.not_valid_before)

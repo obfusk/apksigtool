@@ -50,7 +50,7 @@ apksigner: verified
                     "issuer": "Email Address: android@android.com, Common Name: Android, Organizational Unit: Android, Organization: Android, Locality: Mountain View, State/Province: California, Country: US",
                     "not_valid_after": "2035-07-17 01:33:46+00:00",
                     "not_valid_before": "2008-02-29 01:33:46+00:00",
-                    "serial_number": "0x936eacbe07f201df",
+                    "serial_number": 10623618503190643167,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Email Address: android@android.com, Common Name: Android, Organizational Unit: Android, Organization: Android, Locality: Mountain View, State/Province: California, Country: US"
                   },
@@ -150,7 +150,7 @@ apksigner: verified
                     "issuer": "Email Address: android@android.com, Common Name: Android, Organizational Unit: Android, Organization: Android, Locality: Mountain View, State/Province: California, Country: US",
                     "not_valid_after": "2035-07-17 01:33:46+00:00",
                     "not_valid_before": "2008-02-29 01:33:46+00:00",
-                    "serial_number": "0x936eacbe07f201df",
+                    "serial_number": 10623618503190643167,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Email Address: android@android.com, Common Name: Android, Organizational Unit: Android, Organization: Android, Locality: Mountain View, State/Province: California, Country: US"
                   },
@@ -256,7 +256,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -330,7 +330,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -424,7 +424,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -520,7 +520,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -602,7 +602,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -700,7 +700,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -774,7 +774,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -864,7 +864,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -960,7 +960,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -1042,7 +1042,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -1140,7 +1140,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -1214,7 +1214,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -1314,7 +1314,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -1406,7 +1406,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -1508,7 +1508,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -1582,7 +1582,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -1676,7 +1676,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -1772,7 +1772,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -1854,7 +1854,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -1952,7 +1952,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -2026,7 +2026,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -2116,7 +2116,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -2212,7 +2212,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -2294,7 +2294,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -2392,7 +2392,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -2466,7 +2466,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -2566,7 +2566,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -2658,7 +2658,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -2762,7 +2762,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -2848,7 +2848,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -2952,7 +2952,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3026,7 +3026,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3124,7 +3124,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3198,7 +3198,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3296,7 +3296,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3370,7 +3370,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3468,7 +3468,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3542,7 +3542,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3640,7 +3640,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3714,7 +3714,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3818,7 +3818,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -3904,7 +3904,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -4012,7 +4012,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -4086,7 +4086,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -4180,7 +4180,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -4276,7 +4276,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -4358,7 +4358,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -4456,7 +4456,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -4530,7 +4530,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -4620,7 +4620,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -4716,7 +4716,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -4798,7 +4798,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -4896,7 +4896,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -4970,7 +4970,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -5070,7 +5070,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -5162,7 +5162,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -5264,7 +5264,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -5338,7 +5338,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -5436,7 +5436,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -5510,7 +5510,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -5600,7 +5600,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -5692,7 +5692,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -5766,7 +5766,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -5874,7 +5874,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -5948,7 +5948,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6056,7 +6056,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6130,7 +6130,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6244,7 +6244,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6330,7 +6330,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6444,7 +6444,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6518,7 +6518,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6626,7 +6626,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6700,7 +6700,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6808,7 +6808,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6882,7 +6882,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -6990,7 +6990,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -7064,7 +7064,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -7172,7 +7172,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -7246,7 +7246,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -7380,7 +7380,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -7454,7 +7454,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -7544,7 +7544,7 @@ apksigner: verified
                     "issuer": "Email Address: android@android.com, Common Name: Android, Organizational Unit: Android, Organization: Android, Locality: Mountain View, State/Province: California, Country: US",
                     "not_valid_after": "2039-02-04 20:06:42+00:00",
                     "not_valid_before": "2011-09-19 20:06:42+00:00",
-                    "serial_number": "0xbcdfe81405d5c69e",
+                    "serial_number": 13609851771631814302,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Email Address: android@android.com, Common Name: Android, Organizational Unit: Android, Organization: Android, Locality: Mountain View, State/Province: California, Country: US"
                   },
@@ -7624,7 +7624,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -7683,7 +7683,7 @@ apksigner: not verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -7763,7 +7763,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -7822,7 +7822,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -7959,7 +7959,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -8041,7 +8041,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2028-07-10 17:41:51+00:00",
                     "not_valid_before": "2018-07-13 17:41:51+00:00",
-                    "serial_number": "0x8855bd1dd2b2b225",
+                    "serial_number": 9823966097965232677,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256_2"
                   },
@@ -8155,7 +8155,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -8249,7 +8249,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048_2",
                     "not_valid_after": "2028-06-16 16:49:43+00:00",
                     "not_valid_before": "2018-06-19 16:49:43+00:00",
-                    "serial_number": "0xd0931aa97d3dd7bd",
+                    "serial_number": 15029385696718477245,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_3"
                   },
@@ -8359,7 +8359,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -8453,7 +8453,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048_2",
                     "not_valid_after": "2028-06-16 16:49:43+00:00",
                     "not_valid_before": "2018-06-19 16:49:43+00:00",
-                    "serial_number": "0xd0931aa97d3dd7bd",
+                    "serial_number": 15029385696718477245,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_3"
                   },
@@ -8567,7 +8567,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -8661,7 +8661,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048_2",
                     "not_valid_after": "2028-06-16 16:49:43+00:00",
                     "not_valid_before": "2018-06-19 16:49:43+00:00",
-                    "serial_number": "0xd0931aa97d3dd7bd",
+                    "serial_number": 15029385696718477245,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_3"
                   },
@@ -8757,7 +8757,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -8849,7 +8849,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -8929,7 +8929,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -9013,7 +9013,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p384",
                     "not_valid_after": "2043-08-17 15:30:57+00:00",
                     "not_valid_before": "2016-03-31 15:30:57+00:00",
-                    "serial_number": "0xc4564be08b22cc6a",
+                    "serial_number": 14147578707210062954,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p384"
                   },
@@ -9150,7 +9150,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -9236,7 +9236,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -9316,7 +9316,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-4096",
                     "not_valid_after": "2043-08-17 15:28:46+00:00",
                     "not_valid_before": "2016-03-31 15:28:46+00:00",
-                    "serial_number": "0x8871ad0986f9d719",
+                    "serial_number": 9831829717957334809,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-4096"
                   },
@@ -9396,7 +9396,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -9476,7 +9476,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -9528,7 +9528,7 @@ apksigner: not verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -9601,7 +9601,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -9660,7 +9660,7 @@ apksigner: not verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -9740,7 +9740,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -9799,7 +9799,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -9893,7 +9893,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -9996,7 +9996,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-4096",
                     "not_valid_after": "2043-08-17 15:28:46+00:00",
                     "not_valid_before": "2016-03-31 15:28:46+00:00",
-                    "serial_number": "0x8871ad0986f9d719",
+                    "serial_number": 9831829717957334809,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-4096"
                   },
@@ -10076,7 +10076,7 @@ apksigner: not verified
                     "issuer": "Common Name: dsa-1025",
                     "not_valid_after": "2043-08-17 15:27:10+00:00",
                     "not_valid_before": "2016-03-31 15:27:10+00:00",
-                    "serial_number": "0xfe849a4a0117c528",
+                    "serial_number": 18339953225196094760,
                     "signature_algorithm": "DSA",
                     "subject": "Common Name: dsa-1024"
                   },
@@ -10156,7 +10156,7 @@ apksigner: verified
                     "issuer": "Common Name: dsa-1024",
                     "not_valid_after": "2043-08-17 15:27:10+00:00",
                     "not_valid_before": "2016-03-31 15:27:10+00:00",
-                    "serial_number": "0xfe849a4a0117c528",
+                    "serial_number": 18339953225196094760,
                     "signature_algorithm": "DSA",
                     "subject": "Common Name: dsa-1024"
                   },
@@ -10236,7 +10236,7 @@ apksigner: verified
                     "issuer": "Common Name: dsa-2048",
                     "not_valid_after": "2043-08-17 18:30:01+00:00",
                     "not_valid_before": "2016-03-31 18:30:01+00:00",
-                    "serial_number": "0xae2e62d4c06ade3e",
+                    "serial_number": 12551077877428969022,
                     "signature_algorithm": "DSA",
                     "subject": "Common Name: dsa-2048"
                   },
@@ -10316,7 +10316,7 @@ apksigner: verified
                     "issuer": "Common Name: dsa-3072",
                     "not_valid_after": "2043-08-17 18:32:56+00:00",
                     "not_valid_before": "2016-03-31 18:32:56+00:00",
-                    "serial_number": "0xa9a91f9c173c36c6",
+                    "serial_number": 12225337418739103430,
                     "signature_algorithm": "DSA",
                     "subject": "Common Name: dsa-3072"
                   },
@@ -10396,7 +10396,7 @@ apksigner: not verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -10476,7 +10476,7 @@ apksigner: not verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -10556,7 +10556,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -10636,7 +10636,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p384",
                     "not_valid_after": "2043-08-17 15:30:57+00:00",
                     "not_valid_before": "2016-03-31 15:30:57+00:00",
-                    "serial_number": "0xc4564be08b22cc6a",
+                    "serial_number": 14147578707210062954,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p384"
                   },
@@ -10716,7 +10716,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p521",
                     "not_valid_after": "2043-08-17 15:31:22+00:00",
                     "not_valid_before": "2016-03-31 15:31:22+00:00",
-                    "serial_number": "0xec57745b2f9b7622",
+                    "serial_number": 17030208450914383394,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p521"
                   },
@@ -10796,7 +10796,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -10876,7 +10876,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p384",
                     "not_valid_after": "2043-08-17 15:30:57+00:00",
                     "not_valid_before": "2016-03-31 15:30:57+00:00",
-                    "serial_number": "0xc4564be08b22cc6a",
+                    "serial_number": 14147578707210062954,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p384"
                   },
@@ -10956,7 +10956,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p521",
                     "not_valid_after": "2043-08-17 15:31:22+00:00",
                     "not_valid_before": "2016-03-31 15:31:22+00:00",
-                    "serial_number": "0xec57745b2f9b7622",
+                    "serial_number": 17030208450914383394,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p521"
                   },
@@ -11048,7 +11048,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -11140,7 +11140,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-1024",
                     "not_valid_after": "2043-08-17 16:14:43+00:00",
                     "not_valid_before": "2016-03-31 16:14:43+00:00",
-                    "serial_number": "0xfd0ab588e116edc8",
+                    "serial_number": 18233585640859430344,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-1024"
                   },
@@ -11220,7 +11220,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-1024",
                     "not_valid_after": "2043-08-17 16:14:43+00:00",
                     "not_valid_before": "2016-03-31 16:14:43+00:00",
-                    "serial_number": "0xfd0ab588e116edc8",
+                    "serial_number": 18233585640859430344,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-1024"
                   },
@@ -11300,7 +11300,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-16384",
                     "not_valid_after": "2043-08-21 19:34:31+00:00",
                     "not_valid_before": "2016-04-04 19:34:31+00:00",
-                    "serial_number": "0xe7776e98a4b912af",
+                    "serial_number": 16678921346867597999,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-16384"
                   },
@@ -11380,7 +11380,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -11460,7 +11460,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -11540,7 +11540,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-3072",
                     "not_valid_after": "2043-08-17 19:14:58+00:00",
                     "not_valid_before": "2016-03-31 19:14:58+00:00",
-                    "serial_number": "0xdf1a67e615cb0761",
+                    "serial_number": 16076276057758173025,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-3072"
                   },
@@ -11620,7 +11620,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-4096",
                     "not_valid_after": "2043-08-17 15:28:46+00:00",
                     "not_valid_before": "2016-03-31 15:28:46+00:00",
-                    "serial_number": "0x8871ad0986f9d719",
+                    "serial_number": 9831829717957334809,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-4096"
                   },
@@ -11700,7 +11700,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-8192",
                     "not_valid_after": "2043-08-21 19:32:46+00:00",
                     "not_valid_before": "2016-04-04 19:32:46+00:00",
-                    "serial_number": "0xc30237a0d325a00e",
+                    "serial_number": 14051854951226122254,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-8192"
                   },
@@ -11780,7 +11780,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-1024",
                     "not_valid_after": "2043-08-17 16:14:43+00:00",
                     "not_valid_before": "2016-03-31 16:14:43+00:00",
-                    "serial_number": "0xfd0ab588e116edc8",
+                    "serial_number": 18233585640859430344,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-1024"
                   },
@@ -11860,7 +11860,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-16384",
                     "not_valid_after": "2043-08-21 19:34:31+00:00",
                     "not_valid_before": "2016-04-04 19:34:31+00:00",
-                    "serial_number": "0xe7776e98a4b912af",
+                    "serial_number": 16678921346867597999,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-16384"
                   },
@@ -11940,7 +11940,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -12020,7 +12020,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-3072",
                     "not_valid_after": "2043-08-17 19:14:58+00:00",
                     "not_valid_before": "2016-03-31 19:14:58+00:00",
-                    "serial_number": "0xdf1a67e615cb0761",
+                    "serial_number": 16076276057758173025,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-3072"
                   },
@@ -12100,7 +12100,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-4096",
                     "not_valid_after": "2043-08-17 15:28:46+00:00",
                     "not_valid_before": "2016-03-31 15:28:46+00:00",
-                    "serial_number": "0x8871ad0986f9d719",
+                    "serial_number": 9831829717957334809,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-4096"
                   },
@@ -12180,7 +12180,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-4096",
                     "not_valid_after": "2043-08-17 15:28:46+00:00",
                     "not_valid_before": "2016-03-31 15:28:46+00:00",
-                    "serial_number": "0x8871ad0986f9d719",
+                    "serial_number": 9831829717957334809,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-4096"
                   },
@@ -12260,7 +12260,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-8192",
                     "not_valid_after": "2043-08-21 19:32:46+00:00",
                     "not_valid_before": "2016-04-04 19:32:46+00:00",
-                    "serial_number": "0xc30237a0d325a00e",
+                    "serial_number": 14051854951226122254,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-8192"
                   },
@@ -12340,7 +12340,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-1024",
                     "not_valid_after": "2043-08-17 16:14:43+00:00",
                     "not_valid_before": "2016-03-31 16:14:43+00:00",
-                    "serial_number": "0xfd0ab588e116edc8",
+                    "serial_number": 18233585640859430344,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-1024"
                   },
@@ -12420,7 +12420,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-16384",
                     "not_valid_after": "2043-08-21 19:34:31+00:00",
                     "not_valid_before": "2016-04-04 19:34:31+00:00",
-                    "serial_number": "0xe7776e98a4b912af",
+                    "serial_number": 16678921346867597999,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-16384"
                   },
@@ -12500,7 +12500,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -12580,7 +12580,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -12660,7 +12660,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-3072",
                     "not_valid_after": "2043-08-17 19:14:58+00:00",
                     "not_valid_before": "2016-03-31 19:14:58+00:00",
-                    "serial_number": "0xdf1a67e615cb0761",
+                    "serial_number": 16076276057758173025,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-3072"
                   },
@@ -12740,7 +12740,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-4096",
                     "not_valid_after": "2043-08-17 15:28:46+00:00",
                     "not_valid_before": "2016-03-31 15:28:46+00:00",
-                    "serial_number": "0x8871ad0986f9d719",
+                    "serial_number": 9831829717957334809,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-4096"
                   },
@@ -12820,7 +12820,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-8192",
                     "not_valid_after": "2043-08-21 19:32:46+00:00",
                     "not_valid_before": "2016-04-04 19:32:46+00:00",
-                    "serial_number": "0xc30237a0d325a00e",
+                    "serial_number": 14051854951226122254,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-8192"
                   },
@@ -12900,7 +12900,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-16384",
                     "not_valid_after": "2043-08-21 19:34:31+00:00",
                     "not_valid_before": "2016-04-04 19:34:31+00:00",
-                    "serial_number": "0xe7776e98a4b912af",
+                    "serial_number": 16678921346867597999,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-16384"
                   },
@@ -12980,7 +12980,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -13060,7 +13060,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-3072",
                     "not_valid_after": "2043-08-17 19:14:58+00:00",
                     "not_valid_before": "2016-03-31 19:14:58+00:00",
-                    "serial_number": "0xdf1a67e615cb0761",
+                    "serial_number": 16076276057758173025,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-3072"
                   },
@@ -13140,7 +13140,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-4096",
                     "not_valid_after": "2043-08-17 15:28:46+00:00",
                     "not_valid_before": "2016-03-31 15:28:46+00:00",
-                    "serial_number": "0x8871ad0986f9d719",
+                    "serial_number": 9831829717957334809,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-4096"
                   },
@@ -13220,7 +13220,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-8192",
                     "not_valid_after": "2043-08-21 19:32:46+00:00",
                     "not_valid_before": "2016-04-04 19:32:46+00:00",
-                    "serial_number": "0xc30237a0d325a00e",
+                    "serial_number": 14051854951226122254,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-8192"
                   },
@@ -13300,7 +13300,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -13411,7 +13411,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -13539,7 +13539,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -13641,7 +13641,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -13733,7 +13733,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -13825,7 +13825,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -13986,7 +13986,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -14078,7 +14078,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -14198,7 +14198,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2028-06-16 00:05:00+00:00",
                     "not_valid_before": "2018-06-19 00:05:00+00:00",
-                    "serial_number": "0xd87b0146092a9f4f",
+                    "serial_number": 15599063134640971599,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048_2"
                   },
@@ -14299,7 +14299,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-1024",
                     "not_valid_after": "2043-08-17 16:14:43+00:00",
                     "not_valid_before": "2016-03-31 16:14:43+00:00",
-                    "serial_number": "0xfd0ab588e116edc8",
+                    "serial_number": 18233585640859430344,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-1024"
                   },
@@ -14391,7 +14391,7 @@ apksigner: verified
                     "issuer": "Common Name: dsa-1024",
                     "not_valid_after": "2043-08-17 15:27:10+00:00",
                     "not_valid_before": "2016-03-31 15:27:10+00:00",
-                    "serial_number": "0xfe849a4a0117c528",
+                    "serial_number": 18339953225196094760,
                     "signature_algorithm": "DSA",
                     "subject": "Common Name: dsa-1024"
                   },
@@ -14483,7 +14483,7 @@ apksigner: not verified
                     "issuer": "Common Name: dsa-2048",
                     "not_valid_after": "2043-08-17 18:30:01+00:00",
                     "not_valid_before": "2016-03-31 18:30:01+00:00",
-                    "serial_number": "0xae2e62d4c06ade3e",
+                    "serial_number": 12551077877428969022,
                     "signature_algorithm": "DSA",
                     "subject": "Common Name: dsa-2048"
                   },
@@ -14575,7 +14575,7 @@ apksigner: verified
                     "issuer": "Common Name: dsa-2048",
                     "not_valid_after": "2043-08-17 18:30:01+00:00",
                     "not_valid_before": "2016-03-31 18:30:01+00:00",
-                    "serial_number": "0xae2e62d4c06ade3e",
+                    "serial_number": 12551077877428969022,
                     "signature_algorithm": "DSA",
                     "subject": "Common Name: dsa-2048"
                   },
@@ -14667,7 +14667,7 @@ apksigner: not verified
                     "issuer": "Common Name: dsa-3072",
                     "not_valid_after": "2043-08-17 18:32:56+00:00",
                     "not_valid_before": "2016-03-31 18:32:56+00:00",
-                    "serial_number": "0xa9a91f9c173c36c6",
+                    "serial_number": 12225337418739103430,
                     "signature_algorithm": "DSA",
                     "subject": "Common Name: dsa-3072"
                   },
@@ -14759,7 +14759,7 @@ apksigner: verified
                     "issuer": "Common Name: dsa-3072",
                     "not_valid_after": "2043-08-17 18:32:56+00:00",
                     "not_valid_before": "2016-03-31 18:32:56+00:00",
-                    "serial_number": "0xa9a91f9c173c36c6",
+                    "serial_number": 12225337418739103430,
                     "signature_algorithm": "DSA",
                     "subject": "Common Name: dsa-3072"
                   },
@@ -14851,7 +14851,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -14943,7 +14943,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p384",
                     "not_valid_after": "2043-08-17 15:30:57+00:00",
                     "not_valid_before": "2016-03-31 15:30:57+00:00",
-                    "serial_number": "0xc4564be08b22cc6a",
+                    "serial_number": 14147578707210062954,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p384"
                   },
@@ -15035,7 +15035,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p521",
                     "not_valid_after": "2043-08-17 15:31:22+00:00",
                     "not_valid_before": "2016-03-31 15:31:22+00:00",
-                    "serial_number": "0xec57745b2f9b7622",
+                    "serial_number": 17030208450914383394,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p521"
                   },
@@ -15127,7 +15127,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -15223,7 +15223,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p384",
                     "not_valid_after": "2043-08-17 15:30:57+00:00",
                     "not_valid_before": "2016-03-31 15:30:57+00:00",
-                    "serial_number": "0xc4564be08b22cc6a",
+                    "serial_number": 14147578707210062954,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p384"
                   },
@@ -15315,7 +15315,7 @@ apksigner: not verified
                     "issuer": "Common Name: ec-p521",
                     "not_valid_after": "2043-08-17 15:31:22+00:00",
                     "not_valid_before": "2016-03-31 15:31:22+00:00",
-                    "serial_number": "0xec57745b2f9b7622",
+                    "serial_number": 17030208450914383394,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p521"
                   },
@@ -15407,7 +15407,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p521",
                     "not_valid_after": "2043-08-17 15:31:22+00:00",
                     "not_valid_before": "2016-03-31 15:31:22+00:00",
-                    "serial_number": "0xec57745b2f9b7622",
+                    "serial_number": 17030208450914383394,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p521"
                   },
@@ -15511,7 +15511,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -15615,7 +15615,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-1024",
                     "not_valid_after": "2043-08-17 16:14:43+00:00",
                     "not_valid_before": "2016-03-31 16:14:43+00:00",
-                    "serial_number": "0xfd0ab588e116edc8",
+                    "serial_number": 18233585640859430344,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-1024"
                   },
@@ -15707,7 +15707,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-16384",
                     "not_valid_after": "2043-08-21 19:34:31+00:00",
                     "not_valid_before": "2016-04-04 19:34:31+00:00",
-                    "serial_number": "0xe7776e98a4b912af",
+                    "serial_number": 16678921346867597999,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-16384"
                   },
@@ -15799,7 +15799,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -15891,7 +15891,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-2072",
                     "not_valid_after": "2043-08-17 19:14:58+00:00",
                     "not_valid_before": "2016-03-31 19:14:58+00:00",
-                    "serial_number": "0xdf1a67e615cb0761",
+                    "serial_number": 16076276057758173025,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-3072"
                   },
@@ -15983,7 +15983,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-3072",
                     "not_valid_after": "2043-08-17 19:14:58+00:00",
                     "not_valid_before": "2016-03-31 19:14:58+00:00",
-                    "serial_number": "0xdf1a67e615cb0761",
+                    "serial_number": 16076276057758173025,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-3072"
                   },
@@ -16075,7 +16075,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-4096",
                     "not_valid_after": "2043-08-17 15:28:46+00:00",
                     "not_valid_before": "2016-03-31 15:28:46+00:00",
-                    "serial_number": "0x8871ad0986f9d719",
+                    "serial_number": 9831829717957334809,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-4096"
                   },
@@ -16167,7 +16167,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-8192",
                     "not_valid_after": "2043-08-21 19:32:46+00:00",
                     "not_valid_before": "2016-04-04 19:32:46+00:00",
-                    "serial_number": "0xc30237a0d325a00e",
+                    "serial_number": 14051854951226122254,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-8192"
                   },
@@ -16259,7 +16259,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-1024",
                     "not_valid_after": "2043-08-17 16:14:43+00:00",
                     "not_valid_before": "2016-03-31 16:14:43+00:00",
-                    "serial_number": "0xfd0ab588e116edc8",
+                    "serial_number": 18233585640859430344,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-1024"
                   },
@@ -16351,7 +16351,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-16384",
                     "not_valid_after": "2043-08-21 19:34:31+00:00",
                     "not_valid_before": "2016-04-04 19:34:31+00:00",
-                    "serial_number": "0xe7776e98a4b912af",
+                    "serial_number": 16678921346867597999,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-16384"
                   },
@@ -16443,7 +16443,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -16535,7 +16535,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-3072",
                     "not_valid_after": "2043-08-17 19:14:58+00:00",
                     "not_valid_before": "2016-03-31 19:14:58+00:00",
-                    "serial_number": "0xdf1a67e615cb0761",
+                    "serial_number": 16076276057758173025,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-3072"
                   },
@@ -16631,7 +16631,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-4096",
                     "not_valid_after": "2043-08-17 15:28:46+00:00",
                     "not_valid_before": "2016-03-31 15:28:46+00:00",
-                    "serial_number": "0x8871ad0986f9d719",
+                    "serial_number": 9831829717957334809,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-4096"
                   },
@@ -16723,7 +16723,7 @@ apksigner: not verified
                     "issuer": "Common Name: rsa-8192",
                     "not_valid_after": "2043-08-21 19:32:46+00:00",
                     "not_valid_before": "2016-04-04 19:32:46+00:00",
-                    "serial_number": "0xc30237a0d325a00e",
+                    "serial_number": 14051854951226122254,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-8192"
                   },
@@ -16815,7 +16815,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-8192",
                     "not_valid_after": "2043-08-21 19:32:46+00:00",
                     "not_valid_before": "2016-04-04 19:32:46+00:00",
-                    "serial_number": "0xc30237a0d325a00e",
+                    "serial_number": 14051854951226122254,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-8192"
                   },
@@ -16907,7 +16907,7 @@ apksigner: verified
                     "issuer": "Common Name: ec-p256",
                     "not_valid_after": "2043-08-17 14:58:06+00:00",
                     "not_valid_before": "2016-03-31 14:58:06+00:00",
-                    "serial_number": "0xca0fb64dfb66e772",
+                    "serial_number": 14560056566358665074,
                     "signature_algorithm": "ECDSA",
                     "subject": "Common Name: ec-p256"
                   },
@@ -17019,7 +17019,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },
@@ -17093,7 +17093,7 @@ apksigner: verified
                     "issuer": "Common Name: rsa-2048",
                     "not_valid_after": "2043-08-17 14:57:49+00:00",
                     "not_valid_before": "2016-03-31 14:57:49+00:00",
-                    "serial_number": "0x8e35306cdd0115f7",
+                    "serial_number": 10247149771273868791,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: rsa-2048"
                   },

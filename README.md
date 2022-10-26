@@ -91,6 +91,9 @@ $ apksigtool parse --json some.apk
 <details>
 <summary>full JSON output (long, some data elided)</summary>
 
+NB: elided binary values (`digest`, `fingerprint`, `raw_data`, `signature`) are
+represented as hex (e.g. "foo" would be represented as "666f6f").
+
 ```json
 {
   "_type": "APKSigningBlock",
@@ -144,7 +147,7 @@ $ apksigtool parse --json some.apk
                     "issuer": "Common Name: ..., Organizational Unit: ...",
                     "not_valid_after": "2022-10-27 12:34:56+00:00",
                     "not_valid_before": "2022-10-26 12:34:56+00:00",
-                    "serial_number": "...",
+                    "serial_number": 42,
                     "signature_algorithm": "RSASSA_PKCS1V15",
                     "subject": "Common Name: ..., Organizational Unit: ..."
                   },
