@@ -218,14 +218,14 @@ class Digest(APKSigToolBase):
 @dataclass(frozen=True)
 class Certificate(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> signed data -> certificate."""
-    data: bytes
+    raw_data: bytes
     _certificate: X509Cert = field(init=False)
     _public_key: X509CertPubKeyInfo = field(init=False)
     certificate_info: CertificateInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
 
     def __post_init__(self):
-        object.__setattr__(self, "_certificate", X509Cert.load(self.data))
+        object.__setattr__(self, "_certificate", X509Cert.load(self.raw_data))
         object.__setattr__(self, "_public_key", self.certificate.public_key)
         object.__setattr__(self, "certificate_info", x509_certificate_info(self.certificate))
         object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
@@ -274,12 +274,12 @@ class Signature(APKSigToolBase):
 @dataclass(frozen=True)
 class PublicKey(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> public key."""
-    data: bytes
+    raw_data: bytes
     _public_key: X509CertPubKeyInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
 
     def __post_init__(self):
-        object.__setattr__(self, "_public_key", X509CertPubKeyInfo.load(self.data))
+        object.__setattr__(self, "_public_key", X509CertPubKeyInfo.load(self.raw_data))
         object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
 
     @property
@@ -290,7 +290,7 @@ class PublicKey(APKSigToolBase):
 @dataclass(frozen=True)
 class V2SignedData(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> signed data (v2)."""
-    raw: bytes
+    raw_data: bytes
     digests: Tuple[Digest, ...]
     certificates: Tuple[Certificate, ...]
     additional_attributes: Tuple[AdditionalAttribute, ...]
@@ -299,7 +299,7 @@ class V2SignedData(APKSigToolBase):
 @dataclass(frozen=True)
 class V3SignedData(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> signed data (v3)."""
-    raw: bytes
+    raw_data: bytes
     digests: Tuple[Digest, ...]
     certificates: Tuple[Certificate, ...]
     min_sdk: int
@@ -413,26 +413,26 @@ class VerityPaddingBlock(Block):
 @dataclass(frozen=True)
 class DependencyInfoBlock(Block):
     """Google dependency info block (opaque, encrypted)."""
-    data: bytes
+    raw_data: bytes
 
 
 @dataclass(frozen=True)
 class GooglePlayFrostingBlock(Block):
     """Google Play frosting block (opaque)."""
-    data: bytes
+    raw_data: bytes
 
 
 @dataclass(frozen=True)
 class SourceStampBlock(Block):
     """Google source stamp block (opaque)."""
-    data: bytes
+    raw_data: bytes
     version: Literal[1, 2]
 
 
 @dataclass(frozen=True)
 class UnknownBlock(Block):
     """Unknown block."""
-    data: bytes
+    raw_data: bytes
 
 
 def _assert(b: bool, what: Optional[str] = None) -> None:
@@ -589,7 +589,7 @@ def parse_signed_data(data: bytes, v3: bool) -> Union[V2SignedData, V3SignedData
     """
     Parse APK Signature Scheme v2/v3 Block -> signer -> signed data.
 
-    Returns V2SignedData/V3SignedData (with .raw, .digests, .certificates,
+    Returns V2SignedData/V3SignedData (with .raw_data, .digests, .certificates,
     .additional_attributes; V3SignedData also .min_sdk, .max_sdk).
     """
     result: List = [data]
@@ -631,7 +631,7 @@ def parse_certificates(data: bytes) -> Tuple[Certificate, ...]:
     Parse APK Signature Scheme v2/v3 Block -> signer -> signed data ->
     certificates.
 
-    Returns tuple of Certificate (with .data).
+    Returns tuple of Certificate (with .raw_data).
     """
     return tuple(_parse_certificates(data))
 
@@ -739,8 +739,8 @@ def verify_apk_signature_scheme(signers: Tuple[Union[V2Signer, V3Signer], ...],
             algo, _, halgo, pad, _ = HASHERS[sig.signature_algorithm_id]
             if pk_algo != algo:
                 raise VerificationError(f"Public key algorithm mismatch: expected {algo}, got {pk_algo}")
-            verify_signature(pk.data, sig.signature, signer.signed_data.raw, halgo, pad)
-        if c0.public_key.dump() != pk.data:
+            verify_signature(pk.raw_data, sig.signature, signer.signed_data.raw_data, halgo, pad)
+        if c0.public_key.dump() != pk.raw_data:
             raise VerificationError("Public key does not match first certificate")
         if da != sa:
             raise VerificationError("Signature algorithm IDs of digests and signatures are not identical")
@@ -919,8 +919,8 @@ def show_parse_tree(apk_signing_block: APKSigningBlock, verbose: bool = False,
             print(f"  SOURCE STAMP v{b.version} BLOCK")
         else:
             print("  UNKNOWN BLOCK")
-        if verbose and hasattr(b, "data"):
-            _show_hex(b.data, 2)    # type: ignore
+        if verbose and hasattr(b, "raw_data"):
+            _show_hex(b.raw_data, 2)    # type: ignore
 
 
 def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, verbose: bool,
