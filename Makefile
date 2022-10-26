@@ -22,18 +22,15 @@ test-apks: test-apks-verify test-apks-parse test-apks-parse-json
 
 test-apks-verify:
 	cd test/apks && diff -Naur ../test-verify.out <( ../test-verify.sh \
-	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions \
-	             -e 'WARNING: THIS IS A PROTOTYPE' )
+	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
 
 test-apks-parse:
 	cd test/apks && diff -Naur ../test-parse.out <( ../test-parse.sh \
-	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions \
-	             -e 'WARNING: THIS IS A PROTOTYPE' )
+	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
 
 test-apks-parse-json:
 	cd test/apks && diff -Naur ../test-parse-json.out <( ../test-parse-json.sh \
-	  | grep -vF -e CryptographyDeprecationWarning -e cryptography.exceptions \
-	             -e 'WARNING: THIS IS A PROTOTYPE' )
+	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
 
 lint:
 	flake8 apksigtool.py

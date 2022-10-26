@@ -24,7 +24,8 @@ APK signatures.  It can also clean them (i.e. remove everything that's not an
 APK Signature Scheme v2/v3 Block or verity padding block), which can be useful
 for reproducible builds.
 
-WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON,
+please use apksigner instead.
 
 
 CLI
@@ -331,13 +332,14 @@ class APKSigningBlock(APKSigToolBase):
     pairs: Tuple[Pair, ...]
 
     # FIXME
-    # WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+    # WARNING: verification is considered EXPERIMENTAL
     def verify(self, apkfile: str, sdk: Optional[int] = None) -> None:
         """
         Verify APK file using the APK Signature Scheme v2/v3 Blocks found in
         this APKSigningBlock.
 
-        WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+        WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE
+        RELIED ON, please use apksigner instead.
 
         Raises VerificationError on failure.
         """
@@ -346,14 +348,15 @@ class APKSigningBlock(APKSigToolBase):
                 b.verify(apkfile, sdk=sdk)
 
     # FIXME
-    # WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+    # WARNING: verification is considered EXPERIMENTAL
     def verify_results(self, apkfile: str, sdk: Optional[int] = None) \
             -> Tuple[Tuple[int, ...], Tuple[Tuple[int, Exception], ...]]:
         """
         Verify APK file using the APK Signature Scheme v2/v3 Blocks found in
         this APKSigningBlock.
 
-        WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+        WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE
+        RELIED ON, please use apksigner instead.
 
         Returns (verified, failed), where verified is a tuple of versions for
         verification successes, and failed is a tuple of (version, exception) tuples
@@ -395,12 +398,13 @@ class APKSignatureSchemeBlock(Block):
         return self.version == 3
 
     # FIXME
-    # WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+    # WARNING: verification is considered EXPERIMENTAL
     def verify(self, apkfile: str, sdk: Optional[int] = None) -> None:
         """
         Verify APK Signature Scheme using verify_apk_signature_scheme().
 
-        WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+        WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE
+        RELIED ON, please use apksigner instead.
         """
         verify_apk_signature_scheme(self.signers, apkfile=apkfile, sdk=sdk)
 
@@ -694,7 +698,7 @@ def _len_prefixed_field(data: bytes) -> Tuple[bytes, bytes]:
 
 
 # FIXME: check & audit!
-# WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+# WARNING: verification is considered EXPERIMENTAL
 # https://source.android.com/docs/security/features/apksigning/v2#v2-verification
 # https://source.android.com/docs/security/features/apksigning/v3#v3-verification
 def verify_apk_signature_scheme(signers: Tuple[Union[V2Signer, V3Signer], ...],
@@ -702,7 +706,8 @@ def verify_apk_signature_scheme(signers: Tuple[Union[V2Signer, V3Signer], ...],
     """
     Verify APK Signature Scheme v2/v3.
 
-    WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+    WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED
+    ON, please use apksigner instead.
 
     NB: currently verifies all signatures, not just the one with the strongest
     supported signature algorithm ID.
@@ -849,13 +854,14 @@ def _chunks(data: bytes, blocksize: int) -> Iterator[bytes]:
 
 
 # FIXME: type checking?!
-# WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+# WARNING: verification is considered EXPERIMENTAL
 def verify_signature(key: bytes, sig: bytes, msg: bytes, halgo, pad) -> None:
     """
     Verify signature (sig) from key on message (msg) using appropriate hashing
     algorithm and padding.
 
-    WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+    WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED
+    ON, please use apksigner instead.
 
     Raises VerificationError (as a result of InvalidSignature) on failure.
     """
@@ -1056,14 +1062,15 @@ def _extract_v2_sig(apkfile: str) -> Tuple[int, bytes]:
 
 
 # FIXME
-# WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+# WARNING: verification is considered EXPERIMENTAL
 def verify_apk(apkfile: str, sig_block: Optional[bytes] = None, sdk: Optional[int] = None) \
         -> Tuple[Tuple[int, ...], Tuple[Tuple[int, Exception], ...]]:
     """
     Verify APK file using the APK Signature Scheme v2/v3 Blocks found parsing
     the APK Signing Block.
 
-    WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+    WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED
+    ON, please use apksigner instead.
 
     If sig_block is None, it will be extracted from the APK using
     extract_v2_sig().
@@ -1120,7 +1127,6 @@ def main():
 
     import click
 
-    # FIXME
     @click.group(help="""
         apksigtool - parse/verify/clean android apk signing blocks & apks
     """)
@@ -1128,7 +1134,6 @@ def main():
     def cli():
         pass
 
-    # FIXME
     @cli.command(help="""
         Parse APK Signing Block (from APK or extracted block) and output a parse
         tree (indented with spaces) or JSON.
@@ -1159,13 +1164,15 @@ def main():
         Verify APK using the APK Signature Scheme v2/v3 Blocks in its APK
         Signing Block.
 
-        WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+        WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE
+        RELIED ON, please use apksigner instead.
     """)
     @click.option("--sdk-version", type=click.INT,
                   help="For v3 signers specifying min/max SDK.")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     def verify(apk, sdk_version):
-        print("WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!", file=sys.stderr)
+        print("WARNING: verification is considered EXPERIMENTAL,"
+              " please use apksigner instead.", file=sys.stderr)
         verified, failed = verify_apk(apk, sdk=sdk_version)
         for version in verified:
             print(f"v{version} verified")
@@ -1174,7 +1181,6 @@ def main():
         if failed or not verified:
             sys.exit(1)
 
-    # FIXME
     @cli.command(help="""
         Clean APK (or extracted block): remove everything that's not an APK
         Signature Scheme v2/v3 Block or verity padding block (or has a pair_id

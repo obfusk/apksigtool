@@ -41,7 +41,8 @@ can also clean them (i.e. remove everything that's not an APK Signature Scheme
 v2/v3 Block or verity padding block), which can be useful for [reproducible
 builds](https://reproducible-builds.org).
 
-WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+**WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON, please use
+[`apksigner`](https://developer.android.com/studio/command-line/apksigner) instead.**
 
 ### Parse
 
@@ -228,9 +229,12 @@ $ apksigtool parse --block meta/APKSigningBlock
 
 ### Verify
 
+**WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON, please use
+[`apksigner`](https://developer.android.com/studio/command-line/apksigner) instead.**
+
 ```bash
 $ apksigtool verify some.apk
-WARNING: THIS IS A PROTOTYPE; DO NOT USE IN PRODUCTION!
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 ```
