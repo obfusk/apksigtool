@@ -1,8 +1,7 @@
 from pathlib import Path
 import setuptools
 
-# from apksigtool import __version__
-__version__ = "0.1.0"
+from apksigtool import __version__
 
 info = Path(__file__).with_name("README.md").read_text(encoding = "utf8")
 
