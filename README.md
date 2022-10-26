@@ -85,15 +85,15 @@ $ apksigtool parse --json some.apk | jq -r '.pairs[].id' | awk '{printf "0x%x\n"
 
 JSON (full):
 
+NB: elided binary values (`digest`, `fingerprint`, `raw_data`, `signature`) are
+represented as hex (e.g. `foo` would be represented as `666f6f`).
+
 ```bash
 $ apksigtool parse --json some.apk
 ```
 
 <details>
 <summary>full JSON output (long, some data elided)</summary>
-
-NB: elided binary values (`digest`, `fingerprint`, `raw_data`, `signature`) are
-represented as hex (e.g. "foo" would be represented as "666f6f").
 
 ```json
 {
