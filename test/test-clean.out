@@ -1,0 +1,2224 @@
+apks/debuggable-boolean.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Unknown signature algorithm ID: 0x9901)
+apksigtool: not verified
+
+apks/debuggable-resource.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Unknown signature algorithm ID: 0x9901)
+apksigtool: not verified
+
+apks/golden-aligned-in.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/golden-aligned-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-aligned-v1-out.apk
+apksigner: verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/golden-aligned-v1v2-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/golden-aligned-v1v2v3-lineage-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-aligned-v1v2v3-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-aligned-v2-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/golden-aligned-v2v3-lineage-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-aligned-v2v3-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-aligned-v3-lineage-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/golden-aligned-v3-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/golden-legacy-aligned-in.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/golden-legacy-aligned-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-legacy-aligned-v1-out.apk
+apksigner: verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/golden-legacy-aligned-v1v2-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/golden-legacy-aligned-v1v2v3-lineage-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-legacy-aligned-v1v2v3-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-legacy-aligned-v2-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/golden-legacy-aligned-v2v3-lineage-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-legacy-aligned-v2v3-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-legacy-aligned-v3-lineage-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/golden-legacy-aligned-v3-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/golden-pinsapp-signed.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-rsa-minSdkVersion-1-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-rsa-minSdkVersion-18-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-rsa-minSdkVersion-24-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-rsa-no-verity-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-rsa-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-rsa-verity-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-unaligned-in.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/golden-unaligned-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-unaligned-v1-out.apk
+apksigner: verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/golden-unaligned-v1v2-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/golden-unaligned-v1v2v3-lineage-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-unaligned-v1v2v3-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-unaligned-v2-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/golden-unaligned-v2v3-lineage-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-unaligned-v2v3-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/golden-unaligned-v3-lineage-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/golden-unaligned-v3-out.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/mismatched-compression-method.apk
+apksigner: verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/original-with-stamp-file.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/original-with-versionCodeMajor.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/original.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/pinsapp-unsigned.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/stamp-apk-hash-mismatch-v1.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/stamp-apk-hash-mismatch-v2.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/stamp-apk-hash-mismatch-v3.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/stamp-apk-hash-mismatch.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/stamp-certificate-mismatch.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/stamp-lineage-invalid.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/stamp-lineage-valid.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/stamp-lineage-with-3-signers.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/stamp-malformed-signature.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/stamp-without-apk-signature.apk
+apksigner: not verified
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+apksigtool: not verified
+
+apks/stamp-without-block.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/targetSandboxVersion-2.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/two-signers-second-signer-v2-broken.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Invalid signature)
+apksigtool: not verified
+
+apks/two-signers.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/unsigned-targetSandboxVersion-2.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v1-ec-p256-targetSdk-30.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-manifest.apk
+apksigner: verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-sf.apk
+apksigner: verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v1-sha1-sha256-manifest-and-sf-with-sha256-wrong-in-manifest.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v1-sha1-sha256-manifest-and-sf-with-sha256-wrong-in-sf.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v1-sha1-sha256-manifest-and-sf.apk
+apksigner: verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v1-sha1-sha256-manifest-and-sha1-sf.apk
+apksigner: verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v1-with-apk-sig-block-but-without-apk-sig-scheme-v2-block.apk
+apksigner: verified
+"UnknownBlock"
+cleaned
+nothing to clean
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+apksigtool: not verified
+
+apks/v1v2v3-rotated-v3-key-valid-stamp.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-lineage-attr.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 not verified (Invalid signature)
+apksigtool: not verified
+
+apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-zip.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Digest mismatch: expected 0a457e6dd7cc8d4dde28a4dae843032de5fbe58123eedd0a31e7f958f23e1626, got fc5c360b4d207d632bd7899cd06b07f914e090e40ae2ed9b2c265be00b04f9e8)
+v3 not verified (Digest mismatch: expected 0a457e6dd7cc8d4dde28a4dae843032de5fbe58123eedd0a31e7f958f23e1626, got fc5c360b4d207d632bd7899cd06b07f914e090e40ae2ed9b2c265be00b04f9e8)
+apksigtool: not verified
+
+apks/v1v2v3-with-rsa-2048-lineage-3-signers-no-sig-block.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v1v2v3-with-rsa-2048-lineage-3-signers.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/v2-ec-p256-targetSdk-30.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-apk-sig-block-size-mismatch.apk
+apksigner: not verified
+Error: APK Signing Block sizes not equal.
+Error: APK Signing Block sizes not equal.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: APK Signing Block sizes not equal.
+apksigtool: not verified
+
+apks/v2-only-cert-and-public-key-mismatch.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Public key does not match first certificate)
+apksigtool: not verified
+
+apks/v2-only-garbage-between-cd-and-eocd.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-max-sized-eocd-comment.apk
+apksigner: verified
+Error: Expected end of central directory record (EOCD).
+Error: Expected end of central directory record (EOCD).
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: Expected end of central directory record (EOCD).
+apksigtool: not verified
+
+apks/v2-only-missing-classes.dex.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-no-certs-in-sig.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (No certificates)
+apksigtool: not verified
+
+apks/v2-only-signatures-and-digests-block-mismatch.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Signature algorithm IDs of digests and signatures are not identical)
+apksigtool: not verified
+
+apks/v2-only-targetSandboxVersion-2.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-targetSandboxVersion-3.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-truncated-cd.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-two-signers-second-signer-no-sig.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (No signatures)
+apksigtool: not verified
+
+apks/v2-only-two-signers-second-signer-no-supported-sig.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Unknown signature algorithm ID: 0x8888)
+apksigtool: not verified
+
+apks/v2-only-two-signers.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-unknown-additional-attr.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Unknown signature algorithm ID: 0x9901)
+apksigtool: not verified
+
+apks/v2-only-unknown-pair-in-apk-sig-block.apk
+apksigner: verified
+"UnknownBlock"
+"APKSignatureSchemeBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-dsa-sha256-1024-sig-does-not-verify.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Invalid signature)
+apksigtool: not verified
+
+apks/v2-only-with-dsa-sha256-1024.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-dsa-sha256-2048.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-dsa-sha256-3072.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-ecdsa-sha256-p256-digest-mismatch.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Digest mismatch: expected faee6495d3c8fd4047afd9d2a68a07be597dfcde2435487bc4b2def96dc95c04, got 7aee6495d3c8fd4047afd9d2a68a07be597dfcde2435487bc4b2def96dc95c04)
+apksigtool: not verified
+
+apks/v2-only-with-ecdsa-sha256-p256-sig-does-not-verify.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Invalid signature)
+apksigtool: not verified
+
+apks/v2-only-with-ecdsa-sha256-p256.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-ecdsa-sha256-p384.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-ecdsa-sha256-p521.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-ecdsa-sha512-p256.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-ecdsa-sha512-p384.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-ecdsa-sha512-p521.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-ignorable-unsupported-sig-algs.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Unknown signature algorithm ID: 0x12345678)
+apksigtool: not verified
+
+apks/v2-only-with-rsa-pkcs1-sha256-1024-cert-not-der.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha256-1024.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha256-16384.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha256-2048-sig-does-not-verify.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Invalid signature)
+apksigtool: not verified
+
+apks/v2-only-with-rsa-pkcs1-sha256-2048.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha256-3072.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha256-4096.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha256-8192.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha512-1024.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha512-16384.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha512-2048.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha512-3072.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha512-4096-digest-mismatch.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Digest mismatch: expected 5ec97f56387436550cda87701dd26167e6a093bdf564ff95e2415c9e5edbb0cc31980b541520a551b6eacde1358e9057788f8072e2bbb6a19092cf1af379f840, got dec97f56387436550cda87701dd26167e6a093bdf564ff95e2415c9e5edbb0cc31980b541520a551b6eacde1358e9057788f8072e2bbb6a19092cf1af379f840)
+apksigtool: not verified
+
+apks/v2-only-with-rsa-pkcs1-sha512-4096.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pkcs1-sha512-8192.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha256-1024.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha256-16384.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha256-2048-sig-does-not-verify.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 not verified (Invalid signature)
+apksigtool: not verified
+
+apks/v2-only-with-rsa-pss-sha256-2048.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha256-3072.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha256-4096.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha256-8192.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha512-16384.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha512-2048.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha512-3072.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha512-4096.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-rsa-pss-sha512-8192.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-with-stamp.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-only-wrong-apk-sig-block-magic.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v2-rsa-2048-with-extra-sig-block.apk
+apksigner: verified
+"UnknownBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+apksigtool: verified
+
+apks/v2-stripped-with-ignorable-signing-schemes.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v2-stripped.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v2v3-signed-v3-block-stripped.apk
+apksigner: not verified
+Error: Assertion failed: verity zero padding.
+Error: Assertion failed: verity zero padding.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: Assertion failed: verity zero padding.
+apksigtool: not verified
+
+apks/v2v3-unknown-additional-attr.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/v3-ec-p256-targetSdk-30.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-cert-and-public-key-mismatch.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 not verified (Public key does not match first certificate)
+apksigtool: not verified
+
+apks/v3-only-no-certs-in-sig.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 not verified (No certificates)
+apksigtool: not verified
+
+apks/v3-only-no-supported-sig-algs.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 not verified (Unknown signature algorithm ID: 0x11223344)
+apksigtool: not verified
+
+apks/v3-only-signatures-and-digests-block-mismatch.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 not verified (Signature algorithm IDs of digests and signatures are not identical)
+apksigtool: not verified
+
+apks/v3-only-unknown-additional-attr.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-unknown-pair-in-apk-sig-block.apk
+apksigner: verified
+"UnknownBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-dsa-sha256-1024.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-dsa-sha256-2048-sig-does-not-verify.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 not verified (Invalid signature)
+apksigtool: not verified
+
+apks/v3-only-with-dsa-sha256-2048.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-dsa-sha256-3072-digest-mismatch.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 not verified (Digest mismatch: expected 8df2426ea33aedaf495d88e5be0c6a1663ff0a81c5ed12d5b2929ae4b4300f2f, got 0df2426ea33aedaf495d88e5be0c6a1663ff0a81c5ed12d5b2929ae4b4300f2f)
+apksigtool: not verified
+
+apks/v3-only-with-dsa-sha256-3072.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-ecdsa-sha256-p256.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-ecdsa-sha256-p384.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-ecdsa-sha256-p521.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-ecdsa-sha512-p256.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-ecdsa-sha512-p384-wrong-apk-sig-block-magic.apk
+apksigner: not verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+
+apks/v3-only-with-ecdsa-sha512-p384.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-ecdsa-sha512-p521-sig-does-not-verify.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 not verified (Invalid signature)
+apksigtool: not verified
+
+apks/v3-only-with-ecdsa-sha512-p521.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-ignorable-unsupported-sig-algs.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 not verified (Unknown signature algorithm ID: 0x11223344)
+apksigtool: not verified
+
+apks/v3-only-with-rsa-pkcs1-sha256-1024.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha256-16384.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha256-2048.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha256-3072-sig-does-not-verify.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 not verified (Invalid signature)
+apksigtool: not verified
+
+apks/v3-only-with-rsa-pkcs1-sha256-3072.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha256-4096.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha256-8192.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha512-1024.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha512-16384.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha512-2048.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha512-3072.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha512-4096-apk-sig-block-size-mismatch.apk
+apksigner: not verified
+Error: APK Signing Block sizes not equal.
+Error: APK Signing Block sizes not equal.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: APK Signing Block sizes not equal.
+apksigtool: not verified
+
+apks/v3-only-with-rsa-pkcs1-sha512-4096.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-rsa-pkcs1-sha512-8192-digest-mismatch.apk
+apksigner: not verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 not verified (Digest mismatch: expected 9b9ae02da60b18999bf541790f00d380006fdf0655c3c482aa0bb0af17cf7a42ecf56b973518546c9080b2fef83027e895ed2882bfc88ea19790bbab29af53b3, got c76c00584d2a582a6e1033f254af02f46961dd4e71bd816818b5a58c96ea5ff438bb193331eac006fc22188633d24a1dc5b1afce8bf3b5ef9ab07543bf255af4)
+apksigtool: not verified
+
+apks/v3-only-with-rsa-pkcs1-sha512-8192.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+nothing to clean
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-only-with-stamp.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v3 verified
+apksigtool: verified
+
+apks/v3-stripped.apk
+apksigner: not verified
+Error: Assertion failed: verity zero padding.
+Error: Assertion failed: verity zero padding.
+apksigner: not verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: Assertion failed: verity zero padding.
+apksigtool: not verified
+
+apks/valid-stamp.apk
+apksigner: verified
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"SourceStampBlock"
+"VerityPaddingBlock"
+cleaned
+nothing to clean
+"APKSignatureSchemeBlock"
+"APKSignatureSchemeBlock"
+"VerityPaddingBlock"
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v2 verified
+v3 verified
+apksigtool: verified
+
+apks/weird-compression-method.apk
+apksigner: verified
+Error: No APK Signing Block.
+Error: No APK Signing Block.
+apksigner: verified
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+Error: No APK Signing Block.
+apksigtool: not verified
+

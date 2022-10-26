@@ -26,7 +26,7 @@ jobs:
       run: |
         sudo apt-get update # || sudo apt-get update
         # sudo apt-get upgrade -y
-        sudo apt-get install -y apksigner
+        sudo apt-get install -y apksigner jq
         python3 -m pip install --upgrade pip
         python3 -m pip install flake8 pylint
     - name: Install mypy
@@ -37,3 +37,9 @@ jobs:
       run: make test
     - name: Test APKs
       run: make test-apks
+    - name: Test clean (modifies APKs)
+      run: |
+        make test-apks-clean-DESTRUCTIVE
+        ( cd test/apks && git restore apks/ )
+        make test-apks-clean-check-DESTRUCTIVE
+        ( cd test/apks && git restore apks/ )

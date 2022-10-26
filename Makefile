@@ -5,6 +5,7 @@ export PYTHONWARNINGS := default
 
 .PHONY: all install test test-cli lint lint-extra clean cleanup
 .PHONY: test-apks test-apks-verify test-apks-parse test-apks-parse-json
+.PHONY: test-apks-clean-DESTRUCTIVE test-apks-clean-check-DESTRUCTIVE
 
 all: # TODO: apksigtool.1
 
@@ -30,6 +31,16 @@ test-apks-parse:
 
 test-apks-parse-json:
 	cd test/apks && diff -Naur ../test-parse-json.out <( ../test-parse-json.sh \
+	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
+
+test-apks-clean-DESTRUCTIVE:
+	# WARNING: modifies test/apks/apks/*.apk
+	cd test/apks && diff -Naur ../test-clean.out <( ../test-clean.sh \
+	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
+
+test-apks-clean-check-DESTRUCTIVE:
+	# WARNING: modifies test/apks/apks/*.apk
+	cd test/apks && diff -Naur ../test-clean-check.out <( ../test-clean-check.sh \
 	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
 
 lint:
