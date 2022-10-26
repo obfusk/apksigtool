@@ -470,6 +470,7 @@ def parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None,
     return APKSigningBlock(tuple(_parse_apk_signing_block(data, apkfile=apkfile, sdk=sdk)))
 
 
+# FIXME: check if sb_size % 4096 == 0? when?
 # https://source.android.com/docs/security/features/apksigning/v2#apk-signing-block-format
 def _parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None,
                              sdk: Optional[int] = None) -> Iterator[Pair]:
@@ -505,6 +506,7 @@ def _parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None,
 
 
 # FIXME
+# FIXME: adjust/add verity padding if sb_size % 4096 != 0? when?
 def clean_apk_signing_block(data: bytes, keep: Tuple[int, ...] = ()) -> bytes:
     """
     Clean APK Signing Block: remove everything that's not an APK Signature
