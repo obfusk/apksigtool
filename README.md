@@ -69,7 +69,7 @@ PAIR ID: 0x42726577
   VERITY PADDING BLOCK
 ```
 
-JSON:
+JSON (filtered):
 
 ```bash
 $ apksigtool parse --json some.apk | jq -r '.pairs[].value._type'
@@ -81,6 +81,138 @@ $ apksigtool parse --json some.apk | jq -r '.pairs[].id' | awk '{printf "0x%x\n"
 0xf05368c0
 0x42726577
 ```
+
+JSON (full):
+
+```bash
+$ apksigtool parse --json some.apk
+```
+
+<details>
+<summary>full JSON output (long, some data elided)</summary>
+
+```json
+{
+  "_type": "APKSigningBlock",
+  "pairs": [
+    {
+      "_type": "Pair",
+      "id": 1896449818,
+      "length": 1437,
+      "value": {
+        "_type": "APKSignatureSchemeBlock",
+        "signers": [
+          {
+            "_type": "V2Signer",
+            "public_key": {
+              "_type": "PublicKey",
+              "public_key_info": {
+                "_type": "PublicKeyInfo",
+                "algorithm": "RSA",
+                "bit_size": 2048,
+                "fingerprint": "...",
+                "hash_algorithm": null
+              },
+              "raw_data": "..."
+            },
+            "signatures": [
+              {
+                "_type": "Signature",
+                "algoritm_id_info": "RSASSA-PKCS1-v1_5 with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks",
+                "signature": "...",
+                "signature_algorithm_id": 259
+              }
+            ],
+            "signed_data": {
+              "_type": "V2SignedData",
+              "additional_attributes": [
+                {
+                  "_type": "AdditionalAttribute",
+                  "id": 3203395597,
+                  "is_proof_of_rotation_struct": false,
+                  "is_stripping_protection": true,
+                  "value": "03000000"
+                }
+              ],
+              "certificates": [
+                {
+                  "_type": "Certificate",
+                  "certificate_info": {
+                    "_type": "CertificateInfo",
+                    "fingerprint": "...",
+                    "hash_algorithm": "SHA256",
+                    "issuer": "Common Name: ..., Organizational Unit: ...",
+                    "not_valid_after": "2022-10-27 12:34:56+00:00",
+                    "not_valid_before": "2022-10-26 12:34:56+00:00",
+                    "serial_number": "...",
+                    "signature_algorithm": "RSASSA_PKCS1V15",
+                    "subject": "Common Name: ..., Organizational Unit: ..."
+                  },
+                  "public_key_info": {
+                    "_type": "PublicKeyInfo",
+                    "algorithm": "RSA",
+                    "bit_size": 2048,
+                    "fingerprint": "...",
+                    "hash_algorithm": null
+                  },
+                  "raw_data": "..."
+                }
+              ],
+              "digests": [
+                {
+                  "_type": "Digest",
+                  "algoritm_id_info": "RSASSA-PKCS1-v1_5 with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks",
+                  "digest": "...",
+                  "signature_algorithm_id": 259
+                }
+              ],
+              "raw_data": "..."
+            }
+          }
+        ],
+        "verification_error": null,
+        "verified": true,
+        "version": 2
+      }
+    },
+    {
+      "_type": "Pair",
+      "id": 4031998144,
+      "length": 1437,
+      "value": {
+        "_type": "APKSignatureSchemeBlock",
+        "signers": [
+          {
+            "_type": "V3Signer",
+            "max_sdk": 2147483647,
+            "min_sdk": 24,
+            ...
+            "signed_data": {
+              ...
+              "max_sdk": 2147483647,
+              "min_sdk": 24,
+              ...
+            }
+          }
+        ],
+        "verification_error": null,
+        "verified": true,
+        "version": 3
+      }
+    },
+    {
+      "_type": "Pair",
+      "id": 1114793335,
+      "length": 1166,
+      "value": {
+        "_type": "VerityPaddingBlock"
+      }
+    }
+  ]
+}
+```
+
+</details>
 
 Extracted APKSigningBlock instead of APK:
 
