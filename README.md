@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-10-25
+    Date        : 2022-10-26
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -285,8 +285,8 @@ Parse:
 Parse tree & JSON:
 
 ```python
->>> show_parse_tree(apk_signing_block, verbose=False, apkfile=None, sdk=None)
->>> show_json(apk_signing_block)
+>>> show_parse_tree(apk_signing_block, verbose=False, apkfile=None, sdk=None, file=sys.stdout)
+>>> show_json(apk_signing_block, file=sys.stdout)
 ```
 
 Verify:

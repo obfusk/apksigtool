@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-10-25
+# Date        : 2022-10-26
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -41,8 +41,8 @@ API
 >> from apksigtool import ...
 >> apk_signing_block = parse_apk_signing_block(data, apkfile=None, sdk=None)
 
->> show_parse_tree(apk_signing_block, verbose=False, apkfile=None, sdk=None)
->> show_json(apk_signing_block)
+>> show_parse_tree(apk_signing_block, verbose=False, apkfile=None, sdk=None, file=sys.stdout)
+>> show_json(apk_signing_block, file=sys.stdout)
 
 >> apk_signing_block.verify(apkfile, sdk=None)                  # raises on failure
 >> verified, failed = apk_signing_block.verify_results(apkfile, sdk=None)
@@ -63,7 +63,7 @@ import sys
 from binascii import hexlify
 from dataclasses import dataclass, field
 from hashlib import sha256, sha512
-from typing import Any, Iterator, List, Literal, Mapping, Optional, Tuple, Union
+from typing import Any, Iterator, List, Literal, Mapping, Optional, TextIO, Tuple, Union
 
 from apksigcopier import extract_v2_sig, zip_data, APKSigCopierError
 from asn1crypto.keys import PublicKeyInfo as X509CertPubKeyInfo
@@ -444,6 +444,7 @@ def _assert(b: bool, what: Optional[str] = None) -> None:
     >>> _assert(1 == 2, "oops") # doctest: +IGNORE_EXCEPTION_DETAIL
     Traceback (most recent call last):
     AssertionFailed: Assertion failed: oops
+
     """
     if not b:
         raise AssertionFailed("Assertion failed" + (f": {what}" if what else ""))
@@ -900,124 +901,147 @@ def aid_info(aid: int) -> str:
 
 
 def show_parse_tree(apk_signing_block: APKSigningBlock, verbose: bool = False,
-                    apkfile: Optional[str] = None, sdk: Optional[int] = None) -> None:
-    """Print parse tree (w/ indent etc.) to stdout."""
+                    apkfile: Optional[str] = None, sdk: Optional[int] = None,
+                    file: TextIO = sys.stdout) -> None:
+    """Print parse tree (w/ indent etc.) to file (stdout)."""
+    def p(*a):
+        print(*a, file=file)
     for pair in apk_signing_block.pairs:
         b = pair.value
         if verbose:
-            print("PAIR LENGTH:", pair.length)
-        print("PAIR ID:", hex(pair.id))
+            p("PAIR LENGTH:", pair.length)
+        p("PAIR ID:", hex(pair.id))
         if isinstance(b, APKSignatureSchemeBlock):
-            show_apk_signature_scheme_block(b, verbose=verbose, apkfile=apkfile, sdk=sdk)
+            show_apk_signature_scheme_block(b, verbose=verbose, apkfile=apkfile,
+                                            sdk=sdk, file=file)
         elif isinstance(b, VerityPaddingBlock):
-            print("  VERITY PADDING BLOCK")
+            p("  VERITY PADDING BLOCK")
         elif isinstance(b, DependencyInfoBlock):
-            print("  DEPENDENCY INFO BLOCK")
+            p("  DEPENDENCY INFO BLOCK")
         elif isinstance(b, GooglePlayFrostingBlock):
-            print("  GOOGLE PLAY FROSTING BLOCK")
+            p("  GOOGLE PLAY FROSTING BLOCK")
         elif isinstance(b, SourceStampBlock):
-            print(f"  SOURCE STAMP v{b.version} BLOCK")
+            p(f"  SOURCE STAMP v{b.version} BLOCK")
         else:
-            print("  UNKNOWN BLOCK")
+            p("  UNKNOWN BLOCK")
         if verbose and hasattr(b, "raw_data"):
-            _show_hex(b.raw_data, 2)    # type: ignore
+            _show_hex(b.raw_data, 2, file=file)     # type: ignore
 
 
 def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, verbose: bool,
-                                    apkfile: Optional[str] = None, sdk: Optional[int] = None) -> None:
-    """Print APKSignatureSchemeBlock parse tree to stdout."""
-    print(f"  APK SIGNATURE SCHEME v{block.version} BLOCK")
+                                    apkfile: Optional[str] = None, sdk: Optional[int] = None,
+                                    file: TextIO = sys.stdout) -> None:
+    """Print APKSignatureSchemeBlock parse tree to file (stdout)."""
+    def p(*a):
+        print(*a, file=file)
+    p(f"  APK SIGNATURE SCHEME v{block.version} BLOCK")
     for i, signer in enumerate(block.signers):
-        print("  SIGNER", i)
-        print("    SIGNED DATA")
+        p("  SIGNER", i)
+        p("    SIGNED DATA")
         for j, digest in enumerate(signer.signed_data.digests):
-            print("      DIGEST", j)
-            _show_aid(digest, 8, verbose=verbose)
-            _show_hex(digest.digest, 8)
+            p("      DIGEST", j)
+            _show_aid(digest, 8, verbose=verbose, file=file)
+            _show_hex(digest.digest, 8, file=file)
         for j, cert in enumerate(signer.signed_data.certificates):
-            print("      CERTIFICATE", j)
+            p("      CERTIFICATE", j)
             cert_info, pk_info = cert.certificate_info, cert.public_key_info
-            show_x509_certificate_info(cert_info, pk_info, 8, verbose=verbose)
+            show_x509_certificate_info(cert_info, pk_info, 8, verbose=verbose, file=file)
         if block.is_v3:
             assert isinstance(signer, V3Signer)
-            print("      MIN SDK:", signer.signed_data.min_sdk)
-            print("      MAX SDK:", signer.signed_data.max_sdk)
+            p("      MIN SDK:", signer.signed_data.min_sdk)
+            p("      MAX SDK:", signer.signed_data.max_sdk)
         for j, attr in enumerate(signer.signed_data.additional_attributes):
-            print("      ADDITIONAL ATTRIBUTE", j)
-            print("        ADDITIONAL ATTRIBUTE ID:", hex(attr.id))
+            p("      ADDITIONAL ATTRIBUTE", j)
+            p("        ADDITIONAL ATTRIBUTE ID:", hex(attr.id))
             if attr.is_stripping_protection:
-                print("        STRIPPING PROTECTION ATTR")
+                p("        STRIPPING PROTECTION ATTR")
             elif attr.is_proof_of_rotation_struct:
-                print("        PROOF OF ROTATION STRUCT")
-            _show_hex(attr.value, 8)
+                p("        PROOF OF ROTATION STRUCT")
+            _show_hex(attr.value, 8, file=file)
         if block.is_v3:
             assert isinstance(signer, V3Signer)
-            print("    MIN SDK:", signer.min_sdk)
-            print("    MAX SDK:", signer.max_sdk)
+            p("    MIN SDK:", signer.min_sdk)
+            p("    MAX SDK:", signer.max_sdk)
         for j, sig in enumerate(signer.signatures):
-            print("    SIGNATURE", j)
-            _show_aid(sig, 6, verbose=verbose)
-            _show_hex(sig.signature, 6)
-        print("    PUBLIC KEY")
-        show_public_key_info(signer.public_key.public_key_info, 6)
+            p("    SIGNATURE", j)
+            _show_aid(sig, 6, verbose=verbose, file=file)
+            _show_hex(sig.signature, 6, file=file)
+        p("    PUBLIC KEY")
+        show_public_key_info(signer.public_key.public_key_info, 6, file=file)
     if apkfile is not None:
         try:
             block.verify(apkfile, sdk=sdk)
         except VerificationError as e:
-            print(f"  NOT VERIFIED ({e})")
+            p(f"  NOT VERIFIED ({e})")
         else:
-            print("  VERIFIED")
+            p("  VERIFIED")
     else:
-        print("  NOT VERIFIED (No APK file)")
+        p("  NOT VERIFIED (No APK file)")
 
 
 # FIXME: show more? s/Common Name:/CN=/ etc?
 def show_x509_certificate_info(info: CertificateInfo, pk_info: PublicKeyInfo,
-                               indent: int, verbose: bool) -> None:
-    """Print X.509 certificate information to stdout."""
-    print(" " * indent + "X.509 SUBJECT:", info.subject)
+                               indent: int, verbose: bool, file: TextIO = sys.stdout) -> None:
+    """Print X.509 certificate information to file (stdout)."""
+    def p(*a):
+        print(*a, file=file)
+    p(" " * indent + "X.509 SUBJECT:", info.subject)
     if verbose:
-        print(" " * indent + "X.509 ISSUER:", info.issuer)
-        print(" " * indent + "X.509 SERIAL NUMBER:", info.serial_number)
-        print(" " * indent + "X.509 HASH ALGORITHM:", info.hash_algorithm)
-        print(" " * indent + "X.509 SIGNATURE ALGORITHM:", info.signature_algorithm)
-        print(" " * indent + "X.509 NOT VALID BEFORE:", info.not_valid_before)
-        print(" " * indent + "X.509 NOT VALID AFTER:", info.not_valid_after)
-    print(" " * indent + "X.509 SHA256 FINGERPRINT (HEX):", info.fingerprint)
-    show_public_key_info(pk_info, indent)
+        p(" " * indent + "X.509 ISSUER:", info.issuer)
+        p(" " * indent + "X.509 SERIAL NUMBER:", info.serial_number)
+        p(" " * indent + "X.509 HASH ALGORITHM:", info.hash_algorithm)
+        p(" " * indent + "X.509 SIGNATURE ALGORITHM:", info.signature_algorithm)
+        p(" " * indent + "X.509 NOT VALID BEFORE:", info.not_valid_before)
+        p(" " * indent + "X.509 NOT VALID AFTER:", info.not_valid_after)
+    p(" " * indent + "X.509 SHA256 FINGERPRINT (HEX):", info.fingerprint)
+    show_public_key_info(pk_info, indent, file=file)
 
 
-def show_public_key_info(info: PublicKeyInfo, indent: int) -> None:
-    """Print public key information to stdout."""
-    print(" " * indent + "PUBLIC KEY ALGORITHM:", info.algorithm)
-    print(" " * indent + "PUBLIC KEY BIT SIZE:", info.bit_size)
-    print(" " * indent + "PUBLIC KEY SHA256 FINGERPRINT (HEX):", info.fingerprint)
+def show_public_key_info(info: PublicKeyInfo, indent: int, file: TextIO = sys.stdout) -> None:
+    """Print public key information to file (stdout)."""
+    def p(*a):
+        print(*a, file=file)
+    p(" " * indent + "PUBLIC KEY ALGORITHM:", info.algorithm)
+    p(" " * indent + "PUBLIC KEY BIT SIZE:", info.bit_size)
+    p(" " * indent + "PUBLIC KEY SHA256 FINGERPRINT (HEX):", info.fingerprint)
     if info.hash_algorithm is not None:
-        print(" " * indent + "PUBLIC KEY HASH ALGORITHM:", info.hash_algorithm)
+        p(" " * indent + "PUBLIC KEY HASH ALGORITHM:", info.hash_algorithm)
 
 
-def _show_hex(data: bytes, indent: int) -> None:
-    """Print hex value (w/ indent etc.) to stdout."""
-    print(" " * indent + "VALUE (HEX):", hexlify(data).decode())
+def _show_hex(data: bytes, indent: int, file: TextIO = sys.stdout) -> None:
+    """Print hex value (w/ indent etc.) to file (stdout)."""
+    print(" " * indent + "VALUE (HEX):", hexlify(data).decode(), file=file)
 
 
-def _show_aid(x: Union[Digest, Signature], indent: int, verbose: bool) -> None:
-    """Print signature algorithm ID (w/ indent etc.) to stdout."""
+def _show_aid(x: Union[Digest, Signature], indent: int, verbose: bool, file: TextIO = sys.stdout) -> None:
+    """Print signature algorithm ID (w/ indent etc.) to file (stdout)."""
     aid, aid_s = x.signature_algorithm_id, x.algoritm_id_info
     if not verbose:
         aid_s = aid_s.split(",")[0]
-    print(" " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})")
+    print(" " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})", file=file)
 
 
-def show_json(apk_signing_block: APKSigningBlock) -> None:
-    """Print parse tree as JSON to stdout."""
+def show_json(apk_signing_block: APKSigningBlock, file: TextIO = sys.stdout) -> None:
+    """Print parse tree as JSON to file (stdout)."""
     import simplejson
-    simplejson.dump(apk_signing_block, sys.stdout, indent=2, sort_keys=True,
-                    encoding=None, default=_json_encode_bytes, for_json=True)
-    print()
+    simplejson.dump(apk_signing_block, file, indent=2, sort_keys=True,
+                    encoding=None, default=json_dump_default, for_json=True)
+    print(file=file)
 
 
-def _json_encode_bytes(obj):
+def json_dump_default(obj):
+    """
+    Returns serializable versions of bytes (hex str) and datetime.datetime (str)
+    for simplejson.dump().
+
+    >>> import io, simplejson
+    >>> from apksigtool import json_dump_default
+    >>> out = io.StringIO()
+    >>> simplejson.dump(dict(foo=b"bar"), out, encoding=None, default=json_dump_default)
+    >>> print(out.getvalue())
+    {"foo": "626172"}
+
+    """
     if isinstance(obj, bytes):
         return hexlify(obj).decode()
     if isinstance(obj, datetime.datetime):
