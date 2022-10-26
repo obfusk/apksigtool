@@ -7,7 +7,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Unknown signature algorithm ID: 0x9901)
 apksigtool: not verified
 
@@ -20,7 +19,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Unknown signature algorithm ID: 0x9901)
 apksigtool: not verified
 
@@ -29,7 +27,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -44,7 +41,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -54,7 +50,6 @@ apksigner: verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -67,7 +62,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -82,7 +76,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -98,7 +91,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -112,7 +104,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -127,7 +118,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -143,7 +133,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -157,7 +146,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -170,7 +158,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -179,7 +166,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -194,7 +180,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -204,7 +189,6 @@ apksigner: verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -217,7 +201,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -232,7 +215,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -248,7 +230,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -262,7 +243,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -277,7 +257,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -293,7 +272,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -307,7 +285,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -320,7 +297,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -335,7 +311,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -351,7 +326,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -367,7 +341,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -383,7 +356,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -399,7 +371,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -415,7 +386,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -431,7 +401,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -441,7 +410,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -456,7 +424,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -466,7 +433,6 @@ apksigner: verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -479,7 +445,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -494,7 +459,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -510,7 +474,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -524,7 +487,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -539,7 +501,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -555,7 +516,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -569,7 +529,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -582,7 +541,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -591,7 +549,6 @@ apksigner: verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -606,7 +563,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -622,7 +578,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -634,7 +589,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -643,7 +597,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -659,7 +612,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -676,7 +628,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -693,7 +644,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -710,7 +660,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -727,7 +676,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -744,7 +692,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -761,7 +708,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -778,7 +724,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -795,7 +740,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -808,7 +752,6 @@ cleaned
 nothing to clean
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 apksigtool: not verified
 
 apks/stamp-without-block.apk
@@ -822,7 +765,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -834,7 +776,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -845,7 +786,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Invalid signature)
 apksigtool: not verified
 
@@ -856,7 +796,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -865,7 +804,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -874,7 +812,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -883,7 +820,6 @@ apksigner: verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -892,7 +828,6 @@ apksigner: verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -901,7 +836,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -910,7 +844,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -919,7 +852,6 @@ apksigner: verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -928,7 +860,6 @@ apksigner: verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -938,7 +869,6 @@ apksigner: verified
 cleaned
 nothing to clean
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 apksigtool: not verified
 
 apks/v1v2v3-rotated-v3-key-valid-stamp.apk
@@ -953,7 +883,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -969,7 +898,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 not verified (Invalid signature)
 apksigtool: not verified
@@ -985,7 +913,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Digest mismatch: expected 0a457e6dd7cc8d4dde28a4dae843032de5fbe58123eedd0a31e7f958f23e1626, got fc5c360b4d207d632bd7899cd06b07f914e090e40ae2ed9b2c265be00b04f9e8)
 v3 not verified (Digest mismatch: expected 0a457e6dd7cc8d4dde28a4dae843032de5fbe58123eedd0a31e7f958f23e1626, got fc5c360b4d207d632bd7899cd06b07f914e090e40ae2ed9b2c265be00b04f9e8)
 apksigtool: not verified
@@ -995,7 +922,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -1010,7 +936,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -1024,7 +949,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1033,7 +957,6 @@ apksigner: not verified
 Error: APK Signing Block sizes not equal.
 Error: APK Signing Block sizes not equal.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: APK Signing Block sizes not equal.
 apksigtool: not verified
 
@@ -1044,7 +967,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Public key does not match first certificate)
 apksigtool: not verified
 
@@ -1055,7 +977,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1064,7 +985,6 @@ apksigner: verified
 Error: Expected end of central directory record (EOCD).
 Error: Expected end of central directory record (EOCD).
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: Expected end of central directory record (EOCD).
 apksigtool: not verified
 
@@ -1075,7 +995,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1086,7 +1005,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (No certificates)
 apksigtool: not verified
 
@@ -1097,7 +1015,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Signature algorithm IDs of digests and signatures are not identical)
 apksigtool: not verified
 
@@ -1108,7 +1025,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1119,7 +1035,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1130,7 +1045,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1141,7 +1055,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (No signatures)
 apksigtool: not verified
 
@@ -1152,7 +1065,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Unknown signature algorithm ID: 0x8888)
 apksigtool: not verified
 
@@ -1163,7 +1075,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1176,7 +1087,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Unknown signature algorithm ID: 0x9901)
 apksigtool: not verified
 
@@ -1188,7 +1098,6 @@ cleaned
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1199,7 +1108,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Invalid signature)
 apksigtool: not verified
 
@@ -1210,7 +1118,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1221,7 +1128,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1232,7 +1138,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1243,7 +1148,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Digest mismatch: expected faee6495d3c8fd4047afd9d2a68a07be597dfcde2435487bc4b2def96dc95c04, got 7aee6495d3c8fd4047afd9d2a68a07be597dfcde2435487bc4b2def96dc95c04)
 apksigtool: not verified
 
@@ -1254,7 +1158,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Invalid signature)
 apksigtool: not verified
 
@@ -1265,7 +1168,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1276,7 +1178,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1287,7 +1188,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1298,7 +1198,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1309,7 +1208,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1320,7 +1218,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1331,7 +1228,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Unknown signature algorithm ID: 0x12345678)
 apksigtool: not verified
 
@@ -1342,7 +1238,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1353,7 +1248,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1364,7 +1258,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1375,7 +1268,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Invalid signature)
 apksigtool: not verified
 
@@ -1386,7 +1278,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1397,7 +1288,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1408,7 +1298,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1419,7 +1308,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1430,7 +1318,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1441,7 +1328,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1452,7 +1338,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1463,7 +1348,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1474,7 +1358,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Digest mismatch: expected 5ec97f56387436550cda87701dd26167e6a093bdf564ff95e2415c9e5edbb0cc31980b541520a551b6eacde1358e9057788f8072e2bbb6a19092cf1af379f840, got dec97f56387436550cda87701dd26167e6a093bdf564ff95e2415c9e5edbb0cc31980b541520a551b6eacde1358e9057788f8072e2bbb6a19092cf1af379f840)
 apksigtool: not verified
 
@@ -1485,7 +1368,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1496,7 +1378,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1507,7 +1388,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1518,7 +1398,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1529,7 +1408,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 not verified (Invalid signature)
 apksigtool: not verified
 
@@ -1540,7 +1418,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1551,7 +1428,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1562,7 +1438,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1573,7 +1448,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1584,7 +1458,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1595,7 +1468,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1606,7 +1478,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1617,7 +1488,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1628,7 +1498,6 @@ nothing to clean
 nothing to clean
 "APKSignatureSchemeBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1642,7 +1511,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1651,7 +1519,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -1665,7 +1532,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 apksigtool: verified
 
@@ -1674,7 +1540,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -1683,7 +1548,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -1692,7 +1556,6 @@ apksigner: not verified
 Error: Assertion failed: verity zero padding.
 Error: Assertion failed: verity zero padding.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: Assertion failed: verity zero padding.
 apksigtool: not verified
 
@@ -1707,7 +1570,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -1721,7 +1583,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1734,7 +1595,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 not verified (Public key does not match first certificate)
 apksigtool: not verified
 
@@ -1747,7 +1607,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 not verified (No certificates)
 apksigtool: not verified
 
@@ -1760,7 +1619,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 not verified (Unknown signature algorithm ID: 0x11223344)
 apksigtool: not verified
 
@@ -1773,7 +1631,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 not verified (Signature algorithm IDs of digests and signatures are not identical)
 apksigtool: not verified
 
@@ -1786,7 +1643,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1800,7 +1656,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1813,7 +1668,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1826,7 +1680,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 not verified (Invalid signature)
 apksigtool: not verified
 
@@ -1839,7 +1692,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1852,7 +1704,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 not verified (Digest mismatch: expected 8df2426ea33aedaf495d88e5be0c6a1663ff0a81c5ed12d5b2929ae4b4300f2f, got 0df2426ea33aedaf495d88e5be0c6a1663ff0a81c5ed12d5b2929ae4b4300f2f)
 apksigtool: not verified
 
@@ -1865,7 +1716,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1878,7 +1728,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1891,7 +1740,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1904,7 +1752,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1917,7 +1764,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1926,7 +1772,6 @@ apksigner: not verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
@@ -1939,7 +1784,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1952,7 +1796,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 not verified (Invalid signature)
 apksigtool: not verified
 
@@ -1965,7 +1808,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -1978,7 +1820,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 not verified (Unknown signature algorithm ID: 0x11223344)
 apksigtool: not verified
 
@@ -1991,7 +1832,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2004,7 +1844,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2017,7 +1856,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2030,7 +1868,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 not verified (Invalid signature)
 apksigtool: not verified
 
@@ -2043,7 +1880,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2056,7 +1892,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2069,7 +1904,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2082,7 +1916,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2095,7 +1928,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2108,7 +1940,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2121,7 +1952,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2130,7 +1960,6 @@ apksigner: not verified
 Error: APK Signing Block sizes not equal.
 Error: APK Signing Block sizes not equal.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: APK Signing Block sizes not equal.
 apksigtool: not verified
 
@@ -2143,7 +1972,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2156,7 +1984,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 not verified (Digest mismatch: expected 9b9ae02da60b18999bf541790f00d380006fdf0655c3c482aa0bb0af17cf7a42ecf56b973518546c9080b2fef83027e895ed2882bfc88ea19790bbab29af53b3, got c76c00584d2a582a6e1033f254af02f46961dd4e71bd816818b5a58c96ea5ff438bb193331eac006fc22188633d24a1dc5b1afce8bf3b5ef9ab07543bf255af4)
 apksigtool: not verified
 
@@ -2169,7 +1996,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2183,7 +2009,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v3 verified
 apksigtool: verified
 
@@ -2192,7 +2017,6 @@ apksigner: not verified
 Error: Assertion failed: verity zero padding.
 Error: Assertion failed: verity zero padding.
 apksigner: not verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: Assertion failed: verity zero padding.
 apksigtool: not verified
 
@@ -2208,7 +2032,6 @@ nothing to clean
 "APKSignatureSchemeBlock"
 "VerityPaddingBlock"
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 v2 verified
 v3 verified
 apksigtool: verified
@@ -2218,7 +2041,6 @@ apksigner: verified
 Error: No APK Signing Block.
 Error: No APK Signing Block.
 apksigner: verified
-WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
 Error: No APK Signing Block.
 apksigtool: not verified
 
