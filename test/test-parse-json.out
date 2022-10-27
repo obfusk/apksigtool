@@ -283,7 +283,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -359,7 +359,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -451,7 +451,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -547,7 +547,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -631,7 +631,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -727,7 +727,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -803,7 +803,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -891,7 +891,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -987,7 +987,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -1071,7 +1071,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -1167,7 +1167,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -1243,7 +1243,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -1343,7 +1343,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -1435,7 +1435,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -1535,7 +1535,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -1611,7 +1611,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -1703,7 +1703,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -1799,7 +1799,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -1883,7 +1883,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -1979,7 +1979,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -2055,7 +2055,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -2143,7 +2143,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -2239,7 +2239,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -2323,7 +2323,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -2419,7 +2419,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -2495,7 +2495,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -2595,7 +2595,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -2687,7 +2687,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -2795,7 +2795,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -2883,7 +2883,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -2979,7 +2979,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -3055,7 +3055,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -3151,7 +3151,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -3227,7 +3227,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -3323,7 +3323,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -3399,7 +3399,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -3495,7 +3495,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -3571,7 +3571,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -3667,7 +3667,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -3743,7 +3743,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -3851,7 +3851,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -3939,7 +3939,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -4039,7 +4039,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -4115,7 +4115,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -4207,7 +4207,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -4303,7 +4303,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -4387,7 +4387,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -4483,7 +4483,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -4559,7 +4559,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -4647,7 +4647,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -4743,7 +4743,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -4827,7 +4827,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -4923,7 +4923,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -4999,7 +4999,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -5099,7 +5099,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -5191,7 +5191,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -5291,7 +5291,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -5367,7 +5367,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -5463,7 +5463,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -5539,7 +5539,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -5627,7 +5627,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -5719,7 +5719,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -5795,7 +5795,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -5901,7 +5901,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -5977,7 +5977,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -6083,7 +6083,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -6159,7 +6159,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -6277,7 +6277,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -6365,7 +6365,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -6471,7 +6471,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -6547,7 +6547,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -6653,7 +6653,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -6729,7 +6729,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -6835,7 +6835,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -6911,7 +6911,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -7017,7 +7017,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -7093,7 +7093,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -7199,7 +7199,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -7275,7 +7275,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -7407,7 +7407,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -7483,7 +7483,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -7571,7 +7571,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -7849,7 +7849,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 2,
         "version": 2
       }
     }
@@ -7986,7 +7986,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -8070,7 +8070,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -8188,7 +8188,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -8600,7 +8600,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -8696,7 +8696,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -8784,7 +8784,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -8956,7 +8956,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -9040,7 +9040,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -9263,7 +9263,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -9343,7 +9343,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -9423,7 +9423,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -9826,7 +9826,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 2,
         "version": 2
       }
     }
@@ -10023,7 +10023,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -10183,7 +10183,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -10263,7 +10263,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -10343,7 +10343,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -10583,7 +10583,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -10663,7 +10663,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -10743,7 +10743,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -10823,7 +10823,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -10903,7 +10903,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -10983,7 +10983,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -11167,7 +11167,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -11247,7 +11247,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -11327,7 +11327,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -11487,7 +11487,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -11567,7 +11567,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -11647,7 +11647,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -11727,7 +11727,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -11807,7 +11807,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -11887,7 +11887,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -11967,7 +11967,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -12047,7 +12047,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -12207,7 +12207,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -12287,7 +12287,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -12367,7 +12367,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -12447,7 +12447,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -12607,7 +12607,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -12687,7 +12687,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -12767,7 +12767,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -12847,7 +12847,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -12927,7 +12927,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -13007,7 +13007,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -13087,7 +13087,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -13167,7 +13167,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -13247,7 +13247,7 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     }
@@ -13327,7 +13327,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -13438,7 +13438,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -13572,7 +13572,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -13670,7 +13670,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -13762,7 +13762,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -14227,7 +14227,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -14328,7 +14328,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -14420,7 +14420,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -14604,7 +14604,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -14788,7 +14788,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -14880,7 +14880,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -14972,7 +14972,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -15064,7 +15064,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -15156,7 +15156,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -15252,7 +15252,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -15436,7 +15436,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -15644,7 +15644,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -15736,7 +15736,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -15828,7 +15828,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -16012,7 +16012,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -16104,7 +16104,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -16196,7 +16196,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -16288,7 +16288,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -16380,7 +16380,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -16472,7 +16472,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -16564,7 +16564,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -16660,7 +16660,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -16844,7 +16844,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -16936,7 +16936,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -17046,7 +17046,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -17122,7 +17122,7 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },

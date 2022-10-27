@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-10-26
+    Date        : 2022-10-27
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -16,7 +16,7 @@
 [![CI](https://github.com/obfusk/apksigtool/workflows/CI/badge.svg)](https://github.com/obfusk/apksigtool/actions?query=workflow%3ACI)
 [![AGPLv3+](https://img.shields.io/badge/license-AGPLv3+-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.html)
 
-<!--
+<!-- FIXME
 <a href="https://repology.org/project/apksigtool/versions">
   <img src="https://repology.org/badge/vertical-allrepos/apksigtool.svg?header="
     alt="Packaging status" align="right" />
@@ -57,7 +57,7 @@ PAIR ID: 0x7109871a
       DIGEST 0
         SIGNATURE ALGORITHM ID: 0x104 (RSASSA-PKCS1-v1_5 with SHA2-512 digest)
   [...]
-  VERIFIED
+  VERIFIED (1 signer(s))
 PAIR ID: 0xf05368c0
   APK SIGNATURE SCHEME v3 BLOCK
   SIGNER 0
@@ -65,25 +65,21 @@ PAIR ID: 0xf05368c0
       DIGEST 0
         SIGNATURE ALGORITHM ID: 0x104 (RSASSA-PKCS1-v1_5 with SHA2-512 digest)
   [...]
-  VERIFIED
+  VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
 ```
 
-JSON (filtered):
+Extracted `APKSigningBlock` instead of APK:
 
 ```bash
-$ apksigtool parse --json some.apk | jq -r '.pairs[].value._type'
-APKSignatureSchemeBlock
-APKSignatureSchemeBlock
-VerityPaddingBlock
-$ apksigtool parse --json some.apk | jq -r '.pairs[].id' | awk '{printf "0x%x\n", $1}'
-0x7109871a
-0xf05368c0
-0x42726577
+$ mkdir meta
+$ apksigcopier extract some.apk meta
+$ apksigtool parse --block meta/APKSigningBlock
+[...]
 ```
 
-JSON (full):
+#### JSON
 
 NB: elided binary values (`digest`, `fingerprint`, `raw_data`, `signature`) are
 represented as hex (e.g. `foo` would be represented as `666f6f`).
@@ -92,6 +88,7 @@ represented as hex (e.g. `foo` would be represented as `666f6f`).
 $ apksigtool parse --json some.apk
 ```
 
+<!-- {{{1 -->
 <details>
 <summary>full JSON output (long, some data elided)</summary>
 
@@ -175,7 +172,7 @@ $ apksigtool parse --json some.apk
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 2
       }
     },
@@ -200,7 +197,7 @@ $ apksigtool parse --json some.apk
           }
         ],
         "verification_error": null,
-        "verified": true,
+        "verified": 1,
         "version": 3
       }
     },
@@ -217,14 +214,57 @@ $ apksigtool parse --json some.apk
 ```
 
 </details>
+<!-- }}}1 -->
 
-Extracted APKSigningBlock instead of APK:
+To extract e.g. pair types or IDs:
 
 ```bash
-$ mkdir meta
-$ apksigcopier extract some.apk meta
-$ apksigtool parse --block meta/APKSigningBlock
-[...]
+$ apksigtool parse --json some.apk | jq -r '.pairs[].value._type'
+APKSignatureSchemeBlock
+APKSignatureSchemeBlock
+VerityPaddingBlock
+$ apksigtool parse --json some.apk | jq -r '.pairs[].id' | awk '{printf "0x%x\n", $1}'
+0x7109871a
+0xf05368c0
+0x42726577
+```
+
+To extract e.g. public key info:
+
+```bash
+$ apksigtool parse --json some.apk | jq '.pairs[].value.signers[]?.public_key.public_key_info'
+```
+
+```json
+{
+  "_type": "PublicKeyInfo",
+  "algorithm": "RSA",
+  "bit_size": 2048,
+  "fingerprint": "...",
+  "hash_algorithm": null
+}
+...
+```
+
+To extract e.g. certificate info:
+
+```bash
+$ apksigtool parse --json some.apk | jq '.pairs[].value.signers[]?.signed_data.certificates[].certificate_info'
+```
+
+```json
+{
+  "_type": "CertificateInfo",
+  "fingerprint": "...",
+  "hash_algorithm": "SHA256",
+  "issuer": "Common Name: ..., Organizational Unit: ...",
+  "not_valid_after": "2022-10-27 12:34:56+00:00",
+  "not_valid_before": "2022-10-26 12:34:56+00:00",
+  "serial_number": 42,
+  "signature_algorithm": "RSASSA_PKCS1V15",
+  "subject": "Common Name: ..., Organizational Unit: ..."
+}
+...
 ```
 
 ### Verify
@@ -235,8 +275,8 @@ $ apksigtool parse --block meta/APKSigningBlock
 ```bash
 $ apksigtool verify some.apk
 WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 ```
 
 ### Clean
@@ -260,7 +300,7 @@ $ apksigtool clean --check cleaned.apk
 [...]
 ```
 
-Extracted APKSigningBlock instead of APK:
+Extracted `APKSigningBlock` instead of APK:
 
 ```bash
 $ mkdir meta
@@ -349,7 +389,7 @@ eval (env _APKSIGTOOL_COMPLETE=fish_source apksigtool)
 
 ## Installing
 
-<!--
+<!-- FIXME
 ### Using pip
 
 ```bash

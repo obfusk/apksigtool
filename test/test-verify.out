@@ -18,8 +18,8 @@ apksigner == apksigtool
 
 apks/golden-aligned-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -31,53 +31,53 @@ apksigner != apksigtool
 
 apks/golden-aligned-v1v2-out.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-aligned-v1v2v3-lineage-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-aligned-v1v2v3-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-aligned-v2-out.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-aligned-v2v3-lineage-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-aligned-v2v3-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-aligned-v3-lineage-out.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-aligned-v3-out.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -89,8 +89,8 @@ apksigner == apksigtool
 
 apks/golden-legacy-aligned-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -102,102 +102,102 @@ apksigner != apksigtool
 
 apks/golden-legacy-aligned-v1v2-out.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-legacy-aligned-v1v2v3-lineage-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-legacy-aligned-v1v2v3-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-legacy-aligned-v2-out.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-legacy-aligned-v2v3-lineage-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-legacy-aligned-v2v3-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-legacy-aligned-v3-lineage-out.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-legacy-aligned-v3-out.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-pinsapp-signed.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-rsa-minSdkVersion-1-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-rsa-minSdkVersion-18-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-rsa-minSdkVersion-24-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-rsa-no-verity-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-rsa-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-rsa-verity-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -209,8 +209,8 @@ apksigner == apksigtool
 
 apks/golden-unaligned-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -222,53 +222,53 @@ apksigner != apksigtool
 
 apks/golden-unaligned-v1v2-out.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-unaligned-v1v2v3-lineage-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-unaligned-v1v2v3-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-unaligned-v2-out.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-unaligned-v2v3-lineage-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-unaligned-v2v3-out.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-unaligned-v3-lineage-out.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/golden-unaligned-v3-out.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -280,21 +280,21 @@ apksigner != apksigtool
 
 apks/original-with-stamp-file.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/original-with-versionCodeMajor.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/original.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -306,64 +306,64 @@ apksigner == apksigtool
 
 apks/stamp-apk-hash-mismatch-v1.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/stamp-apk-hash-mismatch-v2.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/stamp-apk-hash-mismatch-v3.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/stamp-apk-hash-mismatch.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/stamp-certificate-mismatch.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/stamp-lineage-invalid.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/stamp-lineage-valid.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/stamp-lineage-with-3-signers.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/stamp-malformed-signature.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -374,14 +374,14 @@ apksigner == apksigtool
 
 apks/stamp-without-block.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/targetSandboxVersion-2.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -393,7 +393,7 @@ apksigner == apksigtool
 
 apks/two-signers.apk
 apksigner: verified
-v2 verified
+v2 verified (2 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -452,14 +452,14 @@ apksigner != apksigtool
 
 apks/v1v2v3-rotated-v3-key-valid-stamp.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-lineage-attr.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 v3 not verified (Invalid signature)
 apksigtool: not verified
 apksigner == apksigtool
@@ -479,14 +479,14 @@ apksigner == apksigtool
 
 apks/v1v2v3-with-rsa-2048-lineage-3-signers.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-ec-p256-targetSdk-30.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -504,7 +504,7 @@ apksigner == apksigtool
 
 apks/v2-only-garbage-between-cd-and-eocd.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
@@ -516,7 +516,7 @@ apksigner != apksigtool
 
 apks/v2-only-missing-classes.dex.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -534,19 +534,19 @@ apksigner == apksigtool
 
 apks/v2-only-targetSandboxVersion-2.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-targetSandboxVersion-3.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-truncated-cd.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
@@ -564,7 +564,7 @@ apksigner == apksigtool
 
 apks/v2-only-two-signers.apk
 apksigner: verified
-v2 verified
+v2 verified (2 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -576,7 +576,7 @@ apksigner != apksigtool
 
 apks/v2-only-unknown-pair-in-apk-sig-block.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -588,19 +588,19 @@ apksigner == apksigtool
 
 apks/v2-only-with-dsa-sha256-1024.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-dsa-sha256-2048.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-dsa-sha256-3072.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -618,37 +618,37 @@ apksigner == apksigtool
 
 apks/v2-only-with-ecdsa-sha256-p256.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-ecdsa-sha256-p384.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-ecdsa-sha256-p521.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-ecdsa-sha512-p256.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-ecdsa-sha512-p384.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-ecdsa-sha512-p521.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -660,19 +660,19 @@ apksigner != apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha256-1024-cert-not-der.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha256-1024.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha256-16384.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -684,49 +684,49 @@ apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha256-2048.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha256-3072.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha256-4096.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha256-8192.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha512-1024.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha512-16384.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha512-2048.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha512-3072.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -738,25 +738,25 @@ apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha512-4096.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pkcs1-sha512-8192.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v2-only-with-rsa-pss-sha256-1024.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
 apks/v2-only-with-rsa-pss-sha256-16384.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
@@ -768,61 +768,61 @@ apksigner == apksigtool
 
 apks/v2-only-with-rsa-pss-sha256-2048.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
 apks/v2-only-with-rsa-pss-sha256-3072.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
 apks/v2-only-with-rsa-pss-sha256-4096.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
 apks/v2-only-with-rsa-pss-sha256-8192.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
 apks/v2-only-with-rsa-pss-sha512-16384.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
 apks/v2-only-with-rsa-pss-sha512-2048.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
 apks/v2-only-with-rsa-pss-sha512-3072.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
 apks/v2-only-with-rsa-pss-sha512-4096.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
 apks/v2-only-with-rsa-pss-sha512-8192.apk
 apksigner: not verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner != apksigtool
 
 apks/v2-only-with-stamp.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -834,7 +834,7 @@ apksigner == apksigtool
 
 apks/v2-rsa-2048-with-extra-sig-block.apk
 apksigner: verified
-v2 verified
+v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -858,14 +858,14 @@ apksigner == apksigtool
 
 apks/v2v3-unknown-additional-attr.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-ec-p256-targetSdk-30.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -895,19 +895,19 @@ apksigner == apksigtool
 
 apks/v3-only-unknown-additional-attr.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-unknown-pair-in-apk-sig-block.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-dsa-sha256-1024.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -919,7 +919,7 @@ apksigner == apksigtool
 
 apks/v3-only-with-dsa-sha256-2048.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -931,31 +931,31 @@ apksigner == apksigtool
 
 apks/v3-only-with-dsa-sha256-3072.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-ecdsa-sha256-p256.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-ecdsa-sha256-p384.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-ecdsa-sha256-p521.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-ecdsa-sha512-p256.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -967,7 +967,7 @@ apksigner == apksigtool
 
 apks/v3-only-with-ecdsa-sha512-p384.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -979,7 +979,7 @@ apksigner == apksigtool
 
 apks/v3-only-with-ecdsa-sha512-p521.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -991,19 +991,19 @@ apksigner != apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha256-1024.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha256-16384.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha256-2048.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -1015,43 +1015,43 @@ apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha256-3072.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha256-4096.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha256-8192.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha512-1024.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha512-16384.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha512-2048.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha512-3072.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -1063,7 +1063,7 @@ apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha512-4096.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -1075,13 +1075,13 @@ apksigner == apksigtool
 
 apks/v3-only-with-rsa-pkcs1-sha512-8192.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/v3-only-with-stamp.apk
 apksigner: verified
-v3 verified
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
@@ -1093,8 +1093,8 @@ apksigner == apksigtool
 
 apks/valid-stamp.apk
 apksigner: verified
-v2 verified
-v3 verified
+v2 verified (1 signer(s))
+v3 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
