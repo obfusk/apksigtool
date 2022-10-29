@@ -17,7 +17,7 @@ test: test-cli lint lint-extra
 test-cli:
 	# TODO
 	apksigtool --version
-	$(PYTHON) -m doctest apksigtool
+	$(PYTHON) -m doctest apksigtool/__init__.py
 
 test-apks: test-apks-verify test-apks-parse test-apks-parse-json
 
@@ -44,12 +44,12 @@ test-apks-clean-check-DESTRUCTIVE:
 	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
 
 lint:
-	flake8 apksigtool.py
-	pylint apksigtool.py
+	flake8 apksigtool/__init__.py
+	pylint apksigtool/__init__.py
 
 lint-extra:
 	# TODO
-	mypy --ignore-missing-imports apksigtool.py
+	mypy --ignore-missing-imports apksigtool/__init__.py
 
 clean: cleanup
 	rm -fr apksigtool.egg-info/
