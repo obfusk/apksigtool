@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-10-29
+    Date        : 2022-11-05
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -326,36 +326,36 @@ Parse:
 
 ```python
 >>> from apksigtool import ...
->>> apk_signing_block = parse_apk_signing_block(data, apkfile=None, sdk=None)
+>>> apk_signing_block = parse_apk_signing_block(data, apkfile=None, ...)
 ```
 
 Parse tree & JSON:
 
 ```python
->>> show_parse_tree(apk_signing_block, verbose=False, apkfile=None, sdk=None, file=sys.stdout)
->>> show_json(apk_signing_block, file=sys.stdout)
+>>> show_parse_tree(apk_signing_block, apkfile=None, ...)
+>>> show_json(obj, ...)
 ```
 
 Verify:
 
 ```python
->>> apk_signing_block.verify(apkfile, sdk=None)                   # raises on failure
->>> verified, failed = apk_signing_block.verify_results(apkfile, sdk=None)
->>> verify_apk(apkfile, sig_block=None, sdk=None)                 # verify APK (uses the above)
+>>> apk_signing_block.verify(apkfile, ...)                  # raises on failure
+>>> verified, failed = apk_signing_block.verify_results(apkfile, ...)
+>>> verify_apk(apkfile, ...)                                # verify APK (uses the above)
 ```
 
 Low-level verification API:
 
 ```python
->>> verify_apk_signature_scheme(signers, apkfile, sdk=None)       # does the verification
->>> APKSignatureSchemeBlock(...).verify(apkfile, sdk=None)        # uses the above
+>>> verify_apk_signature_scheme(signers, apkfile, ...)      # does the verification
+>>> APKSignatureSchemeBlock(...).verify(apkfile, ...)       # uses the above
 ```
 
 Clean:
 
 ```python
->>> data_cleaned = clean_apk_signing_block(data, keep=())         # clean block
->>> cleaned = clean_apk(apkfile, keep=(), check=False, sdk=None)  # clean APK
+>>> data_cleaned = clean_apk_signing_block(data, keep=())   # clean block
+>>> cleaned = clean_apk(apkfile, check=False, keep=(), ...) # clean APK
 ```
 
 <!--

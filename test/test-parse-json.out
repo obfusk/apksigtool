@@ -1,4 +1,4 @@
-apks/debuggable-boolean.apk
+apks/apks/debuggable-boolean.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -98,7 +98,7 @@ apksigner: verified
   ]
 }
 
-apks/debuggable-resource.apk
+apks/apks/debuggable-resource.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -198,11 +198,11 @@ apksigner: verified
   ]
 }
 
-apks/golden-aligned-in.apk
+apks/apks/golden-aligned-in.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/golden-aligned-out.apk
+apks/apks/golden-aligned-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -283,7 +283,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -359,7 +364,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -374,11 +384,11 @@ apksigner: verified
   ]
 }
 
-apks/golden-aligned-v1-out.apk
+apks/apks/golden-aligned-v1-out.apk
 apksigner: verified
 Error: No APK Signing Block.
 
-apks/golden-aligned-v1v2-out.apk
+apks/apks/golden-aligned-v1v2-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -451,7 +461,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -466,7 +481,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-aligned-v1v2v3-lineage-out.apk
+apks/apks/golden-aligned-v1v2v3-lineage-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -547,7 +562,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -631,7 +651,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -646,7 +671,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-aligned-v1v2v3-out.apk
+apks/apks/golden-aligned-v1v2v3-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -727,7 +752,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -803,7 +833,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -818,7 +853,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-aligned-v2-out.apk
+apks/apks/golden-aligned-v2-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -891,7 +926,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -906,7 +946,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-aligned-v2v3-lineage-out.apk
+apks/apks/golden-aligned-v2v3-lineage-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -987,7 +1027,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -1071,7 +1116,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -1086,7 +1136,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-aligned-v2v3-out.apk
+apks/apks/golden-aligned-v2v3-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -1167,7 +1217,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -1243,7 +1298,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -1258,7 +1318,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-aligned-v3-lineage-out.apk
+apks/apks/golden-aligned-v3-lineage-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -1343,7 +1403,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -1358,7 +1423,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-aligned-v3-out.apk
+apks/apks/golden-aligned-v3-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -1435,7 +1500,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -1450,11 +1520,11 @@ apksigner: verified
   ]
 }
 
-apks/golden-legacy-aligned-in.apk
+apks/apks/golden-legacy-aligned-in.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/golden-legacy-aligned-out.apk
+apks/apks/golden-legacy-aligned-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -1535,7 +1605,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -1611,7 +1686,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -1626,11 +1706,11 @@ apksigner: verified
   ]
 }
 
-apks/golden-legacy-aligned-v1-out.apk
+apks/apks/golden-legacy-aligned-v1-out.apk
 apksigner: verified
 Error: No APK Signing Block.
 
-apks/golden-legacy-aligned-v1v2-out.apk
+apks/apks/golden-legacy-aligned-v1v2-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -1703,7 +1783,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -1718,7 +1803,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-legacy-aligned-v1v2v3-lineage-out.apk
+apks/apks/golden-legacy-aligned-v1v2v3-lineage-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -1799,7 +1884,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -1883,7 +1973,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -1898,7 +1993,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-legacy-aligned-v1v2v3-out.apk
+apks/apks/golden-legacy-aligned-v1v2v3-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -1979,7 +2074,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -2055,7 +2155,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -2070,7 +2175,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-legacy-aligned-v2-out.apk
+apks/apks/golden-legacy-aligned-v2-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -2143,7 +2248,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -2158,7 +2268,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-legacy-aligned-v2v3-lineage-out.apk
+apks/apks/golden-legacy-aligned-v2v3-lineage-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -2239,7 +2349,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -2323,7 +2438,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -2338,7 +2458,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-legacy-aligned-v2v3-out.apk
+apks/apks/golden-legacy-aligned-v2v3-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -2419,7 +2539,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -2495,7 +2620,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -2510,7 +2640,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-legacy-aligned-v3-lineage-out.apk
+apks/apks/golden-legacy-aligned-v3-lineage-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -2595,7 +2725,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -2610,7 +2745,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-legacy-aligned-v3-out.apk
+apks/apks/golden-legacy-aligned-v3-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -2687,7 +2822,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -2702,7 +2842,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-pinsapp-signed.apk
+apks/apks/golden-pinsapp-signed.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -2795,7 +2935,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -2883,7 +3028,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -2898,7 +3048,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-rsa-minSdkVersion-1-out.apk
+apks/apks/golden-rsa-minSdkVersion-1-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -2979,7 +3129,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -3055,7 +3210,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -3070,7 +3230,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-rsa-minSdkVersion-18-out.apk
+apks/apks/golden-rsa-minSdkVersion-18-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -3151,7 +3311,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -3227,7 +3392,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -3242,7 +3412,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-rsa-minSdkVersion-24-out.apk
+apks/apks/golden-rsa-minSdkVersion-24-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -3323,7 +3493,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -3399,7 +3574,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -3414,7 +3594,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-rsa-no-verity-out.apk
+apks/apks/golden-rsa-no-verity-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -3495,7 +3675,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -3571,7 +3756,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -3586,7 +3776,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-rsa-out.apk
+apks/apks/golden-rsa-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -3667,7 +3857,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -3743,7 +3938,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -3758,7 +3958,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-rsa-verity-out.apk
+apks/apks/golden-rsa-verity-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -3851,7 +4051,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -3939,7 +4144,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -3954,11 +4164,11 @@ apksigner: verified
   ]
 }
 
-apks/golden-unaligned-in.apk
+apks/apks/golden-unaligned-in.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/golden-unaligned-out.apk
+apks/apks/golden-unaligned-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -4039,7 +4249,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -4115,7 +4330,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -4130,11 +4350,11 @@ apksigner: verified
   ]
 }
 
-apks/golden-unaligned-v1-out.apk
+apks/apks/golden-unaligned-v1-out.apk
 apksigner: verified
 Error: No APK Signing Block.
 
-apks/golden-unaligned-v1v2-out.apk
+apks/apks/golden-unaligned-v1v2-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -4207,7 +4427,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -4222,7 +4447,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-unaligned-v1v2v3-lineage-out.apk
+apks/apks/golden-unaligned-v1v2v3-lineage-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -4303,7 +4528,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -4387,7 +4617,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -4402,7 +4637,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-unaligned-v1v2v3-out.apk
+apks/apks/golden-unaligned-v1v2v3-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -4483,7 +4718,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -4559,7 +4799,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -4574,7 +4819,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-unaligned-v2-out.apk
+apks/apks/golden-unaligned-v2-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -4647,7 +4892,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -4662,7 +4912,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-unaligned-v2v3-lineage-out.apk
+apks/apks/golden-unaligned-v2v3-lineage-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -4743,7 +4993,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -4827,7 +5082,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -4842,7 +5102,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-unaligned-v2v3-out.apk
+apks/apks/golden-unaligned-v2v3-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -4923,7 +5183,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -4999,7 +5264,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -5014,7 +5284,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-unaligned-v3-lineage-out.apk
+apks/apks/golden-unaligned-v3-lineage-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -5099,7 +5369,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -5114,7 +5389,7 @@ apksigner: verified
   ]
 }
 
-apks/golden-unaligned-v3-out.apk
+apks/apks/golden-unaligned-v3-out.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -5191,7 +5466,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -5206,11 +5486,11 @@ apksigner: verified
   ]
 }
 
-apks/mismatched-compression-method.apk
+apks/apks/mismatched-compression-method.apk
 apksigner: verified
 Error: No APK Signing Block.
 
-apks/original-with-stamp-file.apk
+apks/apks/original-with-stamp-file.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -5291,7 +5571,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -5367,7 +5652,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -5382,7 +5672,7 @@ apksigner: verified
   ]
 }
 
-apks/original-with-versionCodeMajor.apk
+apks/apks/original-with-versionCodeMajor.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -5463,7 +5753,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -5539,7 +5834,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -5554,7 +5854,7 @@ apksigner: verified
   ]
 }
 
-apks/original.apk
+apks/apks/original.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -5627,18 +5927,23 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/pinsapp-unsigned.apk
+apks/apks/pinsapp-unsigned.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/stamp-apk-hash-mismatch-v1.apk
+apks/apks/stamp-apk-hash-mismatch-v1.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -5719,7 +6024,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -5795,7 +6105,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -5820,7 +6135,7 @@ apksigner: verified
   ]
 }
 
-apks/stamp-apk-hash-mismatch-v2.apk
+apks/apks/stamp-apk-hash-mismatch-v2.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -5901,7 +6216,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -5977,7 +6297,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -6002,7 +6327,7 @@ apksigner: verified
   ]
 }
 
-apks/stamp-apk-hash-mismatch-v3.apk
+apks/apks/stamp-apk-hash-mismatch-v3.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -6083,7 +6408,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -6159,7 +6489,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -6184,7 +6519,7 @@ apksigner: verified
   ]
 }
 
-apks/stamp-apk-hash-mismatch.apk
+apks/apks/stamp-apk-hash-mismatch.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -6277,7 +6612,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -6365,7 +6705,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -6390,7 +6735,7 @@ apksigner: verified
   ]
 }
 
-apks/stamp-certificate-mismatch.apk
+apks/apks/stamp-certificate-mismatch.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -6471,7 +6816,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -6547,7 +6897,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -6572,7 +6927,7 @@ apksigner: verified
   ]
 }
 
-apks/stamp-lineage-invalid.apk
+apks/apks/stamp-lineage-invalid.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -6653,7 +7008,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -6729,7 +7089,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -6754,7 +7119,7 @@ apksigner: verified
   ]
 }
 
-apks/stamp-lineage-valid.apk
+apks/apks/stamp-lineage-valid.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -6835,7 +7200,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -6911,7 +7281,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -6936,7 +7311,7 @@ apksigner: verified
   ]
 }
 
-apks/stamp-lineage-with-3-signers.apk
+apks/apks/stamp-lineage-with-3-signers.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -7017,7 +7392,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 2
       }
     },
@@ -7093,7 +7473,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 3
       }
     },
@@ -7118,7 +7503,7 @@ apksigner: verified
   ]
 }
 
-apks/stamp-malformed-signature.apk
+apks/apks/stamp-malformed-signature.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -7199,7 +7584,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -7275,7 +7665,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -7300,7 +7695,7 @@ apksigner: verified
   ]
 }
 
-apks/stamp-without-apk-signature.apk
+apks/apks/stamp-without-apk-signature.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -7326,7 +7721,7 @@ apksigner: not verified
   ]
 }
 
-apks/stamp-without-block.apk
+apks/apks/stamp-without-block.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -7407,7 +7802,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -7483,7 +7883,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -7498,7 +7903,7 @@ apksigner: verified
   ]
 }
 
-apks/targetSandboxVersion-2.apk
+apks/apks/targetSandboxVersion-2.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -7571,14 +7976,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6cecc50e34ae31bfb5678986d6d6d3736c571ded2f2459527793e1f054eb0c9b",
+            "6f297e8c9c9b4b9aba8e91bb0b56a650e92f7d3a21e5f638d4dae4c0c0740214"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/two-signers-second-signer-v2-broken.apk
+apks/apks/two-signers-second-signer-v2-broken.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -7717,7 +8127,7 @@ apksigner: not verified
   ]
 }
 
-apks/two-signers.apk
+apks/apks/two-signers.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -7849,46 +8259,55 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 2,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ],
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/unsigned-targetSandboxVersion-2.apk
+apks/apks/unsigned-targetSandboxVersion-2.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/v1-ec-p256-targetSdk-30.apk
+apks/apks/v1-ec-p256-targetSdk-30.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-manifest.apk
+apks/apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-manifest.apk
 apksigner: verified
 Error: No APK Signing Block.
 
-apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-sf.apk
+apks/apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-sf.apk
 apksigner: verified
 Error: No APK Signing Block.
 
-apks/v1-sha1-sha256-manifest-and-sf-with-sha256-wrong-in-manifest.apk
+apks/apks/v1-sha1-sha256-manifest-and-sf-with-sha256-wrong-in-manifest.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/v1-sha1-sha256-manifest-and-sf-with-sha256-wrong-in-sf.apk
+apks/apks/v1-sha1-sha256-manifest-and-sf-with-sha256-wrong-in-sf.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/v1-sha1-sha256-manifest-and-sf.apk
+apks/apks/v1-sha1-sha256-manifest-and-sf.apk
 apksigner: verified
 Error: No APK Signing Block.
 
-apks/v1-sha1-sha256-manifest-and-sha1-sf.apk
+apks/apks/v1-sha1-sha256-manifest-and-sha1-sf.apk
 apksigner: verified
 Error: No APK Signing Block.
 
-apks/v1-with-apk-sig-block-but-without-apk-sig-scheme-v2-block.apk
+apks/apks/v1-with-apk-sig-block-but-without-apk-sig-scheme-v2-block.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -7905,7 +8324,7 @@ apksigner: verified
   ]
 }
 
-apks/v1v2v3-rotated-v3-key-valid-stamp.apk
+apks/apks/v1v2v3-rotated-v3-key-valid-stamp.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -7986,7 +8405,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 2
       }
     },
@@ -8070,7 +8494,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "d78405f761ff6236cc9b570347a570aba0c62a129a3ac30c831c64d09ad95469",
+            "2d3caa8c6b94c4837e6c700caa653453581318c79ddc58982d989abebc87467e"
+          ]
+        ],
         "version": 3
       }
     },
@@ -8095,7 +8524,7 @@ apksigner: verified
   ]
 }
 
-apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-lineage-attr.apk
+apks/apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-lineage-attr.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -8188,7 +8617,12 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -8299,7 +8733,7 @@ apksigner: not verified
   ]
 }
 
-apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-zip.apk
+apks/apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-zip.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -8503,11 +8937,11 @@ apksigner: not verified
   ]
 }
 
-apks/v1v2v3-with-rsa-2048-lineage-3-signers-no-sig-block.apk
+apks/apks/v1v2v3-with-rsa-2048-lineage-3-signers-no-sig-block.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/v1v2v3-with-rsa-2048-lineage-3-signers.apk
+apks/apks/v1v2v3-with-rsa-2048-lineage-3-signers.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -8600,7 +9034,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -8696,7 +9135,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "bb77a72efc60e66501ab75953af735874f82cfe52a70d035186a01b3482180f3",
+            "0f32af18ffe7648947cbe3da403f9d93271bed3b0d2627a3696ef1308ff5b9f9"
+          ]
+        ],
         "version": 3
       }
     },
@@ -8711,7 +9155,7 @@ apksigner: verified
   ]
 }
 
-apks/v2-ec-p256-targetSdk-30.apk
+apks/apks/v2-ec-p256-targetSdk-30.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -8784,7 +9228,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 2
       }
     },
@@ -8799,11 +9248,11 @@ apksigner: verified
   ]
 }
 
-apks/v2-only-apk-sig-block-size-mismatch.apk
+apks/apks/v2-only-apk-sig-block-size-mismatch.apk
 apksigner: not verified
 Error: APK Signing Block sizes not equal.
 
-apks/v2-only-cert-and-public-key-mismatch.apk
+apks/apks/v2-only-cert-and-public-key-mismatch.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -8883,7 +9332,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-garbage-between-cd-and-eocd.apk
+apks/apks/v2-only-garbage-between-cd-and-eocd.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -8956,18 +9405,23 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-max-sized-eocd-comment.apk
+apks/apks/v2-only-max-sized-eocd-comment.apk
 apksigner: verified
 Error: Expected end of central directory record (EOCD).
 
-apks/v2-only-missing-classes.dex.apk
+apks/apks/v2-only-missing-classes.dex.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -9040,14 +9494,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "5e7777ada7ee7ce8f9c4d1b07094876e5604617b7988b4c5d5b764a23431afbe",
+            "0ddfed487f485f5361736634ad0f73d83560a221487e89bdd866688d5be73a0a"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-no-certs-in-sig.apk
+apks/apks/v2-only-no-certs-in-sig.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -9104,7 +9563,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-signatures-and-digests-block-mismatch.apk
+apks/apks/v2-only-signatures-and-digests-block-mismatch.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -9190,7 +9649,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-targetSandboxVersion-2.apk
+apks/apks/v2-only-targetSandboxVersion-2.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -9263,14 +9722,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-targetSandboxVersion-3.apk
+apks/apks/v2-only-targetSandboxVersion-3.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -9343,14 +9807,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a46158f87753395a807edcc7640ac99c9125f6b6e025bdbf461ff281e64e685",
+            "92e297f0984f68b150fcd7194db7163932b9ef0e7372ff364f532f38f1044578"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-truncated-cd.apk
+apks/apks/v2-only-truncated-cd.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -9423,14 +9892,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-two-signers-second-signer-no-sig.apk
+apks/apks/v2-only-two-signers-second-signer-no-sig.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -9555,7 +10029,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-two-signers-second-signer-no-supported-sig.apk
+apks/apks/v2-only-two-signers-second-signer-no-supported-sig.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -9694,7 +10168,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-two-signers.apk
+apks/apks/v2-only-two-signers.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -9826,14 +10300,23 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 2,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ],
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-unknown-additional-attr.apk
+apks/apks/v2-only-unknown-additional-attr.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -9941,7 +10424,7 @@ apksigner: verified
   ]
 }
 
-apks/v2-only-unknown-pair-in-apk-sig-block.apk
+apks/apks/v2-only-unknown-pair-in-apk-sig-block.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -10023,14 +10506,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a46158f87753395a807edcc7640ac99c9125f6b6e025bdbf461ff281e64e685",
+            "92e297f0984f68b150fcd7194db7163932b9ef0e7372ff364f532f38f1044578"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-dsa-sha256-1024-sig-does-not-verify.apk
+apks/apks/v2-only-with-dsa-sha256-1024-sig-does-not-verify.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -10110,7 +10598,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-with-dsa-sha256-1024.apk
+apks/apks/v2-only-with-dsa-sha256-1024.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -10183,14 +10671,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fee7c19ff9bfb4197b3727b9fd92d95406b1bd96db99ea642f5faac019a389d7",
+            "350983f5f6d385526f23c11f6509b0de3e7167de25fa2317b03da57fcbae367b"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-dsa-sha256-2048.apk
+apks/apks/v2-only-with-dsa-sha256-2048.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -10263,14 +10756,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "97cce0bab292c2d5afb9de90e1810b41a5d25c006a10d10982896aa12ab35a9e",
+            "4172f8a7607979d39fd58a235dee209213d7c0cc8987e4814aaa2d4dc47a5c32"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-dsa-sha256-3072.apk
+apks/apks/v2-only-with-dsa-sha256-3072.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -10343,14 +10841,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "966a4537058d24098ea213f12d4b24e37ff5a1d8f68deb8a753374881f23e474",
+            "3d17d53ec60ef11b9f9c9fb7c3335fc2c1f655b8a8fd8e2e838449dcd7df5f0f"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-ecdsa-sha256-p256-digest-mismatch.apk
+apks/apks/v2-only-with-ecdsa-sha256-p256-digest-mismatch.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -10430,7 +10933,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-with-ecdsa-sha256-p256-sig-does-not-verify.apk
+apks/apks/v2-only-with-ecdsa-sha256-p256-sig-does-not-verify.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -10510,7 +11013,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-with-ecdsa-sha256-p256.apk
+apks/apks/v2-only-with-ecdsa-sha256-p256.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -10583,14 +11086,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-ecdsa-sha256-p384.apk
+apks/apks/v2-only-with-ecdsa-sha256-p384.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -10663,14 +11171,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "5e7777ada7ee7ce8f9c4d1b07094876e5604617b7988b4c5d5b764a23431afbe",
+            "0ddfed487f485f5361736634ad0f73d83560a221487e89bdd866688d5be73a0a"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-ecdsa-sha256-p521.apk
+apks/apks/v2-only-with-ecdsa-sha256-p521.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -10743,14 +11256,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "69b50381d98bebcd27df6d7df8af8c8b38d0e51e9168a95ab992d1a9da6082da",
+            "94f1b034aeb789a71c451496b142e07c6923ef13f26c3a7f1be0909ea8de26f4"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-ecdsa-sha512-p256.apk
+apks/apks/v2-only-with-ecdsa-sha512-p256.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -10823,14 +11341,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-ecdsa-sha512-p384.apk
+apks/apks/v2-only-with-ecdsa-sha512-p384.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -10903,14 +11426,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "5e7777ada7ee7ce8f9c4d1b07094876e5604617b7988b4c5d5b764a23431afbe",
+            "0ddfed487f485f5361736634ad0f73d83560a221487e89bdd866688d5be73a0a"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-ecdsa-sha512-p521.apk
+apks/apks/v2-only-with-ecdsa-sha512-p521.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -10983,14 +11511,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "69b50381d98bebcd27df6d7df8af8c8b38d0e51e9168a95ab992d1a9da6082da",
+            "94f1b034aeb789a71c451496b142e07c6923ef13f26c3a7f1be0909ea8de26f4"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-ignorable-unsupported-sig-algs.apk
+apks/apks/v2-only-with-ignorable-unsupported-sig-algs.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11094,7 +11627,7 @@ apksigner: verified
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha256-1024-cert-not-der.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha256-1024-cert-not-der.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11167,14 +11700,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "c5d4535a7e1c8111687a8374b2198da6f5ff8d811a7a25aa99ef060669342fa9",
+            "d1398dddb1752225beb7efcac26cc9360247a7196dc5596a9cb5c30e5a82d767"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha256-1024.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha256-1024.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11247,14 +11785,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "bc5e64eab1c4b5137c0fbc5ed05850b3a148d1c41775cffa4d96eea90bdd0eb8",
+            "d1398dddb1752225beb7efcac26cc9360247a7196dc5596a9cb5c30e5a82d767"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha256-16384.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha256-16384.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11327,14 +11870,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "f3c6b37909f6df310652fbd7c55ec27d3079dcf695dc6e75e22ba7c4e1c95601",
+            "fa3b586ee06eb7eec91287f8c20c9a7f6632022d3253860f6a06ce734d384f72"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha256-2048-sig-does-not-verify.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha256-2048-sig-does-not-verify.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -11414,7 +11962,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha256-2048.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha256-2048.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11487,14 +12035,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha256-3072.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha256-3072.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11567,14 +12120,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "483934461229a780010bc07cd6eeb0b67025fc4fe255757abbf5c3f2ed249e89",
+            "e0e0589e103c47363a45e0c7a9601e895f94f4f783d6daade51c5d81b17ab50d"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha256-4096.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha256-4096.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11647,14 +12205,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a46158f87753395a807edcc7640ac99c9125f6b6e025bdbf461ff281e64e685",
+            "92e297f0984f68b150fcd7194db7163932b9ef0e7372ff364f532f38f1044578"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha256-8192.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha256-8192.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11727,14 +12290,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "060d0a24fea9b60d857225873f78838e081795f7ef2d1ea401262bbd75a58234",
+            "ae9841ae080757c0976a3929c03f8062250660761002658595f2e2407ca948d4"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha512-1024.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha512-1024.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11807,14 +12375,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "bc5e64eab1c4b5137c0fbc5ed05850b3a148d1c41775cffa4d96eea90bdd0eb8",
+            "d1398dddb1752225beb7efcac26cc9360247a7196dc5596a9cb5c30e5a82d767"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha512-16384.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha512-16384.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11887,14 +12460,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "f3c6b37909f6df310652fbd7c55ec27d3079dcf695dc6e75e22ba7c4e1c95601",
+            "fa3b586ee06eb7eec91287f8c20c9a7f6632022d3253860f6a06ce734d384f72"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha512-2048.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha512-2048.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -11967,14 +12545,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha512-3072.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha512-3072.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -12047,14 +12630,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "483934461229a780010bc07cd6eeb0b67025fc4fe255757abbf5c3f2ed249e89",
+            "e0e0589e103c47363a45e0c7a9601e895f94f4f783d6daade51c5d81b17ab50d"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha512-4096-digest-mismatch.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha512-4096-digest-mismatch.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -12134,7 +12722,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha512-4096.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha512-4096.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -12207,14 +12795,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a46158f87753395a807edcc7640ac99c9125f6b6e025bdbf461ff281e64e685",
+            "92e297f0984f68b150fcd7194db7163932b9ef0e7372ff364f532f38f1044578"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pkcs1-sha512-8192.apk
+apks/apks/v2-only-with-rsa-pkcs1-sha512-8192.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -12287,14 +12880,19 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "060d0a24fea9b60d857225873f78838e081795f7ef2d1ea401262bbd75a58234",
+            "ae9841ae080757c0976a3929c03f8062250660761002658595f2e2407ca948d4"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha256-1024.apk
+apks/apks/v2-only-with-rsa-pss-sha256-1024.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -12367,14 +12965,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "bc5e64eab1c4b5137c0fbc5ed05850b3a148d1c41775cffa4d96eea90bdd0eb8",
+            "d1398dddb1752225beb7efcac26cc9360247a7196dc5596a9cb5c30e5a82d767"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha256-16384.apk
+apks/apks/v2-only-with-rsa-pss-sha256-16384.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -12447,14 +13050,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "f3c6b37909f6df310652fbd7c55ec27d3079dcf695dc6e75e22ba7c4e1c95601",
+            "fa3b586ee06eb7eec91287f8c20c9a7f6632022d3253860f6a06ce734d384f72"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha256-2048-sig-does-not-verify.apk
+apks/apks/v2-only-with-rsa-pss-sha256-2048-sig-does-not-verify.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -12534,7 +13142,7 @@ apksigner: not verified
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha256-2048.apk
+apks/apks/v2-only-with-rsa-pss-sha256-2048.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -12607,14 +13215,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha256-3072.apk
+apks/apks/v2-only-with-rsa-pss-sha256-3072.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -12687,14 +13300,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "483934461229a780010bc07cd6eeb0b67025fc4fe255757abbf5c3f2ed249e89",
+            "e0e0589e103c47363a45e0c7a9601e895f94f4f783d6daade51c5d81b17ab50d"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha256-4096.apk
+apks/apks/v2-only-with-rsa-pss-sha256-4096.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -12767,14 +13385,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a46158f87753395a807edcc7640ac99c9125f6b6e025bdbf461ff281e64e685",
+            "92e297f0984f68b150fcd7194db7163932b9ef0e7372ff364f532f38f1044578"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha256-8192.apk
+apks/apks/v2-only-with-rsa-pss-sha256-8192.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -12847,14 +13470,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "060d0a24fea9b60d857225873f78838e081795f7ef2d1ea401262bbd75a58234",
+            "ae9841ae080757c0976a3929c03f8062250660761002658595f2e2407ca948d4"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha512-16384.apk
+apks/apks/v2-only-with-rsa-pss-sha512-16384.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -12927,14 +13555,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "f3c6b37909f6df310652fbd7c55ec27d3079dcf695dc6e75e22ba7c4e1c95601",
+            "fa3b586ee06eb7eec91287f8c20c9a7f6632022d3253860f6a06ce734d384f72"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha512-2048.apk
+apks/apks/v2-only-with-rsa-pss-sha512-2048.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -13007,14 +13640,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha512-3072.apk
+apks/apks/v2-only-with-rsa-pss-sha512-3072.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -13087,14 +13725,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "483934461229a780010bc07cd6eeb0b67025fc4fe255757abbf5c3f2ed249e89",
+            "e0e0589e103c47363a45e0c7a9601e895f94f4f783d6daade51c5d81b17ab50d"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha512-4096.apk
+apks/apks/v2-only-with-rsa-pss-sha512-4096.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -13167,14 +13810,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a46158f87753395a807edcc7640ac99c9125f6b6e025bdbf461ff281e64e685",
+            "92e297f0984f68b150fcd7194db7163932b9ef0e7372ff364f532f38f1044578"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-rsa-pss-sha512-8192.apk
+apks/apks/v2-only-with-rsa-pss-sha512-8192.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -13247,14 +13895,19 @@ apksigner: not verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "060d0a24fea9b60d857225873f78838e081795f7ef2d1ea401262bbd75a58234",
+            "ae9841ae080757c0976a3929c03f8062250660761002658595f2e2407ca948d4"
+          ]
+        ],
         "version": 2
       }
     }
   ]
 }
 
-apks/v2-only-with-stamp.apk
+apks/apks/v2-only-with-stamp.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -13327,7 +13980,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 2
       }
     },
@@ -13352,11 +14010,11 @@ apksigner: verified
   ]
 }
 
-apks/v2-only-wrong-apk-sig-block-magic.apk
+apks/apks/v2-only-wrong-apk-sig-block-magic.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/v2-rsa-2048-with-extra-sig-block.apk
+apks/apks/v2-rsa-2048-with-extra-sig-block.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -13438,7 +14096,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -13453,19 +14116,19 @@ apksigner: verified
   ]
 }
 
-apks/v2-stripped-with-ignorable-signing-schemes.apk
+apks/apks/v2-stripped-with-ignorable-signing-schemes.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/v2-stripped.apk
+apks/apks/v2-stripped.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/v2v3-signed-v3-block-stripped.apk
+apks/apks/v2v3-signed-v3-block-stripped.apk
 apksigner: not verified
 Error: Assertion failed: verity zero padding.
 
-apks/v2v3-unknown-additional-attr.apk
+apks/apks/v2v3-unknown-additional-attr.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -13572,7 +14235,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -13670,7 +14338,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -13685,7 +14358,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-ec-p256-targetSdk-30.apk
+apks/apks/v3-ec-p256-targetSdk-30.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -13762,7 +14435,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 3
       }
     },
@@ -13777,7 +14455,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-cert-and-public-key-mismatch.apk
+apks/apks/v3-only-cert-and-public-key-mismatch.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -13869,7 +14547,7 @@ apksigner: not verified
   ]
 }
 
-apks/v3-only-no-certs-in-sig.apk
+apks/apks/v3-only-no-certs-in-sig.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -13938,7 +14616,7 @@ apksigner: not verified
   ]
 }
 
-apks/v3-only-no-supported-sig-algs.apk
+apks/apks/v3-only-no-supported-sig-algs.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -14030,7 +14708,7 @@ apksigner: not verified
   ]
 }
 
-apks/v3-only-signatures-and-digests-block-mismatch.apk
+apks/apks/v3-only-signatures-and-digests-block-mismatch.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -14128,7 +14806,7 @@ apksigner: not verified
   ]
 }
 
-apks/v3-only-unknown-additional-attr.apk
+apks/apks/v3-only-unknown-additional-attr.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -14227,7 +14905,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "681b0e56a796350c08647352a4db800cc44b2adc8f4c72fa350bd05d4d50264d",
+            "a012606d81829cac18a88dff818652ab582961c03a4ecceb1475c4fbe30d7dce"
+          ]
+        ],
         "version": 3
       }
     },
@@ -14242,7 +14925,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-unknown-pair-in-apk-sig-block.apk
+apks/apks/v3-only-unknown-pair-in-apk-sig-block.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -14328,7 +15011,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "bc5e64eab1c4b5137c0fbc5ed05850b3a148d1c41775cffa4d96eea90bdd0eb8",
+            "d1398dddb1752225beb7efcac26cc9360247a7196dc5596a9cb5c30e5a82d767"
+          ]
+        ],
         "version": 3
       }
     },
@@ -14343,7 +15031,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-dsa-sha256-1024.apk
+apks/apks/v3-only-with-dsa-sha256-1024.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -14420,7 +15108,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fee7c19ff9bfb4197b3727b9fd92d95406b1bd96db99ea642f5faac019a389d7",
+            "350983f5f6d385526f23c11f6509b0de3e7167de25fa2317b03da57fcbae367b"
+          ]
+        ],
         "version": 3
       }
     },
@@ -14435,7 +15128,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-dsa-sha256-2048-sig-does-not-verify.apk
+apks/apks/v3-only-with-dsa-sha256-2048-sig-does-not-verify.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -14527,7 +15220,7 @@ apksigner: not verified
   ]
 }
 
-apks/v3-only-with-dsa-sha256-2048.apk
+apks/apks/v3-only-with-dsa-sha256-2048.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -14604,7 +15297,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "97cce0bab292c2d5afb9de90e1810b41a5d25c006a10d10982896aa12ab35a9e",
+            "4172f8a7607979d39fd58a235dee209213d7c0cc8987e4814aaa2d4dc47a5c32"
+          ]
+        ],
         "version": 3
       }
     },
@@ -14619,7 +15317,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-dsa-sha256-3072-digest-mismatch.apk
+apks/apks/v3-only-with-dsa-sha256-3072-digest-mismatch.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -14711,7 +15409,7 @@ apksigner: not verified
   ]
 }
 
-apks/v3-only-with-dsa-sha256-3072.apk
+apks/apks/v3-only-with-dsa-sha256-3072.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -14788,7 +15486,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "966a4537058d24098ea213f12d4b24e37ff5a1d8f68deb8a753374881f23e474",
+            "3d17d53ec60ef11b9f9c9fb7c3335fc2c1f655b8a8fd8e2e838449dcd7df5f0f"
+          ]
+        ],
         "version": 3
       }
     },
@@ -14803,7 +15506,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-ecdsa-sha256-p256.apk
+apks/apks/v3-only-with-ecdsa-sha256-p256.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -14880,7 +15583,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 3
       }
     },
@@ -14895,7 +15603,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-ecdsa-sha256-p384.apk
+apks/apks/v3-only-with-ecdsa-sha256-p384.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -14972,7 +15680,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "5e7777ada7ee7ce8f9c4d1b07094876e5604617b7988b4c5d5b764a23431afbe",
+            "0ddfed487f485f5361736634ad0f73d83560a221487e89bdd866688d5be73a0a"
+          ]
+        ],
         "version": 3
       }
     },
@@ -14987,7 +15700,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-ecdsa-sha256-p521.apk
+apks/apks/v3-only-with-ecdsa-sha256-p521.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -15064,7 +15777,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "69b50381d98bebcd27df6d7df8af8c8b38d0e51e9168a95ab992d1a9da6082da",
+            "94f1b034aeb789a71c451496b142e07c6923ef13f26c3a7f1be0909ea8de26f4"
+          ]
+        ],
         "version": 3
       }
     },
@@ -15079,7 +15797,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-ecdsa-sha512-p256.apk
+apks/apks/v3-only-with-ecdsa-sha512-p256.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -15156,7 +15874,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 3
       }
     },
@@ -15171,11 +15894,11 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-ecdsa-sha512-p384-wrong-apk-sig-block-magic.apk
+apks/apks/v3-only-with-ecdsa-sha512-p384-wrong-apk-sig-block-magic.apk
 apksigner: not verified
 Error: No APK Signing Block.
 
-apks/v3-only-with-ecdsa-sha512-p384.apk
+apks/apks/v3-only-with-ecdsa-sha512-p384.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -15252,7 +15975,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "5e7777ada7ee7ce8f9c4d1b07094876e5604617b7988b4c5d5b764a23431afbe",
+            "0ddfed487f485f5361736634ad0f73d83560a221487e89bdd866688d5be73a0a"
+          ]
+        ],
         "version": 3
       }
     },
@@ -15267,7 +15995,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-ecdsa-sha512-p521-sig-does-not-verify.apk
+apks/apks/v3-only-with-ecdsa-sha512-p521-sig-does-not-verify.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -15359,7 +16087,7 @@ apksigner: not verified
   ]
 }
 
-apks/v3-only-with-ecdsa-sha512-p521.apk
+apks/apks/v3-only-with-ecdsa-sha512-p521.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -15436,7 +16164,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "69b50381d98bebcd27df6d7df8af8c8b38d0e51e9168a95ab992d1a9da6082da",
+            "94f1b034aeb789a71c451496b142e07c6923ef13f26c3a7f1be0909ea8de26f4"
+          ]
+        ],
         "version": 3
       }
     },
@@ -15451,7 +16184,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-ignorable-unsupported-sig-algs.apk
+apks/apks/v3-only-with-ignorable-unsupported-sig-algs.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -15567,7 +16300,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha256-1024.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha256-1024.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -15644,7 +16377,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "bc5e64eab1c4b5137c0fbc5ed05850b3a148d1c41775cffa4d96eea90bdd0eb8",
+            "d1398dddb1752225beb7efcac26cc9360247a7196dc5596a9cb5c30e5a82d767"
+          ]
+        ],
         "version": 3
       }
     },
@@ -15659,7 +16397,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha256-16384.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha256-16384.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -15736,7 +16474,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "f3c6b37909f6df310652fbd7c55ec27d3079dcf695dc6e75e22ba7c4e1c95601",
+            "fa3b586ee06eb7eec91287f8c20c9a7f6632022d3253860f6a06ce734d384f72"
+          ]
+        ],
         "version": 3
       }
     },
@@ -15751,7 +16494,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha256-2048.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha256-2048.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -15828,7 +16571,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -15843,7 +16591,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha256-3072-sig-does-not-verify.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha256-3072-sig-does-not-verify.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -15935,7 +16683,7 @@ apksigner: not verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha256-3072.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha256-3072.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -16012,7 +16760,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "483934461229a780010bc07cd6eeb0b67025fc4fe255757abbf5c3f2ed249e89",
+            "e0e0589e103c47363a45e0c7a9601e895f94f4f783d6daade51c5d81b17ab50d"
+          ]
+        ],
         "version": 3
       }
     },
@@ -16027,7 +16780,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha256-4096.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha256-4096.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -16104,7 +16857,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a46158f87753395a807edcc7640ac99c9125f6b6e025bdbf461ff281e64e685",
+            "92e297f0984f68b150fcd7194db7163932b9ef0e7372ff364f532f38f1044578"
+          ]
+        ],
         "version": 3
       }
     },
@@ -16119,7 +16877,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha256-8192.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha256-8192.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -16196,7 +16954,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "060d0a24fea9b60d857225873f78838e081795f7ef2d1ea401262bbd75a58234",
+            "ae9841ae080757c0976a3929c03f8062250660761002658595f2e2407ca948d4"
+          ]
+        ],
         "version": 3
       }
     },
@@ -16211,7 +16974,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha512-1024.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha512-1024.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -16288,7 +17051,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "bc5e64eab1c4b5137c0fbc5ed05850b3a148d1c41775cffa4d96eea90bdd0eb8",
+            "d1398dddb1752225beb7efcac26cc9360247a7196dc5596a9cb5c30e5a82d767"
+          ]
+        ],
         "version": 3
       }
     },
@@ -16303,7 +17071,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha512-16384.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha512-16384.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -16380,7 +17148,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "f3c6b37909f6df310652fbd7c55ec27d3079dcf695dc6e75e22ba7c4e1c95601",
+            "fa3b586ee06eb7eec91287f8c20c9a7f6632022d3253860f6a06ce734d384f72"
+          ]
+        ],
         "version": 3
       }
     },
@@ -16395,7 +17168,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha512-2048.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha512-2048.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -16472,7 +17245,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -16487,7 +17265,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha512-3072.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha512-3072.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -16564,7 +17342,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "483934461229a780010bc07cd6eeb0b67025fc4fe255757abbf5c3f2ed249e89",
+            "e0e0589e103c47363a45e0c7a9601e895f94f4f783d6daade51c5d81b17ab50d"
+          ]
+        ],
         "version": 3
       }
     },
@@ -16579,11 +17362,11 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha512-4096-apk-sig-block-size-mismatch.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha512-4096-apk-sig-block-size-mismatch.apk
 apksigner: not verified
 Error: APK Signing Block sizes not equal.
 
-apks/v3-only-with-rsa-pkcs1-sha512-4096.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha512-4096.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -16660,7 +17443,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a46158f87753395a807edcc7640ac99c9125f6b6e025bdbf461ff281e64e685",
+            "92e297f0984f68b150fcd7194db7163932b9ef0e7372ff364f532f38f1044578"
+          ]
+        ],
         "version": 3
       }
     },
@@ -16675,7 +17463,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha512-8192-digest-mismatch.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha512-8192-digest-mismatch.apk
 apksigner: not verified
 {
   "_type": "APKSigningBlock",
@@ -16767,7 +17555,7 @@ apksigner: not verified
   ]
 }
 
-apks/v3-only-with-rsa-pkcs1-sha512-8192.apk
+apks/apks/v3-only-with-rsa-pkcs1-sha512-8192.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -16844,7 +17632,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "060d0a24fea9b60d857225873f78838e081795f7ef2d1ea401262bbd75a58234",
+            "ae9841ae080757c0976a3929c03f8062250660761002658595f2e2407ca948d4"
+          ]
+        ],
         "version": 3
       }
     },
@@ -16859,7 +17652,7 @@ apksigner: verified
   ]
 }
 
-apks/v3-only-with-stamp.apk
+apks/apks/v3-only-with-stamp.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -16936,7 +17729,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "6a8b96e278e58f62cfe3584022cec1d0527fcb85a9e5d2e1694eb0405be5b599",
+            "8512fe4584f86ecf0b76fa2c257c7dddacad40845ce0fdec28cf66f8550227ab"
+          ]
+        ],
         "version": 3
       }
     },
@@ -16961,11 +17759,11 @@ apksigner: verified
   ]
 }
 
-apks/v3-stripped.apk
+apks/apks/v3-stripped.apk
 apksigner: not verified
 Error: Assertion failed: verity zero padding.
 
-apks/valid-stamp.apk
+apks/apks/valid-stamp.apk
 apksigner: verified
 {
   "_type": "APKSigningBlock",
@@ -17046,7 +17844,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 2
       }
     },
@@ -17122,7 +17925,12 @@ apksigner: verified
           }
         ],
         "verification_error": null,
-        "verified": 1,
+        "verified": [
+          [
+            "fb5dbd3c669af9fc236c6991e6387b7f11ff0590997f22d0f5c74ff40e04fca8",
+            "8cabaedf32f1052f6bc5edbeb84d1c500f8c1aa15f8944bf22c46e44c5c4f7e8"
+          ]
+        ],
         "version": 3
       }
     },
@@ -17146,8 +17954,4 @@ apksigner: verified
     }
   ]
 }
-
-apks/weird-compression-method.apk
-apksigner: verified
-Error: No APK Signing Block.
 

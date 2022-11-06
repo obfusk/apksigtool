@@ -4,8 +4,10 @@ PYTHON  ?= python3
 export PYTHONWARNINGS := default
 
 .PHONY: all install test test-cli lint lint-extra clean cleanup
-.PHONY: test-apks test-apks-verify test-apks-parse test-apks-parse-json
-.PHONY: test-apks-clean-DESTRUCTIVE test-apks-clean-check-DESTRUCTIVE
+.PHONY: test-apks test-apks-apksigner test-apks-verify \
+        test-apks-verify-check-v1 test-apks-verify-v1 test-apks-parse \
+        test-apks-parse-v1 test-apks-parse-json test-apks-parse-json-v1 \
+        test-apks-clean-DESTRUCTIVE test-apks-clean-check-DESTRUCTIVE
 
 all: # TODO: apksigtool.1
 
@@ -19,28 +21,49 @@ test-cli:
 	apksigtool --version
 	$(PYTHON) -m doctest apksigtool/__init__.py
 
-test-apks: test-apks-verify test-apks-parse test-apks-parse-json
+test-apks: test-apks-apksigner test-apks-verify test-apks-verify-check-v1 \
+           test-apks-verify-v1 test-apks-parse test-apks-parse-v1 \
+           test-apks-parse-json test-apks-parse-json-v1
+
+test-apks-apksigner:
+	cd test && diff -Naur test-apksigner.out <( ./test-apksigner.sh )
 
 test-apks-verify:
-	cd test/apks && diff -Naur ../test-verify.out <( ../test-verify.sh \
+	cd test && diff -Naur test-verify.out <( ./test-verify.sh \
+	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
+
+test-apks-verify-check-v1:
+	cd test && diff -Naur test-verify-check-v1.out <( ./test-verify-check-v1.sh \
+	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
+
+test-apks-verify-v1:
+	cd test && diff -Naur test-verify-v1.out <( ./test-verify-v1.sh \
 	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
 
 test-apks-parse:
-	cd test/apks && diff -Naur ../test-parse.out <( ../test-parse.sh \
+	cd test && diff -Naur test-parse.out <( ./test-parse.sh \
+	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
+
+test-apks-parse-v1:
+	cd test && diff -Naur test-parse-v1.out <( ./test-parse-v1.sh \
 	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
 
 test-apks-parse-json:
-	cd test/apks && diff -Naur ../test-parse-json.out <( ../test-parse-json.sh \
+	cd test && diff -Naur test-parse-json.out <( ./test-parse-json.sh \
+	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
+
+test-apks-parse-json-v1:
+	cd test && diff -Naur test-parse-json-v1.out <( ./test-parse-json-v1.sh \
 	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
 
 test-apks-clean-DESTRUCTIVE:
 	# WARNING: modifies test/apks/apks/*.apk
-	cd test/apks && diff -Naur ../test-clean.out <( ../test-clean.sh \
+	cd test && diff -Naur test-clean.out <( ./test-clean.sh \
 	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
 
 test-apks-clean-check-DESTRUCTIVE:
 	# WARNING: modifies test/apks/apks/*.apk
-	cd test/apks && diff -Naur ../test-clean-check.out <( ../test-clean-check.sh \
+	cd test && diff -Naur test-clean-check.out <( ./test-clean-check.sh \
 	  | grep -vF 'WARNING: verification is considered EXPERIMENTAL' )
 
 lint:

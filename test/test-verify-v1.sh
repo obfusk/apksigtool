@@ -4,7 +4,8 @@ export LC_ALL=C.UTF-8
 for apk in apks/apks/*.apk; do
   [[ "$apk" != *empty* ]] || continue
   [[ "$apk" != *negmod* ]] || continue
-  [[ "$apk" != *v1-only* ]] || continue
+  [[ "$apk" != *v2-only* ]] || continue
+  [[ "$apk" != *v3-only* ]] || continue
   [[ "$apk" != *weird-compression-method* ]] || continue
   echo "$apk"
   apksigner_result="$( grep -F -A1 "$apk" test-apksigner.out | tail -1 )"
@@ -14,7 +15,7 @@ for apk in apks/apks/*.apk; do
   else
     apksigner_verified=0
   fi
-  if apksigtool verify "$apk" 2>&1; then
+  if apksigtool verify-v1 "$apk" 2>&1; then
     apksigtool_verified=1
     echo 'apksigtool: verified'
   else

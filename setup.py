@@ -44,6 +44,6 @@ setuptools.setup(
     packages          = ["apksigtool"],
     package_data      = dict(apksigtool = ["py.typed"]),
     python_requires   = ">=3.8",
-    install_requires  = ["apksigcopier", "asn1crypto", "click>=6.0",
-                         "cryptography", "simplejson"],
+    install_requires  = ["apksigcopier", "asn1crypto", "click>=6.0", "cryptography",
+                         "pyasn1", "pyasn1-modules", "simplejson"],
 )

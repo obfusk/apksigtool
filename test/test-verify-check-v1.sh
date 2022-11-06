@@ -14,7 +14,7 @@ for apk in apks/apks/*.apk; do
   else
     apksigner_verified=0
   fi
-  if apksigtool verify "$apk" 2>&1; then
+  if apksigtool verify --check-v1 "$apk" 2>&1; then
     apksigtool_verified=1
     echo 'apksigtool: verified'
   else
