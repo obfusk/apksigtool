@@ -68,6 +68,7 @@ import os
 import re
 import struct
 import sys
+import textwrap
 import zipfile
 
 from binascii import hexlify
@@ -195,6 +196,8 @@ UNSAFE_KEY_SIZE = dict(
 assert set(JAR_HASHERS_STR.keys()) == set(UNSAFE_HASH_ALGO.keys())
 assert set(JAR_SBF_EXTS) == set(UNSAFE_KEY_SIZE.keys())
 assert set(JAR_SBF_EXTS) == set(x[0].upper() for x in HASHERS.values())
+
+WRAP_COLUMNS = 80
 
 
 class APKSigToolError(Exception):
@@ -1392,7 +1395,8 @@ def aid_info(aid: int) -> str:
 
 def show_parse_tree(apk_signing_block: APKSigningBlock, *,
                     apkfile: Optional[str] = None, file: TextIO = sys.stdout,
-                    sdk: Optional[int] = None, verbose: bool = False) -> None:
+                    sdk: Optional[int] = None, verbose: bool = False,
+                    wrap: bool = False) -> None:
     """Print parse tree (w/ indent etc.) to file (stdout)."""
     def p(*a):
         print(*a, file=file)
@@ -1402,7 +1406,7 @@ def show_parse_tree(apk_signing_block: APKSigningBlock, *,
         p("PAIR ID:", hex(pair.id))
         if isinstance(pair.value, APKSignatureSchemeBlock):
             show_apk_signature_scheme_block(pair.value, apkfile=apkfile, file=file,
-                                            sdk=sdk, verbose=verbose)
+                                            sdk=sdk, verbose=verbose, wrap=wrap)
         elif isinstance(pair.value, VerityPaddingBlock):
             p("  VERITY PADDING BLOCK")
         elif isinstance(pair.value, DependencyInfoBlock):
@@ -1414,12 +1418,13 @@ def show_parse_tree(apk_signing_block: APKSigningBlock, *,
         else:
             p("  UNKNOWN BLOCK")
         if verbose and hasattr(pair.value, "raw_data"):
-            _show_hex(pair.value.raw_data, 2, file=file)    # type: ignore
+            _show_hex(pair.value.raw_data, 2, file=file, wrap=wrap)     # type: ignore
 
 
 def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
                                     apkfile: Optional[str] = None, file: TextIO = sys.stdout,
-                                    sdk: Optional[int] = None, verbose: bool = False) -> None:
+                                    sdk: Optional[int] = None, verbose: bool = False,
+                                    wrap: bool = False) -> None:
     """Print APKSignatureSchemeBlock parse tree to file (stdout)."""
     def p(*a):
         print(*a, file=file)
@@ -1430,7 +1435,7 @@ def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
         for j, digest in enumerate(signer.signed_data.digests):
             p("      DIGEST", j)
             _show_aid(digest, 8, file=file, verbose=verbose)
-            _show_hex(digest.digest, 8, file=file)
+            _show_hex(digest.digest, 8, file=file, wrap=wrap)
         for j, cert in enumerate(signer.signed_data.certificates):
             p("      CERTIFICATE", j)
             cert_info, pk_info = cert.certificate_info, cert.public_key_info
@@ -1446,7 +1451,7 @@ def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
                 p("        STRIPPING PROTECTION ATTR")
             elif attr.is_proof_of_rotation_struct:
                 p("        PROOF OF ROTATION STRUCT")
-            _show_hex(attr.value, 8, file=file)
+            _show_hex(attr.value, 8, file=file, wrap=wrap)
         if block.is_v3:
             assert isinstance(signer, V3Signer)
             p("    MIN SDK:", signer.min_sdk)
@@ -1454,7 +1459,7 @@ def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
         for j, sig in enumerate(signer.signatures):
             p("    SIGNATURE", j)
             _show_aid(sig, 6, file=file, verbose=verbose)
-            _show_hex(sig.signature, 6, file=file)
+            _show_hex(sig.signature, 6, file=file, wrap=wrap)
         p("    PUBLIC KEY")
         show_public_key_info(signer.public_key.public_key_info, 6, file=file)
     if apkfile is not None:
@@ -1498,9 +1503,15 @@ def show_public_key_info(info: PublicKeyInfo, indent: int, *, file: TextIO = sys
         p(" " * indent + "PUBLIC KEY HASH ALGORITHM:", info.hash_algorithm)
 
 
-def _show_hex(data: bytes, indent: int, *, file: TextIO = sys.stdout) -> None:
+def _show_hex(data: bytes, indent: int, *, file: TextIO = sys.stdout,
+              wrap: bool = False) -> None:
     """Print hex value (w/ indent etc.) to file (stdout)."""
-    print(" " * indent + "VALUE (HEX):", hexlify(data).decode(), file=file)
+    pre = " " * indent + "VALUE (HEX): "
+    out = pre + hexlify(data).decode()
+    if wrap:
+        sin = " " * (indent + 2)
+        out = "\n".join(textwrap.wrap(out, width=WRAP_COLUMNS, subsequent_indent=sin))
+    print(out, file=file)
 
 
 def _show_aid(x: Union[Digest, Signature], indent: int, *,
@@ -1514,7 +1525,7 @@ def _show_aid(x: Union[Digest, Signature], indent: int, *,
 
 def show_v1_signature(signature: JARSignature, *, allow_unsafe: Tuple[str, ...] = (),
                       apkfile: Optional[str] = None, file: TextIO = sys.stdout,
-                      strict: bool = True, verbose: bool = False) -> None:
+                      strict: bool = True, verbose: bool = False, wrap: bool = False) -> None:
     """Print JARSignature parse tree (w/ indent etc.) to file (stdout)."""
     def p(*a):
         print(*a, file=file)
@@ -1522,7 +1533,7 @@ def show_v1_signature(signature: JARSignature, *, allow_unsafe: Tuple[str, ...] 
     for sf in signature.signature_files:
         show_v1_signature_file(sf, file=file, verbose=verbose)
     for sbf in signature.signature_block_files:
-        show_v1_signature_block_file(sbf, file=file, verbose=verbose)
+        show_v1_signature_block_file(sbf, file=file, verbose=verbose, wrap=wrap)
     if apkfile is not None:
         try:
             signers, unverified_mf, unverified_sf = signature.verify(
@@ -1590,7 +1601,7 @@ def show_v1_signature_file(sf: JARSignatureFile, *, file: TextIO = sys.stdout,
 
 
 def show_v1_signature_block_file(sbf: JARSignatureBlockFile, *, file: TextIO = sys.stdout,
-                                 verbose: bool = False) -> None:
+                                 verbose: bool = False, wrap: bool = False) -> None:
     """Print JARSignatureBlockFile parse tree (w/ indent etc.) to file (stdout)."""
     def p(*a):
         print(*a, file=file)
@@ -1600,7 +1611,7 @@ def show_v1_signature_block_file(sbf: JARSignatureBlockFile, *, file: TextIO = s
     cert_info, pk_info = sbf.certificate_info, sbf.public_key_info
     show_x509_certificate_info(cert_info, pk_info, 4, file=file, verbose=verbose)
     p("  SIGNATURE")
-    _show_hex(sbf.signature, 4, file=file)
+    _show_hex(sbf.signature, 4, file=file, wrap=wrap)
     p("  HASH ALGORITHM:", sbf.hash_algorithm)
 
 
@@ -1852,8 +1863,9 @@ def main():
     @click.option("--json", is_flag=True, help="JSON output.")
     @click.option("--sdk-version", type=click.INT, help="For v3 signers specifying min/max SDK.")
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
+    @click.option("--wrap", is_flag=True, help="Wrap hex value output (no-op w/ --json).")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
-    def parse(apk_or_block, block, json, sdk_version, verbose):
+    def parse(apk_or_block, block, json, sdk_version, verbose, wrap):
         if block:
             apkfile = None
             with open(apk_or_block, "rb") as fh:
@@ -1865,7 +1877,7 @@ def main():
             show_json(parse_apk_signing_block(sig_block, apkfile=apkfile, sdk=sdk_version))
         else:
             show_parse_tree(parse_apk_signing_block(sig_block), apkfile=apkfile,
-                            sdk=sdk_version, verbose=verbose)
+                            sdk=sdk_version, verbose=verbose, wrap=wrap)
 
     @cli.command(help="""
         Parse APK v1 (JAR) signatures (from APK or extracted files in a
@@ -1877,8 +1889,9 @@ def main():
     @click.option("--json", is_flag=True, help="JSON output.")
     @click.option("--no-strict", is_flag=True, help="Don't be stricter than the spec.")
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
+    @click.option("--wrap", is_flag=True, help="Wrap hex value output (no-op w/ --json).")
     @click.argument("apk_or_dir", type=click.Path(exists=True, dir_okay=True))
-    def parse_v1(apk_or_dir, allow_unsafe, json, no_strict, verbose):
+    def parse_v1(apk_or_dir, allow_unsafe, json, no_strict, verbose, wrap):
         if os.path.isdir(apk_or_dir):
             apkfile = None
             e_meta = load_extracted_meta_from_dir(apk_or_dir)
@@ -1890,7 +1903,7 @@ def main():
                                              strict=not no_strict))
         else:
             show_v1_signature(parse_apk_v1_signature(e_meta), allow_unsafe=allow_unsafe,
-                              apkfile=apkfile, strict=not no_strict, verbose=verbose)
+                              apkfile=apkfile, strict=not no_strict, verbose=verbose, wrap=wrap)
 
     # FIXME
     @cli.command(help="""
