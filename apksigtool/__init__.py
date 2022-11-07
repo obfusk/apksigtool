@@ -44,6 +44,7 @@ API
 
 >> from apksigtool import ...
 >> apk_signing_block = parse_apk_signing_block(data, apkfile=None, ...)
+>> apk_signing_block = APKSigningBlock.parse(data, ...)     # same as the above
 
 >> show_parse_tree(apk_signing_block, apkfile=None, ...)
 >> show_json(obj, ...)
@@ -1916,7 +1917,7 @@ def verify_apk(apkfile: str, sig_block: Optional[bytes] = None, *,
     """
     if sig_block is None:
         _, sig_block = extract_v2_sig(apkfile)
-    return parse_apk_signing_block(sig_block).verify_results(
+    return APKSigningBlock.parse(sig_block).verify_results(
         apkfile, allow_unsafe=allow_unsafe, sdk=sdk)
 
 
@@ -1944,7 +1945,7 @@ def verify_apk_v1(apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
         if expected:
             return False, "Missing v1 signature"
         return None
-    sig = parse_apk_v1_signature(e_meta)
+    sig = JARSignature.parse(e_meta)
     try:
         signers, unverified_mf, unverified_sf = sig.verify(
             apkfile, allow_unsafe=allow_unsafe, strict=strict)
@@ -2030,9 +2031,9 @@ def main():
             apkfile = apk_or_block
             _, sig_block = extract_v2_sig(apkfile)
         if json:
-            show_json(parse_apk_signing_block(sig_block, apkfile=apkfile, sdk=sdk_version))
+            show_json(APKSigningBlock.parse(sig_block, apkfile=apkfile, sdk=sdk_version))
         else:
-            show_parse_tree(parse_apk_signing_block(sig_block), apkfile=apkfile,
+            show_parse_tree(APKSigningBlock.parse(sig_block), apkfile=apkfile,
                             sdk=sdk_version, verbose=verbose, wrap=wrap)
 
     @cli.command(help="""
@@ -2055,10 +2056,10 @@ def main():
             apkfile = apk_or_dir
             e_meta = apksigcopier.extract_meta(apk_or_dir)
         if json:
-            show_json(parse_apk_v1_signature(e_meta, apkfile=apkfile, allow_unsafe=allow_unsafe,
-                                             strict=not no_strict))
+            show_json(JARSignature.parse(e_meta, apkfile=apkfile, allow_unsafe=allow_unsafe,
+                                         strict=not no_strict))
         else:
-            show_v1_signature(parse_apk_v1_signature(e_meta), allow_unsafe=allow_unsafe,
+            show_v1_signature(JARSignature.parse(e_meta), allow_unsafe=allow_unsafe,
                               apkfile=apkfile, strict=not no_strict, verbose=verbose, wrap=wrap)
 
     # FIXME
@@ -2142,7 +2143,7 @@ def main():
             with open(apk_or_block, "rb") as fh:
                 sig_block = fh.read()
             if check:
-                parse_apk_signing_block(sig_block)  # try parsing, ignore result
+                APKSigningBlock.parse(sig_block)    # try parsing, ignore result
             sig_block_cleaned = clean_apk_signing_block(sig_block, keep=keep)
             if cleaned := (sig_block != sig_block_cleaned):
                 with open(apk_or_block, "wb") as fh:

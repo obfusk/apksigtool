@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-11-05
+    Date        : 2022-11-06
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -327,6 +327,7 @@ Parse:
 ```python
 >>> from apksigtool import ...
 >>> apk_signing_block = parse_apk_signing_block(data, apkfile=None, ...)
+>>> apk_signing_block = APKSigningBlock.parse(data, ...)    # same as the above
 ```
 
 Parse tree & JSON:
