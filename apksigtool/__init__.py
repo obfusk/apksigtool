@@ -197,7 +197,7 @@ assert set(JAR_HASHERS_STR.keys()) == set(UNSAFE_HASH_ALGO.keys())
 assert set(JAR_SBF_EXTS) == set(UNSAFE_KEY_SIZE.keys())
 assert set(JAR_SBF_EXTS) == set(x[0].upper() for x in HASHERS.values())
 
-WRAP_COLUMNS = 80
+WRAP_COLUMNS = 80   # overridden in main() if $APKSIGTOOL_WRAP_COLUMNS is set
 
 
 class APKSigToolError(Exception):
@@ -1841,6 +1841,10 @@ def clean_apk(apkfile: str, *, check: bool = False, keep: Tuple[int, ...] = (),
 
 def main():
     """CLI; requires click."""
+
+    global WRAP_COLUMNS
+    if (columns := os.environ.get("APKSIGTOOL_WRAP_COLUMNS", "")).isdigit():
+        WRAP_COLUMNS = int(columns)
 
     import click
 
