@@ -542,8 +542,8 @@ class APKSignatureSchemeBlock(Block):
     """APK Signature Scheme v2/v3 Block."""
     version: Literal[2, 3]
     signers: Tuple[Union[V2Signer, V3Signer], ...]
-    verified: Union[None, Literal[False], Tuple[Tuple[str, str], ...]]
-    verification_error: Optional[str]
+    verified: Union[None, Literal[False], Tuple[Tuple[str, str], ...]] = None
+    verification_error: Optional[str] = None
 
     def __post_init__(self):
         assert self.verified in (None, False) or len(self.verified) >= 1
@@ -885,15 +885,16 @@ def parse_apk_signature_scheme_block(
     .verification_error).
     """
     signers = tuple(_parse_apk_signature_scheme_block(data, v3=version == 3))
-    verified: Union[None, Literal[False], Tuple[Tuple[str, str], ...]] = None
-    verification_error = None
     if apkfile is not None:
+        verified: Union[Literal[False], Tuple[Tuple[str, str], ...]]
+        verification_error = None
         try:
             verified = verify_apk_signature_scheme(signers, allow_unsafe=allow_unsafe,
                                                    apkfile=apkfile, sdk=sdk)
         except VerificationError as e:
             verified, verification_error = False, str(e)
-    return APKSignatureSchemeBlock(version, signers, verified, verification_error)
+        return APKSignatureSchemeBlock(version, signers, verified, verification_error)
+    return APKSignatureSchemeBlock(version, signers)
 
 
 def _parse_apk_signature_scheme_block(data: bytes, v3: bool) \
