@@ -1552,8 +1552,7 @@ def show_parse_tree(apk_signing_block: APKSigningBlock, *,
                     sdk: Optional[int] = None, verbose: bool = False,
                     wrap: bool = False) -> None:
     """Print parse tree (w/ indent etc.) to file (stdout)."""
-    def p(*a):
-        print(*a, file=file)
+    p = _printer(file, wrap)
     for pair in apk_signing_block.pairs:
         if verbose:
             p("PAIR LENGTH:", pair.length)
@@ -1580,20 +1579,19 @@ def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
                                     sdk: Optional[int] = None, verbose: bool = False,
                                     wrap: bool = False) -> None:
     """Print APKSignatureSchemeBlock parse tree to file (stdout)."""
-    def p(*a):
-        print(*a, file=file)
+    p = _printer(file, wrap)
     p(f"  APK SIGNATURE SCHEME v{block.version} BLOCK")
     for i, signer in enumerate(block.signers):
         p("  SIGNER", i)
         p("    SIGNED DATA")
         for j, digest in enumerate(signer.signed_data.digests):
             p("      DIGEST", j)
-            _show_aid(digest, 8, file=file, verbose=verbose)
+            _show_aid(digest, 8, file=file, verbose=verbose, wrap=wrap)
             _show_hex(digest.digest, 8, file=file, wrap=wrap)
         for j, cert in enumerate(signer.signed_data.certificates):
             p("      CERTIFICATE", j)
             cert_info, pk_info = cert.certificate_info, cert.public_key_info
-            show_x509_certificate_info(cert_info, pk_info, 8, file=file, verbose=verbose)
+            show_x509_certificate_info(cert_info, pk_info, 8, file=file, verbose=verbose, wrap=wrap)
         if block.is_v3:
             assert isinstance(signer, V3Signer)
             p("      MIN SDK:", signer.signed_data.min_sdk)
@@ -1612,10 +1610,10 @@ def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
             p("    MAX SDK:", signer.max_sdk)
         for j, sig in enumerate(signer.signatures):
             p("    SIGNATURE", j)
-            _show_aid(sig, 6, file=file, verbose=verbose)
+            _show_aid(sig, 6, file=file, verbose=verbose, wrap=wrap)
             _show_hex(sig.signature, 6, file=file, wrap=wrap)
         p("    PUBLIC KEY")
-        show_public_key_info(signer.public_key.public_key_info, 6, file=file)
+        show_public_key_info(signer.public_key.public_key_info, 6, file=file, wrap=wrap)
     if apkfile is not None:
         try:
             n = len(block.verify(apkfile, sdk=sdk))
@@ -1630,10 +1628,9 @@ def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
 # FIXME: show more? s/Common Name:/CN=/ etc?
 def show_x509_certificate_info(info: CertificateInfo, pk_info: PublicKeyInfo,
                                indent: int, *, file: TextIO = sys.stdout,
-                               verbose: bool = False) -> None:
+                               verbose: bool = False, wrap: bool = False) -> None:
     """Print X.509 certificate information to file (stdout)."""
-    def p(*a):
-        print(*a, file=file)
+    p = _printer(file, wrap)
     p(" " * indent + "X.509 SUBJECT:", info.subject)
     if verbose:
         p(" " * indent + "X.509 ISSUER:", info.issuer)
@@ -1643,13 +1640,13 @@ def show_x509_certificate_info(info: CertificateInfo, pk_info: PublicKeyInfo,
         p(" " * indent + "X.509 NOT VALID BEFORE:", info.not_valid_before)
         p(" " * indent + "X.509 NOT VALID AFTER:", info.not_valid_after)
     p(" " * indent + "X.509 SHA256 FINGERPRINT (HEX):", info.fingerprint)
-    show_public_key_info(pk_info, indent, file=file)
+    show_public_key_info(pk_info, indent, file=file, wrap=wrap)
 
 
-def show_public_key_info(info: PublicKeyInfo, indent: int, *, file: TextIO = sys.stdout) -> None:
+def show_public_key_info(info: PublicKeyInfo, indent: int, *, file: TextIO = sys.stdout,
+                         wrap: bool = False) -> None:
     """Print public key information to file (stdout)."""
-    def p(*a):
-        print(*a, file=file)
+    p = _printer(file, wrap)
     p(" " * indent + "PUBLIC KEY ALGORITHM:", info.algorithm)
     p(" " * indent + "PUBLIC KEY BIT SIZE:", info.bit_size)
     p(" " * indent + "PUBLIC KEY SHA256 FINGERPRINT (HEX):", info.fingerprint)
@@ -1660,32 +1657,42 @@ def show_public_key_info(info: PublicKeyInfo, indent: int, *, file: TextIO = sys
 def _show_hex(data: bytes, indent: int, *, file: TextIO = sys.stdout,
               wrap: bool = False) -> None:
     """Print hex value (w/ indent etc.) to file (stdout)."""
-    pre = " " * indent + "VALUE (HEX): "
-    out = pre + hexlify(data).decode()
-    if wrap:
-        sin = " " * (indent + 2)
-        out = "\n".join(textwrap.wrap(out, width=WRAP_COLUMNS, subsequent_indent=sin))
-    print(out, file=file)
+    out = " " * indent + "VALUE (HEX): " + hexlify(data).decode()
+    print(_wrap(out, indent, wrap), file=file)
 
 
 def _show_aid(x: Union[Digest, Signature], indent: int, *,
-              file: TextIO = sys.stdout, verbose: bool = False) -> None:
+              file: TextIO = sys.stdout, verbose: bool = False,
+              wrap: bool = False) -> None:
     """Print signature algorithm ID (w/ indent etc.) to file (stdout)."""
     aid, aid_s = x.signature_algorithm_id, x.algoritm_id_info
     if not verbose:
         aid_s = aid_s.split(",")[0]
-    print(" " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})", file=file)
+    out = " " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})"
+    print(_wrap(out, indent, wrap), file=file)
+
+
+def _printer(file: TextIO, wrap: bool):
+    def p(*a):
+        print(_wrap(" ".join(map(str, a)), wrap=wrap), file=file)
+    return p
+
+
+def _wrap(s: str, indent: Optional[int] = None, wrap: bool = True) -> str:
+    if not wrap:
+        return s
+    i = len(re.split("^( *)", s, 1)[1]) if indent is None else indent
+    return "\n".join(textwrap.wrap(s, width=WRAP_COLUMNS, subsequent_indent=" " * (i + 2)))
 
 
 def show_v1_signature(signature: JARSignature, *, allow_unsafe: Tuple[str, ...] = (),
                       apkfile: Optional[str] = None, file: TextIO = sys.stdout,
                       strict: bool = True, verbose: bool = False, wrap: bool = False) -> None:
     """Print JARSignature parse tree (w/ indent etc.) to file (stdout)."""
-    def p(*a):
-        print(*a, file=file)
-    show_v1_manifest(signature.manifest, file=file, verbose=verbose)
+    p = _printer(file, wrap)
+    show_v1_manifest(signature.manifest, file=file, verbose=verbose, wrap=wrap)
     for sf in signature.signature_files:
-        show_v1_signature_file(sf, file=file, verbose=verbose)
+        show_v1_signature_file(sf, file=file, verbose=verbose, wrap=wrap)
     for sbf in signature.signature_block_files:
         show_v1_signature_block_file(sbf, file=file, verbose=verbose, wrap=wrap)
     if apkfile is not None:
@@ -1711,10 +1718,9 @@ def show_v1_signature(signature: JARSignature, *, allow_unsafe: Tuple[str, ...] 
 
 
 def show_v1_manifest(manifest: JARManifest, *, file: TextIO = sys.stdout,
-                     verbose: bool = False) -> None:
+                     verbose: bool = False, wrap: bool = False) -> None:
     """Print JARManifest parse tree (w/ indent etc.) to file (stdout)."""
-    def p(*a):
-        print(*a, file=file)
+    p = _printer(file, wrap)
     p("JAR MANIFEST")
     p("  VERSION:", manifest.version)
     if manifest.created_by:
@@ -1730,10 +1736,9 @@ def show_v1_manifest(manifest: JARManifest, *, file: TextIO = sys.stdout,
 
 
 def show_v1_signature_file(sf: JARSignatureFile, *, file: TextIO = sys.stdout,
-                           verbose: bool = False) -> None:
+                           verbose: bool = False, wrap: bool = False) -> None:
     """Print JARSignatureFile parse tree (w/ indent etc.) to file (stdout)."""
-    def p(*a):
-        print(*a, file=file)
+    p = _printer(file, wrap)
     p("JAR SIGNATURE FILE")
     p("  FILENAME:", repr(sf.filename)[1:-1])
     p("  VERSION:", sf.version)
@@ -1757,13 +1762,12 @@ def show_v1_signature_file(sf: JARSignatureFile, *, file: TextIO = sys.stdout,
 def show_v1_signature_block_file(sbf: JARSignatureBlockFile, *, file: TextIO = sys.stdout,
                                  verbose: bool = False, wrap: bool = False) -> None:
     """Print JARSignatureBlockFile parse tree (w/ indent etc.) to file (stdout)."""
-    def p(*a):
-        print(*a, file=file)
+    p = _printer(file, wrap)
     p("JAR SIGNATURE BLOCK FILE")
     p("  FILENAME:", repr(sbf.filename)[1:-1])
     p("  CERTIFICATE")
     cert_info, pk_info = sbf.certificate_info, sbf.public_key_info
-    show_x509_certificate_info(cert_info, pk_info, 4, file=file, verbose=verbose)
+    show_x509_certificate_info(cert_info, pk_info, 4, file=file, verbose=verbose, wrap=wrap)
     p("  SIGNATURE")
     _show_hex(sbf.signature, 4, file=file, wrap=wrap)
     p("  HASH ALGORITHM:", sbf.hash_algorithm)
@@ -2021,7 +2025,7 @@ def main():
     @click.option("--json", is_flag=True, help="JSON output.")
     @click.option("--sdk-version", type=click.INT, help="For v3 signers specifying min/max SDK.")
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
-    @click.option("--wrap", is_flag=True, help="Wrap hex value output (no-op w/ --json).")
+    @click.option("--wrap", is_flag=True, help="Wrap output (no-op w/ --json).")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
     def parse(apk_or_block, block, json, sdk_version, verbose, wrap):
         if block:
@@ -2047,7 +2051,7 @@ def main():
     @click.option("--json", is_flag=True, help="JSON output.")
     @click.option("--no-strict", is_flag=True, help="Don't be stricter than the spec.")
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
-    @click.option("--wrap", is_flag=True, help="Wrap hex value output (no-op w/ --json).")
+    @click.option("--wrap", is_flag=True, help="Wrap output (no-op w/ --json).")
     @click.argument("apk_or_dir", type=click.Path(exists=True, dir_okay=True))
     def parse_v1(apk_or_dir, allow_unsafe, json, no_strict, verbose, wrap):
         if os.path.isdir(apk_or_dir):
