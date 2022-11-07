@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-06
+# Date        : 2022-11-07
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -78,8 +78,8 @@ from binascii import hexlify
 from dataclasses import dataclass, field
 from functools import reduce
 from hashlib import sha1, sha224, sha256, sha384, sha512
-from typing import (Any, Dict, FrozenSet, Iterator, List, Literal, Mapping,
-                    Optional, TextIO, Tuple, Union)
+from typing import (Any, Callable, Dict, FrozenSet, Iterator, List, Literal,
+                    Mapping, Optional, TextIO, Tuple, TypeVar, Union)
 
 import apksigcopier
 
@@ -202,6 +202,8 @@ assert set(JAR_SBF_EXTS) == set(x[0].upper() for x in HASHERS.values())
 
 WRAP_COLUMNS = 80   # overridden in main() if $APKSIGTOOL_WRAP_COLUMNS is set
 
+T = TypeVar("T")
+
 
 class APKSigToolError(Exception):
     """Base class for errors."""
@@ -251,6 +253,11 @@ class PublicKeyInfo(APKSigToolBase):
 class Block(APKSigToolBase):
     """Base class for APKSigningBlock etc."""
 
+    def dump(self) -> bytes:
+        if hasattr(self, "raw_data"):
+            return self.raw_data    # type: ignore
+        raise NotImplementedError("no .raw_data or custom .dump()")
+
 
 @dataclass(frozen=True)
 class Pair(APKSigToolBase):
@@ -258,6 +265,9 @@ class Pair(APKSigToolBase):
     length: int
     id: int
     value: Block
+
+    def dump(self) -> bytes:
+        return dump_pair(self)
 
 
 @dataclass(frozen=True)
@@ -273,13 +283,23 @@ class Digest(APKSigToolBase):
     @classmethod
     def parse(_cls, data: bytes) -> Tuple[Digest, ...]:
         """
-        Parse APK Signature Scheme v2/v3 Block -> signer -> signed data -> digests.
+        Parse APK Signature Scheme v2/v3 Block -> signer -> signed data ->
+        digests.
 
         NB: returns a tuple of Digest.
 
         Uses parse_digests().
         """
         return parse_digests(data)
+
+    def dump(self) -> bytes:
+        """
+        Dump APK Signature Scheme v2/v3 Block -> signer -> signed data ->
+        digests -> digest.
+
+        Uses dump_digest().
+        """
+        return dump_digest(self)
 
 
 @dataclass(frozen=True)
@@ -317,6 +337,15 @@ class Certificate(APKSigToolBase):
         """
         return parse_certificates(data)
 
+    def dump(self) -> bytes:
+        """
+        Dump APK Signature Scheme v2/v3 Block -> signer -> signed data ->
+        certificates -> certificate.
+
+        Uses dump_certificate().
+        """
+        return dump_certificate(self)
+
 
 @dataclass(frozen=True)
 class AdditionalAttribute(APKSigToolBase):
@@ -350,6 +379,15 @@ class AdditionalAttribute(APKSigToolBase):
         """
         return parse_additional_attributes(data)
 
+    def dump(self) -> bytes:
+        """
+        Dump APK Signature Scheme v2/v3 Block -> signer -> signed data ->
+        additional attributes -> attribute.
+
+        Uses dump_additional_attribute().
+        """
+        return dump_additional_attribute(self)
+
 
 @dataclass(frozen=True)
 class Signature(APKSigToolBase):
@@ -372,6 +410,15 @@ class Signature(APKSigToolBase):
         """
         return parse_signatures(data)
 
+    def dump(self) -> bytes:
+        """
+        Dump APK Signature Scheme v2/v3 Block -> signer -> signatures ->
+        signature.
+
+        Uses dump_signature().
+        """
+        return dump_signature(self)
+
 
 @dataclass(frozen=True)
 class PublicKey(APKSigToolBase):
@@ -387,6 +434,9 @@ class PublicKey(APKSigToolBase):
     @property
     def public_key(self) -> X509CertPubKeyInfo:
         return self._public_key
+
+    def dump(self) -> bytes:
+        return self.raw_data
 
 
 @dataclass(frozen=True)
@@ -407,6 +457,15 @@ class V2SignedData(APKSigToolBase):
         signed_data = parse_signed_data(data, v3=False)
         assert isinstance(signed_data, V2SignedData)
         return signed_data
+
+    def dump(self, *, expect_raw_data: bool = True, verify_raw_data: bool = True) -> bytes:
+        """
+        Dump APK Signature Scheme v2 Block -> v2 signer -> signed data.
+
+        Uses dump_signed_data().
+        """
+        return dump_signed_data(self, expect_raw_data=expect_raw_data,
+                                verify_raw_data=verify_raw_data)
 
 
 @dataclass(frozen=True)
@@ -430,6 +489,15 @@ class V3SignedData(APKSigToolBase):
         assert isinstance(signed_data, V3SignedData)
         return signed_data
 
+    def dump(self, *, expect_raw_data: bool = True, verify_raw_data: bool = True) -> bytes:
+        """
+        Dump APK Signature Scheme v3 Block -> v3 signer -> signed data.
+
+        Uses dump_signed_data().
+        """
+        return dump_signed_data(self, expect_raw_data=expect_raw_data,
+                                verify_raw_data=verify_raw_data)
+
 
 @dataclass(frozen=True)
 class V2Signer(APKSigToolBase):
@@ -448,6 +516,14 @@ class V2Signer(APKSigToolBase):
         signer = parse_signer(data, v3=False)
         assert isinstance(signer, V2Signer)
         return signer
+
+    def dump(self) -> bytes:
+        """
+        Dump APK Signature Scheme v2 Block -> v2 signer.
+
+        Uses dump_signer().
+        """
+        return dump_signer(self)
 
 
 @dataclass(frozen=True)
@@ -470,6 +546,14 @@ class V3Signer(APKSigToolBase):
         assert isinstance(signer, V3Signer)
         return signer
 
+    def dump(self) -> bytes:
+        """
+        Dump APK Signature Scheme v3 Block -> v3 signer.
+
+        Uses dump_signer().
+        """
+        return dump_signer(self)
+
 
 @dataclass(frozen=True)
 class APKSigningBlock(APKSigToolBase):
@@ -486,6 +570,14 @@ class APKSigningBlock(APKSigToolBase):
         Uses parse_apk_signing_block().
         """
         return parse_apk_signing_block(data, apkfile=apkfile, allow_unsafe=allow_unsafe, sdk=sdk)
+
+    def dump(self) -> bytes:
+        """
+        Dump APK Signing Block.
+
+        Uses dump_apk_signing_block().
+        """
+        return dump_apk_signing_block(self)
 
     # FIXME
     # WARNING: verification is considered EXPERIMENTAL
@@ -573,6 +665,14 @@ class APKSignatureSchemeBlock(Block):
         return parse_apk_signature_scheme_block(version, data, allow_unsafe=allow_unsafe,
                                                 apkfile=apkfile, sdk=sdk)
 
+    def dump(self) -> bytes:
+        """
+        Dump APK Signature Scheme v3/v3 Block.
+
+        Uses dump_apk_signature_scheme_block().
+        """
+        return dump_apk_signature_scheme_block(self)
+
     # FIXME
     # WARNING: verification is considered EXPERIMENTAL
     def verify(self, apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
@@ -594,6 +694,10 @@ class APKSignatureSchemeBlock(Block):
 @dataclass(frozen=True)
 class VerityPaddingBlock(Block):
     """Verity padding block (zero padding)."""
+    size: int
+
+    def dump(self) -> bytes:
+        return b"\x00" * self.size
 
 
 @dataclass(frozen=True)
@@ -631,6 +735,11 @@ class JAREntry(APKSigToolBase):
     def __post_init__(self):
         assert all(algo in JAR_HASHERS_STR for algo, _ in self.digests)
 
+    def dump(self) -> bytes:
+        if not self.raw_data:
+            raise ValueError("JAREntry without .raw_data")
+        return self.raw_data
+
 
 @dataclass(frozen=True)
 class JARManifestBase(APKSigToolBase):
@@ -656,6 +765,14 @@ class JARManifest(JARManifestBase):
         """
         return parse_apk_v1_manifest(data)
 
+    def dump(self) -> bytes:
+        """
+        Dump JAR manifest (MANIFEST.MF).
+
+        Uses dump_apk_v1_manifest().
+        """
+        return dump_apk_v1_manifest(self)
+
 
 @dataclass(frozen=True)
 class JARSignatureFile(JARManifestBase):
@@ -677,6 +794,14 @@ class JARSignatureFile(JARManifestBase):
         Uses parse_apk_v1_signature_file().
         """
         return parse_apk_v1_signature_file(filename, data)
+
+    def dump(self) -> bytes:
+        """
+        Dump JAR signature file (.SF).
+
+        Uses dump_apk_v1_signature_file().
+        """
+        return dump_apk_v1_signature_file(self)
 
 
 @dataclass(frozen=True)
@@ -707,6 +832,9 @@ class JARSignatureBlockFile(APKSigToolBase):
     @property
     def public_key(self) -> X509CertPubKeyInfo:
         return self._public_key
+
+    def dump(self) -> bytes:
+        return self.raw_data
 
 
 @dataclass(frozen=True)
@@ -744,6 +872,14 @@ class JARSignature(APKSigToolBase):
         return parse_apk_v1_signature(extracted_meta, apkfile=apkfile,
                                       allow_unsafe=allow_unsafe, strict=strict)
 
+    def dump(self) -> ZipInfoDataPairs:
+        """
+        Dump v1 signature metadata files.
+
+        Uses dump_apk_v1_signature().
+        """
+        return dump_apk_v1_signature(self)
+
     # FIXME
     # WARNING: verification is considered EXPERIMENTAL
     def verify(self, apkfile: str, *, allow_unsafe: Tuple[str, ...] = (), strict: bool = True) \
@@ -778,7 +914,7 @@ def _assert(b: bool, what: Optional[str] = None) -> None:
         raise AssertionFailed("Assertion failed" + (f": {what}" if what else ""))
 
 
-def _fn_base(x):
+def _fn_base(x) -> str:
     return x.filename.rsplit(".", 1)[0]
 
 
@@ -824,7 +960,7 @@ def _parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None, *,
                 3, pair_val, allow_unsafe=allow_unsafe, apkfile=apkfile, sdk=sdk)
         elif pair_id == VERITY_PADDING_BLOCK_ID:
             _assert(all(b == 0 for b in pair_val), "verity zero padding")
-            value = VerityPaddingBlock()
+            value = VerityPaddingBlock(len(pair_val))
         elif pair_id == DEPENDENCY_INFO_BLOCK_ID:
             value = DependencyInfoBlock(pair_val)
         elif pair_id == GOOGLE_PLAY_FROSTING_BLOCK_ID:
@@ -840,13 +976,40 @@ def _parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None, *,
 
 # FIXME
 # FIXME: adjust/add verity padding if sb_size % 4096 != 0? when?
-def clean_apk_signing_block(data: bytes, *, keep: Tuple[int, ...] = ()) -> bytes:
+def clean_apk_signing_block(data: bytes, *, keep: Tuple[int, ...] = (),
+                            parse: bool = False) -> bytes:
     """
     Clean APK Signing Block: remove everything that's not an APK Signature
     Scheme v2/v3 Block or verity padding block (or has a pair_id in keep).
 
     Returns cleaned block (bytes).
+
+    >>> import apksigtool
+    >>> apk = "test/apks/apks/v3-only-with-stamp.apk"
+    >>> _, data = apksigtool.extract_v2_sig(apk)
+    >>> [ hex(p.id) for p in apksigtool.parse_apk_signing_block(data).pairs ]
+    ['0xf05368c0', '0x6dff800d', '0x42726577']
+    >>> cleaned = apksigtool.clean_apk_signing_block(data)
+    >>> [ hex(p.id) for p in apksigtool.parse_apk_signing_block(cleaned).pairs ]
+    ['0xf05368c0', '0x42726577']
+    >>> cleaned == apksigtool.clean_apk_signing_block(data, parse=True)
+    True
+
     """
+    if parse:
+        allow = (APK_SIGNATURE_SCHEME_V2_BLOCK_ID,
+                 APK_SIGNATURE_SCHEME_V3_BLOCK_ID,
+                 VERITY_PADDING_BLOCK_ID) + keep
+        block = parse_apk_signing_block(data)
+        pairs = tuple(p for p in block.pairs if p.id in allow)
+        return dataclasses.replace(block, pairs=pairs).dump()
+    else:
+        return _clean_apk_signing_block(data, keep=keep)
+
+
+# FIXME
+def _clean_apk_signing_block(data: bytes, *, keep: Tuple[int, ...] = ()) -> bytes:
+    """Clean APK Signing Block w/o parsing its contents."""
     magic = data[-16:]
     sb_size1 = int.from_bytes(data[:8], "little")
     sb_size2 = int.from_bytes(data[-24:-16], "little")
@@ -870,6 +1033,32 @@ def clean_apk_signing_block(data: bytes, *, keep: Tuple[int, ...] = ()) -> bytes
         cleaned += pair
     c_size = int.to_bytes(len(cleaned) + 24, 8, "little")
     return c_size + cleaned + c_size + magic
+
+
+def dump_apk_signing_block(block: APKSigningBlock) -> bytes:
+    """
+    Dump APK Signing Block.
+
+    >>> import apksigtool
+    >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
+    >>> _, data = apksigtool.extract_v2_sig(apk)
+    >>> blk = apksigtool.parse_apk_signing_block(data)
+    >>> [ hex(p.id) for p in blk.pairs ]
+    ['0x7109871a', '0xf05368c0', '0x42726577']
+    >>> blk.dump() == data
+    True
+
+    """
+    data = b"".join(map(dump_pair, block.pairs))
+    size = int.to_bytes(len(data) + 24, 8, "little")
+    return size + data + size + b"APK Sig Block 42"
+
+
+def dump_pair(pair: Pair) -> bytes:
+    """Dump Pair."""
+    dump = pair.value.dump()
+    _assert(pair.length == len(dump) + 4, "pair length")
+    return struct.pack("<QL", pair.length, pair.id) + dump
 
 
 def parse_apk_signature_scheme_block(
@@ -903,8 +1092,14 @@ def _parse_apk_signature_scheme_block(data: bytes, v3: bool) \
     seq_len, data = int.from_bytes(data[:4], "little"), data[4:]
     _assert(seq_len == len(data), "APK Signature Scheme Block size")
     while data:
-        signer, data = _len_prefixed_field(data)
+        signer, data = _split_len_prefixed_field(data)
         yield parse_signer(signer, v3=v3)
+
+
+def dump_apk_signature_scheme_block(block: APKSignatureSchemeBlock) -> bytes:
+    """Dump APK Signature Scheme v2/v3 Block."""
+    data = b"".join(_as_len_prefixed_field(dump_signer(s)) for s in block.signers)
+    return int.to_bytes(len(data), 4, "little") + data
 
 
 def parse_signer(data: bytes, v3: bool) -> Union[V2Signer, V3Signer]:
@@ -915,19 +1110,32 @@ def parse_signer(data: bytes, v3: bool) -> Union[V2Signer, V3Signer]:
     V3Signer also .min_sdk, .max_sdk).
     """
     result: List = []
-    sigdata, data = _len_prefixed_field(data)
+    sigdata, data = _split_len_prefixed_field(data)
     result.append(parse_signed_data(sigdata, v3=v3))
     if v3:
         minSDK, maxSDK = struct.unpack("<LL", data[:8])
         data = data[8:]
         result.append(minSDK)
         result.append(maxSDK)
-    sigs, data = _len_prefixed_field(data)
+    sigs, data = _split_len_prefixed_field(data)
     result.append(parse_signatures(sigs))
-    pubkey, data = _len_prefixed_field(data)
+    pubkey, data = _split_len_prefixed_field(data)
     result.append(PublicKey(pubkey))
     _assert(all(b == 0 for b in data), "signer zero padding")
     return (V3Signer if v3 else V2Signer)(*result)
+
+
+# FIXME: zero padding?!
+def dump_signer(signer: Union[V2Signer, V3Signer]) -> bytes:
+    """Dump APK Signature Scheme v2/v3 Block -> signer."""
+    sigdata = _as_len_prefixed_field(dump_signed_data(signer.signed_data))
+    sigs = _dump_tuple(dump_signature, signer.signatures)
+    pubkey = _as_len_prefixed_field(signer.public_key.raw_data)
+    if isinstance(signer, V3Signer):
+        minmax = struct.pack("<LL", signer.min_sdk, signer.max_sdk)
+    else:
+        minmax = b""
+    return sigdata + minmax + sigs + pubkey
 
 
 def parse_signed_data(data: bytes, v3: bool) -> Union[V2SignedData, V3SignedData]:
@@ -938,19 +1146,40 @@ def parse_signed_data(data: bytes, v3: bool) -> Union[V2SignedData, V3SignedData
     .additional_attributes; V3SignedData also .min_sdk, .max_sdk).
     """
     result: List = [data]
-    digests, data = _len_prefixed_field(data)
+    digests, data = _split_len_prefixed_field(data)
     result.append(parse_digests(digests))
-    certs, data = _len_prefixed_field(data)
+    certs, data = _split_len_prefixed_field(data)
     result.append(parse_certificates(certs))
     if v3:
         minSDK, maxSDK = struct.unpack("<LL", data[:8])
         data = data[8:]
         result.append(minSDK)
         result.append(maxSDK)
-    attrs, data = _len_prefixed_field(data)
+    attrs, data = _split_len_prefixed_field(data)
     result.append(parse_additional_attributes(attrs))
     _assert(all(b == 0 for b in data), "signed data zero padding")
     return (V3SignedData if v3 else V2SignedData)(*result)
+
+
+# FIXME: zero padding?!
+def dump_signed_data(signed_data: Union[V2SignedData, V3SignedData], *,
+                     expect_raw_data: bool = True, verify_raw_data: bool = True) -> bytes:
+    """Dump APK Signature Scheme v2/v3 Block -> signer -> signed data."""
+    _assert(not expect_raw_data or bool(signed_data.raw_data), "raw signed data expected")
+    if not verify_raw_data and signed_data.raw_data:
+        return signed_data.raw_data
+    digests = _dump_tuple(dump_digest, signed_data.digests)
+    certs = _dump_tuple(dump_certificate, signed_data.certificates)
+    attrs = _dump_tuple(dump_additional_attribute, signed_data.additional_attributes)
+    if isinstance(signed_data, V3SignedData):
+        minmax = struct.pack("<LL", signed_data.min_sdk, signed_data.max_sdk)
+    else:
+        minmax = b""
+    data = digests + certs + minmax + attrs
+    if (pad := len(signed_data.raw_data) - len(data)) > 0:
+        data += b"\x00" * pad
+    _assert(not verify_raw_data or signed_data.raw_data == data, "raw signed data")
+    return data
 
 
 def parse_digests(data: bytes) -> Tuple[Digest, ...]:
@@ -965,10 +1194,20 @@ def parse_digests(data: bytes) -> Tuple[Digest, ...]:
 def _parse_digests(data: bytes) -> Iterator[Digest]:
     """Yield Digest(s)."""
     while data:
-        digest, data = _len_prefixed_field(data)
+        digest, data = _split_len_prefixed_field(data)
         sig_algo_id = int.from_bytes(digest[:4], "little")
         _assert(int.from_bytes(digest[4:8], "little") == len(digest) - 8, "digest size")
         yield Digest(sig_algo_id, digest[8:])
+
+
+def dump_digest(digest: Digest) -> bytes:
+    """
+    Dump APK Signature Scheme v2/v3 Block -> signer -> signed data -> digests ->
+    digest.
+    """
+    sig_algo_id = int.to_bytes(digest.signature_algorithm_id, 4, "little")
+    dig_len = int.to_bytes(len(digest.digest), 4, "little")
+    return _as_len_prefixed_field(sig_algo_id + dig_len + digest.digest)
 
 
 def parse_certificates(data: bytes) -> Tuple[Certificate, ...]:
@@ -984,8 +1223,16 @@ def parse_certificates(data: bytes) -> Tuple[Certificate, ...]:
 def _parse_certificates(data: bytes) -> Iterator[Certificate]:
     """Yield Certificate(s)."""
     while data:
-        cert, data = _len_prefixed_field(data)
+        cert, data = _split_len_prefixed_field(data)
         yield Certificate(cert)
+
+
+def dump_certificate(certificate: Certificate) -> bytes:
+    """
+    Dump APK Signature Scheme v2/v3 Block -> signer -> signed data ->
+    certificates -> certificate.
+    """
+    return _as_len_prefixed_field(certificate.raw_data)
 
 
 def parse_additional_attributes(data: bytes) -> Tuple[AdditionalAttribute, ...]:
@@ -1001,9 +1248,18 @@ def parse_additional_attributes(data: bytes) -> Tuple[AdditionalAttribute, ...]:
 def _parse_additional_attributes(data: bytes) -> Iterator[AdditionalAttribute]:
     """Yield AdditionalAttribute(s)."""
     while data:
-        attr, data = _len_prefixed_field(data)
+        attr, data = _split_len_prefixed_field(data)
         attr_id = int.from_bytes(attr[:4], "little")
         yield AdditionalAttribute(attr_id, attr[4:])
+
+
+def dump_additional_attribute(attribute: AdditionalAttribute) -> bytes:
+    """
+    Dump APK Signature Scheme v2/v3 Block -> signer -> signed data -> additional
+    attributes -> attribute.
+    """
+    attr_id = int.to_bytes(attribute.id, 4, "little")
+    return _as_len_prefixed_field(attr_id + attribute.value)
 
 
 def parse_signatures(data: bytes) -> Tuple[Signature, ...]:
@@ -1018,13 +1274,20 @@ def parse_signatures(data: bytes) -> Tuple[Signature, ...]:
 def _parse_signatures(data: bytes) -> Iterator[Signature]:
     """Yield Signature(s)."""
     while data:
-        sig, data = _len_prefixed_field(data)
+        sig, data = _split_len_prefixed_field(data)
         sig_algo_id = int.from_bytes(sig[:4], "little")
         _assert(int.from_bytes(sig[4:8], "little") == len(sig) - 8, "signature size")
         yield Signature(sig_algo_id, sig[8:])
 
 
-def _len_prefixed_field(data: bytes) -> Tuple[bytes, bytes]:
+def dump_signature(signature: Signature) -> bytes:
+    """Dump APK Signature Scheme v2/v3 Block -> signer -> signatures -> signature."""
+    sig_algo_id = int.to_bytes(signature.signature_algorithm_id, 4, "little")
+    sig_len = int.to_bytes(len(signature.signature), 4, "little")
+    return _as_len_prefixed_field(sig_algo_id + sig_len + signature.signature)
+
+
+def _split_len_prefixed_field(data: bytes) -> Tuple[bytes, bytes]:
     """
     Parse length-prefixed field (length is little-endian, uint32) at beginning
     of data.
@@ -1035,6 +1298,17 @@ def _len_prefixed_field(data: bytes) -> Tuple[bytes, bytes]:
     field_len = int.from_bytes(data[:4], "little")
     _assert(len(data) >= 4 + field_len, "prefixed field size")
     return data[4:4 + field_len], data[4 + field_len:]
+
+
+def _as_len_prefixed_field(data: bytes) -> bytes:
+    """Create length-prefixed field (length is little-endian, uint32)."""
+    return int.to_bytes(len(data), 4, "little") + data
+
+
+def _dump_tuple(f: Callable[[T], bytes], xs: Tuple[T, ...],
+                len_prefixed: bool = True) -> bytes:
+    data = b"".join(map(f, xs))
+    return _as_len_prefixed_field(data) if len_prefixed else data
 
 
 # FIXME: check & audit!
@@ -1252,6 +1526,37 @@ def parse_apk_v1_signature(extracted_meta: ZipInfoDataPairs, apkfile: Optional[s
     return sig
 
 
+def dump_apk_v1_signature(signature: JARSignature) -> ZipInfoDataPairs:
+    """
+    Dump v1 signature metadata files.
+
+    NB: does not set correct ZipInfo metadata.
+
+    >>> import apksigcopier, apksigtool, dataclasses
+    >>> noraw = lambda x: dataclasses.replace(x, raw_data=b"")
+    >>> noraw_ents = lambda x, es: dataclasses.replace(x, raw_data=b"", entries=es)
+    >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
+    >>> meta = tuple(apksigcopier.extract_meta(apk))
+    >>> [ x.filename for x, _ in meta ]
+    ['META-INF/RSA-2048.SF', 'META-INF/RSA-2048.RSA', 'META-INF/MANIFEST.MF']
+    >>> sig = apksigtool.parse_apk_v1_signature(meta)
+    >>> mf = noraw_ents(sig.manifest, tuple(map(noraw, sig.manifest.entries)))
+    >>> sf = noraw_ents(sig.signature_files[0], tuple(map(noraw, sig.signature_files[0].entries)))
+    >>> sbf = sig.signature_block_files[0]
+    >>> meta_dump = apksigtool.JARSignature(mf, (sf,), (sbf,)).dump()
+    >>> [ x.filename for x, _ in meta_dump ]
+    ['META-INF/RSA-2048.SF', 'META-INF/RSA-2048.RSA', 'META-INF/MANIFEST.MF']
+    >>> [ (x.filename, y) for x, y in meta ] == [ (x.filename, y) for x, y in meta_dump ]
+    True
+
+    """
+    meta = []
+    for sf, sbf in zip(signature.signature_files, signature.signature_block_files):
+        meta += [(sf.filename, sf.dump()), (sbf.filename, sbf.raw_data)]
+    meta.append(("META-INF/MANIFEST.MF", signature.manifest.dump()))
+    return tuple((zipfile.ZipInfo(fn), data) for fn, data in meta)
+
+
 # FIXME: what about other keys besides name & digests?
 def parse_apk_v1_manifest(data: bytes) -> JARManifest:
     """Parse JAR manifest (MANIFEST.MF)."""
@@ -1268,6 +1573,11 @@ def parse_apk_v1_manifest(data: bytes) -> JARManifest:
                                 digests=tuple(_digests_from_dict(ent))))
     return JARManifest(raw_data=data, entries=tuple(entries), version=version,
                        created_by=created_by, built_by=built_by, headers_len=headers_len)
+
+
+def dump_apk_v1_manifest(manifest: JARManifest) -> bytes:
+    """Dump JAR manifest (MANIFEST.MF)."""
+    return _dump_apk_v1_manifest(manifest)
 
 
 # FIXME: what about other keys besides name & digests?
@@ -1294,6 +1604,11 @@ def parse_apk_v1_signature_file(filename: str, data: bytes) -> JARSignatureFile:
         raw_data=data, entries=tuple(entries), version=version, created_by=created_by,
         digests_manifest=digests_manifest, digests_manifest_main_attributes=digests_mma,
         x_android_apk_signed=x_android_apk_signed, filename=filename, headers_len=headers_len)
+
+
+def dump_apk_v1_signature_file(sf: JARSignatureFile) -> bytes:
+    """Dump JAR signature file (.SF)."""
+    return _dump_apk_v1_manifest(sf)
 
 
 def _digests_from_dict(ent: Dict[str, str], suffix: str = "") -> Iterator[Tuple[str, str]]:
@@ -1338,6 +1653,77 @@ def _parse_apk_v1_manifest(data: bytes) \
     if entries and not entries[-1][0]:
         entries.pop()
     return headers, len(b"".join(raw_headers)), tuple((e, b"".join(r)) for e, r in entries)
+
+
+# FIXME
+def _dump_apk_v1_manifest(manifest: Union[JARManifest, JARSignatureFile], *,
+                          headers: Optional[Tuple[Tuple[str, str], ...]] = None,
+                          endl: str = "\r\n", wrap: int = 70) -> bytes:
+    """
+    >>> import apksigcopier, apksigtool, dataclasses
+    >>> noraw = lambda x: dataclasses.replace(x, raw_data=b"")
+    >>> noraw_ents = lambda x, es: dataclasses.replace(x, raw_data=b"", entries=es)
+    >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
+    >>> meta = apksigcopier.extract_meta(apk)
+    >>> sig = apksigtool.parse_apk_v1_signature(meta)
+    >>> mf_ents = tuple(map(noraw, sig.manifest.entries))
+    >>> mf_dump = noraw_ents(sig.manifest, mf_ents).dump()
+    >>> mf_dump == sig.manifest.raw_data
+    True
+    >>> sf_ents = tuple(map(noraw, sig.signature_files[0].entries))
+    >>> sf_dump = noraw_ents(sig.signature_files[0], sf_ents).dump()
+    >>> sf_dump == sig.signature_files[0].raw_data
+    True
+
+    """
+    def _wrap(s):
+        w, t = wrap, ""
+        while len(s) > w:
+            t += s[:w] + endl + " "
+            s = s[w:]
+            w = wrap - 1    # account for the space
+        return t + s
+
+    def _dig_hdr(algo, digest, what=""):
+        a = algo if algo == "SHA1" else algo[:3] + "-" + algo[3:]   # FIXME
+        return f"{a}-Digest{what}", digest
+
+    def _join_hdrs(hs):
+        return "".join(_wrap(f"{k}: {v}") + endl for k, v in hs) + endl
+
+    if manifest.raw_data:
+        return manifest.raw_data
+    if headers is None:
+        hs = []
+        if isinstance(manifest, JARManifest):
+            hs.append(("Manifest-Version", manifest.version))
+            if manifest.built_by:
+                hs.append(("Built-By", manifest.built_by))
+            if manifest.created_by:
+                hs.append(("Created-By", manifest.created_by))
+        elif isinstance(manifest, JARSignatureFile):
+            hs.append(("Signature-Version", manifest.version))
+            if manifest.created_by:
+                hs.append(("Created-By", manifest.created_by))
+            for algo, digest in manifest.digests_manifest:
+                hs.append(_dig_hdr(algo, digest, "-Manifest"))
+            if manifest.digests_manifest_main_attributes:
+                for algo, digest in manifest.digests_manifest_main_attributes:
+                    hs.append(_dig_hdr(algo, digest, "-Manifest-Main-Attributes"))
+            if manifest.x_android_apk_signed:
+                xaas = ", ".join(map(str, manifest.x_android_apk_signed))
+                hs.append(("X-Android-APK-Signed", xaas))
+        headers = tuple(hs)
+    data = _join_hdrs(headers).encode()
+    for entry in manifest.entries:
+        if entry.raw_data:
+            data += entry.raw_data
+        else:
+            hs = [("Name", entry.filename)]
+            for algo, digest in entry.digests:
+                hs.append(_dig_hdr(algo, digest))
+            data += _join_hdrs(hs).encode()
+    return data
 
 
 # FIXME
@@ -1672,7 +2058,7 @@ def _show_aid(x: Union[Digest, Signature], indent: int, *,
     print(_wrap(out, indent, wrap), file=file)
 
 
-def _printer(file: TextIO, wrap: bool):
+def _printer(file: TextIO, wrap: bool) -> Callable[..., None]:
     def p(*a):
         print(_wrap(" ".join(map(str, a)), wrap=wrap), file=file)
     return p

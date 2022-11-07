@@ -19,6 +19,7 @@ test: test-cli lint lint-extra
 test-cli:
 	# TODO
 	apksigtool --version
+	# NB: uses test/apks/apks/*.apk
 	$(PYTHON) -m doctest apksigtool/__init__.py
 
 test-apks: test-apks-apksigner test-apks-verify test-apks-verify-check-v1 \

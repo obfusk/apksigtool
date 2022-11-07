@@ -92,7 +92,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1896,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1892
       }
     }
   ]
@@ -192,7 +193,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1896,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1892
       }
     }
   ]
@@ -378,7 +380,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -475,7 +478,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2633,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2629
       }
     }
   ]
@@ -665,7 +669,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3424,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3420
       }
     }
   ]
@@ -847,7 +852,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -940,7 +946,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2633,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2629
       }
     }
   ]
@@ -1130,7 +1137,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3424,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3420
       }
     }
   ]
@@ -1312,7 +1320,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -1417,7 +1426,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 763,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 759
       }
     }
   ]
@@ -1514,7 +1524,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2621,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2617
       }
     }
   ]
@@ -1700,7 +1711,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -1797,7 +1809,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2633,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2629
       }
     }
   ]
@@ -1987,7 +2000,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3424,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3420
       }
     }
   ]
@@ -2169,7 +2183,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -2262,7 +2277,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2633,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2629
       }
     }
   ]
@@ -2452,7 +2468,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3424,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3420
       }
     }
   ]
@@ -2634,7 +2651,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -2739,7 +2757,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 763,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 759
       }
     }
   ]
@@ -2836,7 +2855,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2621,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2617
       }
     }
   ]
@@ -3042,7 +3062,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 546,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 542
       }
     }
   ]
@@ -3224,7 +3245,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -3406,7 +3428,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -3588,7 +3611,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -3770,7 +3794,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -3952,7 +3977,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -4158,7 +4184,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 546,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 542
       }
     }
   ]
@@ -4344,7 +4371,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -4441,7 +4469,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2633,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2629
       }
     }
   ]
@@ -4631,7 +4660,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3424,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3420
       }
     }
   ]
@@ -4813,7 +4843,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -4906,7 +4937,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2633,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2629
       }
     }
   ]
@@ -5096,7 +5128,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3424,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3420
       }
     }
   ]
@@ -5278,7 +5311,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -5383,7 +5417,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 763,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 759
       }
     }
   ]
@@ -5480,7 +5515,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2621,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2617
       }
     }
   ]
@@ -5666,7 +5702,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -5848,7 +5885,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -6129,7 +6167,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3653,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3649
       }
     }
   ]
@@ -6321,7 +6360,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3653,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3649
       }
     }
   ]
@@ -6513,7 +6553,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3653,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3649
       }
     }
   ]
@@ -6729,7 +6770,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3583,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3579
       }
     }
   ]
@@ -6921,7 +6963,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 127,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 123
       }
     }
   ]
@@ -7113,7 +7156,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1517,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1513
       }
     }
   ]
@@ -7305,7 +7349,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1515,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1511
       }
     }
   ]
@@ -7497,7 +7542,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2030,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2026
       }
     }
   ]
@@ -7689,7 +7735,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1173,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1169
       }
     }
   ]
@@ -7715,7 +7762,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 2707,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2703
       }
     }
   ]
@@ -7897,7 +7945,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1186,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1182
       }
     }
   ]
@@ -8518,7 +8567,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 4065,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 4061
       }
     }
   ]
@@ -8727,7 +8777,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 1729,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1725
       }
     }
   ]
@@ -8931,7 +8982,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 1729,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1725
       }
     }
   ]
@@ -9149,7 +9201,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1729,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1725
       }
     }
   ]
@@ -9242,7 +9295,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3419,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3415
       }
     }
   ]
@@ -10418,7 +10472,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2313,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2309
       }
     }
   ]
@@ -14004,7 +14059,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2349,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2345
       }
     }
   ]
@@ -14110,7 +14166,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2613,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2609
       }
     }
   ]
@@ -14352,7 +14409,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3056,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3052
       }
     }
   ]
@@ -14449,7 +14507,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3407,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3403
       }
     }
   ]
@@ -14541,7 +14600,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 2621,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2617
       }
     }
   ]
@@ -14610,7 +14670,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 3390,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3386
       }
     }
   ]
@@ -14702,7 +14763,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 2621,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2617
       }
     }
   ]
@@ -14800,7 +14862,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 2577,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2573
       }
     }
   ]
@@ -14919,7 +14982,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 739,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 735
       }
     }
   ]
@@ -15025,7 +15089,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3119,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3115
       }
     }
   ]
@@ -15122,7 +15187,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2755,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2751
       }
     }
   ]
@@ -15214,7 +15280,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 1903,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1899
       }
     }
   ]
@@ -15311,7 +15378,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1903,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1899
       }
     }
   ]
@@ -15403,7 +15471,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 1135,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1131
       }
     }
   ]
@@ -15500,7 +15569,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1135,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1131
       }
     }
   ]
@@ -15597,7 +15667,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3407,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3403
       }
     }
   ]
@@ -15694,7 +15765,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3284,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3280
       }
     }
   ]
@@ -15791,7 +15863,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3137,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3133
       }
     }
   ]
@@ -15888,7 +15961,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3374,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3370
       }
     }
   ]
@@ -15989,7 +16063,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3253,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3249
       }
     }
   ]
@@ -16081,7 +16156,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 3105,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3101
       }
     }
   ]
@@ -16178,7 +16254,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3105,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3101
       }
     }
   ]
@@ -16294,7 +16371,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1965,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1961
       }
     }
   ]
@@ -16391,7 +16469,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3142,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3138
       }
     }
   ]
@@ -16488,7 +16567,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3643,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3639
       }
     }
   ]
@@ -16585,7 +16665,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2621,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2617
       }
     }
   ]
@@ -16677,7 +16758,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 2109,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2105
       }
     }
   ]
@@ -16774,7 +16856,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2109,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2105
       }
     }
   ]
@@ -16871,7 +16954,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1597,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1593
       }
     }
   ]
@@ -16968,7 +17052,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3645,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3641
       }
     }
   ]
@@ -17065,7 +17150,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3110,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3106
       }
     }
   ]
@@ -17162,7 +17248,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3611,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3607
       }
     }
   ]
@@ -17259,7 +17346,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2589,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2585
       }
     }
   ]
@@ -17356,7 +17444,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2077,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2073
       }
     }
   ]
@@ -17457,7 +17546,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 1565,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 1561
       }
     }
   ]
@@ -17549,7 +17639,8 @@ apksigner: not verified
       "id": 1114793335,
       "length": 3613,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3609
       }
     }
   ]
@@ -17646,7 +17737,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3613,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3609
       }
     }
   ]
@@ -17753,7 +17845,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 2337,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 2333
       }
     }
   ]
@@ -17949,7 +18042,8 @@ apksigner: verified
       "id": 1114793335,
       "length": 3653,
       "value": {
-        "_type": "VerityPaddingBlock"
+        "_type": "VerityPaddingBlock",
+        "size": 3649
       }
     }
   ]
