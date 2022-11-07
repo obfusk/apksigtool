@@ -59,6 +59,8 @@ API
 >> cleaned = clean_apk(apkfile, check=False, keep=(), ...)  # clean APK
 """
 
+from __future__ import annotations
+
 import base64
 import binascii
 import dataclasses
@@ -267,6 +269,17 @@ class Digest(APKSigToolBase):
     def __post_init__(self):
         object.__setattr__(self, "algoritm_id_info", aid_info(self.signature_algorithm_id))
 
+    @classmethod
+    def parse(_cls, data: bytes) -> Tuple[Digest, ...]:
+        """
+        Parse APK Signature Scheme v2/v3 Block -> signer -> signed data -> digests.
+
+        NB: returns a tuple of Digest.
+
+        Uses parse_digests().
+        """
+        return parse_digests(data)
+
 
 @dataclass(frozen=True)
 class Certificate(APKSigToolBase):
@@ -291,6 +304,18 @@ class Certificate(APKSigToolBase):
     def public_key(self) -> X509CertPubKeyInfo:
         return self._public_key
 
+    @classmethod
+    def parse(_cls, data: bytes) -> Tuple[Certificate, ...]:
+        """
+        Parse APK Signature Scheme v2/v3 Block -> signer -> signed data ->
+        certificates.
+
+        NB: returns a tuple of Certificate.
+
+        Uses parse_certificates().
+        """
+        return parse_certificates(data)
+
 
 @dataclass(frozen=True)
 class AdditionalAttribute(APKSigToolBase):
@@ -312,6 +337,18 @@ class AdditionalAttribute(APKSigToolBase):
                  is_proof_of_rotation_struct=self.is_proof_of_rotation_struct)
         return {**x, **y}
 
+    @classmethod
+    def parse(_cls, data: bytes) -> Tuple[AdditionalAttribute, ...]:
+        """
+        Parse APK Signature Scheme v2/v3 Block -> signer -> signed data ->
+        additional attributes.
+
+        NB: returns a tuple of AdditionalAttribute.
+
+        Uses parse_additional_attributes().
+        """
+        return parse_additional_attributes(data)
+
 
 @dataclass(frozen=True)
 class Signature(APKSigToolBase):
@@ -322,6 +359,17 @@ class Signature(APKSigToolBase):
 
     def __post_init__(self):
         object.__setattr__(self, "algoritm_id_info", aid_info(self.signature_algorithm_id))
+
+    @classmethod
+    def parse(_cls, data: bytes) -> Tuple[Signature, ...]:
+        """
+        Parse APK Signature Scheme v2/v3 Block -> signer -> signatures.
+
+        NB: returns a tuple of Signature
+
+        Uses parse_signatures().
+        """
+        return parse_signatures(data)
 
 
 @dataclass(frozen=True)
@@ -348,6 +396,17 @@ class V2SignedData(APKSigToolBase):
     certificates: Tuple[Certificate, ...]
     additional_attributes: Tuple[AdditionalAttribute, ...]
 
+    @classmethod
+    def parse(_cls, data: bytes) -> V2SignedData:
+        """
+        Parse APK Signature Scheme v2 Block -> v2 signer -> signed data.
+
+        Uses parse_signed_data(v3=False).
+        """
+        signed_data = parse_signed_data(data, v3=False)
+        assert isinstance(signed_data, V2SignedData)
+        return signed_data
+
 
 @dataclass(frozen=True)
 class V3SignedData(APKSigToolBase):
@@ -359,6 +418,17 @@ class V3SignedData(APKSigToolBase):
     max_sdk: int
     additional_attributes: Tuple[AdditionalAttribute, ...]
 
+    @classmethod
+    def parse(_cls, data: bytes) -> V3SignedData:
+        """
+        Parse APK Signature Scheme v3 Block -> v3 signer -> signed data.
+
+        Uses parse_signed_data(v3=True).
+        """
+        signed_data = parse_signed_data(data, v3=True)
+        assert isinstance(signed_data, V3SignedData)
+        return signed_data
+
 
 @dataclass(frozen=True)
 class V2Signer(APKSigToolBase):
@@ -366,6 +436,17 @@ class V2Signer(APKSigToolBase):
     signed_data: V2SignedData
     signatures: Tuple[Signature, ...]
     public_key: PublicKey
+
+    @classmethod
+    def parse(_cls, data: bytes) -> V2Signer:
+        """
+        Parse APK Signature Scheme v2 Block -> v2 signer.
+
+        Uses parse_signer(v3=False).
+        """
+        signer = parse_signer(data, v3=False)
+        assert isinstance(signer, V2Signer)
+        return signer
 
 
 @dataclass(frozen=True)
@@ -377,11 +458,33 @@ class V3Signer(APKSigToolBase):
     signatures: Tuple[Signature, ...]
     public_key: PublicKey
 
+    @classmethod
+    def parse(_cls, data: bytes) -> V3Signer:
+        """
+        Parse APK Signature Scheme v3 Block -> v3 signer.
+
+        Uses parse_signer(v3=True).
+        """
+        signer = parse_signer(data, v3=True)
+        assert isinstance(signer, V3Signer)
+        return signer
+
 
 @dataclass(frozen=True)
 class APKSigningBlock(APKSigToolBase):
     """APK Signing Block."""
     pairs: Tuple[Pair, ...]
+
+    @classmethod
+    def parse(_cls, data: bytes, apkfile: Optional[str] = None, *,
+              allow_unsafe: Tuple[str, ...] = (), sdk: Optional[int] = None) \
+            -> APKSigningBlock:
+        """
+        Parse APK Signing Block.
+
+        Uses parse_apk_signing_block().
+        """
+        return parse_apk_signing_block(data, apkfile=apkfile, allow_unsafe=allow_unsafe, sdk=sdk)
 
     # FIXME
     # WARNING: verification is considered EXPERIMENTAL
@@ -395,6 +498,8 @@ class APKSigningBlock(APKSigToolBase):
         RELIED ON, please use apksigner instead.
 
         Raises VerificationError on failure.
+
+        Uses APKSignatureSchemeBlock.verify().
         """
         for pair in self.pairs:
             if isinstance(pair.value, APKSignatureSchemeBlock):
@@ -416,6 +521,8 @@ class APKSigningBlock(APKSigToolBase):
         Returns (verified, failed), where verified is a tuple of (version,
         signers) of verification successes, and failed is a tuple of (version,
         exception) tuples of verification failures.
+
+        Uses APKSignatureSchemeBlock.verify().
         """
         verified, failed = [], []
         for pair in self.pairs:
@@ -453,6 +560,18 @@ class APKSignatureSchemeBlock(Block):
     def is_v3(self) -> bool:
         return self.version == 3
 
+    @classmethod
+    def parse(_cls, version: Literal[2, 3], data: bytes, apkfile: Optional[str] = None, *,
+              allow_unsafe: Tuple[str, ...] = (), sdk: Optional[int] = None) \
+            -> APKSignatureSchemeBlock:
+        """
+        Parse APK Signature Scheme v2/v3 Block.
+
+        Uses parse_apk_signature_scheme_block().
+        """
+        return parse_apk_signature_scheme_block(version, data, allow_unsafe=allow_unsafe,
+                                                apkfile=apkfile, sdk=sdk)
+
     # FIXME
     # WARNING: verification is considered EXPERIMENTAL
     def verify(self, apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
@@ -464,6 +583,8 @@ class APKSignatureSchemeBlock(Block):
         RELIED ON, please use apksigner instead.
 
         Raises VerificationError on failure.
+
+        Uses verify_apk_signature_scheme().
         """
         return verify_apk_signature_scheme(self.signers, apkfile=apkfile,
                                            allow_unsafe=allow_unsafe, sdk=sdk)
@@ -525,6 +646,15 @@ class JARManifest(JARManifestBase):
     """JAR manifest (MANIFEST.MF)."""
     built_by: Optional[str]
 
+    @classmethod
+    def parse(_cls, data: bytes) -> JARManifest:
+        """
+        Parse JAR manifest (MANIFEST.MF).
+
+        Uses parse_apk_v1_manifest().
+        """
+        return parse_apk_v1_manifest(data)
+
 
 @dataclass(frozen=True)
 class JARSignatureFile(JARManifestBase):
@@ -537,6 +667,15 @@ class JARSignatureFile(JARManifestBase):
     def __post_init__(self):
         assert all(algo in JAR_HASHERS_STR for algo, _ in self.digests_manifest)
         assert all(algo in JAR_HASHERS_STR for algo, _ in self.digests_manifest_main_attributes or ())
+
+    @classmethod
+    def parse(_cls, filename: str, data: bytes) -> JARSignatureFile:
+        """
+        Parse JAR signature file (.SF).
+
+        Uses parse_apk_v1_signature_file().
+        """
+        return parse_apk_v1_signature_file(filename, data)
 
 
 @dataclass(frozen=True)
@@ -593,6 +732,17 @@ class JARSignature(APKSigToolBase):
         """Require signature versions (from X-Android-APK-Signed)."""
         return frozenset(v for sf in self.signature_files for v in sf.x_android_apk_signed or ())
 
+    @classmethod
+    def parse(_cls, extracted_meta: ZipInfoDataPairs, apkfile: Optional[str] = None, *,
+              allow_unsafe: Tuple[str, ...] = (), strict: bool = True) -> JARSignature:
+        """
+        Parse v1 signature metadata files from apksigcopier.extract_meta().
+
+        Uses parse_apk_v1_signature().
+        """
+        return parse_apk_v1_signature(extracted_meta, apkfile=apkfile,
+                                      allow_unsafe=allow_unsafe, strict=strict)
+
     # FIXME
     # WARNING: verification is considered EXPERIMENTAL
     def verify(self, apkfile: str, *, allow_unsafe: Tuple[str, ...] = (), strict: bool = True) \
@@ -605,6 +755,8 @@ class JARSignature(APKSigToolBase):
         RELIED ON, please use apksigner instead.
 
         Raises VerificationError on failure.
+
+        Uses verify_apk_v1_signature().
         """
         return verify_apk_v1_signature(self, apkfile=apkfile, strict=strict,
                                        allow_unsafe=allow_unsafe)
@@ -731,7 +883,7 @@ def parse_apk_signature_scheme_block(
     Returns APKSignatureSchemeBlock (with .version, .signers, .verified,
     .verification_error).
     """
-    signers = tuple(_parse_apk_signature_scheme_block(data, version == 3))
+    signers = tuple(_parse_apk_signature_scheme_block(data, v3=version == 3))
     verified: Union[None, Literal[False], Tuple[Tuple[str, str], ...]] = None
     verification_error = None
     if apkfile is not None:
@@ -750,7 +902,7 @@ def _parse_apk_signature_scheme_block(data: bytes, v3: bool) \
     _assert(seq_len == len(data), "APK Signature Scheme Block size")
     while data:
         signer, data = _len_prefixed_field(data)
-        yield parse_signer(signer, v3)
+        yield parse_signer(signer, v3=v3)
 
 
 def parse_signer(data: bytes, v3: bool) -> Union[V2Signer, V3Signer]:
@@ -762,7 +914,7 @@ def parse_signer(data: bytes, v3: bool) -> Union[V2Signer, V3Signer]:
     """
     result: List = []
     sigdata, data = _len_prefixed_field(data)
-    result.append(parse_signed_data(sigdata, v3))
+    result.append(parse_signed_data(sigdata, v3=v3))
     if v3:
         minSDK, maxSDK = struct.unpack("<LL", data[:8])
         data = data[8:]
