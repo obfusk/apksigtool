@@ -2023,18 +2023,19 @@ def main():
     @click.option("--block", is_flag=True,
                   help="APK_OR_BLOCK is an extracted block, not an APK.")
     @click.option("--json", is_flag=True, help="JSON output.")
+    @click.option("--no-verify", is_flag=True, help="Don't try verifying APK.")
     @click.option("--sdk-version", type=click.INT, help="For v3 signers specifying min/max SDK.")
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
     @click.option("--wrap", is_flag=True, help="Wrap output (no-op w/ --json).")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
-    def parse(apk_or_block, block, json, sdk_version, verbose, wrap):
+    def parse(apk_or_block, block, json, no_verify, sdk_version, verbose, wrap):
         if block:
             apkfile = None
             with open(apk_or_block, "rb") as fh:
                 sig_block = fh.read()
         else:
-            apkfile = apk_or_block
-            _, sig_block = extract_v2_sig(apkfile)
+            apkfile = apk_or_block if not no_verify else None
+            _, sig_block = extract_v2_sig(apk_or_block)
         if json:
             show_json(APKSigningBlock.parse(sig_block, apkfile=apkfile, sdk=sdk_version))
         else:
@@ -2050,15 +2051,16 @@ def main():
                        "key sizes for specified encryption(s) (e.g. RSA).")
     @click.option("--json", is_flag=True, help="JSON output.")
     @click.option("--no-strict", is_flag=True, help="Don't be stricter than the spec.")
+    @click.option("--no-verify", is_flag=True, help="Don't try verifying APK.")
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
     @click.option("--wrap", is_flag=True, help="Wrap output (no-op w/ --json).")
     @click.argument("apk_or_dir", type=click.Path(exists=True, dir_okay=True))
-    def parse_v1(apk_or_dir, allow_unsafe, json, no_strict, verbose, wrap):
+    def parse_v1(apk_or_dir, allow_unsafe, json, no_strict, no_verify, verbose, wrap):
         if os.path.isdir(apk_or_dir):
             apkfile = None
             e_meta = load_extracted_meta_from_dir(apk_or_dir)
         else:
-            apkfile = apk_or_dir
+            apkfile = apk_or_dir if not no_verify else None
             e_meta = apksigcopier.extract_meta(apk_or_dir)
         if json:
             show_json(JARSignature.parse(e_meta, apkfile=apkfile, allow_unsafe=allow_unsafe,
