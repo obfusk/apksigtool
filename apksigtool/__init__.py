@@ -446,6 +446,7 @@ class V2SignedData(APKSigToolBase):
     digests: Tuple[Digest, ...]
     certificates: Tuple[Certificate, ...]
     additional_attributes: Tuple[AdditionalAttribute, ...]
+    zero_padding_size: int = 0
 
     @classmethod
     def parse(_cls, data: bytes) -> V2SignedData:
@@ -477,6 +478,7 @@ class V3SignedData(APKSigToolBase):
     min_sdk: int
     max_sdk: int
     additional_attributes: Tuple[AdditionalAttribute, ...]
+    zero_padding_size: int = 0
 
     @classmethod
     def parse(_cls, data: bytes) -> V3SignedData:
@@ -1121,11 +1123,10 @@ def parse_signer(data: bytes, v3: bool) -> Union[V2Signer, V3Signer]:
     result.append(parse_signatures(sigs))
     pubkey, data = _split_len_prefixed_field(data)
     result.append(PublicKey(pubkey))
-    _assert(all(b == 0 for b in data), "signer zero padding")
+    _assert(not data, "signer extraneous data")
     return (V3Signer if v3 else V2Signer)(*result)
 
 
-# FIXME: zero padding?!
 def dump_signer(signer: Union[V2Signer, V3Signer]) -> bytes:
     """Dump APK Signature Scheme v2/v3 Block -> signer."""
     sigdata = _as_len_prefixed_field(dump_signed_data(signer.signed_data))
@@ -1158,10 +1159,10 @@ def parse_signed_data(data: bytes, v3: bool) -> Union[V2SignedData, V3SignedData
     attrs, data = _split_len_prefixed_field(data)
     result.append(parse_additional_attributes(attrs))
     _assert(all(b == 0 for b in data), "signed data zero padding")
+    result.append(len(data))
     return (V3SignedData if v3 else V2SignedData)(*result)
 
 
-# FIXME: zero padding?!
 def dump_signed_data(signed_data: Union[V2SignedData, V3SignedData], *,
                      expect_raw_data: bool = True, verify_raw_data: bool = True) -> bytes:
     """Dump APK Signature Scheme v2/v3 Block -> signer -> signed data."""
@@ -1175,9 +1176,7 @@ def dump_signed_data(signed_data: Union[V2SignedData, V3SignedData], *,
         minmax = struct.pack("<LL", signed_data.min_sdk, signed_data.max_sdk)
     else:
         minmax = b""
-    data = digests + certs + minmax + attrs
-    if (pad := len(signed_data.raw_data) - len(data)) > 0:
-        data += b"\x00" * pad
+    data = digests + certs + minmax + attrs + b"\x00" * signed_data.zero_padding_size
     _assert(not verify_raw_data or signed_data.raw_data == data, "raw signed data")
     return data
 
@@ -1991,6 +1990,8 @@ def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
             elif attr.is_proof_of_rotation_struct:
                 p("        PROOF OF ROTATION STRUCT")
             _show_hex(attr.value, 8, file=file, wrap=wrap)
+        if signer.signed_data.zero_padding_size:
+            p("      ZERO PADDING SIZE:", signer.signed_data.zero_padding_size)
         if block.is_v3:
             assert isinstance(signer, V3Signer)
             p("    MIN SDK:", signer.min_sdk)
