@@ -29,6 +29,7 @@ PAIR ID: 0x7109871a
   NOT VERIFIED (Unknown signature algorithm ID: 0x9901)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1892
 
 apks/apks/debuggable-resource.apk
 apksigner: verified
@@ -61,6 +62,7 @@ PAIR ID: 0x7109871a
   NOT VERIFIED (Unknown signature algorithm ID: 0x9901)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1892
 
 apks/apks/golden-aligned-in.apk
 apksigner: not verified
@@ -120,6 +122,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-aligned-v1-out.apk
 apksigner: verified
@@ -150,6 +153,7 @@ PAIR ID: 0x7109871a
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2629
 
 apks/apks/golden-aligned-v1v2v3-lineage-out.apk
 apksigner: verified
@@ -209,6 +213,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3420
 
 apks/apks/golden-aligned-v1v2v3-out.apk
 apksigner: verified
@@ -264,6 +269,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-aligned-v2-out.apk
 apksigner: verified
@@ -290,6 +296,7 @@ PAIR ID: 0x7109871a
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2629
 
 apks/apks/golden-aligned-v2v3-lineage-out.apk
 apksigner: verified
@@ -349,6 +356,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3420
 
 apks/apks/golden-aligned-v2v3-out.apk
 apksigner: verified
@@ -404,6 +412,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-aligned-v3-lineage-out.apk
 apksigner: verified
@@ -438,6 +447,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 759
 
 apks/apks/golden-aligned-v3-out.apk
 apksigner: verified
@@ -468,6 +478,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2617
 
 apks/apks/golden-legacy-aligned-in.apk
 apksigner: not verified
@@ -527,6 +538,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-legacy-aligned-v1-out.apk
 apksigner: verified
@@ -557,6 +569,7 @@ PAIR ID: 0x7109871a
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2629
 
 apks/apks/golden-legacy-aligned-v1v2v3-lineage-out.apk
 apksigner: verified
@@ -616,6 +629,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3420
 
 apks/apks/golden-legacy-aligned-v1v2v3-out.apk
 apksigner: verified
@@ -671,6 +685,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-legacy-aligned-v2-out.apk
 apksigner: verified
@@ -697,6 +712,7 @@ PAIR ID: 0x7109871a
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2629
 
 apks/apks/golden-legacy-aligned-v2v3-lineage-out.apk
 apksigner: verified
@@ -756,6 +772,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3420
 
 apks/apks/golden-legacy-aligned-v2v3-out.apk
 apksigner: verified
@@ -811,6 +828,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-legacy-aligned-v3-lineage-out.apk
 apksigner: verified
@@ -845,6 +863,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 759
 
 apks/apks/golden-legacy-aligned-v3-out.apk
 apksigner: verified
@@ -875,6 +894,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2617
 
 apks/apks/golden-pinsapp-signed.apk
 apksigner: verified
@@ -942,6 +962,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 542
 
 apks/apks/golden-rsa-minSdkVersion-1-out.apk
 apksigner: verified
@@ -997,6 +1018,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-rsa-minSdkVersion-18-out.apk
 apksigner: verified
@@ -1052,6 +1074,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-rsa-minSdkVersion-24-out.apk
 apksigner: verified
@@ -1107,6 +1130,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-rsa-no-verity-out.apk
 apksigner: verified
@@ -1162,6 +1186,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-rsa-out.apk
 apksigner: verified
@@ -1217,6 +1242,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-rsa-verity-out.apk
 apksigner: verified
@@ -1284,6 +1310,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 542
 
 apks/apks/golden-unaligned-in.apk
 apksigner: not verified
@@ -1343,6 +1370,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-unaligned-v1-out.apk
 apksigner: verified
@@ -1373,6 +1401,7 @@ PAIR ID: 0x7109871a
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2629
 
 apks/apks/golden-unaligned-v1v2v3-lineage-out.apk
 apksigner: verified
@@ -1432,6 +1461,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3420
 
 apks/apks/golden-unaligned-v1v2v3-out.apk
 apksigner: verified
@@ -1487,6 +1517,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-unaligned-v2-out.apk
 apksigner: verified
@@ -1513,6 +1544,7 @@ PAIR ID: 0x7109871a
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2629
 
 apks/apks/golden-unaligned-v2v3-lineage-out.apk
 apksigner: verified
@@ -1572,6 +1604,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3420
 
 apks/apks/golden-unaligned-v2v3-out.apk
 apksigner: verified
@@ -1627,6 +1660,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/golden-unaligned-v3-lineage-out.apk
 apksigner: verified
@@ -1661,6 +1695,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 759
 
 apks/apks/golden-unaligned-v3-out.apk
 apksigner: verified
@@ -1691,6 +1726,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2617
 
 apks/apks/mismatched-compression-method.apk
 apksigner: verified
@@ -1750,6 +1786,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/original-with-versionCodeMajor.apk
 apksigner: verified
@@ -1805,6 +1842,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/original.apk
 apksigner: verified
@@ -1890,6 +1928,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3649
 
 apks/apks/stamp-apk-hash-mismatch-v2.apk
 apksigner: verified
@@ -1947,6 +1986,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3649
 
 apks/apks/stamp-apk-hash-mismatch-v3.apk
 apksigner: verified
@@ -2004,6 +2044,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3649
 
 apks/apks/stamp-apk-hash-mismatch.apk
 apksigner: verified
@@ -2073,6 +2114,7 @@ PAIR ID: 0x2b09189e
   SOURCE STAMP v1 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3579
 
 apks/apks/stamp-certificate-mismatch.apk
 apksigner: verified
@@ -2130,6 +2172,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 123
 
 apks/apks/stamp-lineage-invalid.apk
 apksigner: verified
@@ -2187,6 +2230,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1513
 
 apks/apks/stamp-lineage-valid.apk
 apksigner: verified
@@ -2244,6 +2288,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1511
 
 apks/apks/stamp-lineage-with-3-signers.apk
 apksigner: verified
@@ -2301,6 +2346,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2026
 
 apks/apks/stamp-malformed-signature.apk
 apksigner: verified
@@ -2358,6 +2404,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1169
 
 apks/apks/stamp-without-apk-signature.apk
 apksigner: not verified
@@ -2365,6 +2412,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2703
 
 apks/apks/stamp-without-block.apk
 apksigner: verified
@@ -2420,6 +2468,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1182
 
 apks/apks/targetSandboxVersion-2.apk
 apksigner: verified
@@ -2626,6 +2675,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 4061
 
 apks/apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-lineage-attr.apk
 apksigner: not verified
@@ -2696,6 +2746,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Invalid signature)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1725
 
 apks/apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-zip.apk
 apksigner: not verified
@@ -2767,6 +2818,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Digest mismatch: expected 0a457e6dd7cc8d4dde28a4dae843032de5fbe58123eedd0a31e7f958f23e1626, got fc5c360b4d207d632bd7899cd06b07f914e090e40ae2ed9b2c265be00b04f9e8)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1725
 
 apks/apks/v1v2v3-with-rsa-2048-lineage-3-signers-no-sig-block.apk
 apksigner: not verified
@@ -2842,6 +2894,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1725
 
 apks/apks/v2-ec-p256-targetSdk-30.apk
 apksigner: verified
@@ -2868,6 +2921,7 @@ PAIR ID: 0x7109871a
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3415
 
 apks/apks/v2-only-apk-sig-block-size-mismatch.apk
 apksigner: not verified
@@ -3220,6 +3274,7 @@ PAIR ID: 0x7109871a
   NOT VERIFIED (Unknown signature algorithm ID: 0x9901)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2309
 
 apks/apks/v2-only-unknown-pair-in-apk-sig-block.apk
 apksigner: verified
@@ -4254,6 +4309,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2345
 
 apks/apks/v2-only-wrong-apk-sig-block-magic.apk
 apksigner: not verified
@@ -4286,6 +4342,7 @@ PAIR ID: 0x7109871a
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2609
 
 apks/apks/v2-stripped-with-ignorable-signing-schemes.apk
 apksigner: not verified
@@ -4375,6 +4432,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3052
 
 apks/apks/v3-ec-p256-targetSdk-30.apk
 apksigner: verified
@@ -4405,6 +4463,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3403
 
 apks/apks/v3-only-cert-and-public-key-mismatch.apk
 apksigner: not verified
@@ -4435,6 +4494,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Public key does not match first certificate)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2617
 
 apks/apks/v3-only-no-certs-in-sig.apk
 apksigner: not verified
@@ -4459,6 +4519,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (No certificates)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3386
 
 apks/apks/v3-only-no-supported-sig-algs.apk
 apksigner: not verified
@@ -4489,6 +4550,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Unknown signature algorithm ID: 0x11223344)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2617
 
 apks/apks/v3-only-signatures-and-digests-block-mismatch.apk
 apksigner: not verified
@@ -4522,6 +4584,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Signature algorithm IDs of digests and signatures are not identical)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2573
 
 apks/apks/v3-only-unknown-additional-attr.apk
 apksigner: verified
@@ -4562,6 +4625,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 735
 
 apks/apks/v3-only-unknown-pair-in-apk-sig-block.apk
 apksigner: verified
@@ -4594,6 +4658,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3115
 
 apks/apks/v3-only-with-dsa-sha256-1024.apk
 apksigner: verified
@@ -4626,6 +4691,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2751
 
 apks/apks/v3-only-with-dsa-sha256-2048-sig-does-not-verify.apk
 apksigner: not verified
@@ -4658,6 +4724,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Invalid signature)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1899
 
 apks/apks/v3-only-with-dsa-sha256-2048.apk
 apksigner: verified
@@ -4690,6 +4757,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1899
 
 apks/apks/v3-only-with-dsa-sha256-3072-digest-mismatch.apk
 apksigner: not verified
@@ -4722,6 +4790,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Digest mismatch: expected 8df2426ea33aedaf495d88e5be0c6a1663ff0a81c5ed12d5b2929ae4b4300f2f, got 0df2426ea33aedaf495d88e5be0c6a1663ff0a81c5ed12d5b2929ae4b4300f2f)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1131
 
 apks/apks/v3-only-with-dsa-sha256-3072.apk
 apksigner: verified
@@ -4754,6 +4823,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1131
 
 apks/apks/v3-only-with-ecdsa-sha256-p256.apk
 apksigner: verified
@@ -4784,6 +4854,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3403
 
 apks/apks/v3-only-with-ecdsa-sha256-p384.apk
 apksigner: verified
@@ -4814,6 +4885,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3280
 
 apks/apks/v3-only-with-ecdsa-sha256-p521.apk
 apksigner: verified
@@ -4844,6 +4916,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3133
 
 apks/apks/v3-only-with-ecdsa-sha512-p256.apk
 apksigner: verified
@@ -4874,6 +4947,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3370
 
 apks/apks/v3-only-with-ecdsa-sha512-p384-wrong-apk-sig-block-magic.apk
 apksigner: not verified
@@ -4908,6 +4982,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3249
 
 apks/apks/v3-only-with-ecdsa-sha512-p521-sig-does-not-verify.apk
 apksigner: not verified
@@ -4938,6 +5013,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Invalid signature)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3101
 
 apks/apks/v3-only-with-ecdsa-sha512-p521.apk
 apksigner: verified
@@ -4968,6 +5044,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3101
 
 apks/apks/v3-only-with-ignorable-unsupported-sig-algs.apk
 apksigner: verified
@@ -5010,6 +5087,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Unknown signature algorithm ID: 0x11223344)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1961
 
 apks/apks/v3-only-with-rsa-pkcs1-sha256-1024.apk
 apksigner: verified
@@ -5040,6 +5118,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3138
 
 apks/apks/v3-only-with-rsa-pkcs1-sha256-16384.apk
 apksigner: verified
@@ -5070,6 +5149,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3639
 
 apks/apks/v3-only-with-rsa-pkcs1-sha256-2048.apk
 apksigner: verified
@@ -5100,6 +5180,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2617
 
 apks/apks/v3-only-with-rsa-pkcs1-sha256-3072-sig-does-not-verify.apk
 apksigner: not verified
@@ -5130,6 +5211,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Invalid signature)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2105
 
 apks/apks/v3-only-with-rsa-pkcs1-sha256-3072.apk
 apksigner: verified
@@ -5160,6 +5242,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2105
 
 apks/apks/v3-only-with-rsa-pkcs1-sha256-4096.apk
 apksigner: verified
@@ -5190,6 +5273,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1593
 
 apks/apks/v3-only-with-rsa-pkcs1-sha256-8192.apk
 apksigner: verified
@@ -5220,6 +5304,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3641
 
 apks/apks/v3-only-with-rsa-pkcs1-sha512-1024.apk
 apksigner: verified
@@ -5250,6 +5335,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3106
 
 apks/apks/v3-only-with-rsa-pkcs1-sha512-16384.apk
 apksigner: verified
@@ -5280,6 +5366,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3607
 
 apks/apks/v3-only-with-rsa-pkcs1-sha512-2048.apk
 apksigner: verified
@@ -5310,6 +5397,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2585
 
 apks/apks/v3-only-with-rsa-pkcs1-sha512-3072.apk
 apksigner: verified
@@ -5340,6 +5428,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2073
 
 apks/apks/v3-only-with-rsa-pkcs1-sha512-4096-apk-sig-block-size-mismatch.apk
 apksigner: not verified
@@ -5374,6 +5463,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 1561
 
 apks/apks/v3-only-with-rsa-pkcs1-sha512-8192-digest-mismatch.apk
 apksigner: not verified
@@ -5404,6 +5494,7 @@ PAIR ID: 0xf05368c0
   NOT VERIFIED (Digest mismatch: expected 9b9ae02da60b18999bf541790f00d380006fdf0655c3c482aa0bb0af17cf7a42ecf56b973518546c9080b2fef83027e895ed2882bfc88ea19790bbab29af53b3, got c76c00584d2a582a6e1033f254af02f46961dd4e71bd816818b5a58c96ea5ff438bb193331eac006fc22188633d24a1dc5b1afce8bf3b5ef9ab07543bf255af4)
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3609
 
 apks/apks/v3-only-with-rsa-pkcs1-sha512-8192.apk
 apksigner: verified
@@ -5434,6 +5525,7 @@ PAIR ID: 0xf05368c0
   VERIFIED (1 signer(s))
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3609
 
 apks/apks/v3-only-with-stamp.apk
 apksigner: verified
@@ -5466,6 +5558,7 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 2333
 
 apks/apks/v3-stripped.apk
 apksigner: not verified
@@ -5527,4 +5620,5 @@ PAIR ID: 0x6dff800d
   SOURCE STAMP v2 BLOCK
 PAIR ID: 0x42726577
   VERITY PADDING BLOCK
+  SIZE: 3649
 

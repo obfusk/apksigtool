@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-07
+# Date        : 2022-11-08
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -1948,6 +1948,7 @@ def show_parse_tree(apk_signing_block: APKSigningBlock, *,
                                             sdk=sdk, verbose=verbose, wrap=wrap)
         elif isinstance(pair.value, VerityPaddingBlock):
             p("  VERITY PADDING BLOCK")
+            p("  SIZE:", pair.value.size)
         elif isinstance(pair.value, DependencyInfoBlock):
             p("  DEPENDENCY INFO BLOCK")
         elif isinstance(pair.value, GooglePlayFrostingBlock):
