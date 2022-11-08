@@ -3,7 +3,7 @@ PYTHON  ?= python3
 
 export PYTHONWARNINGS := default
 
-.PHONY: all install test test-cli doctest lint lint-extra clean cleanup
+.PHONY: all install test test-cli doctest coverage lint lint-extra clean cleanup
 .PHONY: test-apks test-apks-apksigner test-apks-verify \
         test-apks-verify-check-v1 test-apks-verify-v1 test-apks-parse \
         test-apks-parse-v1 test-apks-parse-json test-apks-parse-json-v1 \
@@ -23,6 +23,11 @@ test-cli:
 doctest:
 	# NB: uses test/apks/apks/*.apk
 	$(PYTHON) -m doctest apksigtool/__init__.py
+
+coverage:
+	$(PYTHON) -mcoverage run --source apksigtool -a -m doctest apksigtool/__init__.py
+	$(PYTHON) -mcoverage html
+	$(PYTHON) -mcoverage report
 
 test-apks: test-apks-apksigner test-apks-verify test-apks-verify-check-v1 \
            test-apks-verify-v1 test-apks-parse test-apks-parse-v1 \
