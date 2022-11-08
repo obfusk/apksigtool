@@ -42,22 +42,135 @@ $ apksigtool verify-v1 [--quiet] [--rollback-is-error] APK
 API
 ===
 
->> from apksigtool import ...
->> apk_signing_block = parse_apk_signing_block(data, apkfile=None, ...)
->> apk_signing_block = APKSigningBlock.parse(data, ...)     # same as the above
+APK Signing Block
+-----------------
 
->> show_parse_tree(apk_signing_block, apkfile=None, ...)
->> show_json(obj, ...)
+>>> import apksigtool as ast, io
+>>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
+>>> _, data = ast.extract_v2_sig(apk)
+>>> blk = ast.APKSigningBlock.parse(data)       # parse APK Signing Block
+>>> blk == ast.parse_apk_signing_block(data)    # same as above
+True
+>>> [ hex(p.id) for p in blk.pairs ]
+['0x7109871a', '0xf05368c0', '0x42726577']
+>>> data == blk.dump()
+True
 
->> apk_signing_block.verify(apkfile, ...)                   # raises on failure
->> verified, failed = apk_signing_block.verify_results(apkfile, ...)
->> verify_apk(apkfile, ...)                                 # verify APK (uses the above)
+>>> out = io.StringIO()
+>>> ast.show_parse_tree(blk, file=out)          # print parse tree
+>>> for line in out.getvalue().splitlines():
+...     if line.startswith("PAIR ID") or "BLOCK" in line:
+...         print(line)
+PAIR ID: 0x7109871a
+  APK SIGNATURE SCHEME v2 BLOCK
+PAIR ID: 0xf05368c0
+  APK SIGNATURE SCHEME v3 BLOCK
+PAIR ID: 0x42726577
+  VERITY PADDING BLOCK
+>>> out = io.StringIO()
+>>> ast.show_json(blk, file=out)                # JSON
+>>> for line in out.getvalue().splitlines()[:10]:
+...     print(line)
+{
+  "_type": "APKSigningBlock",
+  "pairs": [
+    {
+      "_type": "Pair",
+      "id": 1896449818,
+      "length": 1427,
+      "value": {
+        "_type": "APKSignatureSchemeBlock",
+        "signers": [
 
->> verify_apk_signature_scheme(signers, apkfile, ...)       # does the verification
->> APKSignatureSchemeBlock(...).verify(apkfile, ...)        # uses the above
+>>> blk.verify(apk)                             # [EXPERIMENTAL] raises on failure
+>>> result = verified, failed = blk.verify_results(apk)
+>>> len(verified), len(failed)
+(2, 0)
+>>> result == ast.verify_apk(apk)               # uses .verify_results()
+True
 
->> data_cleaned = clean_apk_signing_block(data, keep=())    # clean block
->> cleaned = clean_apk(apkfile, check=False, keep=(), ...)  # clean APK
+>>> apk = "test/apks/apks/v2-only-cert-and-public-key-mismatch.apk"
+>>> verified, failed = ast.verify_apk(apk)
+>>> for version, error in failed:
+...     print(f"v{version}: {error}")
+v2: Public key does not match first certificate
+>>> blk = ast.APKSigningBlock.parse(ast.extract_v2_sig(apk)[1])
+>>> try:
+...     blk.verify(apk)
+... except ast.VerificationError as e:
+...     print(e)
+Public key does not match first certificate
+
+
+Cleaning
+--------
+
+>>> import apksigtool as ast, io
+>>> apk = "test/apks/apks/v3-only-with-stamp.apk"
+>>> _, data = ast.extract_v2_sig(apk)
+>>> data_cleaned = ast.clean_apk_signing_block(data)
+>>> len(data), len(data_cleaned)
+(4096, 3027)
+
+>>> # ast.clean_apk(some_apk)                   # NB: modifies existing APK!
+
+
+v1 (JAR) signatures
+-------------------
+
+>>> import apksigcopier as asc, apksigtool as ast, io
+>>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
+>>> meta = tuple(asc.extract_meta(apk))
+>>> [ x.filename for x, _ in meta ]
+['META-INF/RSA-2048.SF', 'META-INF/RSA-2048.RSA', 'META-INF/MANIFEST.MF']
+>>> sig = ast.JARSignature.parse(meta)          # parse v1 signature
+>>> sig == ast.parse_apk_v1_signature(meta)     # same as above
+True
+
+>>> out = io.StringIO()
+>>> ast.show_v1_signature(sig, file=out)        # print parse tree
+>>> for line in out.getvalue().splitlines()[:11]:
+...     print(line)
+JAR MANIFEST
+  VERSION: 1.0
+  CREATED BY: 1.8.0_45-internal (Oracle Corporation)
+JAR SIGNATURE FILE
+  FILENAME: META-INF/RSA-2048.SF
+  VERSION: 1.0
+  CREATED BY: 1.0 (Android)
+  SHA256 MANIFEST DIGEST: hz7AxDJU9Namxoou/kc4Z2GVRS9anCGI+M52tbCsXT0=
+  ANDROID APK SIGNED: 2, 3
+JAR SIGNATURE BLOCK FILE
+  FILENAME: META-INF/RSA-2048.RSA
+>>> out = io.StringIO()
+>>> ast.show_json(sig, file=out)                # JSON
+>>> for line in out.getvalue().splitlines()[:7]:
+...     print(line)
+{
+  "_type": "JARSignature",
+  "manifest": {
+    "_type": "JARManifest",
+    "built_by": null,
+    "created_by": "1.8.0_45-internal (Oracle Corporation)",
+    "entries": [
+
+>>> result = sig.verify(apk)                    # [EXPERIMENTAL] raises on failure
+>>> verified, unverified_mf, unverified_sf = result
+>>> unverified_mf
+('META-INF/MANIFEST.MF', 'META-INF/RSA-2048.RSA', 'META-INF/RSA-2048.SF')
+>>> len(verified), len(unverified_sf)
+(1, 0)
+
+>>> apk = "test/apks/apks/v1-only-with-nul-in-entry-name.apk"
+>>> ast.verify_apk_v1(apk)
+(False, "Manifest entry not in ZIP: 'test.txt\\\\x00'")
+>>> sig = ast.JARSignature.parse(asc.extract_meta(apk))
+>>> try:
+...     sig.verify(apk)
+... except ast.VerificationError as e:
+...     print(e)
+Manifest entry not in ZIP: 'test.txt\\x00'
+
 """
 
 from __future__ import annotations
@@ -642,6 +755,14 @@ class APKSigningBlock(APKSigToolBase):
                     verified.append((pair.value.version, signers))
         return tuple(verified), tuple(failed)
 
+    def clean(self, *, keep: Tuple[int, ...] = ()) -> APKSigningBlock:
+        """
+        Clean APK Signing Block.
+
+        Uses clean_parsed_apk_signing_block().
+        """
+        return clean_parsed_apk_signing_block(self, keep=keep)
+
 
 @dataclass(frozen=True)
 class APKSignatureSchemeBlock(Block):
@@ -933,11 +1054,13 @@ def _assert(b: bool, what: Optional[str] = None) -> None:
     """
     assert that is not removed with optimization.
 
-    >>> from apksigtool import _assert
+    >>> from apksigtool import _assert, AssertionFailed
     >>> _assert(1 == 1, "all good")
-    >>> _assert(1 == 2, "oops") # doctest: +IGNORE_EXCEPTION_DETAIL
-    Traceback (most recent call last):
-    AssertionFailed: Assertion failed: oops
+    >>> try:
+    ...     _assert(1 == 2, "oops")
+    ... except AssertionFailed as e:
+    ...     print(e)
+    Assertion failed: oops
 
     """
     if not b:
@@ -1014,27 +1137,37 @@ def clean_apk_signing_block(data: bytes, *, keep: Tuple[int, ...] = (),
 
     Returns cleaned block (bytes).
 
-    >>> import apksigtool
+    >>> import apksigtool as ast
     >>> apk = "test/apks/apks/v3-only-with-stamp.apk"
-    >>> _, data = apksigtool.extract_v2_sig(apk)
-    >>> [ hex(p.id) for p in apksigtool.parse_apk_signing_block(data).pairs ]
+    >>> _, data = ast.extract_v2_sig(apk)
+    >>> blk = ast.parse_apk_signing_block(data)
+    >>> [ hex(p.id) for p in blk.pairs ]
     ['0xf05368c0', '0x6dff800d', '0x42726577']
-    >>> cleaned = apksigtool.clean_apk_signing_block(data)
-    >>> [ hex(p.id) for p in apksigtool.parse_apk_signing_block(cleaned).pairs ]
+    >>> blk.verify(apk)
+    >>> data_cleaned = ast.clean_apk_signing_block(data)
+    >>> blk_cleaned = ast.parse_apk_signing_block(data_cleaned)
+    >>> [ hex(p.id) for p in blk_cleaned.pairs ]
     ['0xf05368c0', '0x42726577']
-    >>> cleaned == apksigtool.clean_apk_signing_block(data, parse=True)
+    >>> blk_cleaned.verify(apk)
+    >>> data_cleaned == ast.clean_apk_signing_block(data, parse=True)
     True
 
     """
     if parse:
-        allow = (APK_SIGNATURE_SCHEME_V2_BLOCK_ID,
-                 APK_SIGNATURE_SCHEME_V3_BLOCK_ID,
-                 VERITY_PADDING_BLOCK_ID) + keep
-        block = parse_apk_signing_block(data)
-        pairs = tuple(p for p in block.pairs if p.id in allow)
-        return dataclasses.replace(block, pairs=pairs).dump()
+        return parse_apk_signing_block(data).clean(keep=keep).dump()
     else:
         return _clean_apk_signing_block(data, keep=keep)
+
+
+# FIXME
+def clean_parsed_apk_signing_block(block: APKSigningBlock, *,
+                                   keep: Tuple[int, ...] = ()) -> APKSigningBlock:
+    """Clean APKSigningBlock."""
+    allow = (APK_SIGNATURE_SCHEME_V2_BLOCK_ID,
+             APK_SIGNATURE_SCHEME_V3_BLOCK_ID,
+             VERITY_PADDING_BLOCK_ID) + keep
+    pairs = tuple(p for p in block.pairs if p.id in allow)
+    return dataclasses.replace(block, pairs=pairs)
 
 
 # FIXME
@@ -1069,10 +1202,10 @@ def dump_apk_signing_block(block: APKSigningBlock) -> bytes:
     """
     Dump APK Signing Block.
 
-    >>> import apksigtool
+    >>> import apksigtool as ast
     >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
-    >>> _, data = apksigtool.extract_v2_sig(apk)
-    >>> blk = apksigtool.parse_apk_signing_block(data)
+    >>> _, data = ast.extract_v2_sig(apk)
+    >>> blk = ast.parse_apk_signing_block(data)
     >>> [ hex(p.id) for p in blk.pairs ]
     ['0x7109871a', '0xf05368c0', '0x42726577']
     >>> blk.dump() == data
@@ -1193,7 +1326,28 @@ def parse_signed_data(data: bytes, v3: bool) -> Union[V2SignedData, V3SignedData
 
 def dump_signed_data(signed_data: Union[V2SignedData, V3SignedData], *,
                      expect_raw_data: bool = True, verify_raw_data: bool = True) -> bytes:
-    """Dump APK Signature Scheme v2/v3 Block -> signer -> signed data."""
+    """
+    Dump APK Signature Scheme v2/v3 Block -> signer -> signed data.
+
+    >>> import apksigtool as ast, dataclasses as dt
+    >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
+    >>> blk = ast.parse_apk_signing_block(ast.extract_v2_sig(apk)[1])
+    >>> sd1 = blk.pairs[0].value.signers[0].signed_data
+    >>> sd2 = blk.pairs[1].value.signers[0].signed_data
+    >>> sd1_nord = dt.replace(sd1, raw_data=b"")
+    >>> sd2_nord = dt.replace(sd2, raw_data=b"")
+    >>> sd1.dump() == sd1_nord.dump(expect_raw_data=False, verify_raw_data=False)
+    True
+    >>> sd2.dump() == sd2_nord.dump(expect_raw_data=False, verify_raw_data=False)
+    True
+    >>> sd1_nord.zero_padding_size, sd2_nord.zero_padding_size
+    (4, 0)
+    >>> ast.parse_signed_data(sd1.dump(), v3=False) == sd1
+    True
+    >>> ast.parse_signed_data(sd2.dump(), v3=True) == sd2
+    True
+
+    """
     _assert(not expect_raw_data or bool(signed_data.raw_data), "raw signed data expected")
     if not verify_raw_data and signed_data.raw_data:
         return signed_data.raw_data
@@ -1559,18 +1713,18 @@ def dump_apk_v1_signature(signature: JARSignature) -> ZipInfoDataPairs:
 
     NB: does not set correct ZipInfo metadata.
 
-    >>> import apksigcopier, apksigtool, dataclasses
-    >>> noraw = lambda x: dataclasses.replace(x, raw_data=b"")
-    >>> noraw_ents = lambda x, es: dataclasses.replace(x, raw_data=b"", entries=es)
+    >>> import apksigcopier as asc, apksigtool as ast, dataclasses as dc
+    >>> noraw = lambda x: dc.replace(x, raw_data=b"")
+    >>> noraw_ents = lambda x, es: dc.replace(x, raw_data=b"", entries=es)
     >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
-    >>> meta = tuple(apksigcopier.extract_meta(apk))
+    >>> meta = tuple(asc.extract_meta(apk))
     >>> [ x.filename for x, _ in meta ]
     ['META-INF/RSA-2048.SF', 'META-INF/RSA-2048.RSA', 'META-INF/MANIFEST.MF']
-    >>> sig = apksigtool.parse_apk_v1_signature(meta)
+    >>> sig = ast.parse_apk_v1_signature(meta)
     >>> mf = noraw_ents(sig.manifest, tuple(map(noraw, sig.manifest.entries)))
     >>> sf = noraw_ents(sig.signature_files[0], tuple(map(noraw, sig.signature_files[0].entries)))
     >>> sbf = sig.signature_block_files[0]
-    >>> meta_dump = apksigtool.JARSignature(mf, (sf,), (sbf,)).dump()
+    >>> meta_dump = ast.JARSignature(mf, (sf,), (sbf,)).dump()
     >>> [ x.filename for x, _ in meta_dump ]
     ['META-INF/RSA-2048.SF', 'META-INF/RSA-2048.RSA', 'META-INF/MANIFEST.MF']
     >>> [ (x.filename, y) for x, y in meta ] == [ (x.filename, y) for x, y in meta_dump ]
@@ -1687,12 +1841,13 @@ def _dump_apk_v1_manifest(manifest: Union[JARManifest, JARSignatureFile], *,
                           headers: Optional[Tuple[Tuple[str, str], ...]] = None,
                           endl: str = "\r\n", wrap: int = 70) -> bytes:
     """
-    >>> import apksigcopier, apksigtool, dataclasses
-    >>> noraw = lambda x: dataclasses.replace(x, raw_data=b"")
-    >>> noraw_ents = lambda x, es: dataclasses.replace(x, raw_data=b"", entries=es)
+    Dump JAR manifest (MANIFEST.MF) or signature file (.SF).
+
+    >>> import apksigcopier as asc, apksigtool as ast, dataclasses as dc
+    >>> noraw = lambda x: dc.replace(x, raw_data=b"")
+    >>> noraw_ents = lambda x, es: dc.replace(x, raw_data=b"", entries=es)
     >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
-    >>> meta = apksigcopier.extract_meta(apk)
-    >>> sig = apksigtool.parse_apk_v1_signature(meta)
+    >>> sig = ast.parse_apk_v1_signature(asc.extract_meta(apk))
     >>> mf_ents = tuple(map(noraw, sig.manifest.entries))
     >>> mf_dump = noraw_ents(sig.manifest, mf_ents).dump()
     >>> mf_dump == sig.manifest.raw_data
@@ -2375,7 +2530,7 @@ def verify_apk_v1(apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
         return False, str(err)
 
 
-# NB: modifies in-place!
+# NB: modifies in place!
 def clean_apk(apkfile: str, *, check: bool = False, keep: Tuple[int, ...] = (),
               sdk: Optional[int] = None) -> bool:
     """
@@ -2383,7 +2538,7 @@ def clean_apk(apkfile: str, *, check: bool = False, keep: Tuple[int, ...] = (),
     Block or verity padding block (or has a pair_id in keep) from its APK
     Signing Block.
 
-    NB: modifies the file in-place!.
+    NB: modifies the file in place!.
 
     Does not modify the APK file when the cleaned block is equal to the
     original.
@@ -2543,7 +2698,7 @@ def main():
         Signature Scheme v2/v3 Block or verity padding block (or has a pair_id
         in keep) from its APK Signing Block.
 
-        NB: modifies in-place!
+        NB: modifies in place!
     """)
     @click.option("--block", is_flag=True,
                   help="APK_OR_BLOCK is an extracted block, not an APK.")

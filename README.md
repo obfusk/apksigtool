@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-11-06
+    Date        : 2022-11-08
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -79,6 +79,30 @@ $ apksigtool parse --block meta/APKSigningBlock
 [...]
 ```
 
+v1 (JAR) signature (some output elided):
+
+```bash
+$ apksigtool parse-v1 some.apk
+JAR MANIFEST
+  VERSION: 1.0
+  CREATED BY: Android Gradle 7.1.3
+  BUILT BY: Signflinger
+JAR SIGNATURE FILE
+  FILENAME: META-INF/CERT.SF
+  VERSION: 1.0
+  CREATED BY: Android Gradle 7.1.3
+  SHA256 MANIFEST DIGEST: [...]
+  ANDROID APK SIGNED: 2
+JAR SIGNATURE BLOCK FILE
+  FILENAME: META-INF/CERT.RSA
+  CERTIFICATE
+    [...]
+  SIGNATURE
+    VALUE (HEX): [...]
+  HASH ALGORITHM: SHA256
+VERIFIED (1 signature(s))
+```
+
 #### JSON
 
 NB: elided binary values (`digest`, `fingerprint`, `raw_data`, `signature`) are
@@ -111,16 +135,16 @@ $ apksigtool parse --json some.apk
                 "_type": "PublicKeyInfo",
                 "algorithm": "RSA",
                 "bit_size": 2048,
-                "fingerprint": "...",
+                "fingerprint": "[...]",
                 "hash_algorithm": null
               },
-              "raw_data": "..."
+              "raw_data": "[...]"
             },
             "signatures": [
               {
                 "_type": "Signature",
                 "algoritm_id_info": "RSASSA-PKCS1-v1_5 with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks",
-                "signature": "...",
+                "signature": "[...]",
                 "signature_algorithm_id": 259
               }
             ],
@@ -140,34 +164,34 @@ $ apksigtool parse --json some.apk
                   "_type": "Certificate",
                   "certificate_info": {
                     "_type": "CertificateInfo",
-                    "fingerprint": "...",
+                    "fingerprint": "[...]",
                     "hash_algorithm": "SHA256",
-                    "issuer": "Common Name: ..., Organizational Unit: ...",
+                    "issuer": "Common Name: [...], Organizational Unit: [...]",
                     "not_valid_after": "2022-10-27 12:34:56+00:00",
                     "not_valid_before": "2022-10-26 12:34:56+00:00",
                     "serial_number": 42,
                     "signature_algorithm": "RSASSA_PKCS1V15",
-                    "subject": "Common Name: ..., Organizational Unit: ..."
+                    "subject": "Common Name: [...], Organizational Unit: [...]"
                   },
                   "public_key_info": {
                     "_type": "PublicKeyInfo",
                     "algorithm": "RSA",
                     "bit_size": 2048,
-                    "fingerprint": "...",
+                    "fingerprint": "[...]",
                     "hash_algorithm": null
                   },
-                  "raw_data": "..."
+                  "raw_data": "[...]"
                 }
               ],
               "digests": [
                 {
                   "_type": "Digest",
                   "algoritm_id_info": "RSASSA-PKCS1-v1_5 with SHA2-256 digest, content digested using SHA2-256 in 1 MB chunks",
-                  "digest": "...",
+                  "digest": "[...]",
                   "signature_algorithm_id": 259
                 }
               ],
-              "raw_data": "..."
+              "raw_data": "[...]"
             }
           }
         ],
@@ -187,12 +211,12 @@ $ apksigtool parse --json some.apk
             "_type": "V3Signer",
             "max_sdk": 2147483647,
             "min_sdk": 24,
-            ...
+            [...]
             "signed_data": {
-              ...
+              [...]
               "max_sdk": 2147483647,
               "min_sdk": 24,
-              ...
+              [...]
             }
           }
         ],
@@ -240,10 +264,10 @@ $ apksigtool parse --json some.apk | jq '.pairs[].value.signers[]?.public_key.pu
   "_type": "PublicKeyInfo",
   "algorithm": "RSA",
   "bit_size": 2048,
-  "fingerprint": "...",
+  "fingerprint": "[...]",
   "hash_algorithm": null
 }
-...
+[...]
 ```
 
 To extract e.g. certificate info:
@@ -255,16 +279,23 @@ $ apksigtool parse --json some.apk | jq '.pairs[].value.signers[]?.signed_data.c
 ```json
 {
   "_type": "CertificateInfo",
-  "fingerprint": "...",
+  "fingerprint": "[...]",
   "hash_algorithm": "SHA256",
-  "issuer": "Common Name: ..., Organizational Unit: ...",
+  "issuer": "Common Name: [...], Organizational Unit: [...]",
   "not_valid_after": "2022-10-27 12:34:56+00:00",
   "not_valid_before": "2022-10-26 12:34:56+00:00",
   "serial_number": 42,
   "signature_algorithm": "RSASSA_PKCS1V15",
-  "subject": "Common Name: ..., Organizational Unit: ..."
+  "subject": "Common Name: [...], Organizational Unit: [...]"
 }
-...
+[...]
+```
+
+v1 (JAR) signature:
+
+```bash
+$ apksigtool parse-v1 --json some.apk | jq -r .manifest.created_by
+Android Gradle 7.1.3
 ```
 
 ### Verify
@@ -279,9 +310,16 @@ v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 ```
 
+```bash
+$ apksigtool verify-v1 some.apk
+WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.
+v1 verified (1 signature(s))
+Warning: rollback protections require v2, v3 signature(s) as well.
+```
+
 ### Clean
 
-NB: modifies in-place!
+NB: modifies in place!
 
 ```bash
 $ cp some.apk cleaned.apk
@@ -322,41 +360,44 @@ $ man apksigtool                # requires the man page to be installed
 
 ## Python API
 
-Parse:
+### APK Signing Block
 
 ```python
->>> from apksigtool import ...
->>> apk_signing_block = parse_apk_signing_block(data, apkfile=None, ...)
->>> apk_signing_block = APKSigningBlock.parse(data, ...)    # same as the above
+>>> import apksigtool
+>>> _, data = apksigtool.extract_v2_sig(apk)
+>>> blk = apksigtool.APKSigningBlock.parse(data)    # parse APK Signing Block
+>>> blk = apksigtool.parse_apk_signing_block(data)  # same as above
+
+>>> apksigtool.show_parse_tree(blk)                 # print parse tree
+>>> apksigtool.show_json(blk)                       # JSON
+
+>>> blk.verify(apk)                                 # [EXPERIMENTAL] raises on failure
+>>> result = verified, failed = blk.verify_results(apk)
+>>> result = apksigtool.verify_apk(apk)             # uses .verify_results()
 ```
 
-Parse tree & JSON:
+### Cleaning
 
 ```python
->>> show_parse_tree(apk_signing_block, apkfile=None, ...)
->>> show_json(obj, ...)
+>>> import apksigtool
+>>> _, data = apksigtool.extract_v2_sig(apk)
+>>> data_cleaned = apksigtool.clean_apk_signing_block(data)
+
+>>> apksigtool.clean_apk(some_apk)                  # NB: modifies existing APK!
 ```
 
-Verify:
+### v1 (JAR) signatures
 
 ```python
->>> apk_signing_block.verify(apkfile, ...)                  # raises on failure
->>> verified, failed = apk_signing_block.verify_results(apkfile, ...)
->>> verify_apk(apkfile, ...)                                # verify APK (uses the above)
-```
+>>> import apksigcopier, apksigtool
+>>> meta = tuple(apksigcopier.extract_meta(apk))
+>>> sig = apksigtool.JARSignature.parse(meta)       # parse v1 signature
+>>> sig = apksigtool.parse_apk_v1_signature(meta)   # same as above
 
-Low-level verification API:
+>>> apksigtool.show_v1_signature(sig)               # print parse tree
+>>> apksigtool.show_json(sig)                       # JSON
 
-```python
->>> verify_apk_signature_scheme(signers, apkfile, ...)      # does the verification
->>> APKSignatureSchemeBlock(...).verify(apkfile, ...)       # uses the above
-```
-
-Clean:
-
-```python
->>> data_cleaned = clean_apk_signing_block(data, keep=())   # clean block
->>> cleaned = clean_apk(apkfile, check=False, keep=(), ...) # clean APK
+>>> result = sig.verify(apk)                        # [EXPERIMENTAL] raises on failure
 ```
 
 <!--
