@@ -78,8 +78,8 @@ from binascii import hexlify
 from dataclasses import dataclass, field
 from functools import reduce
 from hashlib import sha1, sha224, sha256, sha384, sha512
-from typing import (Any, Callable, Dict, FrozenSet, Iterator, List, Literal,
-                    Mapping, Optional, TextIO, Tuple, TypeVar, Union)
+from typing import (Any, Callable, ClassVar, Dict, FrozenSet, Iterator, List,
+                    Literal, Mapping, Optional, TextIO, Tuple, TypeVar, Union)
 
 import apksigcopier
 
@@ -253,6 +253,12 @@ class PublicKeyInfo(APKSigToolBase):
 class Block(APKSigToolBase):
     """Base class for APKSigningBlock etc."""
 
+    @property
+    def pair_id(self) -> int:
+        if hasattr(self.__class__, "PAIR_ID"):
+            return self.__class__.PAIR_ID   # type: ignore
+        raise NotImplementedError("no .PAIR_ID or custom .pair_id")
+
     def dump(self) -> bytes:
         if hasattr(self, "raw_data"):
             return self.raw_data    # type: ignore
@@ -265,6 +271,12 @@ class Pair(APKSigToolBase):
     length: int
     id: int
     value: Block
+
+    @classmethod
+    def from_block(cls, block: Block, *, length: Optional[int] = None) -> Pair:
+        if length is None:
+            length = len(block.dump()) + 4
+        return cls(length, block.pair_id, block)
 
     def dump(self) -> bytes:
         return dump_pair(self)
@@ -655,6 +667,11 @@ class APKSignatureSchemeBlock(Block):
     def is_v3(self) -> bool:
         return self.version == 3
 
+    @property
+    def pair_id(self) -> int:
+        return (APK_SIGNATURE_SCHEME_V2_BLOCK_ID if self.is_v2 else
+                APK_SIGNATURE_SCHEME_V3_BLOCK_ID)
+
     @classmethod
     def parse(_cls, version: Literal[2, 3], data: bytes, apkfile: Optional[str] = None, *,
               allow_unsafe: Tuple[str, ...] = (), sdk: Optional[int] = None) \
@@ -698,6 +715,8 @@ class VerityPaddingBlock(Block):
     """Verity padding block (zero padding)."""
     size: int
 
+    PAIR_ID: ClassVar[int] = VERITY_PADDING_BLOCK_ID
+
     def dump(self) -> bytes:
         return b"\x00" * self.size
 
@@ -707,11 +726,15 @@ class DependencyInfoBlock(Block):
     """Google dependency info block (opaque, encrypted)."""
     raw_data: bytes
 
+    PAIR_ID: ClassVar[int] = DEPENDENCY_INFO_BLOCK_ID
+
 
 @dataclass(frozen=True)
 class GooglePlayFrostingBlock(Block):
     """Google Play frosting block (opaque)."""
     raw_data: bytes
+
+    PAIR_ID: ClassVar[int] = GOOGLE_PLAY_FROSTING_BLOCK_ID
 
 
 @dataclass(frozen=True)
@@ -719,6 +742,11 @@ class SourceStampBlock(Block):
     """Google source stamp block (opaque)."""
     raw_data: bytes
     version: Literal[1, 2]
+
+    @property
+    def pair_id(self) -> int:
+        return (SOURCE_STAMP_V1_BLOCK_ID if self.version == 1 else
+                SOURCE_STAMP_V2_BLOCK_ID)
 
 
 @dataclass(frozen=True)
