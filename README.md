@@ -466,12 +466,12 @@ $ git pull --rebase
 ## Dependencies
 
 * Python >= 3.8 + [apksigcopier](https://github.com/obfusk/apksigcopier) +
-  asn1crypto + click + cryptography + simplejson.
+  asn1crypto + click + cryptography + pyasn1 + pyasn1-modules + simplejson.
 
 ### Debian/Ubuntu
 
 ```bash
-$ apt install apksigcopier python3-{asn1crypto,click,cryptography,simplejson}
+$ apt install apksigcopier python3-{asn1crypto,click,cryptography,pyasn1{,-modules},simplejson}
 ```
 
 ## License
