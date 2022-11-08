@@ -3,7 +3,7 @@ PYTHON  ?= python3
 
 export PYTHONWARNINGS := default
 
-.PHONY: all install test test-cli lint lint-extra clean cleanup
+.PHONY: all install test test-cli doctest lint lint-extra clean cleanup
 .PHONY: test-apks test-apks-apksigner test-apks-verify \
         test-apks-verify-check-v1 test-apks-verify-v1 test-apks-parse \
         test-apks-parse-v1 test-apks-parse-json test-apks-parse-json-v1 \
@@ -14,11 +14,13 @@ all: # TODO: apksigtool.1
 install:
 	$(PYTHON) -mpip install -e .
 
-test: test-cli lint lint-extra
+test: test-cli doctest lint lint-extra
 
 test-cli:
 	# TODO
 	apksigtool --version
+
+doctest:
 	# NB: uses test/apks/apks/*.apk
 	$(PYTHON) -m doctest apksigtool/__init__.py
 
