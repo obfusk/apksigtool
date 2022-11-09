@@ -369,12 +369,12 @@ class Block(APKSigToolBase):
     @property
     def pair_id(self) -> int:
         if hasattr(self.__class__, "PAIR_ID"):
-            return self.__class__.PAIR_ID   # type: ignore
+            return self.__class__.PAIR_ID
         raise NotImplementedError("no .PAIR_ID or custom .pair_id")
 
     def dump(self) -> bytes:
         if hasattr(self, "raw_data"):
-            return self.raw_data    # type: ignore
+            return self.raw_data
         raise NotImplementedError("no .raw_data or custom .dump()")
 
 
@@ -2077,9 +2077,9 @@ def verify_signature(key: bytes, sig: bytes, msg: bytes, halgo, pad) -> None:
     k = load_der_public_key(key)
     try:
         if pad is None:
-            k.verify(sig, msg, halgo())                 # type: ignore
+            k.verify(sig, msg, halgo())
         else:
-            k.verify(sig, msg, pad(), halgo())          # type: ignore
+            k.verify(sig, msg, pad(), halgo())
     except InvalidSignature:
         raise VerificationError("Invalid signature")    # pylint: disable=W0707
 
@@ -2140,7 +2140,7 @@ def show_parse_tree(apk_signing_block: APKSigningBlock, *,
         else:
             p("  UNKNOWN BLOCK")
         if verbose and hasattr(pair.value, "raw_data"):
-            _show_hex(pair.value.raw_data, 2, file=file, wrap=wrap)     # type: ignore
+            _show_hex(pair.value.raw_data, 2, file=file, wrap=wrap)
 
 
 def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
