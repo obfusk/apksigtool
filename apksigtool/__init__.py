@@ -2077,9 +2077,9 @@ def verify_signature(key: bytes, sig: bytes, msg: bytes, halgo, pad) -> None:
     k = load_der_public_key(key)
     try:
         if pad is None:
-            k.verify(sig, msg, halgo())
+            k.verify(sig, msg, halgo())                 # type: ignore
         else:
-            k.verify(sig, msg, pad(), halgo())
+            k.verify(sig, msg, pad(), halgo())          # type: ignore
     except InvalidSignature:
         raise VerificationError("Invalid signature")    # pylint: disable=W0707
 
