@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-08
+# Date        : 2022-11-09
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -306,7 +306,7 @@ UNSAFE_HASH_ALGO = dict(
 UNSAFE_KEY_SIZE = dict(
     RSA=lambda size: size < 1024,
     DSA=lambda size: size < 1024,
-    EC=None,
+    EC=lambda size: size < 224,
 )
 
 assert set(JAR_HASHERS_STR.keys()) == set(UNSAFE_HASH_ALGO.keys())
