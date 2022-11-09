@@ -1,5 +1,8 @@
-SHELL   := /bin/bash
-PYTHON  ?= python3
+SHELL     := /bin/bash
+PYTHON    ?= python3
+
+PYCOV     := $(PYTHON) -mcoverage run --source apksigtool
+PYCOVCLI  := $(PYCOV) -a apksigtool/__init__.py
 
 export PYTHONWARNINGS := default
 
@@ -25,7 +28,17 @@ doctest:
 	$(PYTHON) -m doctest apksigtool/__init__.py
 
 coverage:
-	$(PYTHON) -mcoverage run --source apksigtool -a -m doctest apksigtool/__init__.py
+	# NB: uses test/apks/apks/*.apk
+	mkdir -p .tmp
+	cp test/apks/apks/v3-only-with-stamp.apk .tmp/test.apk
+	$(PYCOV) -m doctest apksigtool/__init__.py
+	$(PYCOVCLI) verify    --check-v1 test/apks/apks/golden-aligned-v1v2v3-out.apk
+	$(PYCOVCLI) verify-v1            test/apks/apks/golden-aligned-v1v2v3-out.apk
+	$(PYCOVCLI) parse     --verbose  test/apks/apks/golden-aligned-v1v2v3-out.apk >/dev/null
+	$(PYCOVCLI) parse-v1  --verbose  test/apks/apks/golden-aligned-v1v2v3-out.apk >/dev/null
+	$(PYCOVCLI) parse     --json     test/apks/apks/golden-aligned-v1v2v3-out.apk >/dev/null
+	$(PYCOVCLI) parse-v1  --json     test/apks/apks/golden-aligned-v1v2v3-out.apk >/dev/null
+	$(PYCOVCLI) clean                .tmp/test.apk
 	$(PYTHON) -mcoverage html
 	$(PYTHON) -mcoverage report
 
@@ -91,6 +104,7 @@ cleanup:
 	rm -fr build/ dist/
 	rm -fr .coverage htmlcov/
 	rm -fr apksigtool.1
+	rm -fr .tmp/
 
 %.1: %.1.md
 	pandoc -s -t man -o $@ $<
