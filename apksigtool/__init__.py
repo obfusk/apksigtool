@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-09
+# Date        : 2022-11-12
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -2665,7 +2665,7 @@ def main():
     @click.option("-v", "--verbose", is_flag=True, help="Show signer(s).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def verify(ctx, apk, allow_unsafe, check_v1, quiet, sdk_version, verbose, signed_by):
+    def verify(ctx, apk, allow_unsafe, check_v1, quiet, sdk_version, signed_by, verbose):
         print("WARNING: verification is considered EXPERIMENTAL,"
               " please use apksigner instead.", file=sys.stderr)
         sb = _parse_signed_by(signed_by, ctx, verify) if signed_by else None
@@ -2699,11 +2699,12 @@ def main():
         res = _verify_v1(apk, allow_unsafe=allow_unsafe, quiet=quiet, strict=not no_strict)
         if not res:
             sys.exit(4)
-        if signed_by and _parse_signed_by(signed_by, ctx, verify_v1) not in res[2]:
+        _, sig, signers = res
+        if signed_by and _parse_signed_by(signed_by, ctx, verify_v1) not in signers:
             if not quiet:
-                print("expected signer not in common signers")
+                print("expected signer not in signers")
             sys.exit(4)
-        if required_sv := res[1].required_signature_versions:
+        if required_sv := sig.required_signature_versions:
             what = "Error" if rollback_is_error else "Warning"
             vsns = ", ".join(f"v{n}" for n in sorted(required_sv))
             sys.stdout.flush()  # FIXME
