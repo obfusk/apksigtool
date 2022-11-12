@@ -2399,7 +2399,8 @@ def load_extracted_meta_from_dir(path: str) -> Iterator[Tuple[zipfile.ZipInfo, b
 # WARNING: verification is considered EXPERIMENTAL
 def verify_apk_and_check_signers(
         apkfile, *, allow_unsafe: Tuple[str, ...] = (), check_v1: bool = False,
-        quiet: bool = True, sdk_version: Optional[int] = None, verbose: bool = False) -> bool:
+        quiet: bool = True, sdk_version: Optional[int] = None,
+        signed_by: Optional[Tuple[str, str]] = None, verbose: bool = False) -> bool:
     """
     Verify APK signatures and check whether signers match between v1/v2/v3.
 
@@ -2439,6 +2440,10 @@ def verify_apk_and_check_signers(
     if not common_signers:
         if not quiet:
             print("no common signers")
+        return False
+    if signed_by and signed_by not in common_signers:
+        if not quiet:
+            print("expected signer not in common signers")
         return False
     if verbose:
         for cert, pk in sorted(common_signers):
@@ -2654,13 +2659,19 @@ def main():
     @click.option("--check-v1", is_flag=True, help="Validate v1 signature (if any) as well.")
     @click.option("--quiet", is_flag=True, help="Don't print 'vN verified' etc. to stdout.")
     @click.option("--sdk-version", type=click.INT, help="For v3 signers specifying min/max SDK.")
+    @click.option("--signed-by", metavar="CERT:PUBKEY",
+                  help="Assure the APK is signed by the specified signer: "
+                       "certificate and public key sha256 fingerprint (hex).")
     @click.option("-v", "--verbose", is_flag=True, help="Show signer(s).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
-    def verify(apk, allow_unsafe, check_v1, quiet, sdk_version, verbose):
+    @click.pass_context
+    def verify(ctx, apk, allow_unsafe, check_v1, quiet, sdk_version, verbose, signed_by):
         print("WARNING: verification is considered EXPERIMENTAL,"
               " please use apksigner instead.", file=sys.stderr)
+        sb = _parse_signed_by(signed_by, ctx, verify) if signed_by else None
         if not verify_apk_and_check_signers(apk, allow_unsafe=allow_unsafe, check_v1=check_v1,
-                                            quiet=quiet, sdk_version=sdk_version, verbose=verbose):
+                                            quiet=quiet, sdk_version=sdk_version,
+                                            signed_by=sb, verbose=verbose):
             sys.exit(4)
 
     # FIXME
@@ -2677,12 +2688,20 @@ def main():
     @click.option("--quiet", is_flag=True, help="Don't print 'vN verified' etc. to stdout.")
     @click.option("--rollback-is-error", is_flag=True,
                   help="Exit with status 5 if v2/v3 signature(s) are required.")
+    @click.option("--signed-by", metavar="CERT:PUBKEY",
+                  help="Assure the APK is signed by the specified signer: "
+                       "certificate and public key sha256 fingerprint (hex).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
-    def verify_v1(apk, allow_unsafe, no_strict, quiet, rollback_is_error):
+    @click.pass_context
+    def verify_v1(ctx, apk, allow_unsafe, no_strict, quiet, rollback_is_error, signed_by):
         print("WARNING: verification is considered EXPERIMENTAL,"
               " please use apksigner instead.", file=sys.stderr)
         res = _verify_v1(apk, allow_unsafe=allow_unsafe, quiet=quiet, strict=not no_strict)
         if not res:
+            sys.exit(4)
+        if signed_by and _parse_signed_by(signed_by, ctx, verify_v1) not in res[2]:
+            if not quiet:
+                print("expected signer not in common signers")
             sys.exit(4)
         if required_sv := res[1].required_signature_versions:
             what = "Error" if rollback_is_error else "Warning"
@@ -2692,6 +2711,14 @@ def main():
                   file=sys.stderr)
             if rollback_is_error:
                 sys.exit(5)
+
+    def _parse_signed_by(signed_by, ctx, cmd):
+        try:
+            cert, fpr = signed_by.split(":")
+            return cert, fpr
+        except ValueError as e:
+            p, = [x for x in cmd.params if x.name == "signed_by"]
+            raise click.exceptions.BadParameter(e.args[0], ctx, p)
 
     @cli.command(help="""
         Clean APK (or extracted block): remove everything that's not an APK
