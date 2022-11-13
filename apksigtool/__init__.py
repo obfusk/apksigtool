@@ -368,11 +368,13 @@ class Block(APKSigToolBase):
 
     @property
     def pair_id(self) -> int:
+        """Pair ID for this block type (either .__class__.PAIR_ID or custom)."""
         if hasattr(self.__class__, "PAIR_ID"):
             return self.__class__.PAIR_ID
         raise NotImplementedError("no .PAIR_ID or custom .pair_id")
 
     def dump(self) -> bytes:
+        """Dump Block (either .raw_data or custom)."""
         if hasattr(self, "raw_data"):
             return self.raw_data
         raise NotImplementedError("no .raw_data or custom .dump()")
@@ -387,11 +389,17 @@ class Pair(APKSigToolBase):
 
     @classmethod
     def from_block(cls, block: Block, *, length: Optional[int] = None) -> Pair:
+        """Create a Pair from a Block using .pair_id (and .dump() if length is None)."""
         if length is None:
             length = len(block.dump()) + 4
         return cls(length, block.pair_id, block)
 
     def dump(self) -> bytes:
+        """
+        Dump Pair.
+
+        Uses dump_pair().
+        """
         return dump_pair(self)
 
 
@@ -480,13 +488,16 @@ class AdditionalAttribute(APKSigToolBase):
 
     @property
     def is_stripping_protection(self) -> bool:
+        """Whether .id is STRIPPING_PROTECTION_ATTR_ID."""
         return self.id == STRIPPING_PROTECTION_ATTR_ID
 
     @property
     def is_proof_of_rotation_struct(self) -> bool:
+        """Whether .id is PROOF_OF_ROTATION_STRUCT_ID."""
         return self.id == PROOF_OF_ROTATION_STRUCT_ID
 
     def for_json(self) -> Mapping[str, Any]:
+        """Convert to JSON."""
         x = super().for_json()
         y = dict(is_stripping_protection=self.is_stripping_protection,
                  is_proof_of_rotation_struct=self.is_proof_of_rotation_struct)
@@ -561,6 +572,7 @@ class PublicKey(APKSigToolBase):
         return self._public_key
 
     def dump(self) -> bytes:
+        """Dump PublicKey (.raw_data)."""
         return self.raw_data
 
 
@@ -782,14 +794,20 @@ class APKSignatureSchemeBlock(Block):
 
     @property
     def is_v2(self) -> bool:
+        """Whether .version is 2."""
         return self.version == 2
 
     @property
     def is_v3(self) -> bool:
+        """Whether .version is 3."""
         return self.version == 3
 
     @property
     def pair_id(self) -> int:
+        """
+        Pair ID (either APK_SIGNATURE_SCHEME_V2_BLOCK_ID for v2 or
+        APK_SIGNATURE_SCHEME_V3_BLOCK_ID for v3).
+        """
         return (APK_SIGNATURE_SCHEME_V2_BLOCK_ID if self.is_v2 else
                 APK_SIGNATURE_SCHEME_V3_BLOCK_ID)
 
@@ -839,6 +857,7 @@ class VerityPaddingBlock(Block):
     PAIR_ID: ClassVar[int] = VERITY_PADDING_BLOCK_ID
 
     def dump(self) -> bytes:
+        """Dump VerityPaddingBlock (.size null bytes)."""
         return b"\x00" * self.size
 
 
@@ -866,6 +885,10 @@ class SourceStampBlock(Block):
 
     @property
     def pair_id(self) -> int:
+        """
+        Pair ID (either SOURCE_STAMP_V1_BLOCK_ID for v1 or
+        SOURCE_STAMP_V2_BLOCK_ID for v2).
+        """
         return (SOURCE_STAMP_V1_BLOCK_ID if self.version == 1 else
                 SOURCE_STAMP_V2_BLOCK_ID)
 
@@ -887,6 +910,7 @@ class JAREntry(APKSigToolBase):
         assert all(algo in JAR_HASHERS_STR for algo, _ in self.digests)
 
     def dump(self) -> bytes:
+        """Dump JAREntry (.raw_data)."""
         if not self.raw_data:
             raise ValueError("JAREntry without .raw_data")
         return self.raw_data
@@ -985,6 +1009,7 @@ class JARSignatureBlockFile(APKSigToolBase):
         return self._public_key
 
     def dump(self) -> bytes:
+        """Dump JARSignatureBlockFile (.raw_data)."""
         return self.raw_data
 
 
