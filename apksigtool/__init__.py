@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-12
+# Date        : 2022-11-13
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -118,9 +118,9 @@ Cleaning
 v1 (JAR) signatures
 -------------------
 
->>> import apksigcopier as asc, apksigtool as ast, io
+>>> import apksigtool as ast, io
 >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
->>> meta = tuple(asc.extract_meta(apk))
+>>> meta = ast.extract_meta(apk)
 >>> [ x.filename for x, _ in meta ]
 ['META-INF/RSA-2048.SF', 'META-INF/RSA-2048.RSA', 'META-INF/MANIFEST.MF']
 >>> sig = ast.JARSignature.parse(meta)          # parse v1 signature
@@ -164,7 +164,7 @@ JAR SIGNATURE BLOCK FILE
 >>> apk = "test/apks/apks/v1-only-with-nul-in-entry-name.apk"
 >>> ast.verify_apk_v1(apk)
 (False, "Manifest entry not in ZIP: 'test.txt\\\\x00'")
->>> sig = ast.JARSignature.parse(asc.extract_meta(apk))
+>>> sig = ast.JARSignature.parse(ast.extract_meta(apk))
 >>> try:
 ...     sig.verify(apk)
 ... except ast.VerificationError as e:
@@ -1016,7 +1016,7 @@ class JARSignature(APKSigToolBase):
     def parse(_cls, extracted_meta: ZipInfoDataPairs, apkfile: Optional[str] = None, *,
               allow_unsafe: Tuple[str, ...] = (), strict: bool = True) -> JARSignature:
         """
-        Parse v1 signature metadata files from apksigcopier.extract_meta().
+        Parse v1 signature metadata files from extract_meta().
 
         Uses parse_apk_v1_signature().
         """
@@ -1662,7 +1662,7 @@ def _chunks(data: bytes, blocksize: int) -> Iterator[bytes]:
 def parse_apk_v1_signature(extracted_meta: ZipInfoDataPairs, apkfile: Optional[str] = None,
                            *, allow_unsafe: Tuple[str, ...] = (), strict: bool = True) \
         -> JARSignature:
-    """Parse v1 signature metadata files from apksigcopier.extract_meta()."""
+    """Parse v1 signature metadata files from extract_meta()."""
     manifest = None
     sig_files = {}
     sig_block_files = {}
@@ -1713,11 +1713,11 @@ def dump_apk_v1_signature(signature: JARSignature) -> ZipInfoDataPairs:
 
     NB: does not set correct ZipInfo metadata.
 
-    >>> import apksigcopier as asc, apksigtool as ast, dataclasses as dc
+    >>> import apksigtool as ast, dataclasses as dc
     >>> noraw = lambda x: dc.replace(x, raw_data=b"")
     >>> noraw_ents = lambda x, es: dc.replace(x, raw_data=b"", entries=es)
     >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
-    >>> meta = tuple(asc.extract_meta(apk))
+    >>> meta = ast.extract_meta(apk)
     >>> [ x.filename for x, _ in meta ]
     ['META-INF/RSA-2048.SF', 'META-INF/RSA-2048.RSA', 'META-INF/MANIFEST.MF']
     >>> sig = ast.parse_apk_v1_signature(meta)
@@ -1843,11 +1843,11 @@ def _dump_apk_v1_manifest(manifest: Union[JARManifest, JARSignatureFile], *,
     """
     Dump JAR manifest (MANIFEST.MF) or signature file (.SF).
 
-    >>> import apksigcopier as asc, apksigtool as ast, dataclasses as dc
+    >>> import apksigtool as ast, dataclasses as dc
     >>> noraw = lambda x: dc.replace(x, raw_data=b"")
     >>> noraw_ents = lambda x, es: dc.replace(x, raw_data=b"", entries=es)
     >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
-    >>> sig = ast.parse_apk_v1_signature(asc.extract_meta(apk))
+    >>> sig = ast.parse_apk_v1_signature(ast.extract_meta(apk))
     >>> mf_ents = tuple(map(noraw, sig.manifest.entries))
     >>> mf_dump = noraw_ents(sig.manifest, mf_ents).dump()
     >>> mf_dump == sig.manifest.raw_data
@@ -2380,12 +2380,40 @@ def asdict(obj: APKSigToolBase):
 
 
 def extract_v2_sig(apkfile: str) -> Tuple[int, bytes]:
+    """
+    Extract APK Signing Block and offset from APK.
+
+    When successful, returns (sb_offset, sig_block); otherwise raises
+    apksigcopier.NoAPKSigningBlock.
+
+    Uses apksigcopier.extract_v2_sig().
+    """
     extracted_v2_sig = apksigcopier.extract_v2_sig(apkfile)
     assert extracted_v2_sig is not None
     return extracted_v2_sig
 
 
-def load_extracted_meta_from_dir(path: str) -> Iterator[Tuple[zipfile.ZipInfo, bytes]]:
+def extract_meta(signed_apk: str) -> Tuple[Tuple[zipfile.ZipInfo, bytes], ...]:
+    """
+    Extract v1 signature metadata files from signed APK.
+
+    Returns a tuple of (ZipInfo, data) pairs.
+
+    Uses apksigcopier.extract_meta().
+    """
+    return tuple(apksigcopier.extract_meta(signed_apk))
+
+
+def load_extracted_meta_from_dir(path: str) -> Tuple[Tuple[zipfile.ZipInfo, bytes], ...]:
+    """
+    Loads previously extracted v1 metadata files from a directory.
+
+    Returns a tuple of (ZipInfo, data) pairs.
+    """
+    return tuple(_load_extracted_meta_from_dir(path))
+
+
+def _load_extracted_meta_from_dir(path: str) -> Iterator[Tuple[zipfile.ZipInfo, bytes]]:
     for ext in JAR_META_EXTS:
         for fn in glob.glob(os.path.join(path, "*." + ext)):
             info = zipfile.ZipInfo("META-INF/" + os.path.basename(fn))
@@ -2490,7 +2518,7 @@ def verify_apk(apkfile: str, sig_block: Optional[bytes] = None, *,
     ON, please use apksigner instead.
 
     If sig_block is None, it will be extracted from the APK using
-    apksigcopier.extract_v2_sig().
+    extract_v2_sig().
 
     Returns (verified, failed), where verified is a tuple of (version, signers)
     of verification successes, and failed is a tuple of (version, exception)
@@ -2521,7 +2549,7 @@ def verify_apk_v1(apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
     (True, verified_signers, unverified_files) on success and (False, error) on
     failure.
     """
-    e_meta = tuple(apksigcopier.extract_meta(apkfile))
+    e_meta = extract_meta(apkfile)
     if not e_meta or [i.filename for i, _ in e_meta] == [JAR_MANIFEST]:
         if expected:
             return False, "Missing v1 signature"
@@ -2637,7 +2665,7 @@ def main():
             e_meta = load_extracted_meta_from_dir(apk_or_dir)
         else:
             apkfile = apk_or_dir if not no_verify else None
-            e_meta = apksigcopier.extract_meta(apk_or_dir)
+            e_meta = extract_meta(apk_or_dir)
         if json:
             show_json(JARSignature.parse(e_meta, apkfile=apkfile, allow_unsafe=allow_unsafe,
                                          strict=not no_strict))
