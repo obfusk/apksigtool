@@ -2588,7 +2588,7 @@ def verify_apk_v1(apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
         return False, str(err)
 
 
-# NB: modifies in place!
+# NB: modifies the APK file in place!
 def clean_apk(apkfile: str, *, check: bool = False, keep: Tuple[int, ...] = (),
               sdk: Optional[int] = None) -> bool:
     """
@@ -2596,7 +2596,7 @@ def clean_apk(apkfile: str, *, check: bool = False, keep: Tuple[int, ...] = (),
     Block or verity padding block (or has a pair_id in keep) from its APK
     Signing Block.
 
-    NB: modifies the file in place!.
+    NB: modifies the APK file in place!.
 
     Does not modify the APK file when the cleaned block is equal to the
     original.
@@ -2606,7 +2606,7 @@ def clean_apk(apkfile: str, *, check: bool = False, keep: Tuple[int, ...] = (),
 
     Returns True when the APK was modified, False otherwise.
     """
-    sb_offset, sig_block = extract_v2_sig(apkfile)
+    _, sig_block = old_v2_sig = extract_v2_sig(apkfile)
     if check:
         verified, failed = verify_apk(apkfile, sig_block, sdk=sdk)
         if failed or not verified:
@@ -2614,16 +2614,28 @@ def clean_apk(apkfile: str, *, check: bool = False, keep: Tuple[int, ...] = (),
     sig_block_cleaned = clean_apk_signing_block(sig_block, keep=keep)
     if sig_block == sig_block_cleaned:
         return False
+    replace_apk_signing_block(apkfile, sig_block_cleaned, old_v2_sig=old_v2_sig)
+    return True
+
+
+# NB: modifies the APK file in place!
+def replace_apk_signing_block(apkfile: str, new_sig_block: bytes, *,
+                              old_v2_sig: Optional[Tuple[int, bytes]] = None) -> None:
+    """
+    Replace APK Signing Block.
+
+    NB: modifies the APK file in place!.
+    """
+    old_sb_offset, old_sig_block = old_v2_sig or extract_v2_sig(apkfile)
     data_out = apksigcopier.zip_data(apkfile)
-    offset = len(sig_block_cleaned) - len(sig_block)
+    offset = len(new_sig_block) - len(old_sig_block)
     with open(apkfile, "r+b") as fh:
-        fh.seek(sb_offset)
-        fh.write(sig_block_cleaned)
+        fh.seek(old_sb_offset)
+        fh.write(new_sig_block)
         fh.write(data_out.cd_and_eocd)
         fh.truncate()
         fh.seek(data_out.eocd_offset + offset + 16)
         fh.write(int.to_bytes(data_out.cd_offset + offset, 4, "little"))
-    return True
 
 
 def main():
@@ -2779,7 +2791,7 @@ def main():
         Signature Scheme v2/v3 Block or verity padding block (or has a pair_id
         in keep) from its APK Signing Block.
 
-        NB: modifies in place!
+        NB: modifies the APK file in place!
     """)
     @click.option("--block", is_flag=True,
                   help="APK_OR_BLOCK is an extracted block, not an APK.")
