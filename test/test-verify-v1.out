@@ -417,7 +417,7 @@ apksigner == apksigtool
 
 apks/apks/v1-only-no-uses-sdk.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
@@ -807,73 +807,73 @@ apksigner == apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.1-1024.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.1-16384.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.1-2048.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.1-3072.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.1-4096.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.1-8192.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.4-1024.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.4-16384.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.4-2048.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.4-3072.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.4-4096.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-rsa-pkcs1-md5-1.2.840.113549.1.1.4-8192.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Unsafe hash algorithm: MD5)
 apksigtool: not verified
 apksigner != apksigtool
 

@@ -7914,7 +7914,7 @@ apksigner: verified
         "subject": "Common Name: Unknown, Organizational Unit: Unknown, Organization: Unknown, Locality: Unknown, State/Province: Unknown, Country: Unknown"
       },
       "filename": "META-INF/ALIAS1.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -8030,7 +8030,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -16850,7 +16850,7 @@ apksigner: verified
         "subject": "Common Name: rsa-1024"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -16917,7 +16917,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -16983,7 +16983,7 @@ apksigner: verified
         "subject": "Common Name: rsa-16384"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -17050,7 +17050,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -17116,7 +17116,7 @@ apksigner: verified
         "subject": "Common Name: rsa-2048"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -17183,7 +17183,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -17249,7 +17249,7 @@ apksigner: verified
         "subject": "Common Name: rsa-3072"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -17316,7 +17316,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -17382,7 +17382,7 @@ apksigner: verified
         "subject": "Common Name: rsa-4096"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -17449,7 +17449,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -17515,7 +17515,7 @@ apksigner: verified
         "subject": "Common Name: rsa-8192"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -17582,7 +17582,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -17648,7 +17648,7 @@ apksigner: verified
         "subject": "Common Name: rsa-1024"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -17715,7 +17715,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -17781,7 +17781,7 @@ apksigner: verified
         "subject": "Common Name: rsa-16384"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -17848,7 +17848,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -17914,7 +17914,7 @@ apksigner: verified
         "subject": "Common Name: rsa-2048"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -17981,7 +17981,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -18047,7 +18047,7 @@ apksigner: verified
         "subject": "Common Name: rsa-3072"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -18114,7 +18114,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -18180,7 +18180,7 @@ apksigner: verified
         "subject": "Common Name: rsa-4096"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -18247,7 +18247,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 
@@ -18313,7 +18313,7 @@ apksigner: verified
         "subject": "Common Name: rsa-8192"
       },
       "filename": "META-INF/CERT.RSA",
-      "hash_algorithm": null,
+      "hash_algorithm": "MD5",
       "public_key_info": {
         "_type": "PublicKeyInfo",
         "algorithm": "RSA",
@@ -18380,7 +18380,7 @@ apksigner: verified
   ],
   "unverified_mf": null,
   "unverified_sf": null,
-  "verification_error": "Unknown hash algorithm",
+  "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
 

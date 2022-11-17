@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-13
+# Date        : 2022-11-17
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -190,7 +190,7 @@ import zipfile
 from binascii import hexlify
 from dataclasses import dataclass, field
 from functools import reduce
-from hashlib import sha1, sha224, sha256, sha384, sha512
+from hashlib import md5, sha1, sha224, sha256, sha384, sha512
 from typing import (Any, Callable, ClassVar, Dict, FrozenSet, Iterator, List,
                     Literal, Mapping, Optional, TextIO, Tuple, TypeVar, Union)
 
@@ -202,7 +202,7 @@ from asn1crypto.x509 import Certificate as X509Cert
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives.asymmetric.ec import ECDSA
 from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15, PSS, MGF1
-from cryptography.hazmat.primitives.hashes import SHA1, SHA224, SHA256, SHA384, SHA512
+from cryptography.hazmat.primitives.hashes import MD5, SHA1, SHA224, SHA256, SHA384, SHA512
 from cryptography.hazmat.primitives.serialization import load_der_public_key, Encoding
 from cryptography.hazmat.primitives.serialization.pkcs7 import load_der_pkcs7_certificates
 from pyasn1.codec.der.decoder import decode as pyasn1_decode
@@ -287,7 +287,8 @@ JAR_HASHERS_OID = {
     rfc5480.id_sha256: ("SHA256", sha256, SHA256),
     rfc5480.id_sha384: ("SHA384", sha384, SHA384),
     rfc5480.id_sha512: ("SHA512", sha512, SHA512),
-    rfc5480.id_sha1: ("SHA1", sha1, SHA1),
+    rfc5480.id_md5: ("MD5", md5, MD5),      # NB: unsafe!
+    rfc5480.id_sha1: ("SHA1", sha1, SHA1),  # NB: unsafe!
 }
 #                  algo  OID    hasher...
 JAR_HASHERS_STR = {v[0]: (k,) + v[1:] for k, v in JAR_HASHERS_OID.items()}
@@ -299,7 +300,8 @@ JAR_META_EXTS = ("SF",) + JAR_SBF_EXTS + (JAR_MANIFEST.split(".")[-1],)
 
 # FIXME
 UNSAFE_HASH_ALGO = dict(
-    SHA1=True, SHA224=False, SHA256=False, SHA384=False, SHA512=False
+    SHA224=False, SHA256=False, SHA384=False, SHA512=False,
+    MD5=True, SHA1=True
 )
 
 # FIXME
@@ -2366,7 +2368,7 @@ def show_v1_signature_block_file(sbf: JARSignatureBlockFile, *, file: TextIO = s
     show_x509_certificate_info(cert_info, pk_info, 4, file=file, verbose=verbose, wrap=wrap)
     p("  SIGNATURE")
     _show_hex(sbf.signature, 4, file=file, wrap=wrap)
-    p("  HASH ALGORITHM:", sbf.hash_algorithm)
+    p("  HASH ALGORITHM:", sbf.hash_algorithm or "UNKNOWN")
 
 
 def show_json(obj: APKSigToolBase, *, file: TextIO = sys.stdout) -> None:
@@ -2447,7 +2449,7 @@ def _load_extracted_meta_from_dir(path: str) -> Iterator[Tuple[zipfile.ZipInfo, 
 
 
 # FIXME
-# FIXME: handle common signers properly.
+# FIXME: handle common signers properly
 # FIXME: handle key rotation etc.
 # WARNING: verification is considered EXPERIMENTAL
 def verify_apk_and_check_signers(
@@ -2556,7 +2558,7 @@ def verify_apk(apkfile: str, sig_block: Optional[bytes] = None, *,
 
 
 # FIXME
-# FIXME: rollback protections.
+# FIXME: rollback protections
 # WARNING: verification is considered EXPERIMENTAL
 def verify_apk_v1(apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
                   expected: bool = True, strict: bool = True) \
@@ -2733,6 +2735,10 @@ def main():
     def verify(ctx, apk, allow_unsafe, check_v1, quiet, sdk_version, signed_by, verbose):
         print("WARNING: verification is considered EXPERIMENTAL,"
               " please use apksigner instead.", file=sys.stderr)
+        if allow_unsafe:
+            algs = ", ".join(sorted(set(allow_unsafe)))
+            print(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.",
+                  file=sys.stderr)
         sb = _parse_signed_by(signed_by, ctx, verify) if signed_by else None
         if not verify_apk_and_check_signers(apk, allow_unsafe=allow_unsafe, check_v1=check_v1,
                                             quiet=quiet, sdk_version=sdk_version,
@@ -2761,6 +2767,10 @@ def main():
     def verify_v1(ctx, apk, allow_unsafe, no_strict, quiet, rollback_is_error, signed_by):
         print("WARNING: verification is considered EXPERIMENTAL,"
               " please use apksigner instead.", file=sys.stderr)
+        if allow_unsafe:
+            algs = ", ".join(sorted(set(allow_unsafe)))
+            print(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.",
+                  file=sys.stderr)
         res = _verify_v1(apk, allow_unsafe=allow_unsafe, quiet=quiet, strict=not no_strict)
         if not res:
             sys.exit(4)
