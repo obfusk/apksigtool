@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-17
+# Date        : 2022-11-18
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -293,6 +293,7 @@ JAR_HASHERS_OID = {
 #                  algo  OID    hasher...
 JAR_HASHERS_STR = {v[0]: (k,) + v[1:] for k, v in JAR_HASHERS_OID.items()}
 
+# FIXME: MD5?
 JAR_DIGEST_HEADER = r"(SHA(?:1|-(?:224|256|384|512)))-Digest"
 JAR_MANIFEST = "META-INF/MANIFEST.MF"
 JAR_SBF_EXTS = ("RSA", "DSA", "EC")
@@ -1893,6 +1894,7 @@ def _dump_apk_v1_manifest(manifest: Union[JARManifest, JARSignatureFile], *,
             w = wrap - 1    # account for the space
         return t + s
 
+    # FIXME: MD5?
     def _dig_hdr(algo, digest, what=""):
         a = algo if algo == "SHA1" else algo[:3] + "-" + algo[3:]   # FIXME
         return f"{a}-Digest{what}", digest
