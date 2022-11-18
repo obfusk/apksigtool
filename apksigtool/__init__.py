@@ -206,7 +206,10 @@ from cryptography.hazmat.primitives.hashes import MD5, SHA1, SHA224, SHA256, SHA
 from cryptography.hazmat.primitives.serialization import load_der_public_key, Encoding
 from cryptography.hazmat.primitives.serialization.pkcs7 import load_der_pkcs7_certificates
 from pyasn1.codec.der.decoder import decode as pyasn1_decode
-from pyasn1_modules import rfc5480
+from pyasn1.codec.der.encoder import encode as pyasn1_encode
+from pyasn1.error import PyAsn1Error
+from pyasn1.type import univ as pyasn1_univ
+from pyasn1_modules import rfc2315, rfc5480
 
 __version__ = "0.1.0"
 NAME = "apksigtool"
@@ -983,6 +986,21 @@ class JARSignatureFile(JARManifestBase):
 
 
 @dataclass(frozen=True)
+class PKCS7AuthenticatedAttributes(APKSigToolBase):
+    """PKCS #7 authenticatedAttributes."""
+    raw_data: bytes
+    message_digest: bytes
+
+
+@dataclass(frozen=True)
+class PKCS7SignerInfo(APKSigToolBase):
+    """PKCS #7 signerInfo."""
+    encrypted_digest: bytes
+    digest_algorithm: Optional[str]
+    authenticated_attributes: Optional[PKCS7AuthenticatedAttributes]
+
+
+@dataclass(frozen=True)
 class JARSignatureBlockFile(APKSigToolBase):
     """JAR signature block file (.RSA, .DSA, or .EC)."""
     raw_data: bytes
@@ -991,17 +1009,15 @@ class JARSignatureBlockFile(APKSigToolBase):
     _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)
     certificate_info: CertificateInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
-    signature: bytes = field(init=False)
-    hash_algorithm: Optional[str] = field(init=False)
+    signer_infos: Tuple[PKCS7SignerInfo, ...] = field(init=False)
 
     def __post_init__(self):
-        sig, algo, cert = _load_apk_v1_signature_block_file_sig_algo_cert(self.raw_data)
+        infos, cert = _load_apk_v1_signature_block_file_signer_infos_cert(self.raw_data)
         object.__setattr__(self, "_certificate", cert)
         object.__setattr__(self, "_public_key", self.certificate.public_key)
         object.__setattr__(self, "certificate_info", x509_certificate_info(self.certificate))
         object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
-        object.__setattr__(self, "signature", sig)
-        object.__setattr__(self, "hash_algorithm", algo)
+        object.__setattr__(self, "signer_infos", infos)
 
     @property
     def certificate(self) -> X509Cert:
@@ -1939,7 +1955,7 @@ def _dump_apk_v1_manifest(manifest: Union[JARManifest, JARSignatureFile], *,
 
 # FIXME
 # FIXME: improve error messages
-# FIXME: what about files in the .MF not in the .SF?
+# FIXME: consider at least one good sinfo enough when not strict?
 # WARNING: verification is considered EXPERIMENTAL
 # https://docs.oracle.com/javase/tutorial/deployment/jar/intro.html
 # https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#Signature_Validation
@@ -1976,18 +1992,28 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
             raise VerificationError(f"Duplicate manifest entry: {entry.filename!r}")
         manifest[entry.filename] = entry
     for sf, sbf in zip(signature.signature_files, signature.signature_block_files):
-        def halgo_f():
-            return ECDSA(halgo()) if sbf.filename.endswith("EC") else halgo()
-        if sbf.hash_algorithm is None:
-            raise VerificationError("Unknown hash algorithm")
-        halgo = JAR_HASHERS_STR[sbf.hash_algorithm][2]
-        if sbf.hash_algorithm not in allow_unsafe and UNSAFE_HASH_ALGO[sbf.hash_algorithm]:
-            raise VerificationError(f"Unsafe hash algorithm: {sbf.hash_algorithm}")
+        if not sbf.signer_infos:
+            raise VerificationError(f"No signer infos in {sbf.filename!r}")
         if (key_algo := sbf.public_key_info.algorithm) not in allow_unsafe:
             if (f := UNSAFE_KEY_SIZE[key_algo]) is not None and f(sbf.public_key.bit_size):
                 raise VerificationError(f"Unsafe {key_algo} key size: {sbf.public_key.bit_size}")
         pad = PKCS1v15 if sbf.filename.endswith("RSA") else None
-        verify_signature(sbf.public_key.dump(), sbf.signature, sf.raw_data, halgo_f, pad)
+        for sinfo in sbf.signer_infos:
+            def halgo_f():
+                return ECDSA(halgo()) if sbf.filename.endswith("EC") else halgo()
+            if (algo := sinfo.digest_algorithm) is None:
+                raise VerificationError("Unknown hash algorithm")
+            if algo not in allow_unsafe and UNSAFE_HASH_ALGO[algo]:
+                raise VerificationError(f"Unsafe hash algorithm: {algo}")
+            halgo = JAR_HASHERS_STR[algo][2]
+            if sinfo.authenticated_attributes:
+                message_digest = JAR_HASHERS_STR[algo][1](sf.raw_data).digest()
+                if sinfo.authenticated_attributes.message_digest != message_digest:
+                    raise VerificationError("Authenticated attributes digest mismatch")
+                msg = sinfo.authenticated_attributes.raw_data
+            else:
+                msg = sf.raw_data
+            verify_signature(sbf.public_key.dump(), sinfo.encrypted_digest, msg, halgo_f, pad)
         md_verified = False
         for algo, digest in sf.digests_manifest:
             hasher = JAR_HASHERS_STR[algo][1]
@@ -2079,16 +2105,51 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
 
 
 # FIXME
-# FIXME: catch exceptions?
-def _load_apk_v1_signature_block_file_sig_algo_cert(data: bytes) \
-        -> Tuple[bytes, Optional[str], X509Cert]:
-    asn = pyasn1_decode(data)
-    sig = asn[0][-1][-1][-1][-1].asOctets()     # FIXME
-    hsh = asn[0][-1][-1][-1][-3][0]             # FIXME
-    algo = JAR_HASHERS_OID.get(hsh, [None])[0]
+# https://www.rfc-editor.org/rfc/rfc2315
+def _load_apk_v1_signature_block_file_signer_infos_cert(data: bytes) \
+        -> Tuple[Tuple[PKCS7SignerInfo, ...], X509Cert]:
+    signer_infos = []
+    try:
+        cinf = pyasn1_decode(data, asn1Spec=rfc2315.ContentInfo())[0]
+        _assert(cinf.getComponentByName("contentType") == rfc2315.signedData,
+                "signature block file PKCS #7 contentType must be signedData")
+        sdat = pyasn1_decode(cinf.getComponentByName("content"),
+                             asn1Spec=rfc2315.SignedData())[0]
+        for sinf in sdat.getComponentByName("signerInfos"):
+            dalg = sinf.getComponentByName("digestAlgorithm").getComponentByName("algorithm")
+            attr = sinf.getComponentByName("authenticatedAttributes")
+            edig = sinf.getComponentByName("encryptedDigest").asOctets()
+            algo = JAR_HASHERS_OID.get(dalg, [None])[0]
+            signer_infos.append(PKCS7SignerInfo(edig, algo, _parse_auth_attrs(attr)))
+    except PyAsn1Error:
+        raise APKSigToolError("Failed to parse signature block file PKCS #7 data")  # pylint: disable=W0707
     certs = load_der_pkcs7_certificates(data)
     _assert(len(certs) == 1, "signature block file must contain exactly 1 certificate")
-    return sig, algo, X509Cert.load(certs[0].public_bytes(Encoding.DER))
+    return tuple(signer_infos), X509Cert.load(certs[0].public_bytes(Encoding.DER))
+
+
+def _parse_auth_attrs(attr: rfc2315.Attributes) -> Optional[PKCS7AuthenticatedAttributes]:
+    if not len(attr):
+        return None
+    id_contentType = pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.9.3")
+    id_messageDigest = pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.9.4")
+    _assert(len(attr) >= 2, "PKCS #7 authenticatedAttributes must contain at least 2 attributes")
+    ctypes = [a for a in attr if a.getComponentByName("type") == id_contentType]
+    mdigests = [a for a in attr if a.getComponentByName("type") == id_messageDigest]
+    _assert(len(ctypes) == 1, "PKCS #7 authenticatedAttributes must contain exactly 1 "
+                              "PKCS #9 contentType attribute")
+    _assert(len(mdigests) == 1, "PKCS #7 authenticatedAttributes must contain exactly 1 "
+                                "PKCS #9 messageDigest attribute")
+    ctype_vals = ctypes[0].getComponentByName("values")
+    digest_vals = mdigests[0].getComponentByName("values")
+    _assert(len(ctype_vals) == 1, "PKCS #9 contentType attribute must contain exactly 1 value")
+    _assert(len(digest_vals) == 1, "PKCS #9 messageDigest attribute must contain exactly 1 value")
+    ctype = pyasn1_decode(ctype_vals[0], asn1Spec=rfc2315.ContentType())[0]
+    digest = pyasn1_decode(digest_vals[0])[0].asOctets()
+    _assert(ctype == rfc2315.data, "PKCS #9 contentType must be PKCS #7 data")
+    data = pyasn1_univ.SetOf()
+    data.extend(attr)
+    return PKCS7AuthenticatedAttributes(pyasn1_encode(data), digest)
 
 
 # FIXME: type checking?!
@@ -2255,9 +2316,9 @@ def show_public_key_info(info: PublicKeyInfo, indent: int, *, file: TextIO = sys
 
 
 def _show_hex(data: bytes, indent: int, *, file: TextIO = sys.stdout,
-              wrap: bool = False) -> None:
+              what: str = "VALUE", wrap: bool = False) -> None:
     """Print hex value (w/ indent etc.) to file (stdout)."""
-    out = " " * indent + "VALUE (HEX): " + hexlify(data).decode()
+    out = " " * indent + f"{what} (HEX): " + hexlify(data).decode()
     print(_wrap(out, indent, wrap), file=file)
 
 
@@ -2368,9 +2429,13 @@ def show_v1_signature_block_file(sbf: JARSignatureBlockFile, *, file: TextIO = s
     p("  CERTIFICATE")
     cert_info, pk_info = sbf.certificate_info, sbf.public_key_info
     show_x509_certificate_info(cert_info, pk_info, 4, file=file, verbose=verbose, wrap=wrap)
-    p("  SIGNATURE")
-    _show_hex(sbf.signature, 4, file=file, wrap=wrap)
-    p("  HASH ALGORITHM:", sbf.hash_algorithm or "UNKNOWN")
+    for i, sinfo in enumerate(sbf.signer_infos):
+        p("  SIGNER INFO", i)
+        _show_hex(sinfo.encrypted_digest, 4, file=file, what="ENCRYPTED DIGEST", wrap=wrap)
+        p("    DIGEST ALGORITHM:", sinfo.digest_algorithm or "UNKNOWN")
+        if sinfo.authenticated_attributes:
+            _show_hex(sinfo.authenticated_attributes.raw_data, 4, file=file,
+                      what="AUTHENTICATED ATTRIBUTES", wrap=wrap)
 
 
 def show_json(obj: APKSigToolBase, *, file: TextIO = sys.stdout) -> None:
@@ -2735,8 +2800,8 @@ def main():
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
     def verify(ctx, apk, allow_unsafe, check_v1, quiet, sdk_version, signed_by, verbose):
-        print("WARNING: verification is considered EXPERIMENTAL,"
-              " please use apksigner instead.", file=sys.stderr)
+        print("WARNING: verification is considered EXPERIMENTAL, "
+              "please use apksigner instead.", file=sys.stderr)
         if allow_unsafe:
             algs = ", ".join(sorted(set(allow_unsafe)))
             print(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.",
@@ -2767,8 +2832,8 @@ def main():
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
     def verify_v1(ctx, apk, allow_unsafe, no_strict, quiet, rollback_is_error, signed_by):
-        print("WARNING: verification is considered EXPERIMENTAL,"
-              " please use apksigner instead.", file=sys.stderr)
+        print("WARNING: verification is considered EXPERIMENTAL, "
+              "please use apksigner instead.", file=sys.stderr)
         if allow_unsafe:
             algs = ", ".join(sorted(set(allow_unsafe)))
             print(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.",

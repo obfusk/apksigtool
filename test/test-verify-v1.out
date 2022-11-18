@@ -1239,19 +1239,19 @@ apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-missing-content-type.apk
 apksigner: not verified
-v1 not verified (Unknown hash algorithm)
+Error: Assertion failed: PKCS #7 authenticatedAttributes must contain at least 2 attributes.
 apksigtool: not verified
 apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-missing-digest.apk
 apksigner: not verified
-v1 not verified (Unknown hash algorithm)
+Error: Assertion failed: PKCS #7 authenticatedAttributes must contain at least 2 attributes.
 apksigtool: not verified
 apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-multiple-good-digests.apk
 apksigner: not verified
-v1 not verified (Unknown hash algorithm)
+Error: Assertion failed: PKCS #7 authenticatedAttributes must contain exactly 1 PKCS #9 messageDigest attribute.
 apksigtool: not verified
 apksigner == apksigtool
 
@@ -1263,75 +1263,75 @@ apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-missing-content-type-signerInfo2-good.apk
 apksigner: not verified
-v1 verified (1 signer(s))
-apksigtool: verified
-apksigner != apksigtool
+Error: Assertion failed: PKCS #7 authenticatedAttributes must contain at least 2 attributes.
+apksigtool: not verified
+apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-missing-digest-signerInfo2-good.apk
 apksigner: not verified
-v1 verified (1 signer(s))
-apksigtool: verified
-apksigner != apksigtool
+Error: Assertion failed: PKCS #7 authenticatedAttributes must contain at least 2 attributes.
+apksigtool: not verified
+apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-multiple-good-digests-signerInfo2-good.apk
 apksigner: not verified
-v1 verified (1 signer(s))
-apksigtool: verified
-apksigner != apksigtool
+Error: Assertion failed: PKCS #7 authenticatedAttributes must contain exactly 1 PKCS #9 messageDigest attribute.
+apksigtool: not verified
+apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-content-type-signerInfo2-good.apk
 apksigner: verified
-v1 verified (1 signer(s))
-apksigtool: verified
-apksigner == apksigtool
+Error: Assertion failed: PKCS #9 contentType must be PKCS #7 data.
+apksigtool: not verified
+apksigner != apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-digest-signerInfo2-good.apk
 apksigner: verified
-v1 verified (1 signer(s))
-apksigtool: verified
-apksigner == apksigtool
+v1 not verified (Authenticated attributes digest mismatch)
+apksigtool: not verified
+apksigner != apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-order-signerInfo2-good.apk
 apksigner: verified
-v1 verified (1 signer(s))
-apksigtool: verified
-apksigner == apksigtool
+v1 not verified (Invalid signature)
+apksigtool: not verified
+apksigner != apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-signature-signerInfo2-good.apk
 apksigner: verified
-v1 verified (1 signer(s))
-apksigtool: verified
-apksigner == apksigtool
+v1 not verified (Invalid signature)
+apksigtool: not verified
+apksigner != apksigtool
 
 apks/apks/v1-only-with-signed-attrs-wrong-content-type.apk
 apksigner: not verified
-v1 not verified (Unknown hash algorithm)
+Error: Assertion failed: PKCS #9 contentType must be PKCS #7 data.
 apksigtool: not verified
 apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-wrong-digest.apk
 apksigner: not verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Authenticated attributes digest mismatch)
 apksigtool: not verified
 apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-wrong-order.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Invalid signature)
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-signed-attrs-wrong-signature.apk
 apksigner: not verified
-v1 not verified (Unknown hash algorithm)
+v1 not verified (Invalid signature)
 apksigtool: not verified
 apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs.apk
 apksigner: verified
-v1 not verified (Unknown hash algorithm)
-apksigtool: not verified
-apksigner != apksigtool
+v1 verified (1 signer(s))
+apksigtool: verified
+apksigner == apksigtool
 
 apks/apks/v1-only-with-stamp.apk
 apksigner: verified
