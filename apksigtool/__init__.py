@@ -2302,7 +2302,7 @@ def show_v1_signature(signature: JARSignature, *, allow_unsafe: Tuple[str, ...] 
         except VerificationError as e:
             p(f"NOT VERIFIED ({e})")
         else:
-            p(f"VERIFIED ({len(signers)} signature(s))")
+            p(f"VERIFIED ({len(signers)} signer(s))")
             if verbose:
                 if unverified_mf:
                     p("UNVERIFIED FILES (IN ZIP, NOT IN MANIFEST)")
@@ -2524,7 +2524,7 @@ def _verify_v1(apk, *, allow_unsafe: Tuple[str, ...] = (), expected: bool = True
         if res[0]:
             _, sig, signers, _, _ = res
             if not quiet:
-                print(f"v1 verified ({len(signers)} signature(s))")
+                print(f"v1 verified ({len(signers)} signer(s))")
             return True, sig, signers
         else:
             _, err = res

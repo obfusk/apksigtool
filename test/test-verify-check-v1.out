@@ -21,7 +21,7 @@ apksigner == apksigtool
 
 apks/apks/golden-aligned-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -29,21 +29,21 @@ apksigner == apksigtool
 
 apks/apks/golden-aligned-v1-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 Error: No APK Signing Block.
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/golden-aligned-v1v2-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/apks/golden-aligned-v1v2v3-lineage-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 no common signers
@@ -52,7 +52,7 @@ apksigner != apksigtool
 
 apks/apks/golden-aligned-v1v2v3-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -105,7 +105,7 @@ apksigner == apksigtool
 
 apks/apks/golden-legacy-aligned-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -113,21 +113,21 @@ apksigner == apksigtool
 
 apks/apks/golden-legacy-aligned-v1-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 Error: No APK Signing Block.
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/golden-legacy-aligned-v1v2-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/apks/golden-legacy-aligned-v1v2v3-lineage-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 no common signers
@@ -136,7 +136,7 @@ apksigner != apksigtool
 
 apks/apks/golden-legacy-aligned-v1v2v3-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -198,7 +198,7 @@ apksigner != apksigtool
 
 apks/apks/golden-rsa-minSdkVersion-18-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -206,7 +206,7 @@ apksigner == apksigtool
 
 apks/apks/golden-rsa-minSdkVersion-24-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -214,7 +214,7 @@ apksigner == apksigtool
 
 apks/apks/golden-rsa-no-verity-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -222,7 +222,7 @@ apksigner == apksigtool
 
 apks/apks/golden-rsa-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -230,7 +230,7 @@ apksigner == apksigtool
 
 apks/apks/golden-rsa-verity-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -245,7 +245,7 @@ apksigner == apksigtool
 
 apks/apks/golden-unaligned-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -253,21 +253,21 @@ apksigner == apksigtool
 
 apks/apks/golden-unaligned-v1-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 Error: No APK Signing Block.
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/golden-unaligned-v1v2-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/apks/golden-unaligned-v1v2v3-lineage-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 no common signers
@@ -276,7 +276,7 @@ apksigner != apksigtool
 
 apks/apks/golden-unaligned-v1v2v3-out.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -322,14 +322,14 @@ apksigner == apksigtool
 
 apks/apks/mismatched-compression-method.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 Error: No APK Signing Block.
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/original-with-stamp-file.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -337,7 +337,7 @@ apksigner == apksigtool
 
 apks/apks/original-with-versionCodeMajor.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -345,7 +345,7 @@ apksigner == apksigtool
 
 apks/apks/original.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
@@ -359,7 +359,7 @@ apksigner == apksigtool
 
 apks/apks/stamp-apk-hash-mismatch-v1.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -367,7 +367,7 @@ apksigner == apksigtool
 
 apks/apks/stamp-apk-hash-mismatch-v2.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -375,7 +375,7 @@ apksigner == apksigtool
 
 apks/apks/stamp-apk-hash-mismatch-v3.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -383,7 +383,7 @@ apksigner == apksigtool
 
 apks/apks/stamp-apk-hash-mismatch.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -391,7 +391,7 @@ apksigner == apksigtool
 
 apks/apks/stamp-certificate-mismatch.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -399,7 +399,7 @@ apksigner == apksigtool
 
 apks/apks/stamp-lineage-invalid.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -407,7 +407,7 @@ apksigner == apksigtool
 
 apks/apks/stamp-lineage-valid.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -415,7 +415,7 @@ apksigner == apksigtool
 
 apks/apks/stamp-lineage-with-3-signers.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -423,7 +423,7 @@ apksigner == apksigtool
 
 apks/apks/stamp-malformed-signature.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -437,7 +437,7 @@ apksigner == apksigtool
 
 apks/apks/stamp-without-block.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
@@ -445,21 +445,21 @@ apksigner == apksigtool
 
 apks/apks/targetSandboxVersion-2.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/apks/two-signers-second-signer-v2-broken.apk
 apksigner: not verified
-v1 verified (2 signature(s))
+v1 verified (2 signer(s))
 v2 not verified (Invalid signature)
 apksigtool: not verified
 apksigner == apksigtool
 
 apks/apks/two-signers.apk
 apksigner: verified
-v1 verified (2 signature(s))
+v1 verified (2 signer(s))
 v2 verified (2 signer(s))
 apksigtool: verified
 apksigner == apksigtool
@@ -473,7 +473,7 @@ apksigner == apksigtool
 
 apks/apks/v1-ec-p256-targetSdk-30.apk
 apksigner: not verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 Error: No APK Signing Block.
 apksigtool: not verified
 apksigner == apksigtool
@@ -522,13 +522,13 @@ apksigner != apksigtool
 
 apks/apks/v1-with-apk-sig-block-but-without-apk-sig-scheme-v2-block.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1v2v3-rotated-v3-key-valid-stamp.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 no common signers
@@ -537,7 +537,7 @@ apksigner != apksigtool
 
 apks/apks/v1v2v3-with-rsa-2048-lineage-3-signers-invalid-lineage-attr.apk
 apksigner: not verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 not verified (Invalid signature)
 apksigtool: not verified
@@ -551,14 +551,14 @@ apksigner == apksigtool
 
 apks/apks/v1v2v3-with-rsa-2048-lineage-3-signers-no-sig-block.apk
 apksigner: not verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 Error: No APK Signing Block.
 apksigtool: not verified
 apksigner == apksigtool
 
 apks/apks/v1v2v3-with-rsa-2048-lineage-3-signers.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 no common signers
@@ -971,21 +971,21 @@ apksigner == apksigtool
 
 apks/apks/v2-rsa-2048-with-extra-sig-block.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 apksigtool: verified
 apksigner == apksigtool
 
 apks/apks/v2-stripped-with-ignorable-signing-schemes.apk
 apksigner: not verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 Error: No APK Signing Block.
 apksigtool: not verified
 apksigner == apksigtool
 
 apks/apks/v2-stripped.apk
 apksigner: not verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 Error: No APK Signing Block.
 apksigtool: not verified
 apksigner == apksigtool
@@ -1274,7 +1274,7 @@ apksigner == apksigtool
 
 apks/apks/valid-stamp.apk
 apksigner: verified
-v1 verified (1 signature(s))
+v1 verified (1 signer(s))
 v2 verified (1 signer(s))
 v3 verified (1 signer(s))
 apksigtool: verified
