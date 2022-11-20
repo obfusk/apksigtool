@@ -280,6 +280,17 @@ HASHERS = {
 
 assert set(SIGNATURE_ALGORITHM_IDS.keys()) == set(HASHERS.keys())
 
+HASH_ALGOS = ("SHA256", "SHA512")
+
+# FIXME: choose best?!
+SIGNATURE_ALGORITHM = dict(
+    RSA=dict(SHA256=0x103, SHA512=0x104),
+    DSA=dict(SHA256=0x0301),
+    EC=dict(SHA256=0x0201, SHA512=0x0202),
+)
+
+assert all(v in HASHERS for d in SIGNATURE_ALGORITHM.values() for v in d.values())
+
 CHUNK_SIZE = 1048576
 VERITY_BLOCK_SIZE = 4096
 
@@ -354,8 +365,6 @@ DIGEST_ENCRYPTION_ALGORITHM = dict(
         SHA512=rfc5480.ecdsa_with_SHA512,       # 1.2.840.10045.4.3.4
     ),
 )
-
-assert set(PRIVKEY_TYPE.values()) == set(PUBKEY_TYPE.values())
 
 WRAP_COLUMNS = 80   # overridden in main() if $APKSIGTOOL_WRAP_COLUMNS is set
 
@@ -2181,11 +2190,11 @@ def _load_apk_v1_signature_block_file_signer_infos_cert(data: bytes) \
 def _create_signature_block_file(sf: JARSignatureFile, *, cert: bytes, key: PrivKey,
                                  hash_algo: str) -> Tuple[bytes, str]:
     def halgo_f():
-        return ECDSA(halgo()) if ext == "EC" else halgo()
+        return ECDSA(halgo()) if alg == "EC" else halgo()
     oid, _, halgo = JAR_HASHERS_STR[hash_algo]
-    ext, = [e for c, e in PRIVKEY_TYPE.items() if isinstance(key, c)]
-    dea = DIGEST_ENCRYPTION_ALGORITHM[ext][hash_algo]
-    pad = PKCS1v15 if ext == "RSA" else None
+    alg, = [e for c, e in PRIVKEY_TYPE.items() if isinstance(key, c)]
+    dea = DIGEST_ENCRYPTION_ALGORITHM[alg][hash_algo]
+    pad = PKCS1v15 if alg == "RSA" else None
     crt = pyasn1_decode(cert, asn1Spec=rfc2315.Certificate())[0]
     sig = create_signature(key, sf.raw_data, halgo_f, pad)
     sdat = rfc2315.SignedData()
@@ -2204,7 +2213,7 @@ def _create_signature_block_file(sf: JARSignatureFile, *, cert: bytes, key: Priv
     cinf = rfc2315.ContentInfo()
     cinf["contentType"] = rfc2315.ContentType(rfc2315.signedData)
     cinf["content"] = pyasn1_univ.Any(pyasn1_encode(sdat))
-    return pyasn1_encode(cinf), ext
+    return pyasn1_encode(cinf), alg
 
 
 def _parse_auth_attrs(attr: rfc2315.Attributes) -> Optional[PKCS7AuthenticatedAttributes]:
@@ -2815,15 +2824,17 @@ def sign_apk(unsigned_apk: str, output_apk: str, *, cert: bytes, key: PrivKey,
         xaas = tuple(n for n, b in ((2, v2), (3, v3)) if b) or None
         v1_sig = create_v1_signature(output_apk, cert=cert, key=key, x_android_apk_signed=xaas)
         apksigcopier.patch_meta(v1_sig, output_apk, date_time=date_time)
-    # pairs = []
-    # if v2:
-    #     pairs.append(Pair.from_block(create_v2_signature(output_apk, cert=cert, key=key)))
-    # if v3:
-    #     pairs.append(Pair.from_block(create_v3_signature(output_apk, cert=cert, key=key)))
-    # if pairs:
-    #     sb_offset = apksigcopier.zip_data(output_apk).cd_offset     # FIXME
-    #     sig_block = APKSigningBlock(tuple(pairs)).dump()
-    #     apksigcopier.patch_v2_sig((sb_offset, sig_block), output_apk)
+    if v2 or v3:
+        sb_offset = apksigcopier.zip_data(output_apk).cd_offset     # FIXME
+        pairs = []
+        if v2:
+            block = create_v2_signature(output_apk, cert=cert, key=key, sb_offset=sb_offset)
+            pairs.append(Pair.from_block(block))
+        if v3:
+            block = create_v3_signature(output_apk, cert=cert, key=key, sb_offset=sb_offset)
+            pairs.append(Pair.from_block(block))
+        sig_block = APKSigningBlock(tuple(pairs)).dump()
+        apksigcopier.patch_v2_sig((sb_offset, sig_block), output_apk)
 
 
 # FIXME
@@ -2838,7 +2849,7 @@ def create_v1_signature(apkfile: str, *, cert: bytes, key: PrivKey, hash_algo: s
     if hash_algo not in JAR_HASHERS_STR:
         raise ValueError(f"Unknown hash algorithm: {hash_algo}")
     _, hasher, halgo = JAR_HASHERS_STR[hash_algo]
-    created_by = f"{NAME} (v{__version__})"
+    created_by = f"{NAME} v{__version__}"
     mf_entries = []
     sf_entries = []
     with zipfile.ZipFile(apkfile, "r") as zf:
@@ -2877,25 +2888,55 @@ def create_v1_signature(apkfile: str, *, cert: bytes, key: PrivKey, hash_algo: s
 
 
 # FIXME
-# def create_v2_signature(apkfile: str, *, cert: bytes, key: PrivKey) -> APKSignatureSchemeBlock:
-#     """
-#     Create a v2 signature (APK Signature Scheme v2 Block).
-#
-#     WARNING: signing is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON,
-#     please use apksigner instead.
-#     """
+def create_v2_signature(apkfile: str, *, cert: bytes, key: PrivKey, sb_offset: int,
+                        hash_algo: str = "SHA512") -> APKSignatureSchemeBlock:
+    """
+    Create a v2 signature (APK Signature Scheme v2 Block).
+
+    WARNING: signing is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON,
+    please use apksigner instead.
+    """
+    return _create_apk_signature_scheme_block(
+        apkfile, cert=cert, key=key, sb_offset=sb_offset, hash_algo=hash_algo, v3=None)
 
 
 # FIXME
-# FIXME: min_sdk, max_sdk
-# def create_v3_signature(apkfile: str, *, cert: bytes, key: PrivKey,
-#                         min_sdk: int = MIN_SDK, max_sdk: int = MAX_SDK) -> APKSignatureSchemeBlock:
-#     """
-#     Create a v3 signature (APK Signature Scheme v3 Block).
-#
-#     WARNING: signing is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON,
-#     please use apksigner instead.
-#     """
+def create_v3_signature(apkfile: str, *, cert: bytes, key: PrivKey, sb_offset: int,
+                        hash_algo: str = "SHA512", min_sdk: int = MIN_SDK,
+                        max_sdk: int = MAX_SDK) -> APKSignatureSchemeBlock:
+    """
+    Create a v3 signature (APK Signature Scheme v3 Block).
+
+    WARNING: signing is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON,
+    please use apksigner instead.
+    """
+    v3 = (min_sdk, max_sdk)
+    return _create_apk_signature_scheme_block(
+        apkfile, cert=cert, key=key, sb_offset=sb_offset, hash_algo=hash_algo, v3=v3)
+
+
+# FIXME
+def _create_apk_signature_scheme_block(apkfile: str, *, cert: bytes, key: PrivKey,
+                                       sb_offset: int, hash_algo: str,
+                                       v3: Optional[Tuple[int, int]]) -> APKSignatureSchemeBlock:
+    alg, = [e for c, e in PRIVKEY_TYPE.items() if isinstance(key, c)]
+    if hash_algo not in HASH_ALGOS:
+        raise ValueError(f"Unknown hash algorithm: {hash_algo}")
+    if hash_algo not in SIGNATURE_ALGORITHM[alg]:
+        raise ValueError(f"Unsupported hash algorithm for {alg}: {hash_algo}")
+    sid = SIGNATURE_ALGORITHM[alg][hash_algo]
+    _, hasher, halgo, pad, chunk_type = HASHERS[sid]
+    digest = Digest(sid, _apk_digest(apkfile, sb_offset, hasher, chunk_type))
+    certificate = Certificate(cert)
+    signed_data_args = (b"", (digest,), (certificate,)) + (v3 or ()) + ((),)
+    signed_data = (V3SignedData if v3 else V2SignedData)(*signed_data_args)
+    signed_data_raw = signed_data.dump(expect_raw_data=False, verify_raw_data=False)
+    signed_data = dataclasses.replace(signed_data, raw_data=signed_data_raw)
+    signature = Signature(sid, create_signature(key, signed_data_raw, halgo, pad))
+    public_key = PublicKey(X509Cert.load(cert).public_key.dump())
+    signer_args = (signed_data,) + (v3 or ()) + ((signature,), public_key)
+    signer = (V3Signer if v3 else V2Signer)(*signer_args)
+    return APKSignatureSchemeBlock(3 if v3 else 2, (signer,))
 
 
 def main():
