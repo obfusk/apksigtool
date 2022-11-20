@@ -384,6 +384,10 @@ class VerificationError(APKSigToolError):
     """Verification failure."""
 
 
+class PasswordError(APKSigToolError):
+    """Password error (e.g. incorrect or missing)."""
+
+
 class AssertionFailed(APKSigToolError):
     """Assertion failure."""
 
@@ -3155,17 +3159,27 @@ def main():
     @click.option("--no-v1", is_flag=True, help="Don't add a v1 signature.")
     @click.option("--no-v2", is_flag=True, help="Don't add a v2 signature.")
     @click.option("--no-v3", is_flag=True, help="Don't add a v3 signature.")
+    @click.option("--prompt", "--password-prompt", is_flag=True,
+                  help="Private key is encrypted; prompt for password.")
     @click.argument("unsigned_apk", type=click.Path(exists=True, dir_okay=False))
     @click.argument("output_apk", type=click.Path(dir_okay=False))
-    def sign(unsigned_apk, output_apk, cert, key, no_v1, no_v2, no_v3):
+    def sign(unsigned_apk, output_apk, cert, key, no_v1, no_v2, no_v3, prompt):
         print("WARNING: signing is considered EXPERIMENTAL, "
               "please use apksigner instead.", file=sys.stderr)
         if no_v1 and no_v2 and no_v3:
             raise click.exceptions.BadParameter("all versions (v1, v2, and v3) excluded")
+        if prompt:
+            passwd = click.prompt("Password", hide_input=True)
+        else:
+            passwd = os.environ.get("APKSIGTOOL_PRIVKEY_PASSWORD", "")
         with open(cert, "rb") as fh:
             cert_bytes = fh.read()
         with open(key, "rb") as fh:
-            privkey = serialization.load_der_private_key(fh.read(), None)
+            key_bytes = fh.read()
+        try:
+            privkey = serialization.load_der_private_key(key_bytes, passwd.encode() or None)
+        except (TypeError, ValueError) as e:
+            raise PasswordError(e.args[0]) if "password" in e.args[0].lower() else e
         sign_apk(unsigned_apk, output_apk, cert=cert_bytes, key=privkey,
                  v1=not no_v1, v2=not no_v2, v3=not no_v3)
 
