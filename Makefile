@@ -7,7 +7,7 @@ PYCOVCLI  := $(PYCOV) -a apksigtool/__init__.py
 export PYTHONWARNINGS := default
 
 .PHONY: all install test test-cli doctest coverage lint lint-extra clean cleanup
-.PHONY: test-apks test-apks-apksigner test-apks-verify \
+.PHONY: test-signing test-apks test-apks-apksigner test-apks-verify \
         test-apks-verify-check-v1 test-apks-verify-v1 test-apks-parse \
         test-apks-parse-v1 test-apks-parse-json test-apks-parse-json-v1 \
         test-apks-clean-DESTRUCTIVE test-apks-clean-check-DESTRUCTIVE
@@ -28,7 +28,7 @@ doctest:
 	$(PYTHON) -m doctest apksigtool/__init__.py
 
 coverage:
-	# NB: uses test/apks/apks/*.apk
+	# NB: uses test/apks/apks/*.apk & modifies .tmp
 	mkdir -p .tmp
 	cp test/apks/apks/v3-only-with-stamp.apk .tmp/test.apk
 	openssl req -x509 -newkey rsa:2048 -sha512 -outform DER -out .tmp/cert.der \
@@ -47,6 +47,31 @@ coverage:
 	$(PYCOVCLI) verify    --check-v1 .tmp/out.apk
 	$(PYTHON) -mcoverage html
 	$(PYTHON) -mcoverage report
+
+test-signing:
+	# NB: uses test/apks/apks/*.apk & modifies .tmp
+	mkdir -p .tmp
+	openssl req -x509 -newkey rsa:2048 -sha512 -outform DER -out .tmp/cert-rsa.der \
+	    -days 10000 -nodes -subj '/CN=test key' -keyout - \
+	  | openssl pkcs8 -topk8 -nocrypt -outform DER -out .tmp/privkey-rsa.der
+	openssl dsaparam -genkey -outform DER -out .tmp/privkey-dsa.der 2048
+	openssl req -x509 -key .tmp/privkey-dsa.der -outform DER -out .tmp/cert-dsa.der \
+	  -days 10000 -subj '/CN=test key'
+	openssl ecparam -genkey -name prime256v1 -outform DER -out .tmp/privkey-ec.der
+	openssl req -x509 -key .tmp/privkey-ec.der -outform DER -out .tmp/cert-ec.der \
+	  -days 10000 -subj '/CN=test key'
+	apksigtool sign --cert .tmp/cert-rsa.der --key .tmp/privkey-rsa.der \
+	  test/apks/apks/golden-aligned-in.apk .tmp/out-rsa.apk
+	apksigtool sign --cert .tmp/cert-dsa.der --key .tmp/privkey-dsa.der \
+	  test/apks/apks/golden-aligned-in.apk .tmp/out-dsa.apk
+	apksigtool sign --cert .tmp/cert-ec.der --key .tmp/privkey-ec.der \
+	  test/apks/apks/golden-aligned-in.apk .tmp/out-ec.apk
+	apksigtool verify --check-v1 .tmp/out-rsa.apk
+	apksigtool verify --check-v1 .tmp/out-dsa.apk
+	apksigtool verify --check-v1 .tmp/out-ec.apk
+	apksigner verify --verbose .tmp/out-rsa.apk
+	apksigner verify --verbose .tmp/out-dsa.apk
+	apksigner verify --verbose .tmp/out-ec.apk
 
 test-apks: test-apks-apksigner test-apks-verify test-apks-verify-check-v1 \
            test-apks-verify-v1 test-apks-parse test-apks-parse-v1 \

@@ -38,6 +38,8 @@ jobs:
       run: make test
     - name: Test coverage
       run: make coverage
+    - name: Test signing
+      run: make test-signing
     - name: Test APKs
       run: make test-apks
     - name: Test clean (modifies APKs)
