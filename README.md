@@ -355,6 +355,9 @@ cleaned
 You'll need a certificate & private key in DER form; you can e.g. generate one
 using `openssl`.
 
+<details>
+<summary>openssl commands</summary>
+
 NB: these are **examples only**, make sure the RSA/DSA key size or ECDSA curve
 you use is appropriate for your specific security requirements.
 
@@ -372,11 +375,19 @@ $ openssl ecparam -genkey -name prime256v1 -outform DER -out privkey.der
 $ openssl req -x509 -key privkey.der -outform DER -out cert.der -days 10000 -subj '/CN=test key'
 ```
 
+To create an encrypted RSA key, remove `-nocrypt`; for DSA/EC, use `dsaparam`/`ecparam`
+with `-out -` and pipe to `openssl pkcs8 -topk8 -outform DER -out privkey.der`.
+
+</details>
+
 Sign an APK:
 
 ```bash
 $ apksigtool sign --cert cert.der --key privkey.der unsigned.apk output.apk
 ```
+
+NB: use `--prompt` or the `APKSIGTOOL_PRIVKEY_PASSWORD` environment variable to
+provide a password for an encrypted private key.
 
 ### Help
 
