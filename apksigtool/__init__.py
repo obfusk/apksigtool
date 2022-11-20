@@ -2157,7 +2157,7 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
     unverified_mf = tuple(sorted(filenames - set(manifest)))
     if strict:
         for filename in unverified_mf:
-            if not apksigcopier.is_meta(filename):
+            if not (filename.endswith("/") or apksigcopier.is_meta(filename)):
                 raise VerificationError(f"ZIP entry not in manifest: {filename!r}")
     if not verified:
         raise VerificationError("No signers")
