@@ -2084,12 +2084,12 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
             manifest_digest = hasher(signature.manifest.raw_data).digest()
             manifest_digest_b64 = base64.b64encode(manifest_digest).decode()
             if digest == manifest_digest_b64:
-                md_verified = True      # spec says that's sufficient
+                md_verified = True  # spec says that's sufficient
                 if not strict:
                     break
             elif strict:
                 raise VerificationError(f"Manifest {algo} digest mismatch")
-        if not md_verified or strict:   # insufficient for {apk,jar}signer
+        if not md_verified:
             if sf.digests_manifest_main_attributes:
                 mma_verified = False
                 for algo, digest in sf.digests_manifest_main_attributes:

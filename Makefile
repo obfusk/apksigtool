@@ -31,6 +31,9 @@ coverage:
 	# NB: uses test/apks/apks/*.apk
 	mkdir -p .tmp
 	cp test/apks/apks/v3-only-with-stamp.apk .tmp/test.apk
+	openssl req -x509 -newkey rsa:2048 -sha512 -outform DER -out .tmp/cert.der \
+	    -days 10000 -nodes -subj '/CN=test key' -keyout - \
+	  | openssl pkcs8 -topk8 -nocrypt -outform DER -out .tmp/privkey.der
 	$(PYCOV) -m doctest apksigtool/__init__.py
 	$(PYCOVCLI) verify    --check-v1 test/apks/apks/golden-aligned-v1v2v3-out.apk
 	$(PYCOVCLI) verify-v1            test/apks/apks/golden-aligned-v1v2v3-out.apk
@@ -39,6 +42,9 @@ coverage:
 	$(PYCOVCLI) parse     --json     test/apks/apks/golden-aligned-v1v2v3-out.apk >/dev/null
 	$(PYCOVCLI) parse-v1  --json     test/apks/apks/golden-aligned-v1v2v3-out.apk >/dev/null
 	$(PYCOVCLI) clean                .tmp/test.apk
+	$(PYCOVCLI) sign --cert .tmp/cert.der --key .tmp/privkey.der \
+	  test/apks/apks/golden-aligned-in.apk .tmp/out.apk
+	$(PYCOVCLI) verify    --check-v1 .tmp/out.apk
 	$(PYTHON) -mcoverage html
 	$(PYTHON) -mcoverage report
 
