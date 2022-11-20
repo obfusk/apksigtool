@@ -359,6 +359,7 @@ WRAP_COLUMNS = 80   # overridden in main() if $APKSIGTOOL_WRAP_COLUMNS is set
 
 PrivKey = Union[RSAPrivateKey, DSAPrivateKey, EllipticCurvePrivateKey]
 PubKey = Union[RSAPublicKey, DSAPublicKey, EllipticCurvePublicKey]
+PubKeyTypes = (RSAPublicKey, DSAPublicKey, EllipticCurvePublicKey)
 T = TypeVar("T")
 
 
@@ -1622,7 +1623,8 @@ def verify_apk_signature_scheme(signers: Tuple[Union[V2Signer, V3Signer], ...],
         da = sorted(d.signature_algorithm_id for d in signer.signed_data.digests)
         sa = sorted(s.signature_algorithm_id for s in signer.signatures)
         pk_algo = pk.public_key.algorithm
-        pubkey: PubKey = serialization.load_der_public_key(pk.raw_data)
+        pubkey = serialization.load_der_public_key(pk.raw_data)
+        assert isinstance(pubkey, PubKeyTypes)
         if (key_algo := pk_algo.upper()) not in allow_unsafe:
             if (f := UNSAFE_KEY_SIZE[key_algo]) is not None and f(pk.public_key.bit_size):
                 raise VerificationError(f"Unsafe {key_algo} key size: {pk.public_key.bit_size}")
@@ -2041,7 +2043,8 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
             if (f := UNSAFE_KEY_SIZE[key_algo]) is not None and f(sbf.public_key.bit_size):
                 raise VerificationError(f"Unsafe {key_algo} key size: {sbf.public_key.bit_size}")
         pad = PKCS1v15 if sbf.filename.endswith(".RSA") else None
-        pubkey: PubKey = serialization.load_der_public_key(sbf.public_key.dump())
+        pubkey = serialization.load_der_public_key(sbf.public_key.dump())
+        assert isinstance(pubkey, PubKeyTypes)
         for sinfo in sbf.signer_infos:
             def halgo_f():
                 return ECDSA(halgo()) if sbf.filename.endswith(".EC") else halgo()
