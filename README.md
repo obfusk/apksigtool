@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-11-19
+    Date        : 2022-11-20
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -365,11 +365,11 @@ $ openssl req -x509 -newkey rsa:4096 -sha512 -outform DER -out cert.der -days 10
 
 # alternatively, DSA
 $ openssl dsaparam -genkey -outform DER -out privkey.der 2048
-$ openssl req -x509 -key privkey.der -outform DER -out cert.der -days 10000 -nodes -subj '/CN=test key'
+$ openssl req -x509 -key privkey.der -outform DER -out cert.der -days 10000 -subj '/CN=test key'
 
 # alternatively, EC
 $ openssl ecparam -genkey -name prime256v1 -outform DER -out privkey.der
-$ openssl req -x509 -key privkey.der -outform DER -out cert.der -days 10000 -nodes -subj '/CN=test key'
+$ openssl req -x509 -key privkey.der -outform DER -out cert.der -days 10000 -subj '/CN=test key'
 ```
 
 Sign an APK:

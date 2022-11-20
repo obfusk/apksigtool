@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-19
+# Date        : 2022-11-20
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -2084,12 +2084,12 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
             manifest_digest = hasher(signature.manifest.raw_data).digest()
             manifest_digest_b64 = base64.b64encode(manifest_digest).decode()
             if digest == manifest_digest_b64:
-                md_verified = True  # spec says that's sufficient
+                md_verified = True      # spec says that's sufficient
                 if not strict:
                     break
             elif strict:
                 raise VerificationError(f"Manifest {algo} digest mismatch")
-        if not md_verified:
+        if not md_verified or strict:   # insufficient for {apk,jar}signer
             if sf.digests_manifest_main_attributes:
                 mma_verified = False
                 for algo, digest in sf.digests_manifest_main_attributes:
@@ -2853,7 +2853,7 @@ def create_v1_signature(apkfile: str, *, cert: bytes, key: PrivKey,
         hash_algo = HASH_ALGOS[alg][0]
     elif hash_algo not in HASH_ALGOS[alg]:
         raise ValueError(f"Unsupported hash algorithm for {alg}: {hash_algo}")
-    _, hasher, halgo = JAR_HASHERS_STR[hash_algo]
+    hasher = JAR_HASHERS_STR[hash_algo][1]
     created_by = f"{NAME} v{__version__}"
     mf_entries = []
     sf_entries = []
@@ -2877,9 +2877,8 @@ def create_v1_signature(apkfile: str, *, cert: bytes, key: PrivKey,
                                 digests=((hash_algo, mf_entry_digest),))
             sf_entry = dataclasses.replace(sf_entry, raw_data=_dump_jar_entry(sf_entry))
             sf_entries.append(sf_entry)
-    mf = JARManifest(
-        raw_data=b"", entries=tuple(mf_entries), version="1.0", created_by=created_by,
-        built_by=None, headers_len=0)
+    mf = JARManifest(raw_data=b"", entries=tuple(mf_entries), version="1.0",
+                     created_by=created_by, built_by=None, headers_len=0)
     mf = dataclasses.replace(mf, raw_data=mf.dump())
     mf_digest = base64.b64encode(hasher(mf.raw_data).digest()).decode()
     sf = JARSignatureFile(
