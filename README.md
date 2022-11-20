@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-11-08
+    Date        : 2022-11-19
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -41,8 +41,8 @@ can also clean them (i.e. remove everything that's not an APK Signature Scheme
 v2/v3 Block or verity padding block), which can be useful for [reproducible
 builds](https://reproducible-builds.org).
 
-**WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON, please use
-[`apksigner`](https://developer.android.com/studio/command-line/apksigner) instead.**
+**WARNING: verification and signing are considered EXPERIMENTAL and SHOULD NOT BE RELIED ON,
+please use [`apksigner`](https://developer.android.com/studio/command-line/apksigner) instead.**
 
 ### Parse
 
@@ -345,6 +345,25 @@ $ mkdir meta
 $ apksigcopier extract some.apk meta
 $ apksigtool clean --block meta/APKSigningBlock
 cleaned
+```
+
+### Sign
+
+**WARNING: signing is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON, please use
+[`apksigner`](https://developer.android.com/studio/command-line/apksigner) instead.**
+
+You'll need a certificate & private key in DER form; you can e.g. generate one
+using `openssl`:
+
+```bash
+$ openssl req -x509 -newkey rsa:4096 -sha512 -outform DER -out cert.der -days 10000 -nodes \
+  -subj '/CN=test key' -keyout - | openssl pkcs8 -topk8 -nocrypt -outform DER -out privkey.der
+```
+
+Sign an APK:
+
+```bash
+$ apksigtool sign --cert cert.der --key privkey.der unsigned.apk output.apk
 ```
 
 ### Help
