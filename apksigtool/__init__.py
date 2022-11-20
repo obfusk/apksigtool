@@ -286,6 +286,8 @@ VERITY_BLOCK_SIZE = 4096
 # FIXME
 VERITY_SALT = b"\x00" * 8
 
+MIN_SDK, MAX_SDK = 24, 2 * 1024**3 - 1
+
 # FIXME: incomplete?
 JAR_HASHERS_OID = {
     # OID               algo      hasher  halgo
@@ -360,6 +362,7 @@ WRAP_COLUMNS = 80   # overridden in main() if $APKSIGTOOL_WRAP_COLUMNS is set
 PrivKey = Union[RSAPrivateKey, DSAPrivateKey, EllipticCurvePrivateKey]
 PubKey = Union[RSAPublicKey, DSAPublicKey, EllipticCurvePublicKey]
 PubKeyTypes = (RSAPublicKey, DSAPublicKey, EllipticCurvePublicKey)
+
 T = TypeVar("T")
 
 
@@ -2191,12 +2194,13 @@ def _create_signature_block_file(sf: JARSignatureFile, *, cert: bytes, key: Priv
     sdat["contentInfo"] = rfc2315.ContentInfo()
     sdat["contentInfo"]["contentType"] = rfc2315.ContentType(rfc2315.data)
     sdat["certificates"][0]["certificate"] = crt
-    sdat["signerInfos"][0]["version"] = 1
-    sdat["signerInfos"][0]["issuerAndSerialNumber"]["issuer"] = crt["tbsCertificate"]["issuer"]
-    sdat["signerInfos"][0]["issuerAndSerialNumber"]["serialNumber"] = crt["tbsCertificate"]["serialNumber"]
-    sdat["signerInfos"][0]["digestAlgorithm"]["algorithm"] = oid
-    sdat["signerInfos"][0]["digestEncryptionAlgorithm"]["algorithm"] = dea
-    sdat["signerInfos"][0]["encryptedDigest"] = sig
+    sinf = sdat["signerInfos"][0]
+    sinf["version"] = 1
+    sinf["issuerAndSerialNumber"]["issuer"] = crt["tbsCertificate"]["issuer"]
+    sinf["issuerAndSerialNumber"]["serialNumber"] = crt["tbsCertificate"]["serialNumber"]
+    sinf["digestAlgorithm"]["algorithm"] = oid
+    sinf["digestEncryptionAlgorithm"]["algorithm"] = dea
+    sinf["encryptedDigest"] = sig
     cinf = rfc2315.ContentInfo()
     cinf["contentType"] = rfc2315.ContentType(rfc2315.signedData)
     cinf["content"] = pyasn1_univ.Any(pyasn1_encode(sdat))
@@ -2884,7 +2888,8 @@ def create_v1_signature(apkfile: str, *, cert: bytes, key: PrivKey, hash_algo: s
 
 # FIXME
 # FIXME: min_sdk, max_sdk
-# def create_v3_signature(apkfile: str, *, cert: bytes, key: PrivKey) -> APKSignatureSchemeBlock:
+# def create_v3_signature(apkfile: str, *, cert: bytes, key: PrivKey,
+#                         min_sdk: int = MIN_SDK, max_sdk: int = MAX_SDK) -> APKSignatureSchemeBlock:
 #     """
 #     Create a v3 signature (APK Signature Scheme v3 Block).
 #
