@@ -353,11 +353,23 @@ cleaned
 [`apksigner`](https://developer.android.com/studio/command-line/apksigner) instead.**
 
 You'll need a certificate & private key in DER form; you can e.g. generate one
-using `openssl`:
+using `openssl`.
+
+NB: these are **examples only**, make sure the RSA/DSA key size or ECDSA curve
+you use is appropriate for your specific security requirements.
 
 ```bash
+# RSA
 $ openssl req -x509 -newkey rsa:4096 -sha512 -outform DER -out cert.der -days 10000 -nodes \
   -subj '/CN=test key' -keyout - | openssl pkcs8 -topk8 -nocrypt -outform DER -out privkey.der
+
+# alternatively, DSA
+$ openssl dsaparam -genkey -outform DER -out privkey.der 2048
+$ openssl req -x509 -key privkey.der -outform DER -out cert.der -days 10000 -nodes -subj '/CN=test key'
+
+# alternatively, EC
+$ openssl ecparam -genkey -name prime256v1 -outform DER -out privkey.der
+$ openssl req -x509 -key privkey.der -outform DER -out cert.der -days 10000 -nodes -subj '/CN=test key'
 ```
 
 Sign an APK:
