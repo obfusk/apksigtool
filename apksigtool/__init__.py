@@ -2131,8 +2131,7 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
                     raise VerificationError(err)
             if not_in_sf := tuple(sorted(set(manifest) - set(e.filename for e in sf.entries))):
                 unverified_sf[sf.filename] = not_in_sf
-                if strict:
-                    raise VerificationError(f"Mainfest entries missing from {sf.filename!r}")
+                raise VerificationError(f"Manifest entries missing from {sf.filename!r}")
         verified.append((sbf.certificate_info.fingerprint, sbf.public_key_info.fingerprint))
     with zipfile.ZipFile(apkfile, "r") as zf:
         filenames = set(zi.filename for zi in zf.infolist())
@@ -2159,10 +2158,9 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
             if not data_verified:
                 raise VerificationError(f"No suitable digests for {filename!r} in manifest")
     unverified_mf = tuple(sorted(filenames - set(manifest)))
-    if strict:
-        for filename in unverified_mf:
-            if not (filename.endswith("/") or apksigcopier.is_meta(filename)):
-                raise VerificationError(f"ZIP entry not in manifest: {filename!r}")
+    for filename in unverified_mf:
+        if not (filename.endswith("/") or apksigcopier.is_meta(filename)):
+            raise VerificationError(f"ZIP entry not in manifest: {filename!r}")
     if not verified:
         raise VerificationError("No signers")
     return tuple(verified), unverified_mf, tuple(sorted(unverified_sf.items()))
