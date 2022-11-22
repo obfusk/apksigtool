@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-11-20
+    Date        : 2022-11-22
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -448,6 +448,7 @@ $ man apksigtool                # requires the man page to be installed
 ... FIXME ...
 -->
 
+<!--
 ## Tab Completion
 
 NB: the syntax for the environment variable changed in click >= 8.0,
@@ -470,6 +471,7 @@ For Fish, add this to `~/.config/fish/completions/apksigtool.fish`:
 ```fish
 eval (env _APKSIGTOOL_COMPLETE=fish_source apksigtool)
 ```
+-->
 
 ## Installing
 
