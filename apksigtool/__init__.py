@@ -2987,7 +2987,7 @@ def _create_apk_signature_scheme_block(apkfile: str, *, cert: bytes, key: PrivKe
     return APKSignatureSchemeBlock(3 if v3 else 2, (signer,))
 
 
-def main():
+def main() -> None:
     """CLI; requires click."""
 
     global WRAP_COLUMNS
@@ -2996,8 +2996,8 @@ def main():
 
     import click
 
-    UNSAFE = click.Choice(tuple(
-        k for d in (UNSAFE_HASH_ALGO, UNSAFE_KEY_SIZE) for k, v in d.items() if v))
+    unsafe = tuple(UNSAFE_HASH_ALGO.items()) + tuple(UNSAFE_KEY_SIZE.items())
+    UNSAFE = click.Choice(tuple(k for k, v in unsafe if v))
 
     @click.group(help="""
         apksigtool - parse/verify/clean android apk signing blocks & apks
