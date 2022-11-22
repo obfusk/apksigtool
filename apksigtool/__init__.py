@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-20
+# Date        : 2022-11-21
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -370,6 +370,7 @@ DIGEST_ENCRYPTION_ALGORITHM = dict(
 WRAP_COLUMNS = 80   # overridden in main() if $APKSIGTOOL_WRAP_COLUMNS is set
 
 PrivKey = Union[RSAPrivateKey, DSAPrivateKey, EllipticCurvePrivateKey]
+PrivKeyTypes = (RSAPrivateKey, DSAPrivateKey, EllipticCurvePrivateKey)
 PubKey = Union[RSAPublicKey, DSAPublicKey, EllipticCurvePublicKey]
 PubKeyTypes = (RSAPublicKey, DSAPublicKey, EllipticCurvePublicKey)
 
@@ -3178,6 +3179,8 @@ def main():
             privkey = serialization.load_der_private_key(key_bytes, passwd.encode() or None)
         except (TypeError, ValueError) as e:
             raise PasswordError(e.args[0]) if "password" in e.args[0].lower() else e
+        if not isinstance(privkey, PrivKeyTypes):
+            raise APKSigToolError(f"Unsupported private key type: {privkey.__class__.__name__}")
         sign_apk(unsigned_apk, output_apk, cert=cert_bytes, key=privkey,
                  v1=not no_v1, v2=not no_v2, v3=not no_v3)
 
