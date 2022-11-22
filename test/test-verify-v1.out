@@ -1280,16 +1280,16 @@ apksigtool: not verified
 apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-content-type-signerInfo2-good.apk
-apksigner: verified
+apksigner: not verified
 Error: Assertion failed: PKCS #9 contentType must be PKCS #7 data.
 apksigtool: not verified
-apksigner != apksigtool
+apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-digest-signerInfo2-good.apk
-apksigner: verified
+apksigner: not verified
 v1 not verified (Authenticated attributes digest mismatch)
 apksigtool: not verified
-apksigner != apksigtool
+apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-order-signerInfo2-good.apk
 apksigner: verified
@@ -1298,10 +1298,10 @@ apksigtool: not verified
 apksigner != apksigtool
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-signature-signerInfo2-good.apk
-apksigner: verified
+apksigner: not verified
 v1 not verified (Invalid signature)
 apksigtool: not verified
-apksigner != apksigtool
+apksigner == apksigtool
 
 apks/apks/v1-only-with-signed-attrs-wrong-content-type.apk
 apksigner: not verified
@@ -1340,16 +1340,16 @@ apksigtool: verified
 apksigner == apksigtool
 
 apks/apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-manifest.apk
-apksigner: verified
+apksigner: not verified
 v1 not verified (Unsafe hash algorithm: SHA1)
 apksigtool: not verified
-apksigner != apksigtool
+apksigner == apksigtool
 
 apks/apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-sf.apk
-apksigner: verified
+apksigner: not verified
 v1 not verified (Unsafe hash algorithm: SHA1)
 apksigtool: not verified
-apksigner != apksigtool
+apksigner == apksigtool
 
 apks/apks/v1-sha1-sha256-manifest-and-sf-with-sha256-wrong-in-manifest.apk
 apksigner: not verified

@@ -13,7 +13,7 @@ for apk in apks/apks/*.apk; do
   apksigtool clean --check "$apk" 2>&1 || true
   apksigtool clean --check "$apk" 2>&1 || true
   apksigtool parse --json "$apk" 2>/dev/null | jq '.pairs[].value._type' || true
-  if apksigner verify --min-sdk-version=28 "$apk" >/dev/null 2>&1; then
+  if apksigner verify --min-sdk-version=24 "$apk" >/dev/null 2>&1; then
     echo 'apksigner: verified'
   else
     echo 'apksigner: not verified'

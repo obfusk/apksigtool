@@ -6,7 +6,12 @@ for apk in apks/apks/*.apk; do
   [[ "$apk" != *negmod* ]] || continue
   [[ "$apk" != *weird-compression-method* ]] || continue
   echo "$apk"
-  if apksigner verify --min-sdk-version=28 "$apk" >/dev/null 2>&1; then
+  if unzip -l "$apk" 2>/dev/null | grep -qF META-INF/MANIFEST.MF; then
+    min=
+  else
+    min=--min-sdk-version=24
+  fi
+  if apksigner verify $min "$apk" >/dev/null 2>&1; then
     echo 'apksigner: verified'
   else
     echo 'apksigner: not verified'

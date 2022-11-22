@@ -28059,11 +28059,11 @@ apksigner: not verified
 Error: Assertion failed: PKCS #7 authenticatedAttributes must contain exactly 1 PKCS #9 messageDigest attribute.
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-content-type-signerInfo2-good.apk
-apksigner: verified
+apksigner: not verified
 Error: Assertion failed: PKCS #9 contentType must be PKCS #7 data.
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-digest-signerInfo2-good.apk
-apksigner: verified
+apksigner: not verified
 {
   "_type": "JARSignature",
   "manifest": {
@@ -28361,7 +28361,7 @@ apksigner: verified
 }
 
 apks/apks/v1-only-with-signed-attrs-signerInfo1-wrong-signature-signerInfo2-good.apk
-apksigner: verified
+apksigner: not verified
 {
   "_type": "JARSignature",
   "manifest": {
@@ -29265,7 +29265,7 @@ apksigner: verified
 }
 
 apks/apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-manifest.apk
-apksigner: verified
+apksigner: not verified
 {
   "_type": "JARSignature",
   "manifest": {
@@ -29432,7 +29432,7 @@ apksigner: verified
 }
 
 apks/apks/v1-sha1-sha256-manifest-and-sf-with-sha1-wrong-in-sf.apk
-apksigner: verified
+apksigner: not verified
 {
   "_type": "JARSignature",
   "manifest": {
