@@ -2684,7 +2684,7 @@ def load_extracted_meta_from_dir(path: str) -> Tuple[Tuple[zipfile.ZipInfo, byte
 
 def _load_extracted_meta_from_dir(path: str) -> Iterator[Tuple[zipfile.ZipInfo, bytes]]:
     for ext in JAR_META_EXTS:
-        for fn in glob.glob(os.path.join(path, "*." + ext)):
+        for fn in sorted(glob.glob(os.path.join(path, "*." + ext))):
             info = zipfile.ZipInfo("META-INF/" + os.path.basename(fn))
             with open(fn, "rb") as fh:
                 yield info, fh.read()
