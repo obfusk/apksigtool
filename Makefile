@@ -124,7 +124,7 @@ lint:
 
 lint-extra:
 	# TODO
-	mypy --ignore-missing-imports apksigtool/__init__.py
+	mypy --strict --ignore-missing-imports apksigtool/__init__.py
 
 clean: cleanup
 	rm -fr apksigtool.egg-info/

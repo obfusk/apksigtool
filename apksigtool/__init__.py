@@ -192,8 +192,8 @@ from binascii import hexlify
 from dataclasses import dataclass, field
 from functools import reduce
 from hashlib import md5, sha1, sha224, sha256, sha384, sha512
-from typing import (Any, Callable, ClassVar, Dict, FrozenSet, Iterator, List,
-                    Literal, Mapping, Optional, Set, TextIO, Tuple, TypeVar, Union)
+from typing import (Any, Callable, ClassVar, Dict, FrozenSet, Iterable, Iterator, List,
+                    Literal, Mapping, Optional, Set, TextIO, Tuple, Type, TypeVar, Union)
 
 import apksigcopier
 
@@ -206,7 +206,7 @@ from cryptography.hazmat.primitives.asymmetric.dsa import DSAPrivateKey, DSAPubl
 from cryptography.hazmat.primitives.asymmetric.ec import ECDSA, EllipticCurvePrivateKey, EllipticCurvePublicKey
 from cryptography.hazmat.primitives.asymmetric.padding import MGF1, PKCS1v15, PSS
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
-from cryptography.hazmat.primitives.hashes import MD5, SHA1, SHA224, SHA256, SHA384, SHA512
+from cryptography.hazmat.primitives.hashes import HashAlgorithm, MD5, SHA1, SHA224, SHA256, SHA384, SHA512
 from cryptography.hazmat.primitives.serialization.pkcs7 import load_der_pkcs7_certificates
 from pyasn1.codec.der.decoder import decode as pyasn1_decode
 from pyasn1.codec.der.encoder import encode as pyasn1_encode
@@ -216,6 +216,19 @@ from pyasn1_modules import rfc2315, rfc5480
 
 __version__ = "0.1.0"
 NAME = "apksigtool"
+
+Halgo = Union[HashAlgorithm, ECDSA]
+HalgoFun = Union[Callable[[], Halgo], Type[HashAlgorithm]]
+PadFun = Union[Callable[[], PSS], Type[PKCS1v15]]
+
+PrivKey = Union[RSAPrivateKey, DSAPrivateKey, EllipticCurvePrivateKey]
+PrivKeyTypes = (RSAPrivateKey, DSAPrivateKey, EllipticCurvePrivateKey)
+PubKey = Union[RSAPublicKey, DSAPublicKey, EllipticCurvePublicKey]
+PubKeyTypes = (RSAPublicKey, DSAPublicKey, EllipticCurvePublicKey)
+
+SchemeVersion = Literal[2, 3, "3.1"]
+
+T = TypeVar("T")
 
 # FIXME: list of block type IDs is incomplete
 # https://source.android.com/docs/security/features/apksigning/v2#apk-signing-block-format
@@ -269,7 +282,7 @@ SIGNATURE_ALGORITHM_IDS = {
 CHUNKED, VERITY = 1, 2
 
 # FIXME: incomplete
-HASHERS = {
+HASHERS: Dict[int, Tuple[str, Any, HalgoFun, Optional[PadFun], int]] = {
     # id     algo   hasher  halgo   pad                                              chunk_type
     0x0101: ("rsa", sha256, SHA256, lambda: PSS(mgf=MGF1(SHA256()), salt_length=32), CHUNKED),
     0x0102: ("rsa", sha512, SHA512, lambda: PSS(mgf=MGF1(SHA512()), salt_length=64), CHUNKED),
@@ -331,7 +344,7 @@ UNSAFE_HASH_ALGO = dict(
 )
 
 # FIXME
-UNSAFE_KEY_SIZE = dict(
+UNSAFE_KEY_SIZE: Dict[str, Callable[[int], bool]] = dict(
     RSA=lambda size: size < 1024,
     DSA=lambda size: size < 1024,
     EC=lambda size: size < 224,
@@ -373,15 +386,6 @@ DIGEST_ENCRYPTION_ALGORITHM = dict(
 )
 
 WRAP_COLUMNS = 80   # overridden in main() if $APKSIGTOOL_WRAP_COLUMNS is set
-
-PrivKey = Union[RSAPrivateKey, DSAPrivateKey, EllipticCurvePrivateKey]
-PrivKeyTypes = (RSAPrivateKey, DSAPrivateKey, EllipticCurvePrivateKey)
-PubKey = Union[RSAPublicKey, DSAPublicKey, EllipticCurvePublicKey]
-PubKeyTypes = (RSAPublicKey, DSAPublicKey, EllipticCurvePublicKey)
-
-SchemeVersion = Literal[2, 3, "3.1"]
-
-T = TypeVar("T")
 
 
 class APKSigToolError(Exception):
@@ -440,13 +444,13 @@ class Block(APKSigToolBase):
     def pair_id(self) -> int:
         """Pair ID for this block type (either .__class__.PAIR_ID or custom)."""
         if hasattr(self.__class__, "PAIR_ID"):
-            return self.__class__.PAIR_ID
+            return self.__class__.PAIR_ID   # type: ignore
         raise NotImplementedError("no .PAIR_ID or custom .pair_id")
 
     def dump(self) -> bytes:
         """Dump Block (either .raw_data or custom)."""
         if hasattr(self, "raw_data"):
-            return self.raw_data
+            return self.raw_data            # type: ignore
         raise NotImplementedError("no .raw_data or custom .dump()")
 
 
@@ -1133,10 +1137,13 @@ class JARSignature(APKSigToolBase):
     unverified_mf: Optional[Tuple[str, ...]] = None
     unverified_sf: Optional[Tuple[Tuple[str, Tuple[str, ...]], ...]] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         assert [_fn_base(x) for x in self.signature_files] \
             == [_fn_base(x) for x in self.signature_block_files]
-        assert self.verified in (None, False) or len(self.verified) >= 1
+        if isinstance(self.verified, tuple):
+            assert len(self.verified) >= 1
+        else:
+            assert self.verified in (None, False)
         assert (self.verification_error is not None) == (self.verified == False)    # noqa: E712
         assert (self.unverified_mf is not None) == (self.verified not in (None, False))
         assert (self.unverified_sf is not None) == (self.verified not in (None, False))
@@ -1201,8 +1208,8 @@ def _assert(b: bool, what: Optional[str] = None) -> None:
         raise AssertionFailed("Assertion failed" + (f": {what}" if what else ""))
 
 
-def _fn_base(x) -> str:
-    return x.filename.rsplit(".", 1)[0]
+def _fn_base(x: Any) -> str:
+    return x.filename.rsplit(".", 1)[0]     # type: ignore
 
 
 def parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None, *,
@@ -1412,7 +1419,7 @@ def parse_signer(data: bytes, version: SchemeVersion) -> Union[V2Signer, V3Signe
     Returns V2Signer/V3Signer (with .signed_data, .signatures, .public_key;
     V3Signer also .min_sdk, .max_sdk).
     """
-    result: List = []
+    result: List[Any] = []
     sigdata, data = _split_len_prefixed_field(data)
     result.append(parse_signed_data(sigdata, version=version))
     if version != 2:
@@ -1425,7 +1432,7 @@ def parse_signer(data: bytes, version: SchemeVersion) -> Union[V2Signer, V3Signe
     pubkey, data = _split_len_prefixed_field(data)
     result.append(PublicKey(pubkey))
     _assert(not data, "signer extraneous data")
-    return (V2Signer if version == 2 else V3Signer)(*result)
+    return V2Signer(*result) if version == 2 else V3Signer(*result)
 
 
 def dump_signer(signer: Union[V2Signer, V3Signer]) -> bytes:
@@ -1448,7 +1455,7 @@ def parse_signed_data(data: bytes, version: SchemeVersion) \
     Returns V2SignedData/V3SignedData (with .raw_data, .digests, .certificates,
     .additional_attributes; V3SignedData also .min_sdk, .max_sdk).
     """
-    result: List = [data]
+    result: List[Any] = [data]
     digests, data = _split_len_prefixed_field(data)
     result.append(parse_digests(digests))
     certs, data = _split_len_prefixed_field(data)
@@ -1462,7 +1469,7 @@ def parse_signed_data(data: bytes, version: SchemeVersion) \
     result.append(parse_additional_attributes(attrs))
     _assert(all(b == 0 for b in data), "signed data zero padding")
     result.append(len(data))
-    return (V2SignedData if version == 2 else V3SignedData)(*result)
+    return V2SignedData(*result) if version == 2 else V3SignedData(*result)
 
 
 def dump_signed_data(signed_data: Union[V2SignedData, V3SignedData], *,
@@ -1710,7 +1717,7 @@ def verify_apk_signature_scheme(signers: Tuple[Union[V2Signer, V3Signer], ...],
     return tuple(verified)
 
 
-def _apk_digest(apkfile: str, sb_offset: int, hasher, chunk_type: int) -> bytes:
+def _apk_digest(apkfile: str, sb_offset: int, hasher: Any, chunk_type: int) -> bytes:
     """Calculate APK digest (either chunked or verity)."""
     if chunk_type == CHUNKED:
         return apk_digest_chunked(apkfile, sb_offset, hasher)
@@ -1720,9 +1727,9 @@ def _apk_digest(apkfile: str, sb_offset: int, hasher, chunk_type: int) -> bytes:
         raise ValueError(f"Unknown chunk type: {chunk_type}")
 
 
-def apk_digest_chunked(apkfile: str, sb_offset: int, hasher) -> bytes:
+def apk_digest_chunked(apkfile: str, sb_offset: int, hasher: Any) -> bytes:
     """Calculate chunked digest for APK."""
-    def f(size):
+    def f(size: int) -> None:
         while size > 0:
             data = fh.read(min(size, CHUNK_SIZE))
             if not data:
@@ -1742,7 +1749,7 @@ def apk_digest_chunked(apkfile: str, sb_offset: int, hasher) -> bytes:
     return _top_level_chunked_digest(digests, hasher)
 
 
-def apk_digest_verity(apkfile: str, sb_offset: int, hasher) -> bytes:
+def apk_digest_verity(apkfile: str, sb_offset: int, hasher: Any) -> bytes:
     """Calculate verity digest for APK."""
     _assert(sb_offset % VERITY_BLOCK_SIZE == 0,
             "APK Sig Block offset must be a multiple of verity block size")
@@ -1765,27 +1772,28 @@ def apk_digest_verity(apkfile: str, sb_offset: int, hasher) -> bytes:
     return _top_level_verity_digest(digests, total_size, hasher)
 
 
-def _chunk_digest(chunk: bytes, hasher) -> bytes:
+def _chunk_digest(chunk: bytes, hasher: Any) -> bytes:
     data = b"\xa5" + int.to_bytes(len(chunk), 4, "little") + chunk
-    return hasher(data).digest()
+    return hasher(data).digest()    # type: ignore
 
 
-def _top_level_chunked_digest(digests: List[bytes], hasher) -> bytes:
+def _top_level_chunked_digest(digests: List[bytes], hasher: Any) -> bytes:
     data = b"\x5a" + int.to_bytes(len(digests), 4, "little") + b"".join(digests)
-    return hasher(data).digest()
+    return hasher(data).digest()    # type: ignore
 
 
-def _verity_block_digest(block: bytes, hasher) -> bytes:
+def _verity_block_digest(block: bytes, hasher: Any) -> bytes:
     _assert(len(block) == VERITY_BLOCK_SIZE, "verity block size")
-    return hasher(VERITY_SALT + block).digest()
+    return hasher(VERITY_SALT + block).digest()     # type: ignore
 
 
-def _top_level_verity_digest(digests: List[bytes], total_size: int, hasher) -> bytes:
+def _top_level_verity_digest(digests: List[bytes], total_size: int, hasher: Any) -> bytes:
     data = _verity_pad(b"".join(digests))
     while len(data) > VERITY_BLOCK_SIZE:
         data = _verity_pad(b"".join(_verity_block_digest(c, hasher)
                                     for c in _chunks(data, VERITY_BLOCK_SIZE)))
-    return hasher(VERITY_SALT + data).digest() + int.to_bytes(total_size, 8, "little")
+    tot = int.to_bytes(total_size, 8, "little")
+    return hasher(VERITY_SALT + data).digest() + tot    # type: ignore
 
 
 def _verity_pad(data: bytes) -> bytes:
@@ -2104,7 +2112,7 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
         pubkey = serialization.load_der_public_key(sbf.public_key.dump())
         assert isinstance(pubkey, PubKeyTypes)
         for sinfo in sbf.signer_infos:
-            def halgo_f():
+            def halgo_f() -> Halgo:
                 return ECDSA(halgo()) if sbf.filename.endswith(".EC") else halgo()
             if (algo := sinfo.digest_algorithm) is None:
                 raise VerificationError("Unknown hash algorithm")
@@ -2233,7 +2241,7 @@ def _load_apk_v1_signature_block_file_signer_infos_cert(data: bytes) \
 # FIXME
 def _create_signature_block_file(sf: JARSignatureFile, *, cert: bytes, key: PrivKey,
                                  hash_algo: str) -> Tuple[bytes, str]:
-    def halgo_f():
+    def halgo_f() -> Halgo:
         return ECDSA(halgo()) if alg == "EC" else halgo()
     alg, = [e for c, e in PRIVKEY_TYPE.items() if isinstance(key, c)]
     oid, _, halgo = JAR_HASHERS_STR[hash_algo]
@@ -2284,7 +2292,8 @@ def _parse_auth_attrs(attr: rfc2315.Attributes) -> Optional[PKCS7AuthenticatedAt
 
 # FIXME: type checking?!
 # WARNING: verification is considered EXPERIMENTAL
-def verify_signature(key: PubKey, sig: bytes, msg: bytes, halgo, pad) -> None:
+def verify_signature(key: PubKey, sig: bytes, msg: bytes, halgo: HalgoFun,
+                     pad: Optional[PadFun]) -> None:
     """
     Verify signature (sig) from key on message (msg) using appropriate hashing
     algorithm and padding.
@@ -2305,7 +2314,8 @@ def verify_signature(key: PubKey, sig: bytes, msg: bytes, halgo, pad) -> None:
 
 # FIXME: type checking?!
 # WARNING: signing is considered EXPERIMENTAL
-def create_signature(key: PrivKey, msg: bytes, halgo, pad) -> bytes:
+def create_signature(key: PrivKey, msg: bytes, halgo: HalgoFun,
+                     pad: Optional[PadFun]) -> bytes:
     """
     Create signature from key on message (msg) using appropriate hashing
     algorithm and padding.
@@ -2483,7 +2493,7 @@ def _show_aid(x: Union[Digest, Signature], indent: int, *,
 
 
 def _printer(file: TextIO, wrap: bool) -> Callable[..., None]:
-    def p(*a):
+    def p(*a: Any) -> None:
         print(_wrap(" ".join(map(str, a)), wrap=wrap), file=file)
     return p
 
@@ -2595,7 +2605,7 @@ def show_json(obj: APKSigToolBase, *, file: TextIO = sys.stdout) -> None:
     print(file=file)
 
 
-def json_dump_default(obj):
+def json_dump_default(obj: Any) -> str:
     """
     Returns serializable versions of bytes (hex str) and datetime.datetime (str)
     for simplejson.dump().
@@ -2615,9 +2625,9 @@ def json_dump_default(obj):
     raise TypeError(repr(obj) + " is not JSON serializable")
 
 
-def asdict(obj: APKSigToolBase):
+def asdict(obj: APKSigToolBase) -> Dict[str, Any]:
     """dataclasses.asdict() with a dict_factory that skips attributes that start with _."""
-    def dict_factory(pairs):
+    def dict_factory(pairs: Iterable[Tuple[str, Any]]) -> Dict[str, Any]:
         return dict((k, v) for k, v in pairs if not k.startswith("_"))
     return dataclasses.asdict(obj, dict_factory=dict_factory)
 
@@ -2669,7 +2679,7 @@ def _load_extracted_meta_from_dir(path: str) -> Iterator[Tuple[zipfile.ZipInfo, 
 # FIXME: handle key rotation etc.
 # WARNING: verification is considered EXPERIMENTAL
 def verify_apk_and_check_signers(
-        apkfile, *, allow_unsafe: Tuple[str, ...] = (), check_v1: bool = False,
+        apkfile: str, *, allow_unsafe: Tuple[str, ...] = (), check_v1: bool = False,
         quiet: bool = True, sdk_version: Optional[int] = None,
         signed_by: Optional[Tuple[str, str]] = None, verbose: bool = False) -> bool:
     """
@@ -2725,8 +2735,8 @@ def verify_apk_and_check_signers(
 
 
 # FIXME: warn about unverified files?
-def _verify_v1(apk, *, allow_unsafe: Tuple[str, ...] = (), expected: bool = True,
-               quiet: bool = True, strict: bool = True) \
+def _verify_v1(apk: str, *, allow_unsafe: Tuple[str, ...] = (),
+               expected: bool = True, quiet: bool = True, strict: bool = True) \
         -> Union[Tuple[Literal[True], JARSignature, Tuple[Tuple[str, str], ...]],
                  Literal[False], None]:
     res = verify_apk_v1(apk, allow_unsafe=allow_unsafe, expected=expected, strict=strict)
@@ -2888,7 +2898,8 @@ def sign_apk(unsigned_apk: str, output_apk: str, *, cert: bytes, key: PrivKey,
 # FIXME
 def create_v1_signature(apkfile: str, *, cert: bytes, key: PrivKey,
                         hash_algo: Optional[str] = None,
-                        x_android_apk_signed=None) -> ZipInfoDataPairs:
+                        x_android_apk_signed: Optional[Tuple[int, ...]] = None) \
+        -> ZipInfoDataPairs:
     """
     Create v1 (JAR) signature.
 
@@ -3084,8 +3095,9 @@ def main() -> None:
     @click.option("-v", "--verbose", is_flag=True, help="Show signer(s).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def verify(ctx, apk: str, allow_unsafe: Tuple[str], check_v1: bool, quiet: bool,
-               sdk_version: Optional[int], signed_by: Optional[str], verbose: bool) -> None:
+    def verify(ctx: click.Context, apk: str, allow_unsafe: Tuple[str],
+               check_v1: bool, quiet: bool, sdk_version: Optional[int],
+               signed_by: Optional[str], verbose: bool) -> None:
         print("WARNING: verification is considered EXPERIMENTAL, "
               "please use apksigner instead.", file=sys.stderr)
         if allow_unsafe:
@@ -3117,8 +3129,9 @@ def main() -> None:
                        "certificate and public key sha256 fingerprint (hex).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def verify_v1(ctx, apk: str, allow_unsafe: Tuple[str], no_strict: bool, quiet: bool,
-                  rollback_is_error: bool, signed_by: Optional[str]) -> None:
+    def verify_v1(ctx: click.Context, apk: str, allow_unsafe: Tuple[str],
+                  no_strict: bool, quiet: bool, rollback_is_error: bool,
+                  signed_by: Optional[str]) -> None:
         print("WARNING: verification is considered EXPERIMENTAL, "
               "please use apksigner instead.", file=sys.stderr)
         if allow_unsafe:
@@ -3142,7 +3155,8 @@ def main() -> None:
             if rollback_is_error:
                 sys.exit(5)
 
-    def _parse_signed_by(signed_by: str, ctx, cmd) -> Tuple[str, str]:
+    def _parse_signed_by(signed_by: str, ctx: click.Context, cmd: click.Command) \
+            -> Tuple[str, str]:
         try:
             cert, fpr = signed_by.split(":")
             return cert, fpr
@@ -3168,8 +3182,8 @@ def main() -> None:
                   help="For v3 signers specifying min/max SDK.")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def clean(ctx, apk_or_block: str, block: bool, check: bool, keep: Tuple[str],
-              sdk_version: Optional[int]) -> None:
+    def clean(ctx: click.Context, apk_or_block: str, block: bool, check: bool,
+              keep: Tuple[str], sdk_version: Optional[int]) -> None:
         try:
             keep_ids = tuple(int(x, 16) for p in keep for x in p.split(","))
         except ValueError as e:
