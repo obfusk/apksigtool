@@ -192,7 +192,7 @@ from binascii import hexlify
 from dataclasses import dataclass, field
 from functools import reduce
 from hashlib import md5, sha1, sha224, sha256, sha384, sha512
-from typing import (Any, Callable, ClassVar, Dict, FrozenSet, Iterable, Iterator, List,
+from typing import (cast, Any, Callable, ClassVar, Dict, FrozenSet, Iterable, Iterator, List,
                     Literal, Mapping, Optional, Set, TextIO, Tuple, Type, TypeVar, Union)
 
 import apksigcopier
@@ -444,13 +444,13 @@ class Block(APKSigToolBase):
     def pair_id(self) -> int:
         """Pair ID for this block type (either .__class__.PAIR_ID or custom)."""
         if hasattr(self.__class__, "PAIR_ID"):
-            return self.__class__.PAIR_ID   # type: ignore
+            return cast(int, self.__class__.PAIR_ID)
         raise NotImplementedError("no .PAIR_ID or custom .pair_id")
 
     def dump(self) -> bytes:
         """Dump Block (either .raw_data or custom)."""
         if hasattr(self, "raw_data"):
-            return self.raw_data            # type: ignore
+            return cast(bytes, self.raw_data)
         raise NotImplementedError("no .raw_data or custom .dump()")
 
 
@@ -1209,7 +1209,7 @@ def _assert(b: bool, what: Optional[str] = None) -> None:
 
 
 def _fn_base(x: Any) -> str:
-    return x.filename.rsplit(".", 1)[0]     # type: ignore
+    return cast(str, x.filename.rsplit(".", 1)[0])
 
 
 def parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None, *,
@@ -1774,17 +1774,17 @@ def apk_digest_verity(apkfile: str, sb_offset: int, hasher: Any) -> bytes:
 
 def _chunk_digest(chunk: bytes, hasher: Any) -> bytes:
     data = b"\xa5" + int.to_bytes(len(chunk), 4, "little") + chunk
-    return hasher(data).digest()    # type: ignore
+    return cast(bytes, hasher(data).digest())
 
 
 def _top_level_chunked_digest(digests: List[bytes], hasher: Any) -> bytes:
     data = b"\x5a" + int.to_bytes(len(digests), 4, "little") + b"".join(digests)
-    return hasher(data).digest()    # type: ignore
+    return cast(bytes, hasher(data).digest())
 
 
 def _verity_block_digest(block: bytes, hasher: Any) -> bytes:
     _assert(len(block) == VERITY_BLOCK_SIZE, "verity block size")
-    return hasher(VERITY_SALT + block).digest()     # type: ignore
+    return cast(bytes, hasher(VERITY_SALT + block).digest())
 
 
 def _top_level_verity_digest(digests: List[bytes], total_size: int, hasher: Any) -> bytes:
@@ -1793,7 +1793,7 @@ def _top_level_verity_digest(digests: List[bytes], total_size: int, hasher: Any)
         data = _verity_pad(b"".join(_verity_block_digest(c, hasher)
                                     for c in _chunks(data, VERITY_BLOCK_SIZE)))
     tot = int.to_bytes(total_size, 8, "little")
-    return hasher(VERITY_SALT + data).digest() + tot    # type: ignore
+    return cast(bytes, hasher(VERITY_SALT + data).digest()) + tot
 
 
 def _verity_pad(data: bytes) -> bytes:
@@ -2303,11 +2303,19 @@ def verify_signature(key: PubKey, sig: bytes, msg: bytes, halgo: HalgoFun,
 
     Raises VerificationError (as a result of InvalidSignature) on failure.
     """
+    padding = pad() if pad is not None else None
+    algorithm = halgo()
     try:
-        if pad is None:
-            key.verify(sig, msg, halgo())               # type: ignore
+        if isinstance(key, RSAPublicKey):
+            assert padding is not None
+            assert isinstance(algorithm, HashAlgorithm)
+            key.verify(sig, msg, padding, algorithm)
+        elif isinstance(key, DSAPublicKey):
+            assert isinstance(algorithm, HashAlgorithm)
+            key.verify(sig, msg, algorithm)
         else:
-            key.verify(sig, msg, pad(), halgo())        # type: ignore
+            assert isinstance(algorithm, ECDSA)
+            key.verify(sig, msg, algorithm)
     except InvalidSignature:
         raise VerificationError("Invalid signature")    # pylint: disable=W0707
 
@@ -2323,10 +2331,18 @@ def create_signature(key: PrivKey, msg: bytes, halgo: HalgoFun,
     WARNING: signing is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON,
     please use apksigner instead.
     """
-    if pad is None:
-        return key.sign(msg, halgo())                   # type: ignore
+    padding = pad() if pad is not None else None
+    algorithm = halgo()
+    if isinstance(key, RSAPrivateKey):
+        assert padding is not None
+        assert isinstance(algorithm, HashAlgorithm)
+        return key.sign(msg, padding, algorithm)
+    elif isinstance(key, DSAPrivateKey):
+        assert isinstance(algorithm, HashAlgorithm)
+        return key.sign(msg, algorithm)
     else:
-        return key.sign(msg, pad(), halgo())            # type: ignore
+        assert isinstance(algorithm, ECDSA)
+        return key.sign(msg, algorithm)
 
 
 def x509_certificate_info(cert: X509Cert) -> CertificateInfo:
