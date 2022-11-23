@@ -524,12 +524,12 @@ class Certificate(APKSigToolBase):
         object.__setattr__(self, "certificate_info", x509_certificate_info(self.certificate))
         object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
 
-    @property
-    def certificate(self) -> X509Cert:              # type: ignore[no-any-unimported]
+    @property   # type: ignore[no-any-unimported]
+    def certificate(self) -> X509Cert:
         return self._certificate
 
-    @property
-    def public_key(self) -> X509CertPubKeyInfo:     # type: ignore[no-any-unimported]
+    @property   # type: ignore[no-any-unimported]
+    def public_key(self) -> X509CertPubKeyInfo:
         return self._public_key
 
     @classmethod
@@ -652,8 +652,8 @@ class PublicKey(APKSigToolBase):
         object.__setattr__(self, "_public_key", X509CertPubKeyInfo.load(self.raw_data))
         object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
 
-    @property
-    def public_key(self) -> X509CertPubKeyInfo:     # type: ignore[no-any-unimported]
+    @property   # type: ignore[no-any-unimported]
+    def public_key(self) -> X509CertPubKeyInfo:
         return self._public_key
 
     def dump(self) -> bytes:
@@ -1113,12 +1113,12 @@ class JARSignatureBlockFile(APKSigToolBase):
         object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
         object.__setattr__(self, "signer_infos", infos)
 
-    @property
-    def certificate(self) -> X509Cert:              # type: ignore[no-any-unimported]
+    @property   # type: ignore[no-any-unimported]
+    def certificate(self) -> X509Cert:
         return self._certificate
 
-    @property
-    def public_key(self) -> X509CertPubKeyInfo:     # type: ignore[no-any-unimported]
+    @property   # type: ignore[no-any-unimported]
+    def public_key(self) -> X509CertPubKeyInfo:
         return self._public_key
 
     def dump(self) -> bytes:
