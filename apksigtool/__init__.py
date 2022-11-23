@@ -198,8 +198,8 @@ from typing import (cast, Any, Callable, ClassVar, Dict, FrozenSet, Iterable, It
 import apksigcopier
 
 from apksigcopier import APKSigCopierError, ZipInfoDataPairs
-from asn1crypto.keys import PublicKeyInfo as X509CertPubKeyInfo     # type: ignore
-from asn1crypto.x509 import Certificate as X509Cert                 # type: ignore
+from asn1crypto.keys import PublicKeyInfo as X509CertPubKeyInfo     # type: ignore[import]
+from asn1crypto.x509 import Certificate as X509Cert                 # type: ignore[import]
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.dsa import DSAPrivateKey, DSAPublicKey
@@ -208,11 +208,11 @@ from cryptography.hazmat.primitives.asymmetric.padding import MGF1, PKCS1v15, PS
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
 from cryptography.hazmat.primitives.hashes import HashAlgorithm, MD5, SHA1, SHA224, SHA256, SHA384, SHA512
 from cryptography.hazmat.primitives.serialization.pkcs7 import load_der_pkcs7_certificates
-from pyasn1.codec.der.decoder import decode as pyasn1_decode        # type: ignore
-from pyasn1.codec.der.encoder import encode as pyasn1_encode        # type: ignore
-from pyasn1.error import PyAsn1Error                                # type: ignore
-from pyasn1.type import univ as pyasn1_univ                         # type: ignore
-from pyasn1_modules import rfc2315, rfc5480                         # type: ignore
+from pyasn1.codec.der.decoder import decode as pyasn1_decode        # type: ignore[import]
+from pyasn1.codec.der.encoder import encode as pyasn1_encode        # type: ignore[import]
+from pyasn1.error import PyAsn1Error                                # type: ignore[import]
+from pyasn1.type import univ as pyasn1_univ                         # type: ignore[import]
+from pyasn1_modules import rfc2315, rfc5480                         # type: ignore[import]
 
 __version__ = "0.1.0"
 NAME = "apksigtool"
@@ -513,8 +513,8 @@ class Digest(APKSigToolBase):
 class Certificate(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> signed data -> certificate."""
     raw_data: bytes
-    _certificate: X509Cert = field(init=False, repr=False, compare=False)
-    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)
+    _certificate: X509Cert = field(init=False, repr=False, compare=False)           # type: ignore[no-any-unimported]
+    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)  # type: ignore[no-any-unimported]
     certificate_info: CertificateInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
 
@@ -525,11 +525,11 @@ class Certificate(APKSigToolBase):
         object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
 
     @property
-    def certificate(self) -> X509Cert:
+    def certificate(self) -> X509Cert:              # type: ignore[no-any-unimported]
         return self._certificate
 
     @property
-    def public_key(self) -> X509CertPubKeyInfo:
+    def public_key(self) -> X509CertPubKeyInfo:     # type: ignore[no-any-unimported]
         return self._public_key
 
     @classmethod
@@ -645,7 +645,7 @@ class Signature(APKSigToolBase):
 class PublicKey(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> public key."""
     raw_data: bytes
-    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)
+    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)  # type: ignore[no-any-unimported]
     public_key_info: PublicKeyInfo = field(init=False)
 
     def __post_init__(self) -> None:
@@ -653,7 +653,7 @@ class PublicKey(APKSigToolBase):
         object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
 
     @property
-    def public_key(self) -> X509CertPubKeyInfo:
+    def public_key(self) -> X509CertPubKeyInfo:     # type: ignore[no-any-unimported]
         return self._public_key
 
     def dump(self) -> bytes:
@@ -1099,8 +1099,8 @@ class JARSignatureBlockFile(APKSigToolBase):
     """JAR signature block file (.RSA, .DSA, or .EC)."""
     raw_data: bytes
     filename: str
-    _certificate: X509Cert = field(init=False, repr=False, compare=False)
-    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)
+    _certificate: X509Cert = field(init=False, repr=False, compare=False)           # type: ignore[no-any-unimported]
+    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)  # type: ignore[no-any-unimported]
     certificate_info: CertificateInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
     signer_infos: Tuple[PKCS7SignerInfo, ...] = field(init=False)
@@ -1114,11 +1114,11 @@ class JARSignatureBlockFile(APKSigToolBase):
         object.__setattr__(self, "signer_infos", infos)
 
     @property
-    def certificate(self) -> X509Cert:
+    def certificate(self) -> X509Cert:              # type: ignore[no-any-unimported]
         return self._certificate
 
     @property
-    def public_key(self) -> X509CertPubKeyInfo:
+    def public_key(self) -> X509CertPubKeyInfo:     # type: ignore[no-any-unimported]
         return self._public_key
 
     def dump(self) -> bytes:
@@ -2217,8 +2217,8 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
 
 # FIXME
 # https://www.rfc-editor.org/rfc/rfc2315
-def _load_apk_v1_signature_block_file_signer_infos_cert(data: bytes) \
-        -> Tuple[Tuple[PKCS7SignerInfo, ...], X509Cert]:
+def _load_apk_v1_signature_block_file_signer_infos_cert(    # type: ignore[no-any-unimported]
+        data: bytes) -> Tuple[Tuple[PKCS7SignerInfo, ...], X509Cert]:
     signer_infos = []
     try:
         cinf = pyasn1_decode(data, asn1Spec=rfc2315.ContentInfo())[0]
@@ -2268,7 +2268,8 @@ def _create_signature_block_file(sf: JARSignatureFile, *, cert: bytes, key: Priv
     return pyasn1_encode(cinf), alg
 
 
-def _parse_auth_attrs(attr: rfc2315.Attributes) -> Optional[PKCS7AuthenticatedAttributes]:
+def _parse_auth_attrs(  # type: ignore[no-any-unimported]
+        attr: rfc2315.Attributes) -> Optional[PKCS7AuthenticatedAttributes]:
     if not len(attr):
         return None
     id_contentType = pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.9.3")
@@ -2345,7 +2346,7 @@ def create_signature(key: PrivKey, msg: bytes, halgo: HalgoFun,
         return key.sign(msg, algorithm)
 
 
-def x509_certificate_info(cert: X509Cert) -> CertificateInfo:
+def x509_certificate_info(cert: X509Cert) -> CertificateInfo:   # type: ignore[no-any-unimported]
     """X.509 certificate info."""
     return CertificateInfo(
         subject=cert.subject.human_friendly,
@@ -2358,7 +2359,7 @@ def x509_certificate_info(cert: X509Cert) -> CertificateInfo:
         fingerprint=cert.sha256_fingerprint.replace(" ", "").lower())
 
 
-def public_key_info(key: X509CertPubKeyInfo) -> PublicKeyInfo:
+def public_key_info(key: X509CertPubKeyInfo) -> PublicKeyInfo:  # type: ignore[no-any-unimported]
     """Public key info."""
     try:
         algo = key.hash_algo.upper()
