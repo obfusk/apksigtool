@@ -480,7 +480,7 @@ class Digest(APKSigToolBase):
     digest: bytes
     algoritm_id_info: str = field(init=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         object.__setattr__(self, "algoritm_id_info", aid_info(self.signature_algorithm_id))
 
     @classmethod
@@ -514,7 +514,7 @@ class Certificate(APKSigToolBase):
     certificate_info: CertificateInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         object.__setattr__(self, "_certificate", X509Cert.load(self.raw_data))
         object.__setattr__(self, "_public_key", self.certificate.public_key)
         object.__setattr__(self, "certificate_info", x509_certificate_info(self.certificate))
@@ -613,7 +613,7 @@ class Signature(APKSigToolBase):
     signature: bytes
     algoritm_id_info: str = field(init=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         object.__setattr__(self, "algoritm_id_info", aid_info(self.signature_algorithm_id))
 
     @classmethod
@@ -644,7 +644,7 @@ class PublicKey(APKSigToolBase):
     _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)
     public_key_info: PublicKeyInfo = field(init=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         object.__setattr__(self, "_public_key", X509CertPubKeyInfo.load(self.raw_data))
         object.__setattr__(self, "public_key_info", public_key_info(self.public_key))
 
@@ -865,9 +865,12 @@ class APKSignatureSchemeBlock(Block):
     verified: Union[None, Literal[False], Tuple[Tuple[str, str], ...]] = None
     verification_error: Optional[str] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         assert self.version in (2, 3, "3.1")
-        assert self.verified in (None, False) or len(self.verified) >= 1
+        if isinstance(self.verified, tuple):
+            assert len(self.verified) >= 1
+        else:
+            assert self.verified in (None, False)
         assert (self.verification_error is not None) == (self.verified == False)    # noqa: E712
         if self.is_v2:
             assert all(isinstance(s, V2Signer) for s in self.signers)
@@ -999,7 +1002,7 @@ class JAREntry(APKSigToolBase):
     filename: str
     digests: Tuple[Tuple[str, str], ...]
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         assert all(algo in JAR_HASHERS_STR for algo, _ in self.digests)
 
     def dump(self) -> bytes:
@@ -1050,7 +1053,7 @@ class JARSignatureFile(JARManifestBase):
     digests_manifest_main_attributes: Optional[Tuple[Tuple[str, str], ...]]
     x_android_apk_signed: Optional[Tuple[int, ...]]
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         assert all(algo in JAR_HASHERS_STR for algo, _ in self.digests_manifest)
         assert all(algo in JAR_HASHERS_STR for algo, _ in self.digests_manifest_main_attributes or ())
 
@@ -1098,7 +1101,7 @@ class JARSignatureBlockFile(APKSigToolBase):
     public_key_info: PublicKeyInfo = field(init=False)
     signer_infos: Tuple[PKCS7SignerInfo, ...] = field(init=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         infos, cert = _load_apk_v1_signature_block_file_signer_infos_cert(self.raw_data)
         object.__setattr__(self, "_certificate", cert)
         object.__setattr__(self, "_public_key", self.certificate.public_key)
@@ -3003,7 +3006,7 @@ def main() -> None:
         apksigtool - parse/verify/clean android apk signing blocks & apks
     """)
     @click.version_option(__version__)
-    def cli():
+    def cli() -> None:
         pass
 
     @cli.command(help="""
@@ -3018,7 +3021,8 @@ def main() -> None:
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
     @click.option("--wrap", is_flag=True, help="Wrap output (no-op w/ --json).")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
-    def parse(apk_or_block, block, json, no_verify, sdk_version, verbose, wrap):
+    def parse(apk_or_block: str, block: bool, json: bool, no_verify: bool,
+              sdk_version: Optional[int], verbose: bool, wrap: bool) -> None:
         if block:
             apkfile = None
             with open(apk_or_block, "rb") as fh:
@@ -3045,7 +3049,8 @@ def main() -> None:
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
     @click.option("--wrap", is_flag=True, help="Wrap output (no-op w/ --json).")
     @click.argument("apk_or_dir", type=click.Path(exists=True, dir_okay=True))
-    def parse_v1(apk_or_dir, allow_unsafe, json, no_strict, no_verify, verbose, wrap):
+    def parse_v1(apk_or_dir: str, allow_unsafe: Tuple[str], json: bool, no_strict: bool,
+                 no_verify: bool, verbose: bool, wrap: bool) -> None:
         if os.path.isdir(apk_or_dir):
             apkfile = None
             e_meta = load_extracted_meta_from_dir(apk_or_dir)
@@ -3079,7 +3084,8 @@ def main() -> None:
     @click.option("-v", "--verbose", is_flag=True, help="Show signer(s).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def verify(ctx, apk, allow_unsafe, check_v1, quiet, sdk_version, signed_by, verbose):
+    def verify(ctx, apk: str, allow_unsafe: Tuple[str], check_v1: bool, quiet: bool,
+               sdk_version: Optional[int], signed_by: Optional[str], verbose: bool) -> None:
         print("WARNING: verification is considered EXPERIMENTAL, "
               "please use apksigner instead.", file=sys.stderr)
         if allow_unsafe:
@@ -3111,7 +3117,8 @@ def main() -> None:
                        "certificate and public key sha256 fingerprint (hex).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def verify_v1(ctx, apk, allow_unsafe, no_strict, quiet, rollback_is_error, signed_by):
+    def verify_v1(ctx, apk: str, allow_unsafe: Tuple[str], no_strict: bool, quiet: bool,
+                  rollback_is_error: bool, signed_by: Optional[str]) -> None:
         print("WARNING: verification is considered EXPERIMENTAL, "
               "please use apksigner instead.", file=sys.stderr)
         if allow_unsafe:
@@ -3135,7 +3142,7 @@ def main() -> None:
             if rollback_is_error:
                 sys.exit(5)
 
-    def _parse_signed_by(signed_by, ctx, cmd):
+    def _parse_signed_by(signed_by: str, ctx, cmd) -> Tuple[str, str]:
         try:
             cert, fpr = signed_by.split(":")
             return cert, fpr
@@ -3161,9 +3168,10 @@ def main() -> None:
                   help="For v3 signers specifying min/max SDK.")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def clean(ctx, apk_or_block, block, check, keep, sdk_version):
+    def clean(ctx, apk_or_block: str, block: bool, check: bool, keep: Tuple[str],
+              sdk_version: Optional[int]) -> None:
         try:
-            keep = tuple(int(x, 16) for p in keep for x in p.split(","))
+            keep_ids = tuple(int(x, 16) for p in keep for x in p.split(","))
         except ValueError as e:
             p, = [x for x in clean.params if x.name == "keep"]
             raise click.exceptions.BadParameter(e.args[0], ctx, p)
@@ -3172,12 +3180,12 @@ def main() -> None:
                 sig_block = fh.read()
             if check:
                 APKSigningBlock.parse(sig_block)    # try parsing, ignore result
-            sig_block_cleaned = clean_apk_signing_block(sig_block, keep=keep)
+            sig_block_cleaned = clean_apk_signing_block(sig_block, keep=keep_ids)
             if cleaned := (sig_block != sig_block_cleaned):
                 with open(apk_or_block, "wb") as fh:
                     fh.write(sig_block_cleaned)
         else:
-            cleaned = clean_apk(apk_or_block, check=check, keep=keep, sdk=sdk_version)
+            cleaned = clean_apk(apk_or_block, check=check, keep=keep_ids, sdk=sdk_version)
         if cleaned:
             print("cleaned")
         else:
@@ -3203,7 +3211,8 @@ def main() -> None:
                   help="Private key is encrypted; prompt for password.")
     @click.argument("unsigned_apk", type=click.Path(exists=True, dir_okay=False))
     @click.argument("output_apk", type=click.Path(dir_okay=False))
-    def sign(unsigned_apk, output_apk, cert, key, no_v1, no_v2, no_v3, prompt):
+    def sign(unsigned_apk: str, output_apk: str, cert: str, key: str,
+             no_v1: bool, no_v2: bool, no_v3: bool, prompt: bool) -> None:
         print("WARNING: signing is considered EXPERIMENTAL, "
               "please use apksigner instead.", file=sys.stderr)
         if no_v1 and no_v2 and no_v3:
