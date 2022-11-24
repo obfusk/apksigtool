@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-21
+# Date        : 2022-11-23
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -84,15 +84,25 @@ PAIR ID: 0x42726577
         "signers": [
 
 >>> blk.verify(apk)                             # [EXPERIMENTAL] raises on failure
->>> result = verified, failed = blk.verify_results(apk)
->>> len(verified), len(failed)
+>>> result = blk.verify_result(apk)
+>>> result.is_verified()
+True
+>>> result.is_v2_verified(), result.is_v3_verified(), result.is_v31_verified()
+(True, True, False)
+>>> len(result.verified), len(result.failed)
 (2, 0)
->>> result == ast.verify_apk(apk)               # uses .verify_results()
+>>> result == ast.verify_apk(apk)               # uses .verify_result()
 True
 
+>>> r = ast.verify_apk_and_check_signers(apk, check_v1=True)
+>>> r.is_v1_verified(), r.is_v2_verified(), r.is_v3_verified(), r.is_v31_verified()
+(True, True, True, False)
+
 >>> apk = "test/apks/apks/v2-only-cert-and-public-key-mismatch.apk"
->>> verified, failed = ast.verify_apk(apk)
->>> for version, error in failed:
+>>> result = ast.verify_apk(apk)
+>>> result.is_verified()
+False
+>>> for version, error in result.failed:
 ...     print(f"v{version}: {error}")
 v2: Public key does not match first certificate
 >>> blk = ast.APKSigningBlock.parse(ast.extract_v2_sig(apk)[1])
@@ -156,15 +166,14 @@ JAR SIGNATURE BLOCK FILE
     "entries": [
 
 >>> result = sig.verify(apk)                    # [EXPERIMENTAL] raises on failure
->>> verified, unverified_mf, unverified_sf = result
->>> unverified_mf
+>>> result.unverified_mf
 ('META-INF/MANIFEST.MF', 'META-INF/RSA-2048.RSA', 'META-INF/RSA-2048.SF')
->>> len(verified), len(unverified_sf)
+>>> len(result.verified_signers), len(result.unverified_sf)
 (1, 0)
 
 >>> apk = "test/apks/apks/v1-only-with-nul-in-entry-name.apk"
 >>> ast.verify_apk_v1(apk)
-(False, "Manifest entry not in ZIP: 'test.txt\\\\x00'")
+JARVerificationFailure(error="Manifest entry not in ZIP: 'test.txt\\\\x00'")
 >>> sig = ast.JARSignature.parse(ast.extract_meta(apk))
 >>> try:
 ...     sig.verify(apk)
@@ -176,6 +185,7 @@ Manifest entry not in ZIP: 'test.txt\\x00'
 
 from __future__ import annotations
 
+import abc
 import base64
 import binascii
 import dataclasses
@@ -786,8 +796,8 @@ class APKSigningBlock(APKSigToolBase):
 
     @classmethod
     def parse(_cls, data: bytes, apkfile: Optional[str] = None, *,
-              allow_unsafe: Tuple[str, ...] = (), sdk: Optional[int] = None) \
-            -> APKSigningBlock:
+              allow_unsafe: Tuple[str, ...] = (),
+              sdk: Optional[int] = None) -> APKSigningBlock:
         """
         Parse APK Signing Block.
 
@@ -824,10 +834,8 @@ class APKSigningBlock(APKSigToolBase):
 
     # FIXME
     # WARNING: verification is considered EXPERIMENTAL
-    def verify_results(self, apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
-                       sdk: Optional[int] = None) \
-            -> Tuple[Tuple[Tuple[Union[int, str], Tuple[Tuple[str, str], ...]], ...],
-                     Tuple[Tuple[Union[int, str], Exception], ...]]:
+    def verify_result(self, apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
+                      sdk: Optional[int] = None) -> APKVerificationResult:
         """
         Verify APK file using the APK Signature Scheme v2/v3 Blocks found in
         this APKSigningBlock.
@@ -835,9 +843,7 @@ class APKSigningBlock(APKSigToolBase):
         WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE
         RELIED ON, please use apksigner instead.
 
-        Returns (verified, failed), where verified is a tuple of (version,
-        signers) of verification successes, and failed is a tuple of (version,
-        exception) tuples of verification failures.
+        Returns APKVerificationResult.
 
         Uses APKSignatureSchemeBlock.verify().
         """
@@ -850,7 +856,7 @@ class APKSigningBlock(APKSigToolBase):
                     failed.append((pair.value.version, e))
                 else:
                     verified.append((pair.value.version, signers))
-        return tuple(verified), tuple(failed)
+        return APKVerificationResult(tuple(verified), tuple(failed))
 
     def clean(self, *, keep: Tuple[int, ...] = ()) -> APKSigningBlock:
         """
@@ -913,8 +919,8 @@ class APKSignatureSchemeBlock(Block):
 
     @classmethod
     def parse(_cls, version: SchemeVersion, data: bytes, apkfile: Optional[str] = None, *,
-              allow_unsafe: Tuple[str, ...] = (), sdk: Optional[int] = None) \
-            -> APKSignatureSchemeBlock:
+              allow_unsafe: Tuple[str, ...] = (),
+              sdk: Optional[int] = None) -> APKSignatureSchemeBlock:
         """
         Parse APK Signature Scheme v2/v3 Block.
 
@@ -1174,9 +1180,8 @@ class JARSignature(APKSigToolBase):
 
     # FIXME
     # WARNING: verification is considered EXPERIMENTAL
-    def verify(self, apkfile: str, *, allow_unsafe: Tuple[str, ...] = (), strict: bool = True) \
-            -> Tuple[Tuple[Tuple[str, str], ...], Tuple[str, ...],
-                     Tuple[Tuple[str, Tuple[str, ...]], ...]]:
+    def verify(self, apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
+               strict: bool = True) -> JARVerificationSuccess:
         """
         Verify APK file using this v1 (JAR) signature.
 
@@ -1189,6 +1194,108 @@ class JARSignature(APKSigToolBase):
         """
         return verify_apk_v1_signature(self, apkfile=apkfile, strict=strict,
                                        allow_unsafe=allow_unsafe)
+
+
+@dataclass(frozen=True)
+class JARVerificationResult(APKSigToolBase, abc.ABC):
+    """JAR (v1) verification result."""
+
+    @abc.abstractmethod
+    def is_verified(self) -> bool:
+        ...
+
+
+@dataclass(frozen=True)
+class JARVerificationSuccess(JARVerificationResult):
+    """
+    JAR (v1) verification sucess.
+
+    .verified_signers is a tuple of (cert_sha256_fingerprint,
+    pubkey_sha256_fingerprint) pairs.
+
+    .unverified_mf is a tuple of filenames in the ZIP but not in the manifest.
+
+    .unverified_sf is a tuple of (sf_filename, filenames) for files in the
+    manifest but not in the signature file.
+    """
+    signature: JARSignature
+    verified_signers: Tuple[Tuple[str, str], ...]
+    unverified_mf: Tuple[str, ...]
+    unverified_sf: Tuple[Tuple[str, Tuple[str, ...]], ...]
+
+    def is_verified(self) -> bool:
+        """True."""
+        return True
+
+
+@dataclass(frozen=True)
+class JARVerificationFailure(JARVerificationResult):
+    """JAR (v1) verification failure."""
+
+    error: str
+
+    def is_verified(self) -> bool:
+        """False."""
+        return False
+
+
+@dataclass(frozen=True)
+class APKVerificationResult(APKSigToolBase):
+    """
+    APK (v2/v3) verification result.
+
+    .verified is a tuple of (version, signers) of verification successes.
+
+    .failed is a tuple of (version, exception) tuples of verification failures.
+    """
+    verified: Tuple[Tuple[Union[int, str], Tuple[Tuple[str, str], ...]], ...]
+    failed: Tuple[Tuple[Union[int, str], Exception], ...]
+
+    def is_verified(self) -> bool:
+        """The APK is verified if .verified is not empty and .failed is."""
+        return bool(self.verified and not self.failed)
+
+    def is_v2_verified(self) -> bool:
+        """Whether .is_verified() w/ v2."""
+        return self.is_verified() and 2 in [v for v, _ in self.verified]
+
+    def is_v3_verified(self) -> bool:
+        """Whether .is_verified() w/ v3."""
+        return self.is_verified() and 3 in [v for v, _ in self.verified]
+
+    def is_v31_verified(self) -> bool:
+        """Whether .is_verified() w/ v3.1."""
+        return self.is_verified() and "3.1" in [v for v, _ in self.verified]
+
+
+@dataclass(frozen=True)
+class VerificationResult(APKSigToolBase):
+    """Combined verification result."""
+    error: Optional[str]
+    jar_result: Optional[JARVerificationResult]
+    apk_result: APKVerificationResult
+    common_signers: Optional[Tuple[Tuple[str, str], ...]]
+
+    def is_verified(self) -> bool:
+        """Whether .error is None."""
+        return self.error is None
+
+    def is_v1_verified(self) -> bool:
+        """Whether .is_verified() w/ version 1."""
+        return self.is_verified() and self.jar_result is not None \
+            and self.jar_result.is_verified()
+
+    def is_v2_verified(self) -> bool:
+        """Whether .is_verified() w/ version 2."""
+        return self.is_verified() and self.apk_result.is_v2_verified()
+
+    def is_v3_verified(self) -> bool:
+        """Whether .is_verified() w/ version 3."""
+        return self.is_verified() and self.apk_result.is_v3_verified()
+
+    def is_v31_verified(self) -> bool:
+        """Whether .is_verified() w/ version 3.1."""
+        return self.is_verified() and self.apk_result.is_v31_verified()
 
 
 def _assert(b: bool, what: Optional[str] = None) -> None:
@@ -1373,8 +1480,8 @@ def dump_pair(pair: Pair) -> bytes:
 
 def parse_apk_signature_scheme_block(
         version: SchemeVersion, data: bytes, apkfile: Optional[str] = None, *,
-        allow_unsafe: Tuple[str, ...] = (), sdk: Optional[int] = None) \
-        -> APKSignatureSchemeBlock:
+        allow_unsafe: Tuple[str, ...] = (),
+        sdk: Optional[int] = None) -> APKSignatureSchemeBlock:
     """
     Parse APK Signature Scheme v2/v3 Block (and attempt to verify -- setting
     .verified to #signers or False instead of None -- if apkfile is not
@@ -1396,8 +1503,8 @@ def parse_apk_signature_scheme_block(
     return APKSignatureSchemeBlock(version, signers)
 
 
-def _parse_apk_signature_scheme_block(data: bytes, version: SchemeVersion) \
-        -> Iterator[Union[V2Signer, V3Signer]]:
+def _parse_apk_signature_scheme_block(
+        data: bytes, version: SchemeVersion) -> Iterator[Union[V2Signer, V3Signer]]:
     """Yield V2Signer/V3Signer(s) for each parse_signer()."""
     seq_len, data = int.from_bytes(data[:4], "little"), data[4:]
     _assert(seq_len == len(data), "APK Signature Scheme Block size")
@@ -1447,8 +1554,8 @@ def dump_signer(signer: Union[V2Signer, V3Signer]) -> bytes:
     return sigdata + minmax + sigs + pubkey
 
 
-def parse_signed_data(data: bytes, version: SchemeVersion) \
-        -> Union[V2SignedData, V3SignedData]:
+def parse_signed_data(
+        data: bytes, version: SchemeVersion) -> Union[V2SignedData, V3SignedData]:
     """
     Parse APK Signature Scheme v2/v3 Block -> signer -> signed data.
 
@@ -1811,8 +1918,8 @@ def _chunks(data: bytes, blocksize: int) -> Iterator[bytes]:
 
 # https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html
 def parse_apk_v1_signature(extracted_meta: ZipInfoDataPairs, apkfile: Optional[str] = None,
-                           *, allow_unsafe: Tuple[str, ...] = (), strict: bool = True) \
-        -> JARSignature:
+                           *, allow_unsafe: Tuple[str, ...] = (),
+                           strict: bool = True) -> JARSignature:
     """Parse v1 signature metadata files from extract_meta()."""
     manifest = None
     sig_files = {}
@@ -1848,8 +1955,10 @@ def parse_apk_v1_signature(extracted_meta: ZipInfoDataPairs, apkfile: Optional[s
         verified: Union[Literal[False], Tuple[Tuple[str, str], ...]]
         verification_error = unverified_mf = unverified_sf = None
         try:
-            verified, unverified_mf, unverified_sf = sig.verify(
-                apkfile, allow_unsafe=allow_unsafe, strict=strict)
+            result = sig.verify(apkfile, allow_unsafe=allow_unsafe, strict=strict)
+            verified = result.verified_signers
+            unverified_mf = result.unverified_mf
+            unverified_sf = result.unverified_sf
         except VerificationError as e:
             verified, verification_error = False, str(e)
         return dataclasses.replace(
@@ -1954,8 +2063,8 @@ def _digests_from_dict(ent: Dict[str, str], suffix: str = "") -> Iterator[Tuple[
 
 
 # FIXME
-def _parse_apk_v1_manifest(data: bytes) \
-        -> Tuple[Dict[str, str], int, Tuple[Tuple[Dict[str, str], bytes], ...]]:
+def _parse_apk_v1_manifest(
+        data: bytes) -> Tuple[Dict[str, str], int, Tuple[Tuple[Dict[str, str], bytes], ...]]:
     lines = data.splitlines(keepends=True)
     i, n = 0, len(lines)
     headers: Dict[str, str] = {}
@@ -2071,9 +2180,8 @@ def _mf_hdr_wrap(s: str, endl: str, wrap: int) -> str:
 # https://docs.oracle.com/javase/tutorial/deployment/jar/intro.html
 # https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#Signature_Validation
 def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
-                            allow_unsafe: Tuple[str, ...] = (), strict: bool = True) \
-        -> Tuple[Tuple[Tuple[str, str], ...], Tuple[str, ...],
-                 Tuple[Tuple[str, Tuple[str, ...]], ...]]:
+                            allow_unsafe: Tuple[str, ...] = (),
+                            strict: bool = True) -> JARVerificationSuccess:
     """
     Verify v1 (JAR) signature.
 
@@ -2088,12 +2196,7 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
 
     Raises VerificationError on failure.
 
-    Returns (verified_signers, unverified_mf, unverified_sf), where
-    verified_signers is a tuple of (cert_sha256_fingerprint,
-    pubkey_sha256_fingerprint) pairs, unverified_mf is a tuple of filenames in
-    the ZIP but not in the manifest, and unverified_sf is a tuple of
-    (sf_filename, filenames) for files in the manifest but not in the signature
-    file.
+    Returns JARVerificationSuccess.
     """
     verified = []
     manifest = {}
@@ -2212,7 +2315,8 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
             raise VerificationError(f"ZIP entry not in manifest: {filename!r}")
     if not verified:
         raise VerificationError("No signers")
-    return tuple(verified), unverified_mf, tuple(sorted(unverified_sf.items()))
+    return JARVerificationSuccess(signature, tuple(verified), unverified_mf,
+                                  tuple(sorted(unverified_sf.items())))
 
 
 # FIXME
@@ -2534,19 +2638,18 @@ def show_v1_signature(signature: JARSignature, *, allow_unsafe: Tuple[str, ...] 
         show_v1_signature_block_file(sbf, file=file, verbose=verbose, wrap=wrap)
     if apkfile is not None:
         try:
-            signers, unverified_mf, unverified_sf = signature.verify(
-                apkfile, allow_unsafe=allow_unsafe, strict=strict)
+            result = signature.verify(apkfile, allow_unsafe=allow_unsafe, strict=strict)
         except VerificationError as e:
             p(f"NOT VERIFIED ({e})")
         else:
-            p(f"VERIFIED ({len(signers)} signer(s))")
+            p(f"VERIFIED ({len(result.verified_signers)} signer(s))")
             if verbose:
-                if unverified_mf:
+                if result.unverified_mf:
                     p("UNVERIFIED FILES (IN ZIP, NOT IN MANIFEST)")
-                    for filename in unverified_mf:
+                    for filename in result.unverified_mf:
                         p("  FILENAME:", repr(filename)[1:-1])
-                if unverified_sf:
-                    for sfn, filenames in unverified_sf:
+                if result.unverified_sf:
+                    for sfn, filenames in result.unverified_sf:
                         p(f"UNVERIFIED FILES (IN MANIFEST, NOT IN {repr(sfn)[1:-1]})")
                         for filename in filenames:
                             p("  FILENAME:", repr(filename)[1:-1])
@@ -2698,88 +2801,89 @@ def _load_extracted_meta_from_dir(path: str) -> Iterator[Tuple[zipfile.ZipInfo, 
 def verify_apk_and_check_signers(
         apkfile: str, *, allow_unsafe: Tuple[str, ...] = (), check_v1: bool = False,
         quiet: bool = True, sdk_version: Optional[int] = None,
-        signed_by: Optional[Tuple[str, str]] = None, verbose: bool = False) -> bool:
+        signed_by: Optional[Tuple[str, str]] = None,
+        verbose: bool = False) -> VerificationResult:
     """
     Verify APK signatures and check whether signers match between v1/v2/v3.
 
     WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED
     ON, please use apksigner instead.
 
-    Returns True on success, False on failure.
+    Returns VerificationResult.
     """
     all_signers = []
     required_sig_versions: Set[Union[int, str]] = set()
     if check_v1:
-        res = _verify_v1(apkfile, allow_unsafe=allow_unsafe, expected=False, quiet=quiet)
-        if res:
-            _, sig, v1_signers = res
-            all_signers.append(set(v1_signers))
-            required_sig_versions = set(sig.required_signature_versions)
-        v1_ok = bool(res or res is None)
+        jar_result = _verify_v1(apkfile, allow_unsafe=allow_unsafe, expected=False, quiet=quiet)
+        if jar_result and jar_result.is_verified():
+            assert isinstance(jar_result, JARVerificationSuccess)
+            all_signers.append(set(jar_result.verified_signers))
+            required_sig_versions = set(jar_result.signature.required_signature_versions)
     else:
-        v1_ok = True
-    verified, failed = verify_apk(apkfile, allow_unsafe=allow_unsafe, sdk=sdk_version)
-    for version, signers in verified:
+        jar_result = None
+    apk_result = verify_apk(apkfile, allow_unsafe=allow_unsafe, sdk=sdk_version)
+    for version, signers in apk_result.verified:
         required_sig_versions.discard(version)
         all_signers.append(set(signers))
         if not quiet:
             print(f"v{version} verified ({len(signers)} signer(s))")
-    for version, e in failed:
+    for version, e in apk_result.failed:
         if not quiet:
             print(f"v{version} not verified ({e})")
-    if failed or not verified or not v1_ok:
-        return False
+    common_signers = reduce(lambda x, y: x & y, all_signers) if all_signers else set()
+    result = (jar_result, apk_result, tuple(sorted(common_signers)) or None)
+    if not apk_result.is_verified() or (jar_result and not jar_result.is_verified()):
+        return VerificationResult("Not verified", *result)
     if required_sig_versions:
         if not quiet:
             for n in sorted(required_sig_versions):
                 print(f"v{n} signature(s) not found but required")
-        return False
-    common_signers = reduce(lambda x, y: x & y, all_signers)
+        vsns = ", ".join(f"v{n}" for n in sorted(required_sig_versions))
+        return VerificationResult(f"Missing required {vsns} signature(s)", *result)
     if not common_signers:
         if not quiet:
             print("no common signers")
-        return False
+        return VerificationResult("No common signers", *result)
     if signed_by and signed_by not in common_signers:
         if not quiet:
             print("expected signer not in common signers")
-        return False
+        return VerificationResult("Expected signer not in common signers", *result)
     if verbose:
         for cert, pk in sorted(common_signers):
             print("common signer:")
             print(f"  {cert} (sha256 fingerprint of certificate)")
             print(f"  {pk} (sha256 fingerprint of public key)")
-    return True
+    return VerificationResult(None, *result)
 
 
 # FIXME: warn about unverified files?
 def _verify_v1(apk: str, *, allow_unsafe: Tuple[str, ...] = (),
-               expected: bool = True, quiet: bool = True, strict: bool = True) \
-        -> Union[Tuple[Literal[True], JARSignature, Tuple[Tuple[str, str], ...]],
-                 Literal[False], None]:
+               expected: bool = True, quiet: bool = True, strict: bool = True,
+               signed_by: Optional[Tuple[str, str]] = None) -> Optional[JARVerificationResult]:
     res = verify_apk_v1(apk, allow_unsafe=allow_unsafe, expected=expected, strict=strict)
     if not res:
         if not quiet:
             print("v1 signature(s) not found")
-        return None
+    elif res.is_verified():
+        assert isinstance(res, JARVerificationSuccess)
+        if not quiet:
+            print(f"v1 verified ({len(res.verified_signers)} signer(s))")
+        if signed_by and signed_by not in res.verified_signers:
+            if not quiet:
+                print("expected signer not in signers")
+            return JARVerificationFailure("Expected signer not in signers")
     else:
-        if res[0]:
-            _, sig, signers, _, _ = res
-            if not quiet:
-                print(f"v1 verified ({len(signers)} signer(s))")
-            return True, sig, signers
-        else:
-            _, err = res
-            if not quiet:
-                print(f"v1 not verified ({err})")
-            return False
+        assert isinstance(res, JARVerificationFailure)
+        if not quiet:
+            print(f"v1 not verified ({res.error})")
+    return res
 
 
 # FIXME
 # WARNING: verification is considered EXPERIMENTAL
 def verify_apk(apkfile: str, sig_block: Optional[bytes] = None, *,
-               allow_unsafe: Tuple[str, ...] = (), sdk: Optional[int] = None) \
-        -> Tuple[Tuple[Tuple[Union[int, str], Tuple[Tuple[str, str], ...]], ...],
-                 Tuple[Tuple[Union[int, str], Exception], ...]]:
+               allow_unsafe: Tuple[str, ...] = (),
+               sdk: Optional[int] = None) -> APKVerificationResult:
     """
     Verify APK file using the APK Signature Scheme v2/v3 Blocks found parsing
     the APK Signing Block.
@@ -2790,25 +2894,19 @@ def verify_apk(apkfile: str, sig_block: Optional[bytes] = None, *,
     If sig_block is None, it will be extracted from the APK using
     extract_v2_sig().
 
-    Returns (verified, failed), where verified is a tuple of (version, signers)
-    of verification successes, and failed is a tuple of (version, exception)
-    tuples of verification failures.
+    Returns APKVerificationResult.
     """
     if sig_block is None:
         _, sig_block = extract_v2_sig(apkfile)
-    return APKSigningBlock.parse(sig_block).verify_results(
+    return APKSigningBlock.parse(sig_block).verify_result(
         apkfile, allow_unsafe=allow_unsafe, sdk=sdk)
 
 
 # FIXME
 # FIXME: rollback protections
 # WARNING: verification is considered EXPERIMENTAL
-def verify_apk_v1(apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
-                  expected: bool = True, strict: bool = True) \
-        -> Union[Tuple[Literal[True], JARSignature,
-                       Tuple[Tuple[str, str], ...], Tuple[str, ...],
-                       Tuple[Tuple[str, Tuple[str, ...]], ...]],
-                 Tuple[Literal[False], str], None]:
+def verify_apk_v1(apkfile: str, *, allow_unsafe: Tuple[str, ...] = (), expected: bool = True,
+                  strict: bool = True) -> Optional[JARVerificationResult]:
     """
     Verify APK file using the v1 (JAR) signatures.
 
@@ -2816,21 +2914,18 @@ def verify_apk_v1(apkfile: str, *, allow_unsafe: Tuple[str, ...] = (),
     ON, please use apksigner instead.
 
     Returns None when no v1 signature was found and expected is False, otherwise
-    (True, verified_signers, unverified_files) on success and (False, error) on
-    failure.
+    JARVerificationSuccess on success and JARVerificationFailure on failure.
     """
     e_meta = extract_meta(apkfile)
     if not e_meta or [i.filename for i, _ in e_meta] == [JAR_MANIFEST]:
         if expected:
-            return False, "Missing v1 signature"
+            return JARVerificationFailure("Missing v1 signature")
         return None
     sig = JARSignature.parse(e_meta)
     try:
-        signers, unverified_mf, unverified_sf = sig.verify(
-            apkfile, allow_unsafe=allow_unsafe, strict=strict)
-        return True, sig, signers, unverified_mf, unverified_sf
+        return sig.verify(apkfile, allow_unsafe=allow_unsafe, strict=strict)
     except VerificationError as err:
-        return False, str(err)
+        return JARVerificationFailure(str(err))
 
 
 # NB: modifies the APK file in place!
@@ -2853,8 +2948,8 @@ def clean_apk(apkfile: str, *, check: bool = False, keep: Tuple[int, ...] = (),
     """
     _, sig_block = old_v2_sig = extract_v2_sig(apkfile)
     if check:
-        verified, failed = verify_apk(apkfile, sig_block, sdk=sdk)
-        if failed or not verified:
+        result = verify_apk(apkfile, sig_block, sdk=sdk)
+        if not result.is_verified():
             raise VerificationError("Verification failed")
     sig_block_cleaned = clean_apk_signing_block(sig_block, keep=keep)
     if sig_block == sig_block_cleaned:
@@ -2915,8 +3010,7 @@ def sign_apk(unsigned_apk: str, output_apk: str, *, cert: bytes, key: PrivKey,
 # FIXME
 def create_v1_signature(apkfile: str, *, cert: bytes, key: PrivKey,
                         hash_algo: Optional[str] = None,
-                        x_android_apk_signed: Optional[Tuple[int, ...]] = None) \
-        -> ZipInfoDataPairs:
+                        x_android_apk_signed: Optional[Tuple[int, ...]] = None) -> ZipInfoDataPairs:
     """
     Create v1 (JAR) signature.
 
@@ -3122,9 +3216,10 @@ def main() -> None:
             print(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.",
                   file=sys.stderr)
         sb = _parse_signed_by(signed_by, ctx, verify) if signed_by else None
-        if not verify_apk_and_check_signers(apk, allow_unsafe=allow_unsafe, check_v1=check_v1,
-                                            quiet=quiet, sdk_version=sdk_version,
-                                            signed_by=sb, verbose=verbose):
+        res = verify_apk_and_check_signers(apk, allow_unsafe=allow_unsafe, check_v1=check_v1,
+                                           quiet=quiet, sdk_version=sdk_version,
+                                           signed_by=sb, verbose=verbose)
+        if not res.is_verified():
             sys.exit(4)
 
     # FIXME
@@ -3155,15 +3250,13 @@ def main() -> None:
             algs = ", ".join(sorted(set(allow_unsafe)))
             print(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.",
                   file=sys.stderr)
-        res = _verify_v1(apk, allow_unsafe=allow_unsafe, quiet=quiet, strict=not no_strict)
-        if not res:
+        sb = _parse_signed_by(signed_by, ctx, verify_v1) if signed_by else None
+        res = _verify_v1(apk, allow_unsafe=allow_unsafe, quiet=quiet,
+                         strict=not no_strict, signed_by=sb)
+        if not res or not res.is_verified():
             sys.exit(4)
-        _, sig, signers = res
-        if signed_by and _parse_signed_by(signed_by, ctx, verify_v1) not in signers:
-            if not quiet:
-                print("expected signer not in signers")
-            sys.exit(4)
-        if required_sv := sig.required_signature_versions:
+        assert isinstance(res, JARVerificationSuccess)
+        if required_sv := res.signature.required_signature_versions:
             what = "Error" if rollback_is_error else "Warning"
             vsns = ", ".join(f"v{n}" for n in sorted(required_sv))
             sys.stdout.flush()  # FIXME
@@ -3172,8 +3265,8 @@ def main() -> None:
             if rollback_is_error:
                 sys.exit(5)
 
-    def _parse_signed_by(signed_by: str, ctx: click.Context, cmd: click.Command) \
-            -> Tuple[str, str]:
+    def _parse_signed_by(signed_by: str, ctx: click.Context,
+                         cmd: click.Command) -> Tuple[str, str]:
         try:
             cert, fpr = signed_by.split(":")
             return cert, fpr

@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-11-22
+    Date        : 2022-11-23
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -414,8 +414,9 @@ $ man apksigtool                # requires the man page to be installed
 >>> apksigtool.show_json(blk)                       # JSON
 
 >>> blk.verify(apk)                                 # [EXPERIMENTAL] raises on failure
->>> result = verified, failed = blk.verify_results(apk)
->>> result = apksigtool.verify_apk(apk)             # uses .verify_results()
+>>> result = blk.verify_result(apk)
+>>> result = apksigtool.verify_apk(apk)             # uses .verify_result()
+>>> result.is_verified()
 ```
 
 ### Cleaning
