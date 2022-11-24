@@ -52,7 +52,7 @@ APK Signing Block
 >>> blk = ast.APKSigningBlock.parse(data)       # parse APK Signing Block
 >>> blk == ast.parse_apk_signing_block(data)    # same as above
 True
->>> [ hex(p.id) for p in blk.pairs ]
+>>> [hex(p.id) for p in blk.pairs]
 ['0x7109871a', '0xf05368c0', '0x42726577']
 >>> data == blk.dump()
 True
@@ -132,7 +132,7 @@ v1 (JAR) signatures
 >>> import apksigtool as ast, io
 >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
 >>> meta = ast.extract_meta(apk)
->>> [ x.filename for x, _ in meta ]
+>>> [x.filename for x, _ in meta]
 ['META-INF/RSA-2048.SF', 'META-INF/RSA-2048.RSA', 'META-INF/MANIFEST.MF']
 >>> sig = ast.JARSignature.parse(meta)          # parse v1 signature
 >>> sig == ast.parse_apk_v1_signature(meta)     # same as above
@@ -1392,12 +1392,12 @@ def clean_apk_signing_block(data: bytes, *, keep: Tuple[int, ...] = (),
     >>> apk = "test/apks/apks/v3-only-with-stamp.apk"
     >>> _, data = ast.extract_v2_sig(apk)
     >>> blk = ast.parse_apk_signing_block(data)
-    >>> [ hex(p.id) for p in blk.pairs ]
+    >>> [hex(p.id) for p in blk.pairs]
     ['0xf05368c0', '0x6dff800d', '0x42726577']
     >>> blk.verify(apk)
     >>> data_cleaned = ast.clean_apk_signing_block(data)
     >>> blk_cleaned = ast.parse_apk_signing_block(data_cleaned)
-    >>> [ hex(p.id) for p in blk_cleaned.pairs ]
+    >>> [hex(p.id) for p in blk_cleaned.pairs]
     ['0xf05368c0', '0x42726577']
     >>> blk_cleaned.verify(apk)
     >>> data_cleaned == ast.clean_apk_signing_block(data, parse=True)
@@ -1460,9 +1460,29 @@ def dump_apk_signing_block(block: APKSigningBlock) -> bytes:
     >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
     >>> _, data = ast.extract_v2_sig(apk)
     >>> blk = ast.parse_apk_signing_block(data)
-    >>> [ hex(p.id) for p in blk.pairs ]
+    >>> [hex(p.id) for p in blk.pairs]
     ['0x7109871a', '0xf05368c0', '0x42726577']
     >>> blk.dump() == data
+    True
+
+    >>> import dataclasses as dc, shutil, tempfile
+    >>> v2_id = ast.APK_SIGNATURE_SCHEME_V2_BLOCK_ID
+    >>> pairs_no_v2 = tuple(p for p in blk.pairs if not p.id == v2_id)
+    >>> blk_no_v2 = dc.replace(blk, pairs=pairs_no_v2)
+    >>> [hex(p.id) for p in blk_no_v2.pairs]
+    ['0xf05368c0', '0x42726577']
+    >>> with tempfile.TemporaryDirectory() as tmpdir:
+    ...     out = os.path.join(tmpdir, "out.apk")
+    ...     _ = shutil.copy(apk, out)
+    ...     r1 = ast.verify_apk_and_check_signers(out, check_v1=True)
+    ...     r1.is_verified()
+    ...     ast.replace_apk_signing_block(out, blk_no_v2.dump())
+    ...     r2 = ast.verify_apk_and_check_signers(out, check_v1=True)
+    ...     r2.is_verified(), r2.error
+    ...     r3 = ast.verify_apk_and_check_signers(out)
+    ...     r3.is_verified()
+    True
+    (False, 'Missing required v2 signature(s)')
     True
 
     """
@@ -1584,13 +1604,13 @@ def dump_signed_data(signed_data: Union[V2SignedData, V3SignedData], *,
     """
     Dump APK Signature Scheme v2/v3 Block -> signer -> signed data.
 
-    >>> import apksigtool as ast, dataclasses as dt
+    >>> import apksigtool as ast, dataclasses as dc
     >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
     >>> blk = ast.parse_apk_signing_block(ast.extract_v2_sig(apk)[1])
     >>> sd1 = blk.pairs[0].value.signers[0].signed_data
     >>> sd2 = blk.pairs[1].value.signers[0].signed_data
-    >>> sd1_nord = dt.replace(sd1, raw_data=b"")
-    >>> sd2_nord = dt.replace(sd2, raw_data=b"")
+    >>> sd1_nord = dc.replace(sd1, raw_data=b"")
+    >>> sd2_nord = dc.replace(sd2, raw_data=b"")
     >>> sd1.dump() == sd1_nord.dump(expect_raw_data=False, verify_raw_data=False)
     True
     >>> sd2.dump() == sd2_nord.dump(expect_raw_data=False, verify_raw_data=False)
@@ -1978,16 +1998,16 @@ def dump_apk_v1_signature(signature: JARSignature) -> ZipInfoDataPairs:
     >>> noraw_ents = lambda x, es: dc.replace(x, raw_data=b"", entries=es)
     >>> apk = "test/apks/apks/golden-aligned-v1v2v3-out.apk"
     >>> meta = ast.extract_meta(apk)
-    >>> [ x.filename for x, _ in meta ]
+    >>> [x.filename for x, _ in meta]
     ['META-INF/RSA-2048.SF', 'META-INF/RSA-2048.RSA', 'META-INF/MANIFEST.MF']
     >>> sig = ast.parse_apk_v1_signature(meta)
     >>> mf = noraw_ents(sig.manifest, tuple(map(noraw, sig.manifest.entries)))
     >>> sf = noraw_ents(sig.signature_files[0], tuple(map(noraw, sig.signature_files[0].entries)))
     >>> sbf = sig.signature_block_files[0]
     >>> meta_dump = ast.JARSignature(mf, (sf,), (sbf,)).dump()
-    >>> [ x.filename for x, _ in meta_dump ]
+    >>> [x.filename for x, _ in meta_dump]
     ['META-INF/RSA-2048.SF', 'META-INF/RSA-2048.RSA', 'META-INF/MANIFEST.MF']
-    >>> [ (x.filename, y) for x, y in meta ] == [ (x.filename, y) for x, y in meta_dump ]
+    >>> [(x.filename, y) for x, y in meta] == [(x.filename, y) for x, y in meta_dump]
     True
 
     """
