@@ -85,9 +85,9 @@ PAIR ID: 0x42726577
 
 >>> blk.verify(apk)                             # [EXPERIMENTAL] raises on failure
 >>> result = blk.verify_result(apk)
->>> result.is_verified()
+>>> result.is_verified
 True
->>> result.is_v2_verified(), result.is_v3_verified(), result.is_v31_verified()
+>>> result.is_v2_verified, result.is_v3_verified, result.is_v31_verified
 (True, True, False)
 >>> len(result.verified), len(result.failed)
 (2, 0)
@@ -95,12 +95,12 @@ True
 True
 
 >>> r = ast.verify_apk_and_check_signers(apk, check_v1=True)
->>> r.is_v1_verified(), r.is_v2_verified(), r.is_v3_verified(), r.is_v31_verified()
+>>> r.is_v1_verified, r.is_v2_verified, r.is_v3_verified, r.is_v31_verified
 (True, True, True, False)
 
 >>> apk = "test/apks/apks/v2-only-cert-and-public-key-mismatch.apk"
 >>> result = ast.verify_apk(apk)
->>> result.is_verified()
+>>> result.is_verified
 False
 >>> for version, error in result.failed:
 ...     print(f"v{version}: {error}")
@@ -1200,6 +1200,7 @@ class JARSignature(APKSigToolBase):
 class JARVerificationResult(APKSigToolBase, abc.ABC):
     """JAR (v1) verification result."""
 
+    @property
     @abc.abstractmethod
     def is_verified(self) -> bool:
         ...
@@ -1223,6 +1224,7 @@ class JARVerificationSuccess(JARVerificationResult):
     unverified_mf: Tuple[str, ...]
     unverified_sf: Tuple[Tuple[str, Tuple[str, ...]], ...]
 
+    @property
     def is_verified(self) -> bool:
         """True."""
         return True
@@ -1231,9 +1233,9 @@ class JARVerificationSuccess(JARVerificationResult):
 @dataclass(frozen=True)
 class JARVerificationFailure(JARVerificationResult):
     """JAR (v1) verification failure."""
-
     error: str
 
+    @property
     def is_verified(self) -> bool:
         """False."""
         return False
@@ -1251,21 +1253,25 @@ class APKVerificationResult(APKSigToolBase):
     verified: Tuple[Tuple[Union[int, str], Tuple[Tuple[str, str], ...]], ...]
     failed: Tuple[Tuple[Union[int, str], Exception], ...]
 
+    @property
     def is_verified(self) -> bool:
         """The APK is verified if .verified is not empty and .failed is."""
         return bool(self.verified and not self.failed)
 
+    @property
     def is_v2_verified(self) -> bool:
-        """Whether .is_verified() w/ v2."""
-        return self.is_verified() and 2 in [v for v, _ in self.verified]
+        """Whether .is_verified w/ v2."""
+        return self.is_verified and 2 in [v for v, _ in self.verified]
 
+    @property
     def is_v3_verified(self) -> bool:
-        """Whether .is_verified() w/ v3."""
-        return self.is_verified() and 3 in [v for v, _ in self.verified]
+        """Whether .is_verified w/ v3."""
+        return self.is_verified and 3 in [v for v, _ in self.verified]
 
+    @property
     def is_v31_verified(self) -> bool:
-        """Whether .is_verified() w/ v3.1."""
-        return self.is_verified() and "3.1" in [v for v, _ in self.verified]
+        """Whether .is_verified w/ v3.1."""
+        return self.is_verified and "3.1" in [v for v, _ in self.verified]
 
 
 @dataclass(frozen=True)
@@ -1276,26 +1282,31 @@ class VerificationResult(APKSigToolBase):
     apk_result: APKVerificationResult
     common_signers: Optional[Tuple[Tuple[str, str], ...]]
 
+    @property
     def is_verified(self) -> bool:
         """Whether .error is None."""
         return self.error is None
 
+    @property
     def is_v1_verified(self) -> bool:
-        """Whether .is_verified() w/ version 1."""
-        return self.is_verified() and self.jar_result is not None \
-            and self.jar_result.is_verified()
+        """Whether .is_verified w/ version 1."""
+        return self.is_verified and self.jar_result is not None \
+            and self.jar_result.is_verified
 
+    @property
     def is_v2_verified(self) -> bool:
-        """Whether .is_verified() w/ version 2."""
-        return self.is_verified() and self.apk_result.is_v2_verified()
+        """Whether .is_verified w/ version 2."""
+        return self.is_verified and self.apk_result.is_v2_verified
 
+    @property
     def is_v3_verified(self) -> bool:
-        """Whether .is_verified() w/ version 3."""
-        return self.is_verified() and self.apk_result.is_v3_verified()
+        """Whether .is_verified w/ version 3."""
+        return self.is_verified and self.apk_result.is_v3_verified
 
+    @property
     def is_v31_verified(self) -> bool:
-        """Whether .is_verified() w/ version 3.1."""
-        return self.is_verified() and self.apk_result.is_v31_verified()
+        """Whether .is_verified w/ version 3.1."""
+        return self.is_verified and self.apk_result.is_v31_verified
 
 
 def _assert(b: bool, what: Optional[str] = None) -> None:
@@ -1475,12 +1486,12 @@ def dump_apk_signing_block(block: APKSigningBlock) -> bytes:
     ...     out = os.path.join(tmpdir, "out.apk")
     ...     _ = shutil.copy(apk, out)
     ...     r1 = ast.verify_apk_and_check_signers(out, check_v1=True)
-    ...     r1.is_verified()
+    ...     r1.is_verified
     ...     ast.replace_apk_signing_block(out, blk_no_v2.dump())
     ...     r2 = ast.verify_apk_and_check_signers(out, check_v1=True)
-    ...     r2.is_verified(), r2.error
+    ...     r2.is_verified, r2.error
     ...     r3 = ast.verify_apk_and_check_signers(out)
-    ...     r3.is_verified()
+    ...     r3.is_verified
     True
     (False, 'Missing required v2 signature(s)')
     True
@@ -2835,7 +2846,7 @@ def verify_apk_and_check_signers(
     required_sig_versions: Set[Union[int, str]] = set()
     if check_v1:
         jar_result = _verify_v1(apkfile, allow_unsafe=allow_unsafe, expected=False, quiet=quiet)
-        if jar_result and jar_result.is_verified():
+        if jar_result and jar_result.is_verified:
             assert isinstance(jar_result, JARVerificationSuccess)
             all_signers.append(set(jar_result.verified_signers))
             required_sig_versions = set(jar_result.signature.required_signature_versions)
@@ -2852,7 +2863,7 @@ def verify_apk_and_check_signers(
             print(f"v{version} not verified ({e})")
     common_signers = reduce(lambda x, y: x & y, all_signers) if all_signers else set()
     result = (jar_result, apk_result, tuple(sorted(common_signers)) or None)
-    if not apk_result.is_verified() or (jar_result and not jar_result.is_verified()):
+    if not apk_result.is_verified or (jar_result and not jar_result.is_verified):
         return VerificationResult("Not verified", *result)
     if required_sig_versions:
         if not quiet:
@@ -2884,7 +2895,7 @@ def _verify_v1(apk: str, *, allow_unsafe: Tuple[str, ...] = (),
     if not res:
         if not quiet:
             print("v1 signature(s) not found")
-    elif res.is_verified():
+    elif res.is_verified:
         assert isinstance(res, JARVerificationSuccess)
         if not quiet:
             print(f"v1 verified ({len(res.verified_signers)} signer(s))")
@@ -2969,7 +2980,7 @@ def clean_apk(apkfile: str, *, check: bool = False, keep: Tuple[int, ...] = (),
     _, sig_block = old_v2_sig = extract_v2_sig(apkfile)
     if check:
         result = verify_apk(apkfile, sig_block, sdk=sdk)
-        if not result.is_verified():
+        if not result.is_verified:
             raise VerificationError("Verification failed")
     sig_block_cleaned = clean_apk_signing_block(sig_block, keep=keep)
     if sig_block == sig_block_cleaned:
@@ -3239,7 +3250,7 @@ def main() -> None:
         res = verify_apk_and_check_signers(apk, allow_unsafe=allow_unsafe, check_v1=check_v1,
                                            quiet=quiet, sdk_version=sdk_version,
                                            signed_by=sb, verbose=verbose)
-        if not res.is_verified():
+        if not res.is_verified:
             sys.exit(4)
 
     # FIXME
@@ -3273,7 +3284,7 @@ def main() -> None:
         sb = _parse_signed_by(signed_by, ctx, verify_v1) if signed_by else None
         res = _verify_v1(apk, allow_unsafe=allow_unsafe, quiet=quiet,
                          strict=not no_strict, signed_by=sb)
-        if not res or not res.is_verified():
+        if not res or not res.is_verified:
             sys.exit(4)
         assert isinstance(res, JARVerificationSuccess)
         if required_sv := res.signature.required_signature_versions:

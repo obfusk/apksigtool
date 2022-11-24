@@ -416,7 +416,7 @@ $ man apksigtool                # requires the man page to be installed
 >>> blk.verify(apk)                                 # [EXPERIMENTAL] raises on failure
 >>> result = blk.verify_result(apk)
 >>> result = apksigtool.verify_apk(apk)             # uses .verify_result()
->>> result.is_verified()
+>>> result.is_verified
 ```
 
 ### Cleaning
