@@ -89,6 +89,8 @@ PAIR ID: 0x42726577
 True
 >>> result.is_v2_verified, result.is_v3_verified, result.is_v31_verified
 (True, True, False)
+>>> ast.versions_sorted(result.verified_signature_versions)
+(2, 3)
 >>> len(result.verified), len(result.failed)
 (2, 0)
 >>> result == ast.verify_apk(apk)               # uses .verify_result()
@@ -97,6 +99,8 @@ True
 >>> r = ast.verify_apk_and_check_signers(apk, check_v1=True)
 >>> r.is_v1_verified, r.is_v2_verified, r.is_v3_verified, r.is_v31_verified
 (True, True, True, False)
+>>> ast.versions_sorted(r.verified_signature_versions)
+(1, 2, 3)
 
 >>> apk = "test/apks/apks/v2-only-cert-and-public-key-mismatch.apk"
 >>> result = ast.verify_apk(apk)
@@ -1159,6 +1163,11 @@ class JARSignature(APKSigToolBase):
         """Require signature versions (from X-Android-APK-Signed)."""
         return frozenset(v for sf in self.signature_files for v in sf.x_android_apk_signed or ())
 
+    def for_json(self) -> Mapping[str, Any]:
+        """Convert to JSON."""
+        x = dict(required_signature_versions=tuple(sorted(self.required_signature_versions)))
+        return {**super().for_json(), **x}
+
     @classmethod
     def parse(_cls, extracted_meta: ZipInfoDataPairs, apkfile: Optional[str] = None, *,
               allow_unsafe: Tuple[str, ...] = (), strict: bool = True) -> JARSignature:
@@ -1204,6 +1213,10 @@ class JARVerificationResult(APKSigToolBase, abc.ABC):
     @abc.abstractmethod
     def is_verified(self) -> bool:
         ...
+
+    def for_json(self) -> Mapping[str, Any]:
+        """Convert to JSON."""
+        return {**super().for_json(), **dict(is_verified=self.is_verified)}
 
 
 @dataclass(frozen=True)
@@ -1273,6 +1286,17 @@ class APKVerificationResult(APKSigToolBase):
         """Whether .is_verified w/ v3.1."""
         return self.is_verified and "3.1" in [v for v, _ in self.verified]
 
+    @property
+    def verified_signature_versions(self) -> FrozenSet[Union[int, str]]:
+        """Verified signature versions (2, 3, and/or '3.1')."""
+        return frozenset(v for v, _ in self.verified)
+
+    def for_json(self) -> Mapping[str, Any]:
+        """Convert to JSON."""
+        vsvs = versions_sorted(self.verified_signature_versions)
+        x = dict(is_verified=self.is_verified, verified_signature_versions=vsvs)
+        return {**super().for_json(), **x}
+
 
 @dataclass(frozen=True)
 class VerificationResult(APKSigToolBase):
@@ -1307,6 +1331,18 @@ class VerificationResult(APKSigToolBase):
     def is_v31_verified(self) -> bool:
         """Whether .is_verified w/ version 3.1."""
         return self.is_verified and self.apk_result.is_v31_verified
+
+    @property
+    def verified_signature_versions(self) -> FrozenSet[Union[int, str]]:
+        """Verified signature versions (1, 2, 3, and/or '3.1')."""
+        vsvs = self.apk_result.verified_signature_versions
+        return frozenset([1]) | vsvs if self.is_v1_verified else vsvs
+
+    def for_json(self) -> Mapping[str, Any]:
+        """Convert to JSON."""
+        vsvs = versions_sorted(self.verified_signature_versions)
+        x = dict(is_verified=self.is_verified, verified_signature_versions=vsvs)
+        return {**super().for_json(), **x}
 
 
 def _assert(b: bool, what: Optional[str] = None) -> None:
@@ -2781,6 +2817,18 @@ def asdict(obj: APKSigToolBase) -> Dict[str, Any]:
     def dict_factory(pairs: Iterable[Tuple[str, Any]]) -> Dict[str, Any]:
         return dict((k, v) for k, v in pairs if not k.startswith("_"))
     return dataclasses.asdict(obj, dict_factory=dict_factory)
+
+
+def versions_sorted(xs: Iterable[Union[int, str]]) -> Tuple[Union[int, str], ...]:
+    """
+    Sorted as numbers.
+
+    >>> from apksigtool import versions_sorted
+    >>> versions_sorted((3, 10, '4.2', 2, '2.0', '3.9', '3.10', '3.1'))
+    (2, '2.0', 3, '3.1', '3.9', '3.10', '4.2', 10)
+
+    """
+    return tuple(sorted(xs, key=lambda x: [int(n) for n in str(x).split(".")]))
 
 
 def extract_v2_sig(apkfile: str) -> Tuple[int, bytes]:
