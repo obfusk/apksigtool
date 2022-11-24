@@ -1288,7 +1288,11 @@ class APKVerificationResult(APKSigToolBase):
 
     @property
     def verified_signature_versions(self) -> FrozenSet[Union[int, str]]:
-        """Verified signature versions (2, 3, and/or '3.1')."""
+        """
+        Verified signature versions (2, 3, and/or '3.1').
+
+        NB: having verified signature versions doesn't mean .is_verified is True!
+        """
         return frozenset(v for v, _ in self.verified)
 
     def for_json(self) -> Mapping[str, Any]:
@@ -1334,7 +1338,11 @@ class VerificationResult(APKSigToolBase):
 
     @property
     def verified_signature_versions(self) -> FrozenSet[Union[int, str]]:
-        """Verified signature versions (1, 2, 3, and/or '3.1')."""
+        """
+        Verified signature versions (1, 2, 3, and/or '3.1').
+
+        NB: having verified signature versions doesn't mean .is_verified is True!
+        """
         vsvs = self.apk_result.verified_signature_versions
         return frozenset([1]) | vsvs if self.is_v1_verified else vsvs
 
@@ -1518,19 +1526,26 @@ def dump_apk_signing_block(block: APKSigningBlock) -> bytes:
     >>> blk_no_v2 = dc.replace(blk, pairs=pairs_no_v2)
     >>> [hex(p.id) for p in blk_no_v2.pairs]
     ['0xf05368c0', '0x42726577']
+    >>> blk_rev = dc.replace(blk, pairs=blk.pairs[::-1])
+    >>> [hex(p.id) for p in blk_rev.pairs]
+    ['0x42726577', '0xf05368c0', '0x7109871a']
     >>> with tempfile.TemporaryDirectory() as tmpdir:
     ...     out = os.path.join(tmpdir, "out.apk")
     ...     _ = shutil.copy(apk, out)
     ...     r1 = ast.verify_apk_and_check_signers(out, check_v1=True)
-    ...     r1.is_verified
+    ...     r1.is_verified, ast.versions_sorted(r1.verified_signature_versions)
     ...     ast.replace_apk_signing_block(out, blk_no_v2.dump())
     ...     r2 = ast.verify_apk_and_check_signers(out, check_v1=True)
-    ...     r2.is_verified, r2.error
+    ...     r2.is_verified, r2.error, ast.versions_sorted(r2.verified_signature_versions)
     ...     r3 = ast.verify_apk_and_check_signers(out)
     ...     r3.is_verified
+    ...     ast.replace_apk_signing_block(out, blk_rev.dump())
+    ...     r4 = ast.verify_apk_and_check_signers(out, check_v1=True)
+    ...     r4.is_verified, ast.versions_sorted(r4.verified_signature_versions)
+    (True, (1, 2, 3))
+    (False, 'Missing required v2 signature(s)', (3,))
     True
-    (False, 'Missing required v2 signature(s)')
-    True
+    (True, (1, 2, 3))
 
     """
     data = b"".join(map(dump_pair, block.pairs))
