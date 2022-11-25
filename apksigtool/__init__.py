@@ -2938,10 +2938,15 @@ def verify_apk_and_check_signers(
         if not quiet:
             print("no common signers")
         return VerificationResult("No common signers", *result)
-    if signed_by and signed_by not in common_signers:
-        if not quiet:
-            print("expected signer not in common signers")
-        return VerificationResult("Expected signer not in common signers", *result)
+    if signed_by:
+        if signed_by[1]:
+            signer_ok = signed_by in common_signers
+        else:
+            signer_ok = signed_by[0] in [c for c, _ in common_signers]
+        if not signer_ok:
+            if not quiet:
+                print("expected signer not in common signers")
+            return VerificationResult("Expected signer not in common signers", *result)
     if verbose:
         for cert, pk in sorted(common_signers):
             print("common signer:")
@@ -2962,10 +2967,15 @@ def _verify_v1(apk: str, *, allow_unsafe: Tuple[str, ...] = (),
         assert isinstance(res, JARVerificationSuccess)
         if not quiet:
             print(f"v1 verified ({len(res.verified_signers)} signer(s))")
-        if signed_by and signed_by not in res.verified_signers:
-            if not quiet:
-                print("expected signer not in signers")
-            return JARVerificationFailure("Expected signer not in signers")
+        if signed_by:
+            if signed_by[1]:
+                signer_ok = signed_by in res.verified_signers
+            else:
+                signer_ok = signed_by[0] in [c for c, _ in res.verified_signers]
+            if not signer_ok:
+                if not quiet:
+                    print("expected signer not in signers")
+                return JARVerificationFailure("Expected signer not in signers")
     else:
         assert isinstance(res, JARVerificationFailure)
         if not quiet:
