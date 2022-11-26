@@ -123,7 +123,6 @@ lint:
 	pylint apksigtool/__init__.py
 
 lint-extra:
-	# TODO
 	mypy --strict --disallow-any-unimported apksigtool/__init__.py
 
 clean: cleanup
