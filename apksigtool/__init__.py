@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-11-23
+# Date        : 2022-12-01
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -1368,6 +1368,11 @@ def _assert(b: bool, what: Optional[str] = None) -> None:
     """
     if not b:
         raise AssertionFailed("Assertion failed" + (f": {what}" if what else ""))
+
+
+def _err(*a: str) -> None:
+    sys.stdout.flush()  # FIXME
+    print(*a, file=sys.stderr)
 
 
 def _fn_base(x: Any) -> str:
@@ -2923,7 +2928,7 @@ def verify_apk_and_check_signers(
             print(f"v{version} verified ({len(signers)} signer(s))")
     for version, e in apk_result.failed:
         if not quiet:
-            print(f"v{version} not verified ({e})")
+            _err(f"v{version} not verified ({e})")
     common_signers = reduce(lambda x, y: x & y, all_signers) if all_signers else set()
     result = (jar_result, apk_result, tuple(sorted(common_signers)) or None)
     if not apk_result.is_verified or (jar_result and not jar_result.is_verified):
@@ -2931,12 +2936,12 @@ def verify_apk_and_check_signers(
     if required_sig_versions:
         if not quiet:
             for n in sorted(required_sig_versions):
-                print(f"v{n} signature(s) not found but required")
+                _err(f"v{n} signature(s) not found but required")
         vsns = ", ".join(f"v{n}" for n in sorted(required_sig_versions))
         return VerificationResult(f"Missing required {vsns} signature(s)", *result)
     if not common_signers:
         if not quiet:
-            print("no common signers")
+            _err("no common signers")
         return VerificationResult("No common signers", *result)
     if signed_by:
         if signed_by[1]:
@@ -2945,7 +2950,7 @@ def verify_apk_and_check_signers(
             signer_ok = signed_by[0] in [c for c, _ in common_signers]
         if not signer_ok:
             if not quiet:
-                print("expected signer not in common signers")
+                _err("expected signer not in common signers")
             return VerificationResult("Expected signer not in common signers", *result)
     if verbose:
         for cert, pk in sorted(common_signers):
@@ -2962,7 +2967,7 @@ def _verify_v1(apk: str, *, allow_unsafe: Tuple[str, ...] = (),
     res = verify_apk_v1(apk, allow_unsafe=allow_unsafe, expected=expected, strict=strict)
     if not res:
         if not quiet:
-            print("v1 signature(s) not found")
+            _err("v1 signature(s) not found")
     elif res.is_verified:
         assert isinstance(res, JARVerificationSuccess)
         if not quiet:
@@ -2974,12 +2979,12 @@ def _verify_v1(apk: str, *, allow_unsafe: Tuple[str, ...] = (),
                 signer_ok = signed_by[0] in [c for c, _ in res.verified_signers]
             if not signer_ok:
                 if not quiet:
-                    print("expected signer not in signers")
+                    _err("expected signer not in signers")
                 return JARVerificationFailure("Expected signer not in signers")
     else:
         assert isinstance(res, JARVerificationFailure)
         if not quiet:
-            print(f"v1 not verified ({res.error})")
+            _err(f"v1 not verified ({res.error})")
     return res
 
 
@@ -3313,12 +3318,10 @@ def main() -> None:
     def verify(ctx: click.Context, apk: str, allow_unsafe: Tuple[str],
                check_v1: bool, quiet: bool, sdk_version: Optional[int],
                signed_by: Optional[str], verbose: bool) -> None:
-        print("WARNING: verification is considered EXPERIMENTAL, "
-              "please use apksigner instead.", file=sys.stderr)
+        _err("WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.")
         if allow_unsafe:
             algs = ", ".join(sorted(set(allow_unsafe)))
-            print(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.",
-                  file=sys.stderr)
+            _err(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.")
         sb = _parse_signed_by(signed_by, ctx, verify) if signed_by else None
         res = verify_apk_and_check_signers(apk, allow_unsafe=allow_unsafe, check_v1=check_v1,
                                            quiet=quiet, sdk_version=sdk_version,
@@ -3348,12 +3351,10 @@ def main() -> None:
     def verify_v1(ctx: click.Context, apk: str, allow_unsafe: Tuple[str],
                   no_strict: bool, quiet: bool, rollback_is_error: bool,
                   signed_by: Optional[str]) -> None:
-        print("WARNING: verification is considered EXPERIMENTAL, "
-              "please use apksigner instead.", file=sys.stderr)
+        _err("WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.")
         if allow_unsafe:
             algs = ", ".join(sorted(set(allow_unsafe)))
-            print(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.",
-                  file=sys.stderr)
+            _err(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.")
         sb = _parse_signed_by(signed_by, ctx, verify_v1) if signed_by else None
         res = _verify_v1(apk, allow_unsafe=allow_unsafe, quiet=quiet,
                          strict=not no_strict, signed_by=sb)
@@ -3363,9 +3364,7 @@ def main() -> None:
         if required_sv := res.signature.required_signature_versions:
             what = "Error" if rollback_is_error else "Warning"
             vsns = ", ".join(f"v{n}" for n in sorted(required_sv))
-            sys.stdout.flush()  # FIXME
-            print(f"{what}: rollback protections require {vsns} signature(s) as well.",
-                  file=sys.stderr)
+            _err(f"{what}: rollback protections require {vsns} signature(s) as well.")
             if rollback_is_error:
                 sys.exit(5)
 
@@ -3441,8 +3440,7 @@ def main() -> None:
     @click.argument("output_apk", type=click.Path(dir_okay=False))
     def sign(unsigned_apk: str, output_apk: str, cert: str, key: str,
              no_v1: bool, no_v2: bool, no_v3: bool, prompt: bool) -> None:
-        print("WARNING: signing is considered EXPERIMENTAL, "
-              "please use apksigner instead.", file=sys.stderr)
+        _err("WARNING: signing is considered EXPERIMENTAL, please use apksigner instead.")
         if no_v1 and no_v2 and no_v3:
             raise click.exceptions.BadParameter("all versions (v1, v2, and v3) excluded")
         if prompt:
@@ -3465,8 +3463,7 @@ def main() -> None:
     try:
         cli(prog_name=NAME)
     except (APKSigToolError, APKSigCopierError, zipfile.BadZipFile) as e:
-        sys.stdout.flush()  # FIXME
-        print(f"Error: {e}.", file=sys.stderr)
+        _err(f"Error: {e}.")
         sys.exit(3)
 
 
