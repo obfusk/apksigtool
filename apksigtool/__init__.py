@@ -1370,9 +1370,11 @@ def _assert(b: bool, what: Optional[str] = None) -> None:
         raise AssertionFailed("Assertion failed" + (f": {what}" if what else ""))
 
 
+# FIXME
 def _err(*a: str) -> None:
     sys.stdout.flush()  # FIXME
     print(*a, file=sys.stderr)
+    sys.stderr.flush()  # FIXME
 
 
 def _fn_base(x: Any) -> str:
