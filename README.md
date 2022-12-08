@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-11-23
+    Date        : 2022-12-07
 
     Copyright   : Copyright (C) 2022  FC Stegerman
     Version     : v0.1.0
@@ -296,6 +296,13 @@ v1 (JAR) signature:
 ```bash
 $ apksigtool parse-v1 --json some.apk | jq -r .manifest.created_by
 Android Gradle 7.1.3
+```
+
+### Extract X.509 Certificates
+
+```bash
+$ mkdir certs
+$ apksigtool extract-certs some.apk certs
 ```
 
 ### Verify

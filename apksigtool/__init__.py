@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-12-01
+# Date        : 2022-12-07
 #
 # Copyright   : Copyright (C) 2022  FC Stegerman
 # Version     : v0.1.0
@@ -33,6 +33,7 @@ CLI
 
 $ apksigtool parse [--block] [--json] [--verbose] APK_OR_BLOCK
 $ apksigtool verify [--check-v1] [--quiet] [--verbose] APK
+$ apksigtool extract-certs [--block] APK_OR_BLOCK_OR_DIR OUTPUT_DIR
 $ apksigtool clean [--block] [--check] [--keep HEXID] APK_OR_BLOCK
 $ apksigtool sign --cert CERT --key PRIVKEY UNSIGNED_APK OUTPUT_APK
 
@@ -2878,6 +2879,36 @@ def extract_meta(signed_apk: str) -> Tuple[Tuple[zipfile.ZipInfo, bytes], ...]:
     return tuple(apksigcopier.extract_meta(signed_apk))
 
 
+def extract_v1_certs(   # type: ignore[no-any-unimported]
+        extracted_meta: ZipInfoDataPairs) -> Tuple[Tuple[Union[int, str], X509Cert], ...]:
+    """Extract certificate(s) from v1 signature metadata files."""
+    return tuple(_extract_v1_certs(extracted_meta))
+
+
+def _extract_v1_certs(  # type: ignore[no-any-unimported]
+        extracted_meta: ZipInfoDataPairs) -> Iterator[Tuple[Union[int, str], X509Cert]]:
+    e_meta = tuple(extracted_meta)
+    if not e_meta or [i.filename for i, _ in e_meta] == [JAR_MANIFEST]:
+        return
+    for sbf in JARSignature.parse(e_meta).signature_block_files:
+        yield 1, sbf.certificate
+
+
+def extract_v2_certs(   # type: ignore[no-any-unimported]
+        sig_block: bytes) -> Tuple[Tuple[Union[int, str], X509Cert], ...]:
+    """Extract v2/v3 certificate(s) from APK Signing Block."""
+    return tuple(_extract_v2_certs(sig_block))
+
+
+def _extract_v2_certs(  # type: ignore[no-any-unimported]
+        sig_block: bytes) -> Iterator[Tuple[Union[int, str], X509Cert]]:
+    for pair in APKSigningBlock.parse(sig_block).pairs:
+        if isinstance(pair.value, APKSignatureSchemeBlock):
+            for signer in pair.value.signers:
+                for cert in signer.signed_data.certificates:
+                    yield pair.value.version, cert.certificate
+
+
 def load_extracted_meta_from_dir(path: str) -> Tuple[Tuple[zipfile.ZipInfo, bytes], ...]:
     """
     Loads previously extracted v1 metadata files from a directory.
@@ -3296,6 +3327,41 @@ def main() -> None:
         else:
             show_v1_signature(JARSignature.parse(e_meta), allow_unsafe=allow_unsafe,
                               apkfile=apkfile, strict=not no_strict, verbose=verbose, wrap=wrap)
+
+    @cli.command(help="""
+        Extract X.509 certificates (in DER form) from APK, extracted APK Signing
+        Block, or extracted files in a directory.
+    """)
+    @click.option("--block", is_flag=True,
+                  help="APK_OR_BLOCK_OR_DIR is an extracted block, not an APK or directory.")
+    @click.option("--v1-only", is_flag=True,
+                  help="Do not expect (or process) an APK Signing Block, "
+                       "just the v1 signature files (if any).")
+    @click.argument("apk_or_block_or_dir", type=click.Path(exists=True, dir_okay=True))
+    @click.argument("output_dir", type=click.Path(exists=True, file_okay=False))
+    def extract_certs(apk_or_block_or_dir: str, output_dir: str,
+                      block: bool, v1_only: bool) -> None:
+        v1_certs = sig_block = None
+        if block:
+            with open(apk_or_block_or_dir, "rb") as fh:
+                sig_block = fh.read()
+        elif os.path.isdir(apk_or_block_or_dir):
+            v1_certs = extract_v1_certs(load_extracted_meta_from_dir(apk_or_block_or_dir))
+            if not v1_only:
+                with open(os.path.join(apk_or_block_or_dir, apksigcopier.SIGBLOCK), "rb") as fh:
+                    sig_block = fh.read()
+        else:
+            v1_certs = extract_v1_certs(extract_meta(apk_or_block_or_dir))
+            if not v1_only:
+                _, sig_block = extract_v2_sig(apk_or_block_or_dir)
+        v2_certs = extract_v2_certs(sig_block) if sig_block else None
+        counters: Dict[Union[int, str], int] = {}
+        for version, cert in (v1_certs or ()) + (v2_certs or ()):
+            counters.setdefault(version, 0)
+            name = f"v{version}cert{counters[version]}.der"
+            counters[version] += 1
+            with open(os.path.join(output_dir, name), "wb") as fh:
+                fh.write(cert.dump())
 
     # FIXME
     @cli.command(help="""

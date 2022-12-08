@@ -29,7 +29,7 @@ doctest:
 
 coverage:
 	# NB: uses test/apks/apks/*.apk & modifies .tmp
-	mkdir -p .tmp
+	mkdir -p .tmp/certs
 	cp test/apks/apks/v3-only-with-stamp.apk .tmp/test.apk
 	openssl req -x509 -newkey rsa:2048 -sha512 -outform DER -out .tmp/cert.der \
 	    -days 10000 -nodes -subj '/CN=test key' -keyout - \
@@ -45,8 +45,12 @@ coverage:
 	$(PYCOVCLI) sign --cert .tmp/cert.der --key .tmp/privkey.der \
 	  test/apks/apks/golden-aligned-in.apk .tmp/out.apk
 	$(PYCOVCLI) verify    --check-v1 .tmp/out.apk
+	$(PYCOVCLI) extract-certs .tmp/out.apk .tmp/certs
 	$(PYTHON) -mcoverage html
 	$(PYTHON) -mcoverage report
+	cmp .tmp/cert.der .tmp/certs/v1cert0.der
+	cmp .tmp/cert.der .tmp/certs/v2cert0.der
+	cmp .tmp/cert.der .tmp/certs/v3cert0.der
 
 test-signing:
 	# NB: uses test/apks/apks/*.apk & modifies .tmp
