@@ -3263,6 +3263,7 @@ def main() -> None:
 
     import click
 
+    NAY = click.Choice(apksigcopier.NOAUTOYES)
     unsafe = tuple(UNSAFE_HASH_ALGO.items()) + tuple(UNSAFE_KEY_SIZE.items())
     UNSAFE = click.Choice(tuple(k for k, v in unsafe if v))
 
@@ -3334,29 +3335,39 @@ def main() -> None:
     """)
     @click.option("--block", is_flag=True,
                   help="APK_OR_BLOCK_OR_DIR is an extracted block, not an APK or directory.")
-    @click.option("--v1-only", is_flag=True,
-                  help="Do not expect (or process) an APK Signing Block, "
-                       "just the v1 signature files (if any).")
+    @click.option("--v1-only", type=NAY, default=apksigcopier.NO, show_default=True,
+                  help="Expect only a v1 signature.")
     @click.argument("apk_or_block_or_dir", type=click.Path(exists=True, dir_okay=True))
     @click.argument("output_dir", type=click.Path(exists=True, file_okay=False))
-    def extract_certs(apk_or_block_or_dir: str, output_dir: str,
-                      block: bool, v1_only: bool) -> None:
+    def extract_certs(apk_or_block_or_dir: str, output_dir: str, block: bool,
+                      v1_only: apksigcopier.NoAutoYesBoolNone) -> None:
+        v1_only = apksigcopier.noautoyes(v1_only)
         v1_certs = sig_block = None
         if block:
             with open(apk_or_block_or_dir, "rb") as fh:
                 sig_block = fh.read()
         elif os.path.isdir(apk_or_block_or_dir):
             v1_certs = extract_v1_certs(load_extracted_meta_from_dir(apk_or_block_or_dir))
-            if not v1_only:
-                with open(os.path.join(apk_or_block_or_dir, apksigcopier.SIGBLOCK), "rb") as fh:
-                    sig_block = fh.read()
+            if v1_only != apksigcopier.YES:
+                sigblock_file = os.path.join(apk_or_block_or_dir, apksigcopier.SIGBLOCK)
+                if os.path.exists(sigblock_file):
+                    with open(sigblock_file, "rb") as fh:
+                        sig_block = fh.read()
+                elif v1_only == apksigcopier.NO:
+                    raise APKSigToolError("No APK Signing Block")
         else:
             v1_certs = extract_v1_certs(extract_meta(apk_or_block_or_dir))
-            if not v1_only:
-                _, sig_block = extract_v2_sig(apk_or_block_or_dir)
+            if v1_only != apksigcopier.YES:
+                expected = v1_only == apksigcopier.NO
+                v2_sig = apksigcopier.extract_v2_sig(apk_or_block_or_dir, expected=expected)
+                if v2_sig is not None:
+                    _, sig_block = v2_sig
         v2_certs = extract_v2_certs(sig_block) if sig_block else None
+        certs = (v1_certs or ()) + (v2_certs or ())
+        if not certs:
+            raise APKSigToolError("No certificates")
         counters: Dict[Union[int, str], int] = {}
-        for version, cert in (v1_certs or ()) + (v2_certs or ()):
+        for version, cert in certs:
             counters.setdefault(version, 0)
             name = f"v{version}cert{counters[version]}.der"
             counters[version] += 1
