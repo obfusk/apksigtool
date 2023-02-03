@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 # encoding: utf-8
-# SPDX-FileCopyrightText: 2022 FC Stegerman <flx@obfusk.net>
+# SPDX-FileCopyrightText: 2023 FC Stegerman <flx@obfusk.net>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 # --                                                            ; {{{1
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2022-12-07
+# Date        : 2023-02-03
 #
-# Copyright   : Copyright (C) 2022  FC Stegerman
+# Copyright   : Copyright (C) 2023  FC Stegerman
 # Version     : v0.1.0
 # License     : AGPLv3+
 #
@@ -801,6 +801,7 @@ class APKSigningBlock(APKSigToolBase):
 
     @classmethod
     def parse(_cls, data: bytes, apkfile: Optional[str] = None, *,
+              allow_nonzero_verity: bool = False,
               allow_unsafe: Tuple[str, ...] = (),
               sdk: Optional[int] = None) -> APKSigningBlock:
         """
@@ -808,7 +809,9 @@ class APKSigningBlock(APKSigToolBase):
 
         Uses parse_apk_signing_block().
         """
-        return parse_apk_signing_block(data, apkfile=apkfile, allow_unsafe=allow_unsafe, sdk=sdk)
+        return parse_apk_signing_block(
+            data, apkfile=apkfile, allow_nonzero_verity=allow_nonzero_verity,
+            allow_unsafe=allow_unsafe, sdk=sdk)
 
     def dump(self) -> bytes:
         """
@@ -970,6 +973,14 @@ class VerityPaddingBlock(Block):
     def dump(self) -> bytes:
         """Dump VerityPaddingBlock (.size null bytes)."""
         return b"\x00" * self.size
+
+
+@dataclass(frozen=True)
+class NonZeroVerityPaddingBlock(Block):
+    """Verity padding block (nonzero padding)."""
+    raw_data: bytes
+
+    PAIR_ID: ClassVar[int] = VERITY_PADDING_BLOCK_ID
 
 
 @dataclass(frozen=True)
@@ -1383,6 +1394,7 @@ def _fn_base(x: Any) -> str:
 
 
 def parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None, *,
+                            allow_nonzero_verity: bool = False,
                             allow_unsafe: Tuple[str, ...] = (),
                             sdk: Optional[int] = None) -> APKSigningBlock:
     """
@@ -1397,12 +1409,14 @@ def parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None, *,
     UnknownBlock if not identified).
     """
     return APKSigningBlock(tuple(_parse_apk_signing_block(
-        data, allow_unsafe=allow_unsafe, apkfile=apkfile, sdk=sdk)))
+        data, allow_nonzero_verity=allow_nonzero_verity,
+        allow_unsafe=allow_unsafe, apkfile=apkfile, sdk=sdk)))
 
 
 # FIXME: check if sb_size % 4096 == 0? when?
 # https://source.android.com/docs/security/features/apksigning/v2#apk-signing-block-format
 def _parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None, *,
+                             allow_nonzero_verity: bool = False,
                              allow_unsafe: Tuple[str, ...] = (),
                              sdk: Optional[int] = None) -> Iterator[Pair]:
     """Yield Pair(s) (with e.g. an APKSignatureSchemeBlock as .value)."""
@@ -1426,8 +1440,12 @@ def _parse_apk_signing_block(data: bytes, apkfile: Optional[str] = None, *,
             value = parse_apk_signature_scheme_block(
                 "3.1", pair_val, allow_unsafe=allow_unsafe, apkfile=apkfile, sdk=sdk)
         elif pair_id == VERITY_PADDING_BLOCK_ID:
-            _assert(all(b == 0 for b in pair_val), "verity zero padding")
-            value = VerityPaddingBlock(len(pair_val))
+            if all(b == 0 for b in pair_val):
+                value = VerityPaddingBlock(len(pair_val))
+            elif allow_nonzero_verity:
+                value = NonZeroVerityPaddingBlock(pair_val)
+            else:
+                _assert(False, "verity zero padding")
         elif pair_id == DEPENDENCY_INFO_BLOCK_ID:
             value = DependencyInfoBlock(pair_val)
         elif pair_id == GOOGLE_PLAY_FROSTING_BLOCK_ID:
@@ -2587,6 +2605,9 @@ def show_parse_tree(apk_signing_block: APKSigningBlock, *,
         elif isinstance(pair.value, VerityPaddingBlock):
             p("  VERITY PADDING BLOCK")
             p("  SIZE:", pair.value.size)
+        elif isinstance(pair.value, NonZeroVerityPaddingBlock):
+            p("  NONZERO VERITY PADDING BLOCK")
+            p("  SIZE:", len(pair.value.raw_data))
         elif isinstance(pair.value, DependencyInfoBlock):
             p("  DEPENDENCY INFO BLOCK")
         elif isinstance(pair.value, GooglePlayFrostingBlock):
@@ -3278,6 +3299,8 @@ def main() -> None:
         Parse APK Signing Block (from APK or extracted block) and output a parse
         tree (indented with spaces) or JSON.
     """)
+    @click.option("--allow-nonzero-verity", is_flag=True,
+                  help="Allow verity padding that is not all zeroes.")
     @click.option("--block", is_flag=True,
                   help="APK_OR_BLOCK is an extracted block, not an APK.")
     @click.option("--json", is_flag=True, help="JSON output.")
@@ -3286,8 +3309,9 @@ def main() -> None:
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
     @click.option("--wrap", is_flag=True, help="Wrap output (no-op w/ --json).")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
-    def parse(apk_or_block: str, block: bool, json: bool, no_verify: bool,
-              sdk_version: Optional[int], verbose: bool, wrap: bool) -> None:
+    def parse(apk_or_block: str, allow_nonzero_verity: bool, block: bool,
+              json: bool, no_verify: bool, sdk_version: Optional[int],
+              verbose: bool, wrap: bool) -> None:
         if block:
             apkfile = None
             with open(apk_or_block, "rb") as fh:
@@ -3296,10 +3320,12 @@ def main() -> None:
             apkfile = apk_or_block if not no_verify else None
             _, sig_block = extract_v2_sig(apk_or_block)
         if json:
-            show_json(APKSigningBlock.parse(sig_block, apkfile=apkfile, sdk=sdk_version))
+            blk = APKSigningBlock.parse(sig_block, apkfile=apkfile, sdk=sdk_version,
+                                        allow_nonzero_verity=allow_nonzero_verity)
+            show_json(blk)
         else:
-            show_parse_tree(APKSigningBlock.parse(sig_block), apkfile=apkfile,
-                            sdk=sdk_version, verbose=verbose, wrap=wrap)
+            blk = APKSigningBlock.parse(sig_block, allow_nonzero_verity=allow_nonzero_verity)
+            show_parse_tree(blk, apkfile=apkfile, sdk=sdk_version, verbose=verbose, wrap=wrap)
 
     @cli.command(help="""
         Parse APK v1 (JAR) signatures (from APK or extracted files in a
