@@ -227,7 +227,7 @@ from pyasn1.codec.der.decoder import decode as pyasn1_decode        # type: igno
 from pyasn1.codec.der.encoder import encode as pyasn1_encode        # type: ignore[import]
 from pyasn1.error import PyAsn1Error                                # type: ignore[import]
 from pyasn1.type import univ as pyasn1_univ                         # type: ignore[import]
-from pyasn1_modules import rfc2315, rfc5480                         # type: ignore[import]
+from pyasn1_modules import rfc2315                                  # type: ignore[import]
 
 __version__ = "0.1.0"
 NAME = "apksigtool"
@@ -333,15 +333,41 @@ VERITY_SALT = b"\x00" * 8
 
 MIN_SDK, MAX_SDK = 24, 2 * 1024**3 - 1
 
+# FIXME: pyasn1_modules.rfc5480 is not available in bullseye/jammy
+RFC5480 = dict(
+    id_sha224=pyasn1_univ.ObjectIdentifier("2.16.840.1.101.3.4.2.4"),
+    id_sha256=pyasn1_univ.ObjectIdentifier("2.16.840.1.101.3.4.2.1"),
+    id_sha384=pyasn1_univ.ObjectIdentifier("2.16.840.1.101.3.4.2.2"),
+    id_sha512=pyasn1_univ.ObjectIdentifier("2.16.840.1.101.3.4.2.3"),
+    id_md5=pyasn1_univ.ObjectIdentifier("1.2.840.113549.2.5"),
+    id_sha1=pyasn1_univ.ObjectIdentifier("1.3.14.3.2.26"),
+
+    rsaEncryption=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.1"),
+    md5WithRSAEncryption=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.4"),
+    sha1WithRSAEncryption=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.5"),
+
+    id_dsa=pyasn1_univ.ObjectIdentifier("1.2.840.10040.4.1"),
+    id_dsa_with_sha1=pyasn1_univ.ObjectIdentifier("1.2.840.10040.4.3"),
+    id_dsa_with_sha224=pyasn1_univ.ObjectIdentifier("2.16.840.1.101.3.4.3.1"),
+    id_dsa_with_sha256=pyasn1_univ.ObjectIdentifier("2.16.840.1.101.3.4.3.2"),
+
+    id_ecPublicKey=pyasn1_univ.ObjectIdentifier("1.2.840.10045.2.1"),
+    ecdsa_with_SHA1=pyasn1_univ.ObjectIdentifier("1.2.840.10045.4.1"),
+    ecdsa_with_SHA224=pyasn1_univ.ObjectIdentifier("1.2.840.10045.4.3.1"),
+    ecdsa_with_SHA256=pyasn1_univ.ObjectIdentifier("1.2.840.10045.4.3.2"),
+    ecdsa_with_SHA384=pyasn1_univ.ObjectIdentifier("1.2.840.10045.4.3.3"),
+    ecdsa_with_SHA512=pyasn1_univ.ObjectIdentifier("1.2.840.10045.4.3.4"),
+)
+
 # FIXME: incomplete?
 JAR_HASHERS_OID = {
-    # OID               algo      hasher  halgo
-    rfc5480.id_sha224: ("SHA224", sha224, SHA224),
-    rfc5480.id_sha256: ("SHA256", sha256, SHA256),
-    rfc5480.id_sha384: ("SHA384", sha384, SHA384),
-    rfc5480.id_sha512: ("SHA512", sha512, SHA512),
-    rfc5480.id_md5: ("MD5", md5, MD5),      # NB: unsafe!
-    rfc5480.id_sha1: ("SHA1", sha1, SHA1),  # NB: unsafe!
+    # OID                  algo      hasher  halgo
+    RFC5480["id_sha224"]: ("SHA224", sha224, SHA224),
+    RFC5480["id_sha256"]: ("SHA256", sha256, SHA256),
+    RFC5480["id_sha384"]: ("SHA384", sha384, SHA384),
+    RFC5480["id_sha512"]: ("SHA512", sha512, SHA512),
+    RFC5480["id_md5"]: ("MD5", md5, MD5),       # NB: unsafe!
+    RFC5480["id_sha1"]: ("SHA1", sha1, SHA1),   # NB: unsafe!
 }
 #                  algo  OID    hasher...
 JAR_HASHERS_STR = {v[0]: (k,) + v[1:] for k, v in JAR_HASHERS_OID.items()}
@@ -374,29 +400,29 @@ PUBKEY_TYPE = {RSAPublicKey: "RSA", DSAPublicKey: "DSA", EllipticCurvePublicKey:
 
 DIGEST_ENCRYPTION_ALGORITHM = dict(
     RSA=dict(
-        _any=rfc5480.rsaEncryption,             # 1.2.840.113549.1.1.1
-        MD5=rfc5480.md5WithRSAEncryption,       # 1.2.840.113549.1.1.4
-        SHA1=rfc5480.sha1WithRSAEncryption,     # 1.2.840.113549.1.1.5
+        _any=RFC5480["rsaEncryption"],          # 1.2.840.113549.1.1.1
+        MD5=RFC5480["md5WithRSAEncryption"],    # 1.2.840.113549.1.1.4
+        SHA1=RFC5480["sha1WithRSAEncryption"],  # 1.2.840.113549.1.1.5
         SHA256=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.11"),
         SHA384=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.12"),
         SHA512=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.13"),
         SHA224=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.14"),
     ),
     DSA=dict(
-        _any=rfc5480.id_dsa,                    # 1.2.840.10040.4.1
-        SHA1=rfc5480.id_dsa_with_sha1,          # 1.2.840.10040.4.3
-        SHA224=rfc5480.id_dsa_with_sha224,      # 2.16.840.1.101.3.4.3.1
-        SHA256=rfc5480.id_dsa_with_sha256,      # 2.16.840.1.101.3.4.3.2
+        _any=RFC5480["id_dsa"],                 # 1.2.840.10040.4.1
+        SHA1=RFC5480["id_dsa_with_sha1"],       # 1.2.840.10040.4.3
+        SHA224=RFC5480["id_dsa_with_sha224"],   # 2.16.840.1.101.3.4.3.1
+        SHA256=RFC5480["id_dsa_with_sha256"],   # 2.16.840.1.101.3.4.3.2
         SHA384=pyasn1_univ.ObjectIdentifier("2.16.840.1.101.3.4.3.3"),
         SHA512=pyasn1_univ.ObjectIdentifier("2.16.840.1.101.3.4.3.4"),
     ),
     EC=dict(
-        _any=rfc5480.id_ecPublicKey,            # 1.2.840.10045.2.1
-        SHA1=rfc5480.ecdsa_with_SHA1,           # 1.2.840.10045.4.1
-        SHA224=rfc5480.ecdsa_with_SHA224,       # 1.2.840.10045.4.3.1
-        SHA256=rfc5480.ecdsa_with_SHA256,       # 1.2.840.10045.4.3.2
-        SHA384=rfc5480.ecdsa_with_SHA384,       # 1.2.840.10045.4.3.3
-        SHA512=rfc5480.ecdsa_with_SHA512,       # 1.2.840.10045.4.3.4
+        _any=RFC5480["id_ecPublicKey"],         # 1.2.840.10045.2.1
+        SHA1=RFC5480["ecdsa_with_SHA1"],        # 1.2.840.10045.4.1
+        SHA224=RFC5480["ecdsa_with_SHA224"],    # 1.2.840.10045.4.3.1
+        SHA256=RFC5480["ecdsa_with_SHA256"],    # 1.2.840.10045.4.3.2
+        SHA384=RFC5480["ecdsa_with_SHA384"],    # 1.2.840.10045.4.3.3
+        SHA512=RFC5480["ecdsa_with_SHA512"],    # 1.2.840.10045.4.3.4
     ),
 )
 
