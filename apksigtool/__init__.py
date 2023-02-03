@@ -2482,7 +2482,7 @@ def _create_signature_block_file(sf: JARSignatureFile, *, cert: bytes, key: Priv
 
 def _parse_auth_attrs(  # type: ignore[no-any-unimported]
         attr: rfc2315.Attributes) -> Optional[PKCS7AuthenticatedAttributes]:
-    if not len(attr):
+    if not len(attr):   # pylint: disable=C1802
         return None
     id_contentType = pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.9.3")
     id_messageDigest = pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.9.4")
