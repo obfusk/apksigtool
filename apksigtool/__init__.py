@@ -186,8 +186,8 @@ JAR SIGNATURE BLOCK FILE
 >>> result = sig.verify(apk)                    # [EXPERIMENTAL] raises on failure
 >>> result.unverified_mf
 ('META-INF/MANIFEST.MF', 'META-INF/RSA-2048.RSA', 'META-INF/RSA-2048.SF')
->>> len(result.verified_signers), len(result.unverified_sf)
-(1, 0)
+>>> len(result.verified_signers)
+1
 
 >>> apk = "test/apks/apks/v1-only-with-nul-in-entry-name.apk"
 >>> ast.verify_apk_v1(apk)
@@ -1222,7 +1222,6 @@ class JARSignature(APKSigToolBase):
     verified: Union[None, Literal[False], Tuple[Tuple[str, str], ...]] = None
     verification_error: Optional[str] = None
     unverified_mf: Optional[Tuple[str, ...]] = None
-    unverified_sf: Optional[Tuple[Tuple[str, Tuple[str, ...]], ...]] = None
 
     def __post_init__(self) -> None:
         assert [_fn_base(x) for x in self.signature_files] \
@@ -1233,7 +1232,6 @@ class JARSignature(APKSigToolBase):
             assert self.verified in (None, False)
         assert (self.verification_error is not None) == (self.verified == False)    # noqa: E712
         assert (self.unverified_mf is not None) == (self.verified not in (None, False))
-        assert (self.unverified_sf is not None) == (self.verified not in (None, False))
 
     @property
     def required_signature_versions(self) -> FrozenSet[int]:
@@ -1305,14 +1303,10 @@ class JARVerificationSuccess(JARVerificationResult):
     pubkey_sha256_fingerprint) pairs.
 
     .unverified_mf is a tuple of filenames in the ZIP but not in the manifest.
-
-    .unverified_sf is a tuple of (sf_filename, filenames) for files in the
-    manifest but not in the signature file.
     """
     signature: JARSignature
     verified_signers: Tuple[Tuple[str, str], ...]
     unverified_mf: Tuple[str, ...]
-    unverified_sf: Tuple[Tuple[str, Tuple[str, ...]], ...]
 
     @property
     def is_verified(self) -> bool:
@@ -2126,17 +2120,16 @@ def parse_apk_v1_signature(extracted_meta: ZipInfoDataPairs, apkfile: Optional[s
                        signature_block_files=tuple(sbfs))
     if apkfile is not None:
         verified: Union[Literal[False], Tuple[Tuple[str, str], ...]]
-        verification_error = unverified_mf = unverified_sf = None
+        verification_error = unverified_mf = None
         try:
             result = sig.verify(apkfile, allow_unsafe=allow_unsafe, strict=strict)
             verified = result.verified_signers
             unverified_mf = result.unverified_mf
-            unverified_sf = result.unverified_sf
         except VerificationError as e:
             verified, verification_error = False, str(e)
         return dataclasses.replace(
             sig, verified=verified, verification_error=verification_error,
-            unverified_mf=unverified_mf, unverified_sf=unverified_sf)
+            unverified_mf=unverified_mf)
     return sig
 
 
@@ -2373,7 +2366,6 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
     """
     verified = []
     manifest = {}
-    unverified_sf = {}
     for entry in signature.manifest.entries:
         if entry.filename in manifest:
             raise VerificationError(f"Duplicate manifest entry: {entry.filename!r}")
@@ -2454,8 +2446,7 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
                 if not entry_verified:
                     err = f"No suitable digests for {entry.filename!r} in {sf.filename!r}"
                     raise VerificationError(err)
-            if not_in_sf := tuple(sorted(set(manifest) - set(e.filename for e in sf.entries))):
-                unverified_sf[sf.filename] = not_in_sf
+            if set(manifest) - set(e.filename for e in sf.entries):
                 raise VerificationError(f"Manifest entries missing from {sf.filename!r}")
         verified.append((sbf.certificate_info.fingerprint, sbf.public_key_info.fingerprint))
     with zipfile.ZipFile(apkfile, "r") as zf:
@@ -2488,8 +2479,7 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
             raise VerificationError(f"ZIP entry not in manifest: {filename!r}")
     if not verified:
         raise VerificationError("No signers")
-    return JARVerificationSuccess(signature, tuple(verified), unverified_mf,
-                                  tuple(sorted(unverified_sf.items())))
+    return JARVerificationSuccess(signature, tuple(verified), unverified_mf)
 
 
 # FIXME
@@ -2824,11 +2814,6 @@ def show_v1_signature(signature: JARSignature, *, allow_unsafe: Tuple[str, ...] 
                     p("UNVERIFIED FILES (IN ZIP, NOT IN MANIFEST)")
                     for filename in result.unverified_mf:
                         p("  FILENAME:", repr(filename)[1:-1])
-                if result.unverified_sf:
-                    for sfn, filenames in result.unverified_sf:
-                        p(f"UNVERIFIED FILES (IN MANIFEST, NOT IN {repr(sfn)[1:-1]})")
-                        for filename in filenames:
-                            p("  FILENAME:", repr(filename)[1:-1])
     else:
         p("NOT VERIFIED (No APK file)")
 

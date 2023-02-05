@@ -137,7 +137,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -281,7 +280,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -501,7 +499,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -716,7 +713,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -935,7 +931,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -1156,7 +1151,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -1377,7 +1371,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -1622,7 +1615,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -1837,7 +1829,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -2056,7 +2047,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -2277,7 +2267,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -2498,7 +2487,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -2713,7 +2701,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -2859,7 +2846,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -3009,7 +2995,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -3164,7 +3149,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -3319,7 +3303,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -3474,7 +3457,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -3629,7 +3611,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -3876,7 +3857,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -4113,7 +4093,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -4354,7 +4333,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -4597,7 +4575,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -4840,7 +4817,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -5009,7 +4985,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -5186,7 +5161,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -5341,7 +5315,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -5494,7 +5467,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -5675,7 +5647,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -5852,7 +5823,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -6029,7 +5999,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -6206,7 +6175,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -6383,7 +6351,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -6560,7 +6527,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -6737,7 +6703,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -6914,7 +6879,6 @@ apksigner: verified
     "META-INF/EC-P256.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -7091,7 +7055,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -7272,7 +7235,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -7425,7 +7387,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -7664,7 +7625,6 @@ apksigner: not verified
     "META-INF/CERT1.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -7907,7 +7867,6 @@ apksigner: verified
     "META-INF/CERT1.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -8064,7 +8023,6 @@ apksigner: not verified
     "META-INF/EC-P256.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -8213,7 +8171,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -8451,7 +8408,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -8599,7 +8555,6 @@ apksigner: not verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -8832,7 +8787,6 @@ apksigner: verified
     "META-INF/CERT1.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -8990,7 +8944,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -9135,7 +9088,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -9280,7 +9232,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -9420,7 +9371,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -9560,7 +9510,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -9700,7 +9649,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -9849,7 +9797,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -10003,7 +9950,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -10157,7 +10103,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -10306,7 +10251,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -10455,7 +10399,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -10604,7 +10547,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -10758,7 +10700,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -10912,7 +10853,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -11066,7 +11006,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -11215,7 +11154,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -11364,7 +11302,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -11513,7 +11450,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -11662,7 +11598,6 @@ apksigner: not verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -11811,7 +11746,6 @@ apksigner: not verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -11960,7 +11894,6 @@ apksigner: not verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -12109,7 +12042,6 @@ apksigner: not verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -12258,7 +12190,6 @@ apksigner: not verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -12407,7 +12338,6 @@ apksigner: not verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -12557,7 +12487,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -12702,7 +12631,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -12847,7 +12775,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -12987,7 +12914,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -13127,7 +13053,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -13267,7 +13192,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -13416,7 +13340,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -13570,7 +13493,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -13724,7 +13646,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -13873,7 +13794,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -14022,7 +13942,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -14171,7 +14090,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -14325,7 +14243,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -14479,7 +14396,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -14633,7 +14549,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -14782,7 +14697,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -14931,7 +14845,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -15080,7 +14993,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -15234,7 +15146,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -15388,7 +15299,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -15542,7 +15452,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -15691,7 +15600,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -15840,7 +15748,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -15989,7 +15896,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -16143,7 +16049,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -16297,7 +16202,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -16451,7 +16355,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -16600,7 +16503,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -16749,7 +16651,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -16898,7 +16799,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -17069,7 +16969,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Manifest entry not in ZIP: 'test.txt\\x00'",
   "verified": false
 }
@@ -17209,7 +17108,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -17349,7 +17247,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -17489,7 +17386,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -17633,7 +17529,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -17778,7 +17673,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -17918,7 +17812,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -18058,7 +17951,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -18198,7 +18090,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -18338,7 +18229,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -18478,7 +18368,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -18618,7 +18507,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -18758,7 +18646,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -18898,7 +18785,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -19038,7 +18924,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -19178,7 +19063,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -19318,7 +19202,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: MD5",
   "verified": false
 }
@@ -19458,7 +19341,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -19598,7 +19480,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -19738,7 +19619,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -19878,7 +19758,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -20018,7 +19897,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -20158,7 +20036,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -20298,7 +20175,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -20438,7 +20314,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -20578,7 +20453,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -20718,7 +20592,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -20858,7 +20731,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -20998,7 +20870,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -21142,7 +21013,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -21291,7 +21161,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -21440,7 +21309,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -21589,7 +21457,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -21738,7 +21605,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -21887,7 +21753,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -22036,7 +21901,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -22185,7 +22049,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -22334,7 +22197,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -22483,7 +22345,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -22632,7 +22493,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -22781,7 +22641,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -22930,7 +22789,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -23079,7 +22937,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -23228,7 +23085,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -23377,7 +23233,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -23526,7 +23381,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -23675,7 +23529,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -23824,7 +23677,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -23973,7 +23825,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -24122,7 +23973,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -24271,7 +24121,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -24420,7 +24269,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -24569,7 +24417,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -24718,7 +24565,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -24867,7 +24713,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -25016,7 +24861,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -25165,7 +25009,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -25314,7 +25157,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -25463,7 +25305,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -25612,7 +25453,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -25761,7 +25601,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -25910,7 +25749,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -26059,7 +25897,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -26208,7 +26045,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -26357,7 +26193,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -26506,7 +26341,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -26655,7 +26489,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -26804,7 +26637,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -26953,7 +26785,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -27102,7 +26933,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -27251,7 +27081,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -27400,7 +27229,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -27549,7 +27377,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -27698,7 +27525,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -27847,7 +27673,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -27996,7 +27821,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -28145,7 +27969,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -28316,7 +28139,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -28487,7 +28309,6 @@ apksigner: not verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Authenticated attributes digest mismatch",
   "verified": false
 }
@@ -28637,7 +28458,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Invalid signature",
   "verified": false
 }
@@ -28787,7 +28607,6 @@ apksigner: not verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Invalid signature",
   "verified": false
 }
@@ -28935,7 +28754,6 @@ apksigner: not verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Authenticated attributes digest mismatch",
   "verified": false
 }
@@ -29079,7 +28897,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Invalid signature",
   "verified": false
 }
@@ -29223,7 +29040,6 @@ apksigner: not verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Invalid signature",
   "verified": false
 }
@@ -29371,7 +29187,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -29542,7 +29357,6 @@ apksigner: verified
     "META-INF/EC-P256.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -29715,7 +29529,6 @@ apksigner: not verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -29883,7 +29696,6 @@ apksigner: not verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -30051,7 +29863,6 @@ apksigner: not verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -30219,7 +30030,6 @@ apksigner: not verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -30387,7 +30197,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -30555,7 +30364,6 @@ apksigner: verified
     }
   ],
   "unverified_mf": null,
-  "unverified_sf": null,
   "verification_error": "Unsafe hash algorithm: SHA1",
   "verified": false
 }
@@ -30699,7 +30507,6 @@ apksigner: verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -30876,7 +30683,6 @@ apksigner: verified
     "META-INF/EC-P256.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -31031,7 +30837,6 @@ apksigner: not verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -31190,7 +30995,6 @@ apksigner: not verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -31345,7 +31149,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -31502,7 +31305,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -31659,7 +31461,6 @@ apksigner: not verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -31812,7 +31613,6 @@ apksigner: not verified
     "META-INF/CERT.SF",
     "META-INF/MANIFEST.MF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
@@ -32005,7 +31805,6 @@ apksigner: verified
     "META-INF/RSA-2048.RSA",
     "META-INF/RSA-2048.SF"
   ],
-  "unverified_sf": [],
   "verification_error": null,
   "verified": [
     [
