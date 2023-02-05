@@ -2,9 +2,9 @@
 
     File        : README.md
     Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2022-12-07
+    Date        : 2023-02-05
 
-    Copyright   : Copyright (C) 2022  FC Stegerman
+    Copyright   : Copyright (C) 2023  FC Stegerman
     Version     : v0.1.0
     License     : AGPLv3+
 
@@ -30,7 +30,7 @@
 
 # apksigtool
 
-## parse/verify/clean android apk signing blocks & apks
+## parse/verify/clean/sign android apk (signing block)
 
 `apksigtool` is a tool for parsing [android APK Signing
 Blocks](https://source.android.com/docs/security/features/apksigning/v2#apk-signing-block)
@@ -39,7 +39,7 @@ Blocks](https://source.android.com/docs/security/features/apksigning/v2#apk-sign
 signatures](https://source.android.com/docs/security/features/apksigning).  It
 can also clean them (i.e. remove everything that's not an APK Signature Scheme
 v2/v3 Block or verity padding block), which can be useful for [reproducible
-builds](https://reproducible-builds.org).
+builds](https://reproducible-builds.org), and sign APKs.
 
 **WARNING: verification and signing are considered EXPERIMENTAL and SHOULD NOT BE RELIED ON,
 please use [`apksigner`](https://developer.android.com/studio/command-line/apksigner) instead.**
@@ -409,6 +409,20 @@ $ man apksigtool                # requires the man page to be installed
 
 ## Python API
 
+NB: every CLI command maps to an API function: e.g. `parse` to `do_parse()`.
+
+```python
+>>> import apksigtool
+>>> apksigtool.do_parse(apk, verbose=True)
+>>> apksigtool.do_parse_v1(apk, verbose=True)
+>>> apksigtool.do_extract_certs(apk, output_dir)
+>>> apksigtool.do_verify(apk, check_v1=True)                # [EXPERIMENTAL]
+>>> apksigtool.do_verify_v1(apk, allow_unsafe=("SHA1",))    # [EXPERIMENTAL]
+>>> apksigtool.do_clean(apk)                                # NB: modifies existing APK!
+>>> apksigtool.do_sign(unsigned_apk, output_apk, cert=cert_file,
+...                    key=key_file, password=password)     # [EXPERIMENTAL]
+```
+
 ### APK Signing Block
 
 ```python
@@ -448,6 +462,28 @@ $ man apksigtool                # requires the man page to be installed
 >>> apksigtool.show_json(sig)                       # JSON
 
 >>> result = sig.verify(apk)                        # [EXPERIMENTAL] raises on failure
+```
+
+### Signing
+
+```python
+>>> import apksigtool
+>>> unsigned_apk = "path/to/unsigned.apk"
+>>> output_apk = "path/to/output.apk"
+>>> cert = "path/to/cert.der"
+>>> key = "path/to/privkey.der"
+>>> password = "top secret"
+>>> apksigtool.do_sign(unsigned_apk, output_apk, cert=cert,
+...                    key=key, password=password)  # [EXPERIMENTAL]
+
+>>> from cryptography.hazmat.primitives import serialization
+>>> with open(cert, "rb") as fh:
+>>>     cert_bytes = fh.read()
+>>> with open(key, "rb") as fh:
+>>>     key_bytes = fh.read()
+>>> privkey = serialization.load_der_private_key(key_bytes, password.encode())
+>>> apksigtool.sign_apk(unsigned_apk, output_apk, cert=cert_bytes,
+...                     key=privkey)                # low-level API
 ```
 
 <!--

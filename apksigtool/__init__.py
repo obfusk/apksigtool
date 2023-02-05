@@ -7,7 +7,7 @@
 #
 # File        : apksigtool
 # Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2023-02-03
+# Date        : 2023-02-05
 #
 # Copyright   : Copyright (C) 2023  FC Stegerman
 # Version     : v0.1.0
@@ -16,13 +16,13 @@
 # --                                                            ; }}}1
 
 """
-parse/verify/clean android apk signing blocks & apks
+parse/verify/clean/sign android apk (signing block)
 
 apksigtool is a tool for parsing android APK Signing Blocks (either embedded in
 an APK or extracted as a separate file, e.g. using apksigcopier) and verifying
 APK signatures.  It can also clean them (i.e. remove everything that's not an
 APK Signature Scheme v2/v3 Block or verity padding block), which can be useful
-for reproducible builds.
+for reproducible builds, and sign APKs.
 
 WARNING: verification and signing are considered EXPERIMENTAL and SHOULD NOT BE
 RELIED ON, please use apksigner instead.
@@ -43,6 +43,19 @@ $ apksigtool verify-v1 [--quiet] [--rollback-is-error] APK
 
 API
 ===
+
+NB: every CLI command maps to an API function: e.g. parse to do_parse().
+
+#>> import apksigtool
+#>> apksigtool.do_parse(apk, verbose=True)
+#>> apksigtool.do_parse_v1(apk, verbose=True)
+#>> apksigtool.do_extract_certs(apk, output_dir)
+#>> apksigtool.do_verify(apk, check_v1=True)                # [EXPERIMENTAL]
+#>> apksigtool.do_verify_v1(apk, allow_unsafe=("SHA1",))    # [EXPERIMENTAL]
+#>> apksigtool.do_clean(apk)                                # NB: modifies existing APK!
+#>> apksigtool.do_sign(unsigned_apk, output_apk, cert=cert_file,
+...                    key=key_file, password=password)     # [EXPERIMENTAL]
+
 
 APK Signing Block
 -----------------
@@ -128,7 +141,7 @@ Cleaning
 >>> len(data), len(data_cleaned)
 (4096, 3027)
 
->>> # ast.clean_apk(some_apk)                   # NB: modifies existing APK!
+#>> ast.clean_apk(some_apk)                     # NB: modifies existing APK!
 
 
 v1 (JAR) signatures
@@ -185,6 +198,28 @@ JARVerificationFailure(error="Manifest entry not in ZIP: 'test.txt\\\\x00'")
 ... except ast.VerificationError as e:
 ...     print(e)
 Manifest entry not in ZIP: 'test.txt\\x00'
+
+
+Signing
+-------
+
+#>> import apksigtool
+#>> unsigned_apk = "path/to/unsigned.apk"
+#>> output_apk = "path/to/output.apk"
+#>> cert = "path/to/cert.der"
+#>> key = "path/to/privkey.der"
+#>> password = "top secret"
+#>> apksigtool.do_sign(unsigned_apk, output_apk, cert=cert,
+...                    key=key, password=password)  # [EXPERIMENTAL]
+
+#>> from cryptography.hazmat.primitives import serialization
+#>> with open(cert, "rb") as fh:
+#>>     cert_bytes = fh.read()
+#>> with open(key, "rb") as fh:
+#>>     key_bytes = fh.read()
+#>> privkey = serialization.load_der_private_key(key_bytes, password.encode())
+#>> apksigtool.sign_apk(unsigned_apk, output_apk, cert=cert_bytes,
+...                     key=privkey)                # low-level API
 
 """
 
@@ -3480,7 +3515,7 @@ def do_clean(apk_or_block: str, *, block: bool = False, check: bool = False,
 
 
 # WARNING: signing is considered EXPERIMENTAL
-def do_sign(unsigned_apk: str, output_apk: str, cert: str, key: str, *,
+def do_sign(unsigned_apk: str, output_apk: str, *, cert: str, key: str,
             no_v1: bool = False, no_v2: bool = False, no_v3: bool = False,
             password: Optional[str] = None) -> None:
     """
@@ -3521,7 +3556,7 @@ def main() -> None:
     UNSAFE = click.Choice(tuple(k for k, v in unsafe if v))
 
     @click.group(help="""
-        apksigtool - parse/verify/clean android apk signing blocks & apks
+        apksigtool - parse/verify/clean/sign android apk (signing block)
     """)
     @click.version_option(__version__)
     def cli() -> None:
