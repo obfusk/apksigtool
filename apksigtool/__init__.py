@@ -353,9 +353,9 @@ HASH_ALGOS = dict(RSA=("SHA512", "SHA256"), DSA=("SHA256",), EC=("SHA512", "SHA2
 
 # FIXME: choose best?!
 SIGNATURE_ALGORITHM = dict(
-    RSA=dict(SHA256=0x103, SHA512=0x104),
-    DSA=dict(SHA256=0x0301),
-    EC=dict(SHA256=0x0201, SHA512=0x0202),
+    RSA=dict(SHA256=0x0103, SHA512=0x0104),   # deterministic
+    DSA=dict(SHA256=0x0301),                  # non-deterministic
+    EC=dict(SHA256=0x0201, SHA512=0x0202),    # non-deterministic
 )
 
 assert all(v in HASHERS for d in SIGNATURE_ALGORITHM.values() for v in d.values())
