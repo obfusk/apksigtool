@@ -437,6 +437,10 @@ class VerificationError(APKSigToolError):
     """Verification failure."""
 
 
+class RollbackError(APKSigToolError):
+    """Other signature versions required by X-Android-APK-Signed."""
+
+
 class PasswordError(APKSigToolError):
     """Password error (e.g. incorrect or missing)."""
 
@@ -3301,6 +3305,208 @@ def _create_apk_signature_scheme_block(apkfile: str, *, cert: bytes, key: PrivKe
     return APKSignatureSchemeBlock(3 if v3 else 2, (signer,))
 
 
+def do_parse(apk_or_block: str, *, allow_nonzero_verity: bool = False,
+             block: bool = False, json: bool = False, no_verify: bool = False,
+             sdk_version: Optional[int] = None, verbose: bool = False,
+             wrap: bool = False) -> None:
+    """
+    Parse APK Signing Block (from the file apk_or_block, which is expected to be
+    an extracted block when block=True, an APK otherwise) and output a parse
+    tree (indented with spaces) or JSON (when json=True).
+    """
+    if block:
+        apkfile = None
+        with open(apk_or_block, "rb") as fh:
+            sig_block = fh.read()
+    else:
+        apkfile = apk_or_block if not no_verify else None
+        _, sig_block = extract_v2_sig(apk_or_block)
+    if json:
+        blk = APKSigningBlock.parse(sig_block, apkfile=apkfile, sdk=sdk_version,
+                                    allow_nonzero_verity=allow_nonzero_verity)
+        show_json(blk)
+    else:
+        blk = APKSigningBlock.parse(sig_block, allow_nonzero_verity=allow_nonzero_verity)
+        show_parse_tree(blk, apkfile=apkfile, sdk=sdk_version, verbose=verbose, wrap=wrap)
+
+
+def do_parse_v1(apk_or_dir: str, *, allow_unsafe: Tuple[str, ...] = (),
+                json: bool = False, no_strict: bool = False,
+                no_verify: bool = False, verbose: bool = False,
+                wrap: bool = False) -> None:
+    """
+    Parse APK v1 (JAR) signatures (from the file/directory apk_or_dir: an APK or
+    a directory with extracted metadata files) and output a parse tree (indented
+    with spaces) or JSON (when json=True).
+    """
+    if os.path.isdir(apk_or_dir):
+        apkfile = None
+        e_meta = load_extracted_meta_from_dir(apk_or_dir)
+    else:
+        apkfile = apk_or_dir if not no_verify else None
+        e_meta = extract_meta(apk_or_dir)
+    if json:
+        sig = JARSignature.parse(e_meta, allow_unsafe=allow_unsafe,
+                                 apkfile=apkfile, strict=not no_strict)
+        show_json(sig)
+    else:
+        sig = JARSignature.parse(e_meta)
+        show_v1_signature(sig, allow_unsafe=allow_unsafe, apkfile=apkfile,
+                          strict=not no_strict, verbose=verbose, wrap=wrap)
+
+
+def do_extract_certs(apk_or_block_or_dir: str, output_dir: str, *, block: bool = False,
+                     v1_only: apksigcopier.NoAutoYesBoolNone = apksigcopier.NO) -> None:
+    """
+    Extract X.509 certificates (in DER form) from apk_or_block_or_dir -- an APK,
+    extracted APK Signing Block (when block=True), or extracted files in a
+    directory -- to output_dir (as v1cert0.der, v2cert0.der, etc.)
+    """
+    v1_only = apksigcopier.noautoyes(v1_only)
+    v1_certs = sig_block = None
+    if block:
+        with open(apk_or_block_or_dir, "rb") as fh:
+            sig_block = fh.read()
+    elif os.path.isdir(apk_or_block_or_dir):
+        v1_certs = extract_v1_certs(load_extracted_meta_from_dir(apk_or_block_or_dir))
+        if v1_only != apksigcopier.YES:
+            sigblock_file = os.path.join(apk_or_block_or_dir, apksigcopier.SIGBLOCK)
+            if os.path.exists(sigblock_file):
+                with open(sigblock_file, "rb") as fh:
+                    sig_block = fh.read()
+            elif v1_only == apksigcopier.NO:
+                raise APKSigToolError("No APK Signing Block")
+    else:
+        v1_certs = extract_v1_certs(extract_meta(apk_or_block_or_dir))
+        if v1_only != apksigcopier.YES:
+            expected = v1_only == apksigcopier.NO
+            v2_sig = apksigcopier.extract_v2_sig(apk_or_block_or_dir, expected=expected)
+            if v2_sig is not None:
+                _, sig_block = v2_sig
+    v2_certs = extract_v2_certs(sig_block) if sig_block else None
+    certs = (v1_certs or ()) + (v2_certs or ())
+    if not certs:
+        raise APKSigToolError("No certificates")
+    counters: Dict[Union[int, str], int] = {}
+    for version, cert in certs:
+        counters.setdefault(version, 0)
+        name = f"v{version}cert{counters[version]}.der"
+        counters[version] += 1
+        with open(os.path.join(output_dir, name), "wb") as fh:
+            fh.write(cert.dump())
+
+
+# WARNING: verification is considered EXPERIMENTAL
+def do_verify(apk: str, *, allow_unsafe: Tuple[str, ...] = (),
+              check_v1: bool = False, quiet: bool = False,
+              sdk_version: Optional[int] = None,
+              signed_by: Optional[Tuple[str, str]] = None,
+              verbose: bool = False) -> None:
+    """
+    Verify APK using the APK Signature Scheme v2/v3 Blocks in its APK Signing
+    Block.
+
+    WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED
+    ON, please use apksigner instead.
+
+    Raises VerificationError on failure.
+    """
+    _err("WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.")
+    if allow_unsafe:
+        algs = ", ".join(sorted(set(allow_unsafe)))
+        _err(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.")
+    res = verify_apk_and_check_signers(apk, allow_unsafe=allow_unsafe, check_v1=check_v1,
+                                       quiet=quiet, sdk_version=sdk_version,
+                                       signed_by=signed_by, verbose=verbose)
+    if not res.is_verified:
+        raise VerificationError("Verification failed")
+
+
+# WARNING: verification is considered EXPERIMENTAL
+def do_verify_v1(apk: str, *, allow_unsafe: Tuple[str, ...] = (),
+                 no_strict: bool = False, quiet: bool = False,
+                 rollback_is_error: bool = False,
+                 signed_by: Optional[Tuple[str, str]] = None) -> None:
+    """
+    Verify APK v1 (JAR) signatures.
+
+    WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED
+    ON, please use apksigner instead.
+
+    Raises VerificationError on failure.
+
+    Raises RollbackError when other signature versions are required by
+    X-Android-APK-Signed and rollback_is_error=True.
+    """
+    _err("WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.")
+    if allow_unsafe:
+        algs = ", ".join(sorted(set(allow_unsafe)))
+        _err(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.")
+    res = _verify_v1(apk, allow_unsafe=allow_unsafe, quiet=quiet,
+                     strict=not no_strict, signed_by=signed_by)
+    if not res or not res.is_verified:
+        raise VerificationError("Verification failed")
+    assert isinstance(res, JARVerificationSuccess)
+    if required_sv := res.signature.required_signature_versions:
+        what = "Error" if rollback_is_error else "Warning"
+        vsns = ", ".join(f"v{n}" for n in sorted(required_sv))
+        _err(f"{what}: rollback protections require {vsns} signature(s) as well.")
+        if rollback_is_error:
+            raise RollbackError(f"Requires {vsns} signature(s)")
+
+
+def do_clean(apk_or_block: str, *, block: bool = False, check: bool = False,
+             keep: Tuple[int, ...] = (), sdk_version: Optional[int] = None) -> None:
+    """
+    Clean the file apk_or_block (which is expected to be an extracted block when
+    block=True, an APK otherwise): remove everything that's not an APK Signature
+    Scheme v2/v3 Block or verity padding block (or has a pair_id in keep) from
+    its APK Signing Block.
+
+    NB: modifies the APK file in place!
+    """
+    if block:
+        with open(apk_or_block, "rb") as fh:
+            sig_block = fh.read()
+        if check:
+            APKSigningBlock.parse(sig_block)    # try parsing, ignore result
+        sig_block_cleaned = clean_apk_signing_block(sig_block, keep=keep)
+        if cleaned := (sig_block != sig_block_cleaned):
+            with open(apk_or_block, "wb") as fh:
+                fh.write(sig_block_cleaned)
+    else:
+        cleaned = clean_apk(apk_or_block, check=check, keep=keep, sdk=sdk_version)
+    print("cleaned" if cleaned else "nothing to clean")
+
+
+# WARNING: signing is considered EXPERIMENTAL
+def do_sign(unsigned_apk: str, output_apk: str, cert: str, key: str, *,
+            no_v1: bool = False, no_v2: bool = False, no_v3: bool = False,
+            password: Optional[str] = None) -> None:
+    """
+    Sign unsigned_apk using v1 (JAR) and/or v2/v3 (APK Signing Block)
+    signature(s) -- using cert as the certificate file and key as the private
+    key file (encrypted with password if not None) -- and save as output_apk.
+
+    WARNING: signing is considered EXPERIMENTAL and SHOULD NOT BE RELIED ON,
+    please use apksigner instead.
+    """
+    _err("WARNING: signing is considered EXPERIMENTAL, please use apksigner instead.")
+    with open(cert, "rb") as fh:
+        cert_bytes = fh.read()
+    with open(key, "rb") as fh:
+        key_bytes = fh.read()
+    try:
+        passwd = password.encode() if password else None
+        privkey = serialization.load_der_private_key(key_bytes, passwd)
+    except (TypeError, ValueError) as e:
+        raise PasswordError(e.args[0]) if "password" in e.args[0].lower() else e
+    if not isinstance(privkey, PrivKeyTypes):
+        raise APKSigToolError(f"Unsupported private key type: {privkey.__class__.__name__}")
+    sign_apk(unsigned_apk, output_apk, cert=cert_bytes, key=privkey,
+             v1=not no_v1, v2=not no_v2, v3=not no_v3)
+
+
 def main() -> None:
     """CLI; requires click."""
 
@@ -3335,23 +3541,8 @@ def main() -> None:
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
     @click.option("--wrap", is_flag=True, help="Wrap output (no-op w/ --json).")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
-    def parse(apk_or_block: str, allow_nonzero_verity: bool, block: bool,
-              json: bool, no_verify: bool, sdk_version: Optional[int],
-              verbose: bool, wrap: bool) -> None:
-        if block:
-            apkfile = None
-            with open(apk_or_block, "rb") as fh:
-                sig_block = fh.read()
-        else:
-            apkfile = apk_or_block if not no_verify else None
-            _, sig_block = extract_v2_sig(apk_or_block)
-        if json:
-            blk = APKSigningBlock.parse(sig_block, apkfile=apkfile, sdk=sdk_version,
-                                        allow_nonzero_verity=allow_nonzero_verity)
-            show_json(blk)
-        else:
-            blk = APKSigningBlock.parse(sig_block, allow_nonzero_verity=allow_nonzero_verity)
-            show_parse_tree(blk, apkfile=apkfile, sdk=sdk_version, verbose=verbose, wrap=wrap)
+    def parse(*args: Any, **kwargs: Any) -> None:
+        do_parse(*args, **kwargs)
 
     @cli.command(help="""
         Parse APK v1 (JAR) signatures (from APK or extracted files in a
@@ -3366,20 +3557,8 @@ def main() -> None:
     @click.option("-v", "--verbose", is_flag=True, help="Be verbose (no-op w/ --json).")
     @click.option("--wrap", is_flag=True, help="Wrap output (no-op w/ --json).")
     @click.argument("apk_or_dir", type=click.Path(exists=True, dir_okay=True))
-    def parse_v1(apk_or_dir: str, allow_unsafe: Tuple[str], json: bool, no_strict: bool,
-                 no_verify: bool, verbose: bool, wrap: bool) -> None:
-        if os.path.isdir(apk_or_dir):
-            apkfile = None
-            e_meta = load_extracted_meta_from_dir(apk_or_dir)
-        else:
-            apkfile = apk_or_dir if not no_verify else None
-            e_meta = extract_meta(apk_or_dir)
-        if json:
-            show_json(JARSignature.parse(e_meta, apkfile=apkfile, allow_unsafe=allow_unsafe,
-                                         strict=not no_strict))
-        else:
-            show_v1_signature(JARSignature.parse(e_meta), allow_unsafe=allow_unsafe,
-                              apkfile=apkfile, strict=not no_strict, verbose=verbose, wrap=wrap)
+    def parse_v1(*args: Any, **kwargs: Any) -> None:
+        do_parse_v1(*args, **kwargs)
 
     @cli.command(help="""
         Extract X.509 certificates (in DER form) from APK, extracted APK Signing
@@ -3391,40 +3570,8 @@ def main() -> None:
                   help="Expect only a v1 signature.")
     @click.argument("apk_or_block_or_dir", type=click.Path(exists=True, dir_okay=True))
     @click.argument("output_dir", type=click.Path(exists=True, file_okay=False))
-    def extract_certs(apk_or_block_or_dir: str, output_dir: str, block: bool,
-                      v1_only: apksigcopier.NoAutoYesBoolNone) -> None:
-        v1_only = apksigcopier.noautoyes(v1_only)
-        v1_certs = sig_block = None
-        if block:
-            with open(apk_or_block_or_dir, "rb") as fh:
-                sig_block = fh.read()
-        elif os.path.isdir(apk_or_block_or_dir):
-            v1_certs = extract_v1_certs(load_extracted_meta_from_dir(apk_or_block_or_dir))
-            if v1_only != apksigcopier.YES:
-                sigblock_file = os.path.join(apk_or_block_or_dir, apksigcopier.SIGBLOCK)
-                if os.path.exists(sigblock_file):
-                    with open(sigblock_file, "rb") as fh:
-                        sig_block = fh.read()
-                elif v1_only == apksigcopier.NO:
-                    raise APKSigToolError("No APK Signing Block")
-        else:
-            v1_certs = extract_v1_certs(extract_meta(apk_or_block_or_dir))
-            if v1_only != apksigcopier.YES:
-                expected = v1_only == apksigcopier.NO
-                v2_sig = apksigcopier.extract_v2_sig(apk_or_block_or_dir, expected=expected)
-                if v2_sig is not None:
-                    _, sig_block = v2_sig
-        v2_certs = extract_v2_certs(sig_block) if sig_block else None
-        certs = (v1_certs or ()) + (v2_certs or ())
-        if not certs:
-            raise APKSigToolError("No certificates")
-        counters: Dict[Union[int, str], int] = {}
-        for version, cert in certs:
-            counters.setdefault(version, 0)
-            name = f"v{version}cert{counters[version]}.der"
-            counters[version] += 1
-            with open(os.path.join(output_dir, name), "wb") as fh:
-                fh.write(cert.dump())
+    def extract_certs(*args: Any, **kwargs: Any) -> None:
+        do_extract_certs(*args, **kwargs)
 
     # FIXME
     @cli.command(help="""
@@ -3446,18 +3593,12 @@ def main() -> None:
     @click.option("-v", "--verbose", is_flag=True, help="Show signer(s).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def verify(ctx: click.Context, apk: str, allow_unsafe: Tuple[str],
-               check_v1: bool, quiet: bool, sdk_version: Optional[int],
-               signed_by: Optional[str], verbose: bool) -> None:
-        _err("WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.")
-        if allow_unsafe:
-            algs = ", ".join(sorted(set(allow_unsafe)))
-            _err(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.")
-        sb = _parse_signed_by(signed_by, ctx, verify) if signed_by else None
-        res = verify_apk_and_check_signers(apk, allow_unsafe=allow_unsafe, check_v1=check_v1,
-                                           quiet=quiet, sdk_version=sdk_version,
-                                           signed_by=sb, verbose=verbose)
-        if not res.is_verified:
+    def verify(ctx: click.Context, *args: Any, **kwargs: Any) -> None:
+        if kwargs["signed_by"]:
+            kwargs["signed_by"] = _parse_signed_by(kwargs["signed_by"], ctx, verify)
+        try:
+            do_verify(*args, **kwargs)
+        except VerificationError:
             sys.exit(4)
 
     # FIXME
@@ -3479,25 +3620,15 @@ def main() -> None:
                        "certificate and public key sha256 fingerprint (hex).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def verify_v1(ctx: click.Context, apk: str, allow_unsafe: Tuple[str],
-                  no_strict: bool, quiet: bool, rollback_is_error: bool,
-                  signed_by: Optional[str]) -> None:
-        _err("WARNING: verification is considered EXPERIMENTAL, please use apksigner instead.")
-        if allow_unsafe:
-            algs = ", ".join(sorted(set(allow_unsafe)))
-            _err(f"WARNING: unsafe hash algorithms and/or key sizes allowed: {algs}.")
-        sb = _parse_signed_by(signed_by, ctx, verify_v1) if signed_by else None
-        res = _verify_v1(apk, allow_unsafe=allow_unsafe, quiet=quiet,
-                         strict=not no_strict, signed_by=sb)
-        if not res or not res.is_verified:
+    def verify_v1(ctx: click.Context, *args: Any, **kwargs: Any) -> None:
+        if kwargs["signed_by"]:
+            kwargs["signed_by"] = _parse_signed_by(kwargs["signed_by"], ctx, verify_v1)
+        try:
+            do_verify_v1(*args, **kwargs)
+        except VerificationError:
             sys.exit(4)
-        assert isinstance(res, JARVerificationSuccess)
-        if required_sv := res.signature.required_signature_versions:
-            what = "Error" if rollback_is_error else "Warning"
-            vsns = ", ".join(f"v{n}" for n in sorted(required_sv))
-            _err(f"{what}: rollback protections require {vsns} signature(s) as well.")
-            if rollback_is_error:
-                sys.exit(5)
+        except RollbackError:
+            sys.exit(5)
 
     def _parse_signed_by(signed_by: str, ctx: click.Context,
                          cmd: click.Command) -> Tuple[str, str]:
@@ -3526,31 +3657,16 @@ def main() -> None:
                   help="For v3 signers specifying min/max SDK.")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def clean(ctx: click.Context, apk_or_block: str, block: bool, check: bool,
-              keep: Tuple[str], sdk_version: Optional[int]) -> None:
+    def clean(ctx: click.Context, *args: Any, **kwargs: Any) -> None:
         try:
-            keep_ids = tuple(int(x, 16) for p in keep for x in p.split(","))
+            kwargs["keep"] = tuple(int(x, 16) for p in kwargs["keep"] for x in p.split(","))
         except ValueError as e:
             p, = [x for x in clean.params if x.name == "keep"]
             raise click.exceptions.BadParameter(e.args[0], ctx, p)
-        if block:
-            with open(apk_or_block, "rb") as fh:
-                sig_block = fh.read()
-            if check:
-                APKSigningBlock.parse(sig_block)    # try parsing, ignore result
-            sig_block_cleaned = clean_apk_signing_block(sig_block, keep=keep_ids)
-            if cleaned := (sig_block != sig_block_cleaned):
-                with open(apk_or_block, "wb") as fh:
-                    fh.write(sig_block_cleaned)
-        else:
-            cleaned = clean_apk(apk_or_block, check=check, keep=keep_ids, sdk=sdk_version)
-        if cleaned:
-            print("cleaned")
-        else:
-            print("nothing to clean")
+        do_clean(*args, **kwargs)
 
     # FIXME
-    # FIXME: --verbose, --min-sdk, --max-sdk, PEM, passwd, keystore, ...
+    # FIXME: --verbose, --min-sdk, --max-sdk, PEM, keystore, ...
     # FIXME: rotation, multiple signers
     @cli.command(help="""
         Sign APK using v1 (JAR) and/or v2/v3 (APK Signing Block) signature(s).
@@ -3569,27 +3685,14 @@ def main() -> None:
                   help="Private key is encrypted; prompt for password.")
     @click.argument("unsigned_apk", type=click.Path(exists=True, dir_okay=False))
     @click.argument("output_apk", type=click.Path(dir_okay=False))
-    def sign(unsigned_apk: str, output_apk: str, cert: str, key: str,
-             no_v1: bool, no_v2: bool, no_v3: bool, prompt: bool) -> None:
-        _err("WARNING: signing is considered EXPERIMENTAL, please use apksigner instead.")
-        if no_v1 and no_v2 and no_v3:
+    def sign(*args: Any, prompt: bool, **kwargs: Any) -> None:
+        if kwargs["no_v1"] and kwargs["no_v2"] and kwargs["no_v3"]:
             raise click.exceptions.BadParameter("all versions (v1, v2, and v3) excluded")
         if prompt:
-            passwd = click.prompt("Password", hide_input=True)
+            password = click.prompt("Password", hide_input=True)
         else:
-            passwd = os.environ.get("APKSIGTOOL_PRIVKEY_PASSWORD", "")
-        with open(cert, "rb") as fh:
-            cert_bytes = fh.read()
-        with open(key, "rb") as fh:
-            key_bytes = fh.read()
-        try:
-            privkey = serialization.load_der_private_key(key_bytes, passwd.encode() or None)
-        except (TypeError, ValueError) as e:
-            raise PasswordError(e.args[0]) if "password" in e.args[0].lower() else e
-        if not isinstance(privkey, PrivKeyTypes):
-            raise APKSigToolError(f"Unsupported private key type: {privkey.__class__.__name__}")
-        sign_apk(unsigned_apk, output_apk, cert=cert_bytes, key=privkey,
-                 v1=not no_v1, v2=not no_v2, v3=not no_v3)
+            password = os.environ.get("APKSIGTOOL_PRIVKEY_PASSWORD")
+        do_sign(*args, **kwargs, password=password or None)
 
     try:
         cli(prog_name=NAME)
