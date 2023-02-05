@@ -2809,11 +2809,10 @@ def show_v1_signature(signature: JARSignature, *, allow_unsafe: Tuple[str, ...] 
             p(f"NOT VERIFIED ({e})")
         else:
             p(f"VERIFIED ({len(result.verified_signers)} signer(s))")
-            if verbose:
-                if result.unverified_mf:
-                    p("UNVERIFIED FILES (IN ZIP, NOT IN MANIFEST)")
-                    for filename in result.unverified_mf:
-                        p("  FILENAME:", repr(filename)[1:-1])
+            if verbose and result.unverified_mf:
+                p("UNVERIFIED FILES (IN ZIP, NOT IN MANIFEST)")
+                for filename in result.unverified_mf:
+                    p("  FILENAME:", repr(filename)[1:-1])
     else:
         p("NOT VERIFIED (No APK file)")
 
