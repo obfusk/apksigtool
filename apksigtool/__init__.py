@@ -1110,7 +1110,7 @@ class JARManifestBase(APKSigToolBase):
     entries: Tuple[JAREntry, ...]
     version: str
     created_by: Optional[str]
-    headers_len: int
+    _headers_len: int
 
 
 @dataclass(frozen=True)
@@ -2179,7 +2179,7 @@ def parse_apk_v1_manifest(data: bytes) -> JARManifest:
         entries.append(JAREntry(raw_data=raw, filename=ent["Name"],
                                 digests=tuple(_digests_from_dict(ent))))
     return JARManifest(raw_data=data, entries=tuple(entries), version=version,
-                       created_by=created_by, built_by=built_by, headers_len=headers_len)
+                       created_by=created_by, built_by=built_by, _headers_len=headers_len)
 
 
 def dump_apk_v1_manifest(manifest: JARManifest) -> bytes:
@@ -2210,7 +2210,7 @@ def parse_apk_v1_signature_file(filename: str, data: bytes) -> JARSignatureFile:
     return JARSignatureFile(
         raw_data=data, entries=tuple(entries), version=version, created_by=created_by,
         digests_manifest=digests_manifest, digests_manifest_main_attributes=digests_mma,
-        x_android_apk_signed=x_android_apk_signed, filename=filename, headers_len=headers_len)
+        x_android_apk_signed=x_android_apk_signed, filename=filename, _headers_len=headers_len)
 
 
 def dump_apk_v1_signature_file(sf: JARSignatureFile) -> bytes:
@@ -2418,7 +2418,7 @@ def verify_apk_v1_signature(signature: JARSignature, apkfile: str, *,
                     if unsafe := algo not in allow_unsafe and UNSAFE_HASH_ALGO[algo]:
                         if strict:
                             raise VerificationError(f"Unsafe hash algorithm: {algo}")
-                    hdrs = signature.manifest.raw_data[:signature.manifest.headers_len]
+                    hdrs = signature.manifest.raw_data[:signature.manifest._headers_len]
                     mma_digest = base64.b64encode(hasher(hdrs).digest()).decode()
                     if digest != mma_digest:
                         raise VerificationError(f"Manifest main attributes {algo} digest mismatch")
@@ -3259,13 +3259,13 @@ def create_v1_signature(apkfile: str, *, cert: bytes, key: PrivKey,
             sf_entry = dataclasses.replace(sf_entry, raw_data=_dump_jar_entry(sf_entry))
             sf_entries.append(sf_entry)
     mf = JARManifest(raw_data=b"", entries=tuple(mf_entries), version="1.0",
-                     created_by=created_by, built_by=None, headers_len=0)
+                     created_by=created_by, built_by=None, _headers_len=0)
     mf = dataclasses.replace(mf, raw_data=mf.dump())
     mf_digest = base64.b64encode(hasher(mf.raw_data).digest()).decode()
     sf = JARSignatureFile(
         raw_data=b"", entries=tuple(sf_entries), version="1.0", created_by=created_by,
         digests_manifest=((hash_algo, mf_digest),), digests_manifest_main_attributes=None,
-        x_android_apk_signed=x_android_apk_signed, filename="META-INF/CERT.SF", headers_len=0)
+        x_android_apk_signed=x_android_apk_signed, filename="META-INF/CERT.SF", _headers_len=0)
     sf = dataclasses.replace(sf, raw_data=sf.dump())
     sbf_raw, sbf_ext = _create_signature_block_file(sf, cert=cert, key=key, hash_algo=hash_algo)
     sbf = JARSignatureBlockFile(raw_data=sbf_raw, filename=f"META-INF/CERT.{sbf_ext}")
