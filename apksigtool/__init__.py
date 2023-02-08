@@ -31,13 +31,13 @@ RELIED ON, please use apksigner instead.
 CLI
 ===
 
-$ apksigtool parse [--block] [--json] [--verbose] APK_OR_BLOCK
+$ apksigtool parse [--block] [--json] [--verbose] [--wrap] APK_OR_BLOCK
 $ apksigtool verify [--check-v1] [--quiet] [--verbose] APK
 $ apksigtool extract-certs [--block] APK_OR_BLOCK_OR_DIR OUTPUT_DIR
 $ apksigtool clean [--block] [--check] [--keep HEXID] APK_OR_BLOCK
 $ apksigtool sign --cert CERT --key PRIVKEY UNSIGNED_APK OUTPUT_APK
 
-$ apksigtool parse-v1 [--json] [--verbose] APK_OR_DIR
+$ apksigtool parse-v1 [--json] [--verbose] [--wrap] APK_OR_DIR
 $ apksigtool verify-v1 [--quiet] [--rollback-is-error] APK
 
 
@@ -346,7 +346,7 @@ HASHERS: Dict[int, Tuple[str, Any, HalgoFun, Optional[PadFun], int]] = {
     0x0425: ("dsa", sha256, SHA256, None, VERITY),                      # NB: untested
 }
 
-assert set(SIGNATURE_ALGORITHM_IDS.keys()) == set(HASHERS.keys())
+assert set(SIGNATURE_ALGORITHM_IDS) == set(HASHERS)
 
 # in order of preference
 HASH_ALGOS = dict(RSA=("SHA512", "SHA256"), DSA=("SHA256",), EC=("SHA512", "SHA256"))
@@ -426,8 +426,8 @@ UNSAFE_KEY_SIZE: Dict[str, Callable[[int], bool]] = dict(
     EC=lambda size: size < 224,
 )
 
-assert set(JAR_HASHERS_STR.keys()) == set(UNSAFE_HASH_ALGO.keys())
-assert set(JAR_SBF_EXTS) == set(UNSAFE_KEY_SIZE.keys())
+assert set(JAR_HASHERS_STR) == set(UNSAFE_HASH_ALGO)
+assert set(JAR_SBF_EXTS) == set(UNSAFE_KEY_SIZE)
 assert set(JAR_SBF_EXTS) == set(x[0].upper() for x in HASHERS.values())
 
 PRIVKEY_TYPE = {RSAPrivateKey: "RSA", DSAPrivateKey: "DSA", EllipticCurvePrivateKey: "EC"}

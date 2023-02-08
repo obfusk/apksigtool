@@ -44,6 +44,19 @@ builds](https://reproducible-builds.org), and sign APKs.
 **WARNING: verification and signing are considered EXPERIMENTAL and SHOULD NOT BE RELIED ON,
 please use [`apksigner`](https://developer.android.com/studio/command-line/apksigner) instead.**
 
+## CLI
+
+```bash
+$ apksigtool parse [--block] [--json] [--verbose] [--wrap] APK_OR_BLOCK
+$ apksigtool verify [--check-v1] [--quiet] [--verbose] APK
+$ apksigtool extract-certs [--block] APK_OR_BLOCK_OR_DIR OUTPUT_DIR
+$ apksigtool clean [--block] [--check] [--keep HEXID] APK_OR_BLOCK
+$ apksigtool sign --cert CERT --key PRIVKEY UNSIGNED_APK OUTPUT_APK
+
+$ apksigtool parse-v1 [--json] [--verbose] [--wrap] APK_OR_DIR
+$ apksigtool verify-v1 [--quiet] [--rollback-is-error] APK
+```
+
 ### Parse
 
 Parse tree (some output elided):
