@@ -438,10 +438,10 @@ DIGEST_ENCRYPTION_ALGORITHM = dict(
         _any=RFC5480["rsaEncryption"],          # 1.2.840.113549.1.1.1
         MD5=RFC5480["md5WithRSAEncryption"],    # 1.2.840.113549.1.1.4
         SHA1=RFC5480["sha1WithRSAEncryption"],  # 1.2.840.113549.1.1.5
+        SHA224=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.14"),
         SHA256=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.11"),
         SHA384=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.12"),
         SHA512=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.13"),
-        SHA224=pyasn1_univ.ObjectIdentifier("1.2.840.113549.1.1.14"),
     ),
     DSA=dict(
         _any=RFC5480["id_dsa"],                 # 1.2.840.10040.4.1
@@ -468,8 +468,16 @@ class APKSigToolError(Exception):
     """Base class for errors."""
 
 
+class ParseError(APKSigToolError):
+    """Parse failure."""
+
+
 class VerificationError(APKSigToolError):
     """Verification failure."""
+
+
+class SigningError(APKSigToolError):
+    """Signing failure."""
 
 
 class RollbackError(APKSigToolError):
@@ -2093,7 +2101,7 @@ def parse_apk_v1_signature(extracted_meta: ZipInfoDataPairs, apkfile: Optional[s
     sig_block_files = {}
     for info, data in extracted_meta:
         if not apksigcopier.is_meta(info.filename):
-            raise APKSigToolError(f"Not a v1 signature file: {info.filename!r}")
+            raise ParseError(f"Not a v1 signature file: {info.filename!r}")
         if info.filename == JAR_MANIFEST:
             _assert(manifest is None, "duplicate manifest")
             manifest = parse_apk_v1_manifest(data)
@@ -2107,9 +2115,9 @@ def parse_apk_v1_signature(extracted_meta: ZipInfoDataPairs, apkfile: Optional[s
                     "public key algorithm must match file extension")
             sig_block_files[info.filename] = sbf
         else:
-            raise APKSigToolError(f"Unexpected metadata file: {info.filename!r}")
+            raise ParseError(f"Unexpected metadata file: {info.filename!r}")
     if manifest is None:
-        raise APKSigToolError("Missing manifest")
+        raise ParseError("Missing manifest")
     _assert(bool(sig_files), "must have at least one signature file")
     _assert(bool(sig_block_files), "must have at least one signature block file")
     sf_fb = tuple(map(_fn_base, sig_files.values()))
@@ -2499,7 +2507,7 @@ def _load_apk_v1_signature_block_file_signer_infos_cert(    # type: ignore[no-an
             algo = JAR_HASHERS_OID.get(dalg, [None])[0]
             signer_infos.append(PKCS7SignerInfo(edig, algo, _parse_auth_attrs(attr)))
     except PyAsn1Error:
-        raise APKSigToolError("Failed to parse signature block file PKCS #7 data")  # pylint: disable=W0707
+        raise ParseError("Failed to parse signature block file PKCS #7 data")   # pylint: disable=W0707
     certs = load_der_pkcs7_certificates(data)
     _assert(len(certs) == 1, "signature block file must contain exactly 1 certificate")
     return tuple(signer_infos), X509Cert.load(certs[0].public_bytes(serialization.Encoding.DER))
@@ -3240,7 +3248,7 @@ def create_v1_signature(apkfile: str, *, cert: bytes, key: PrivKey,
     sf_entries = []
     with zipfile.ZipFile(apkfile, "r") as zf:
         if len(set(zi.filename for zi in zf.infolist())) != len(zf.infolist()):
-            raise APKSigToolError("Duplicate ZIP entries")
+            raise SigningError("Duplicate ZIP entries")
         for info in sorted(zf.infolist(), key=lambda info: info.header_offset):
             if info.filename.endswith("/"):
                 continue
@@ -3394,7 +3402,7 @@ def do_extract_certs(apk_or_block_or_dir: str, output_dir: str, *, block: bool =
                 with open(sigblock_file, "rb") as fh:
                     sig_block = fh.read()
             elif v1_only == apksigcopier.NO:
-                raise APKSigToolError("No APK Signing Block")
+                raise ParseError("No APK Signing Block")
     else:
         v1_certs = extract_v1_certs(extract_meta(apk_or_block_or_dir))
         if v1_only != apksigcopier.YES:
@@ -3405,7 +3413,7 @@ def do_extract_certs(apk_or_block_or_dir: str, output_dir: str, *, block: bool =
     v2_certs = extract_v2_certs(sig_block) if sig_block else None
     certs = (v1_certs or ()) + (v2_certs or ())
     if not certs:
-        raise APKSigToolError("No certificates")
+        raise ParseError("No certificates")
     counters: Dict[Union[int, str], int] = {}
     for version, cert in certs:
         counters.setdefault(version, 0)
@@ -3521,7 +3529,7 @@ def do_sign(unsigned_apk: str, output_apk: str, *, cert: str, key: str,
     except (TypeError, ValueError) as e:
         raise PasswordError(e.args[0]) if "password" in e.args[0].lower() else e
     if not isinstance(privkey, PrivKeyTypes):
-        raise APKSigToolError(f"Unsupported private key type: {privkey.__class__.__name__}")
+        raise SigningError(f"Unsupported private key type: {privkey.__class__.__name__}")
     sign_apk(unsigned_apk, output_apk, cert=cert_bytes, key=privkey,
              v1=not no_v1, v2=not no_v2, v3=not no_v3)
 
