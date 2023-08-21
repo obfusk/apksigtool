@@ -408,7 +408,7 @@ JAR_HASHERS_OID = {
 JAR_HASHERS_STR = {v[0]: (k,) + v[1:] for k, v in JAR_HASHERS_OID.items()}
 
 # FIXME: MD5?
-JAR_DIGEST_HEADER = r"(SHA(?:1|-(?:224|256|384|512)))-Digest"
+JAR_DIGEST_HEADER = r"(SHA(?:1|-?(?:224|256|384|512)))-Digest"
 JAR_MANIFEST = "META-INF/MANIFEST.MF"
 JAR_SBF_EXTS = ("RSA", "DSA", "EC")
 JAR_META_EXTS = ("SF",) + JAR_SBF_EXTS + (JAR_MANIFEST.split(".")[-1],)
