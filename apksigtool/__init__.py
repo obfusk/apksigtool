@@ -601,8 +601,8 @@ class Digest(APKSigToolBase):
 class Certificate(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> signed data -> certificate."""
     raw_data: bytes
-    _certificate: X509Cert = field(init=False, repr=False, compare=False)           # type: ignore[no-any-unimported]
-    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)  # type: ignore[no-any-unimported]
+    _certificate: Any = field(init=False, repr=False, compare=False)    # Any=X509Cert
+    _public_key: Any = field(init=False, repr=False, compare=False)     # Any=X509CertPubKeyInfo
     certificate_info: CertificateInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
 
@@ -733,7 +733,7 @@ class Signature(APKSigToolBase):
 class PublicKey(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> public key."""
     raw_data: bytes
-    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)  # type: ignore[no-any-unimported]
+    _public_key: Any = field(init=False, repr=False, compare=False)     # Any=X509CertPubKeyInfo
     public_key_info: PublicKeyInfo = field(init=False)
 
     def __post_init__(self) -> None:
@@ -1194,8 +1194,8 @@ class JARSignatureBlockFile(APKSigToolBase):
     """JAR signature block file (.RSA, .DSA, or .EC)."""
     raw_data: bytes
     filename: str
-    _certificate: X509Cert = field(init=False, repr=False, compare=False)           # type: ignore[no-any-unimported]
-    _public_key: X509CertPubKeyInfo = field(init=False, repr=False, compare=False)  # type: ignore[no-any-unimported]
+    _certificate: Any = field(init=False, repr=False, compare=False)    # Any=X509Cert
+    _public_key: Any = field(init=False, repr=False, compare=False)     # Any=X509CertPubKeyInfo
     certificate_info: CertificateInfo = field(init=False)
     public_key_info: PublicKeyInfo = field(init=False)
     signer_infos: Tuple[PKCS7SignerInfo, ...] = field(init=False)
@@ -3620,7 +3620,7 @@ def main() -> None:
     @click.option("-v", "--verbose", is_flag=True, help="Show signer(s).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def verify(ctx: click.Context, *args: Any, **kwargs: Any) -> None:
+    def verify(ctx: click.Context, /, *args: Any, **kwargs: Any) -> None:
         if kwargs["signed_by"]:
             kwargs["signed_by"] = _parse_signed_by(kwargs["signed_by"], ctx, verify)
         try:
@@ -3647,7 +3647,7 @@ def main() -> None:
                        "certificate and public key sha256 fingerprint (hex).")
     @click.argument("apk", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def verify_v1(ctx: click.Context, *args: Any, **kwargs: Any) -> None:
+    def verify_v1(ctx: click.Context, /, *args: Any, **kwargs: Any) -> None:
         if kwargs["signed_by"]:
             kwargs["signed_by"] = _parse_signed_by(kwargs["signed_by"], ctx, verify_v1)
         try:
@@ -3684,7 +3684,7 @@ def main() -> None:
                   help="For v3 signers specifying min/max SDK.")
     @click.argument("apk_or_block", type=click.Path(exists=True, dir_okay=False))
     @click.pass_context
-    def clean(ctx: click.Context, *args: Any, **kwargs: Any) -> None:
+    def clean(ctx: click.Context, /, *args: Any, **kwargs: Any) -> None:
         try:
             kwargs["keep"] = tuple(int(x, 16) for p in kwargs["keep"] for x in p.split(","))
         except ValueError as e:
