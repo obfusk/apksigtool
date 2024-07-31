@@ -13,7 +13,7 @@ setuptools.setup(
     long_description  = info,
     long_description_content_type = "text/markdown",
     version           = __version__,
-    author            = "FC Stegerman",
+    author            = "FC (Fay) Stegerman",
     author_email      = "flx@obfusk.net",
     license           = "AGPLv3+",
     classifiers       = [

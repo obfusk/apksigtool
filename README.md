@@ -1,14 +1,5 @@
-<!-- {{{1
-
-    File        : README.md
-    Maintainer  : FC Stegerman <flx@obfusk.net>
-    Date        : 2023-02-05
-
-    Copyright   : Copyright (C) 2023  FC Stegerman
-    Version     : v0.1.0
-    License     : AGPLv3+
-
-}}}1 -->
+<!-- SPDX-FileCopyrightText: 2024 FC (Fay) Stegerman <flx@obfusk.net> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 
 [![GitHub Release](https://img.shields.io/github/release/obfusk/apksigtool.svg?logo=github)](https://github.com/obfusk/apksigtool/releases)
 [![PyPI Version](https://img.shields.io/pypi/v/apksigtool.svg)](https://pypi.python.org/pypi/apksigtool)

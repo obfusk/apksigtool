@@ -1,19 +1,7 @@
 #!/usr/bin/python3
 # encoding: utf-8
-# SPDX-FileCopyrightText: 2023 FC Stegerman <flx@obfusk.net>
+# SPDX-FileCopyrightText: 2024 FC (Fay) Stegerman <flx@obfusk.net>
 # SPDX-License-Identifier: AGPL-3.0-or-later
-
-# --                                                            ; {{{1
-#
-# File        : apksigtool
-# Maintainer  : FC Stegerman <flx@obfusk.net>
-# Date        : 2023-02-05
-#
-# Copyright   : Copyright (C) 2023  FC Stegerman
-# Version     : v0.1.0
-# License     : AGPLv3+
-#
-# --                                                            ; }}}1
 
 """
 parse/verify/clean/sign android apk (signing block)
@@ -248,8 +236,8 @@ from typing import (cast, Any, Callable, ClassVar, Dict, FrozenSet, Iterable, It
 import apksigcopier
 
 from apksigcopier import APKSigCopierError, ZipInfoDataPairs
-from asn1crypto.keys import PublicKeyInfo as X509CertPubKeyInfo     # type: ignore[import]
-from asn1crypto.x509 import Certificate as X509Cert                 # type: ignore[import]
+from asn1crypto.keys import PublicKeyInfo as X509CertPubKeyInfo     # type: ignore[import-untyped]
+from asn1crypto.x509 import Certificate as X509Cert                 # type: ignore[import-untyped]
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.dsa import DSAPrivateKey, DSAPublicKey
@@ -258,11 +246,11 @@ from cryptography.hazmat.primitives.asymmetric.padding import MGF1, PKCS1v15, PS
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
 from cryptography.hazmat.primitives.hashes import HashAlgorithm, MD5, SHA1, SHA224, SHA256, SHA384, SHA512
 from cryptography.hazmat.primitives.serialization.pkcs7 import load_der_pkcs7_certificates
-from pyasn1.codec.der.decoder import decode as pyasn1_decode        # type: ignore[import]
-from pyasn1.codec.der.encoder import encode as pyasn1_encode        # type: ignore[import]
-from pyasn1.error import PyAsn1Error                                # type: ignore[import]
-from pyasn1.type import univ as pyasn1_univ                         # type: ignore[import]
-from pyasn1_modules import rfc2315                                  # type: ignore[import]
+from pyasn1.codec.der.decoder import decode as pyasn1_decode
+from pyasn1.codec.der.encoder import encode as pyasn1_encode
+from pyasn1.error import PyAsn1Error
+from pyasn1.type import univ as pyasn1_univ
+from pyasn1_modules import rfc2315                                  # type: ignore[import-untyped]
 
 __version__ = "0.1.0"
 NAME = "apksigtool"
@@ -411,7 +399,7 @@ JAR_HASHERS_STR = {v[0]: (k,) + v[1:] for k, v in JAR_HASHERS_OID.items()}
 JAR_DIGEST_HEADER = r"(SHA(?:1|-?(?:224|256|384|512)))-Digest"
 JAR_MANIFEST = "META-INF/MANIFEST.MF"
 JAR_SBF_EXTS = ("RSA", "DSA", "EC")
-JAR_META_EXTS = ("SF",) + JAR_SBF_EXTS + (JAR_MANIFEST.split(".")[-1],)
+JAR_META_EXTS = ("SF",) + JAR_SBF_EXTS + (JAR_MANIFEST.rsplit(".", 1)[-1],)
 
 # FIXME
 UNSAFE_HASH_ALGO = dict(
