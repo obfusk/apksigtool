@@ -2875,8 +2875,8 @@ def show_v1_signature_block_file(sbf: JARSignatureBlockFile, *, file: TextIO = s
 
 def show_json(obj: APKSigToolBase, *, file: TextIO = sys.stdout) -> None:
     """Print parse tree as JSON to file (stdout)."""
-    import simplejson
-    simplejson.dump(obj, file, indent=2, sort_keys=True, encoding=None,
+    import simplejson   # FIXME: casting None to str because of wrong type stub
+    simplejson.dump(obj, file, indent=2, sort_keys=True, encoding=cast(str, None),
                     default=json_dump_default, for_json=True)
     print(file=file)
 
