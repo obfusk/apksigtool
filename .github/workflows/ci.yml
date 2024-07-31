@@ -33,7 +33,7 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install flake8 pylint coverage
     - name: Install mypy
-      run: python3 -m pip install mypy types-simplejson
+      run: python3 -m pip install mypy types-pyasn1 types-simplejson
       continue-on-error:
         ${{ contains(matrix.python-version, 'alpha') }}
     - name: Install
