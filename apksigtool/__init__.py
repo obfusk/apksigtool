@@ -228,6 +228,7 @@ import zipfile
 
 from binascii import hexlify
 from dataclasses import dataclass, field
+from enum import Flag
 from functools import reduce
 from hashlib import md5, sha1, sha224, sha256, sha384, sha512
 from typing import (cast, Any, Callable, ClassVar, Dict, FrozenSet, Iterable, Iterator, List,
@@ -296,9 +297,12 @@ SOURCE_STAMP_V2_BLOCK_ID = 0x6dff800d
 
 # FIXME: not used properly
 STRIPPING_PROTECTION_ATTR_ID = 0xbeeff00d
-PROOF_OF_ROTATION_ATTR_ID = 0x3ba06f8c
 ROTATION_MIN_SDK_VERSION_ATTR_ID = 0x559f8b02
 ROTATION_ON_DEV_RELEASE_ATTR_ID = 0xc2a6b3ba
+
+# signing lineage & proof of rotation
+PROOF_OF_ROTATION_ATTR_ID = 0x3ba06f8c
+PROOF_OF_ROTATION_VERSION = 1
 
 # FIXME: incomplete
 # https://android.googlesource.com/platform/tools/apksig
@@ -631,10 +635,42 @@ class Certificate(APKSigToolBase):
 
 
 @dataclass(frozen=True)
+class SigningLineageNode:
+    """Signing lineage node."""
+    signed_data: bytes
+    certificate: Certificate
+    parent_signature_algorithm_id: int
+    flags: Flags
+    signature: Signature
+
+    class Flags(Flag):
+        PAST_CERT_INSTALLED_DATA = 1
+        PAST_CERT_SHARED_USER_ID = 2
+        PAST_CERT_PERMISSION = 4
+        PAST_CERT_ROLLBACK = 8
+        PAST_CERT_AUTH = 16
+
+        def __str__(self) -> str:
+            return "|".join(cast(str, f.name) for f in self)
+
+
+@dataclass(frozen=True)
+class SigningLineage:
+    """Signing lineage."""
+    version: int
+    nodes: Tuple[SigningLineageNode, ...]
+
+    def verify(self) -> None:
+        """Verify signing lineage."""
+        verify_signing_lineage(self)
+
+
+@dataclass(frozen=True)
 class AdditionalAttribute(APKSigToolBase):
     """APK Signature Scheme v2/v3 Block -> signer -> signed data -> additional attribute."""
     id: int
     value: bytes
+    struct: Optional[SigningLineage]
 
     @property
     def is_stripping_protection(self) -> bool:
@@ -655,6 +691,13 @@ class AdditionalAttribute(APKSigToolBase):
     def is_rotation_on_dev_release(self) -> bool:
         """Whether .id is ROTATION_ON_DEV_RELEASE_ATTR_ID."""
         return self.id == ROTATION_ON_DEV_RELEASE_ATTR_ID
+
+    @property
+    def signing_lineage(self) -> SigningLineage:
+        """Get signing lineage from proof-of-rotation struct (if .struct matches)."""
+        if not isinstance(self.struct, SigningLineage):
+            raise TypeError("Not a SigningLineage.")
+        return self.struct
 
     def for_json(self) -> Mapping[str, Any]:
         """Convert to JSON."""
@@ -1844,12 +1887,17 @@ def parse_additional_attributes(data: bytes) -> Tuple[AdditionalAttribute, ...]:
     return tuple(_parse_additional_attributes(data))
 
 
+# FIXME
 def _parse_additional_attributes(data: bytes) -> Iterator[AdditionalAttribute]:
     """Yield AdditionalAttribute(s)."""
     while data:
         attr, data = _split_len_prefixed_field(data)
-        attr_id = int.from_bytes(attr[:4], "little")
-        yield AdditionalAttribute(attr_id, attr[4:])
+        attr_id, attr_data = int.from_bytes(attr[:4], "little"), attr[4:]
+        if attr_id == PROOF_OF_ROTATION_ATTR_ID:
+            attr_struct = parse_proof_of_rotation_attr(attr_data)
+        else:
+            attr_struct = None
+        yield AdditionalAttribute(attr_id, attr_data, attr_struct)
 
 
 def dump_additional_attribute(attribute: AdditionalAttribute) -> bytes:
@@ -1859,6 +1907,34 @@ def dump_additional_attribute(attribute: AdditionalAttribute) -> bytes:
     """
     attr_id = int.to_bytes(attribute.id, 4, "little")
     return _as_len_prefixed_field(attr_id + attribute.value)
+
+
+def parse_proof_of_rotation_attr(data: bytes) -> SigningLineage:
+    """
+    Parse APK Signature Scheme v2/v3 Block -> signer -> signed data ->
+    additional attributes -> proof of rotation struct (signing lineage).
+
+    Returns SigningLineage.
+    """
+    nodes: List[SigningLineageNode] = []
+    version, data = int.from_bytes(data[:4], "little"), data[4:]
+    _assert(version == PROOF_OF_ROTATION_VERSION, "lineage version")
+    while data:
+        lineage_data, data = _split_len_prefixed_field(data)
+        nodes.append(_parse_lineage_node(lineage_data))
+    return SigningLineage(version, tuple(nodes))
+
+
+def _parse_lineage_node(data: bytes) -> SigningLineageNode:
+    signed_data, data = _split_len_prefixed_field(data)
+    flags, sig_algo_id = struct.unpack("<LL", data[:8])
+    signature, data = _split_len_prefixed_field(data[8:])
+    _assert(not data, "lineage node extraneous data")
+    cert, psai_data = _split_len_prefixed_field(signed_data)
+    parent_sig_algo_id = int.from_bytes(psai_data, "little")
+    return SigningLineageNode(
+        signed_data, Certificate(cert), parent_sig_algo_id,
+        SigningLineageNode.Flags(flags), Signature(sig_algo_id, signature))
 
 
 def parse_signatures(data: bytes) -> Tuple[Signature, ...]:
@@ -2077,6 +2153,43 @@ def _chunks(data: bytes, blocksize: int) -> Iterator[bytes]:
     while data:
         chunk, data = data[:blocksize], data[blocksize:]
         yield chunk
+
+
+# FIXME: check & audit!
+# WARNING: verification is considered EXPERIMENTAL
+# https://source.android.com/docs/security/features/apksigning/v3#proof-of-rotation-and-self-trusted-old-certs-structs
+def verify_signing_lineage(lineage: SigningLineage, *, allow_unsafe: Tuple[str, ...] = ()) -> None:
+    """
+    Verify SigningLineage.
+
+    WARNING: verification is considered EXPERIMENTAL and SHOULD NOT BE RELIED
+    ON, please use apksigner instead.
+
+    Raises VerificationError on failure.
+    """
+    last, seen = None, set()
+    for i, node in enumerate(lineage.nodes):
+        if (fingerprint := node.certificate.certificate_info.fingerprint) in seen:
+            raise VerificationError(f"Duplicate certificate: {fingerprint}")
+        if last:
+            if node.parent_signature_algorithm_id != last.signature.signature_algorithm_id:
+                raise VerificationError("Signature algorithm IDs of parent and node are not identical")
+            pk = last.certificate.public_key
+            pubkey = serialization.load_der_public_key(pk.dump())
+            if (key_algo := pk.algorithm.upper()) not in allow_unsafe:
+                if (f := UNSAFE_KEY_SIZE[key_algo]) is not None and f(pk.bit_size):
+                    raise VerificationError(f"Unsafe {key_algo} key size: {pk.bit_size}")
+            if last.signature.signature_algorithm_id not in HASHERS:
+                raise VerificationError(f"Unknown signature algorithm ID: {hex(last.signature.signature_algorithm_id)}")
+            _, _, halgo, pad, _ = HASHERS[last.signature.signature_algorithm_id]
+            verify_signature(pubkey, node.signature.signature, node.signed_data, halgo, pad)
+        else:
+            _assert(node.parent_signature_algorithm_id == 0, "zero first parent signature algorithm ID")
+            _assert(not node.signature.signature, "empty first signature")
+        if i == len(lineage.nodes) - 1:
+            _assert(node.signature.signature_algorithm_id == 0, "zero last signature algorithm ID")
+        seen.add(fingerprint)
+        last = node
 
 
 # https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html
@@ -2700,6 +2813,25 @@ def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
                 p("        STRIPPING PROTECTION ATTR")
             elif attr.is_proof_of_rotation:
                 p("        PROOF OF ROTATION ATTR")
+                p("        VERSION:", attr.signing_lineage.version)
+                for k, node in enumerate(attr.signing_lineage.nodes):
+                    p("        NODE", k)
+                    p("          SIGNED DATA")
+                    p("            CERTIFICATE")
+                    cert = node.certificate
+                    cert_info, pk_info = cert.certificate_info, cert.public_key_info
+                    show_x509_certificate_info(cert_info, pk_info, 14, file=file, verbose=verbose, wrap=wrap)
+                    _show_aid(node, 12, file=file, verbose=verbose, wrap=wrap)
+                    p("          FLAGS:", node.flags)
+                    _show_aid(node.signature, 10, file=file, verbose=verbose, wrap=wrap)
+                    _show_hex(node.signature.signature, 10, file=file, what="SIGNATURE", wrap=wrap)
+                try:
+                    attr.signing_lineage.verify()
+                except VerificationError as e:
+                    p(f"        NOT VERIFIED ({e})")
+                else:
+                    p("        VERIFIED")
+                continue
             elif attr.is_rotation_min_sdk_version:
                 p("        ROTATION MIN SDK VERSION ATTR")
             elif attr.is_rotation_on_dev_release:
@@ -2764,11 +2896,14 @@ def _show_hex(data: bytes, indent: int, *, file: TextIO = sys.stdout,
     print(_wrap(out, indent, wrap), file=file)
 
 
-def _show_aid(x: Union[Digest, Signature], indent: int, *,
+def _show_aid(x: Union[Digest, Signature, SigningLineageNode], indent: int, *,
               file: TextIO = sys.stdout, verbose: bool = False,
               wrap: bool = False) -> None:
     """Print signature algorithm ID (w/ indent etc.) to file (stdout)."""
-    aid, aid_s = x.signature_algorithm_id, x.algoritm_id_info
+    if isinstance(x, SigningLineageNode):
+        aid, aid_s = x.parent_signature_algorithm_id, aid_info(x.parent_signature_algorithm_id)
+    else:
+        aid, aid_s = x.signature_algorithm_id, x.algoritm_id_info
     if not verbose:
         aid_s = aid_s.split(",")[0]
     out = " " * indent + f"SIGNATURE ALGORITHM ID: {hex(aid)} ({aid_s})"
