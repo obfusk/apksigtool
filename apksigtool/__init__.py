@@ -229,7 +229,7 @@ import zipfile
 from binascii import hexlify
 from dataclasses import dataclass, field
 from enum import Flag
-from functools import reduce
+from functools import cached_property, reduce
 from hashlib import md5, sha1, sha224, sha256, sha384, sha512
 from typing import (cast, Any, Callable, ClassVar, Dict, FrozenSet, Iterable, Iterator, List,
                     Literal, Mapping, Optional, Set, TextIO, Tuple, Type, TypeVar, Union)
@@ -635,12 +635,12 @@ class Certificate(APKSigToolBase):
 
 
 @dataclass(frozen=True)
-class SigningLineageNode:
+class SigningLineageNode(APKSigToolBase):
     """Signing lineage node."""
     signed_data: bytes
     certificate: Certificate
-    parent_signature_algorithm_id: int
     flags: Flags
+    next_signature_algorithm_id: int
     signature: Signature
 
     class Flags(Flag):
@@ -653,16 +653,40 @@ class SigningLineageNode:
         def __str__(self) -> str:
             return "|".join(cast(str, f.name) for f in self)
 
+        def for_json(self) -> Mapping[str, Any]:
+            """Convert to JSON."""
+            return dict(_type=self.__class__.__name__, flags=[f.name for f in self],
+                        value=self.value)
+
 
 @dataclass(frozen=True)
-class SigningLineage:
+class SigningLineage(APKSigToolBase):
     """Signing lineage."""
     version: int
     nodes: Tuple[SigningLineageNode, ...]
 
+    @property
+    def verified(self) -> bool:
+        """Is verified."""
+        return self.verification_error is None
+
+    @cached_property
+    def verification_error(self) -> Optional[str]:
+        """Verification error."""
+        try:
+            self.verify()
+        except VerificationError as e:
+            return str(e)
+        return None
+
     def verify(self) -> None:
         """Verify signing lineage."""
         verify_signing_lineage(self)
+
+    def for_json(self) -> Mapping[str, Any]:
+        """Convert to JSON."""
+        x = dict(verified=self.verified, verification_error=self.verification_error)
+        return {**super().for_json(), **x}
 
 
 @dataclass(frozen=True)
@@ -1927,14 +1951,14 @@ def parse_proof_of_rotation_attr(data: bytes) -> SigningLineage:
 
 def _parse_lineage_node(data: bytes) -> SigningLineageNode:
     signed_data, data = _split_len_prefixed_field(data)
-    flags, sig_algo_id = struct.unpack("<LL", data[:8])
+    flags, next_sig_algo_id = struct.unpack("<LL", data[:8])
     signature, data = _split_len_prefixed_field(data[8:])
     _assert(not data, "lineage node extraneous data")
-    cert, psai_data = _split_len_prefixed_field(signed_data)
-    parent_sig_algo_id = int.from_bytes(psai_data, "little")
+    cert, sai_data = _split_len_prefixed_field(signed_data)
+    sig_algo_id = int.from_bytes(sai_data, "little")
     return SigningLineageNode(
-        signed_data, Certificate(cert), parent_sig_algo_id,
-        SigningLineageNode.Flags(flags), Signature(sig_algo_id, signature))
+        signed_data, Certificate(cert), SigningLineageNode.Flags(flags),
+        next_sig_algo_id, Signature(sig_algo_id, signature))
 
 
 def parse_signatures(data: bytes) -> Tuple[Signature, ...]:
@@ -2167,29 +2191,29 @@ def verify_signing_lineage(lineage: SigningLineage, *, allow_unsafe: Tuple[str, 
 
     Raises VerificationError on failure.
     """
-    last, seen = None, set()
+    prev, seen = None, set()
     for i, node in enumerate(lineage.nodes):
         if (fingerprint := node.certificate.certificate_info.fingerprint) in seen:
             raise VerificationError(f"Duplicate certificate: {fingerprint}")
-        if last:
-            if node.parent_signature_algorithm_id != last.signature.signature_algorithm_id:
-                raise VerificationError("Signature algorithm IDs of parent and node are not identical")
-            pk = last.certificate.public_key
+        if prev:
+            if node.signature.signature_algorithm_id != prev.next_signature_algorithm_id:
+                raise VerificationError("Signature algorithm IDs of node and prev next are not identical")
+            pk = prev.certificate.public_key
             pubkey = serialization.load_der_public_key(pk.dump())
             if (key_algo := pk.algorithm.upper()) not in allow_unsafe:
                 if (f := UNSAFE_KEY_SIZE[key_algo]) is not None and f(pk.bit_size):
                     raise VerificationError(f"Unsafe {key_algo} key size: {pk.bit_size}")
-            if last.signature.signature_algorithm_id not in HASHERS:
-                raise VerificationError(f"Unknown signature algorithm ID: {hex(last.signature.signature_algorithm_id)}")
-            _, _, halgo, pad, _ = HASHERS[last.signature.signature_algorithm_id]
+            if node.signature.signature_algorithm_id not in HASHERS:
+                raise VerificationError(f"Unknown signature algorithm ID: {hex(node.signature.signature_algorithm_id)}")
+            _, _, halgo, pad, _ = HASHERS[node.signature.signature_algorithm_id]
             verify_signature(pubkey, node.signature.signature, node.signed_data, halgo, pad)
         else:
-            _assert(node.parent_signature_algorithm_id == 0, "zero first parent signature algorithm ID")
+            _assert(node.signature.signature_algorithm_id == 0, "zero first signature algorithm ID")
             _assert(not node.signature.signature, "empty first signature")
         if i == len(lineage.nodes) - 1:
-            _assert(node.signature.signature_algorithm_id == 0, "zero last signature algorithm ID")
+            _assert(node.next_signature_algorithm_id == 0, "zero last next signature algorithm ID")
         seen.add(fingerprint)
-        last = node
+        prev = node
 
 
 # https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html
@@ -2821,16 +2845,14 @@ def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
                     cert = node.certificate
                     cert_info, pk_info = cert.certificate_info, cert.public_key_info
                     show_x509_certificate_info(cert_info, pk_info, 14, file=file, verbose=verbose, wrap=wrap)
-                    _show_aid(node, 12, file=file, verbose=verbose, wrap=wrap)
+                    _show_aid(node.signature.signature_algorithm_id, 12, file=file, verbose=verbose, wrap=wrap)
                     p("          FLAGS:", node.flags)
-                    _show_aid(node.signature, 10, file=file, verbose=verbose, wrap=wrap)
+                    _show_aid(node.next_signature_algorithm_id, 10, file=file, verbose=verbose, wrap=wrap)
                     _show_hex(node.signature.signature, 10, file=file, what="SIGNATURE", wrap=wrap)
-                try:
-                    attr.signing_lineage.verify()
-                except VerificationError as e:
-                    p(f"        NOT VERIFIED ({e})")
-                else:
+                if attr.signing_lineage.verified:
                     p("        VERIFIED")
+                else:
+                    p(f"        NOT VERIFIED ({attr.signing_lineage.verification_error})")
                 continue
             elif attr.is_rotation_min_sdk_version:
                 p("        ROTATION MIN SDK VERSION ATTR")
@@ -2896,12 +2918,12 @@ def _show_hex(data: bytes, indent: int, *, file: TextIO = sys.stdout,
     print(_wrap(out, indent, wrap), file=file)
 
 
-def _show_aid(x: Union[Digest, Signature, SigningLineageNode], indent: int, *,
+def _show_aid(x: Union[Digest, Signature, int], indent: int, *,
               file: TextIO = sys.stdout, verbose: bool = False,
               wrap: bool = False) -> None:
     """Print signature algorithm ID (w/ indent etc.) to file (stdout)."""
-    if isinstance(x, SigningLineageNode):
-        aid, aid_s = x.parent_signature_algorithm_id, aid_info(x.parent_signature_algorithm_id)
+    if isinstance(x, int):
+        aid, aid_s = x, aid_info(x)
     else:
         aid, aid_s = x.signature_algorithm_id, x.algoritm_id_info
     if not verbose:
