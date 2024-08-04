@@ -2845,10 +2845,19 @@ def show_apk_signature_scheme_block(block: APKSignatureSchemeBlock, *,
                     cert = node.certificate
                     cert_info, pk_info = cert.certificate_info, cert.public_key_info
                     show_x509_certificate_info(cert_info, pk_info, 14, file=file, verbose=verbose, wrap=wrap)
-                    _show_aid(node.signature.signature_algorithm_id, 12, file=file, verbose=verbose, wrap=wrap)
+                    if node.signature.signature_algorithm_id:
+                        _show_aid(node.signature.signature_algorithm_id, 12, file=file, verbose=verbose, wrap=wrap)
+                    else:
+                        p("            ZERO SIGNATURE ALGORITHM ID")
                     p("          FLAGS:", node.flags)
-                    _show_aid(node.next_signature_algorithm_id, 10, file=file, verbose=verbose, wrap=wrap)
-                    _show_hex(node.signature.signature, 10, file=file, what="SIGNATURE", wrap=wrap)
+                    if node.next_signature_algorithm_id:
+                        _show_aid(node.next_signature_algorithm_id, 10, file=file, verbose=verbose, wrap=wrap)
+                    else:
+                        p("          ZERO SIGNATURE ALGORITHM ID")
+                    if node.signature.signature:
+                        _show_hex(node.signature.signature, 10, file=file, what="SIGNATURE", wrap=wrap)
+                    else:
+                        p("          EMPTY SIGNATURE")
                 if attr.signing_lineage.verified:
                     p("        VERIFIED")
                 else:
