@@ -650,13 +650,16 @@ class SigningLineageNode(APKSigToolBase):
         PAST_CERT_ROLLBACK = 8
         PAST_CERT_AUTH = 16
 
+        @property
+        def _flags(self) -> List[str]:
+            return [cast(str, f.name) for f in self.__class__ if self.value & f.value]
+
         def __str__(self) -> str:
-            return "|".join(cast(str, f.name) for f in self)
+            return "|".join(self._flags)
 
         def for_json(self) -> Mapping[str, Any]:
             """Convert to JSON."""
-            return dict(_type=self.__class__.__name__, flags=[f.name for f in self],
-                        value=self.value)
+            return dict(_type=self.__class__.__name__, flags=self._flags, value=self.value)
 
 
 @dataclass(frozen=True)
