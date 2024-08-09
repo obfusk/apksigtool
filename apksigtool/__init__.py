@@ -2734,9 +2734,9 @@ def show_x509_certificate_info(info: CertificateInfo, pk_info: PublicKeyInfo,
                                verbose: bool = False, wrap: bool = False) -> None:
     """Print X.509 certificate information to file (stdout)."""
     p = _printer(file, wrap)
-    p(" " * indent + "X.509 SUBJECT:", info.subject)
+    p(" " * indent + "X.509 SUBJECT:", repr(info.subject)[1:-1])
     if verbose:
-        p(" " * indent + "X.509 ISSUER:", info.issuer)
+        p(" " * indent + "X.509 ISSUER:", repr(info.issuer)[1:-1])
         p(" " * indent + "X.509 SERIAL NUMBER:", hex(info.serial_number))
         p(" " * indent + "X.509 HASH ALGORITHM:", info.hash_algorithm)
         p(" " * indent + "X.509 SIGNATURE ALGORITHM:", info.signature_algorithm)
