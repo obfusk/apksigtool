@@ -26,9 +26,6 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install cffi pre-release for python 3.13 support
-      run: python3 -m pip install cffi==1.17.0rc1
-      if: ${{ contains(matrix.python-version, '3.13.0-alpha') }}
     - name: Install dependencies
       run: |
         sudo apt-get update # || sudo apt-get update
