@@ -3309,14 +3309,20 @@ def _create_apk_signature_scheme_block(apkfile: str, *, cert: bytes, key: PrivKe
     _, hasher, halgo, pad, chunk_type = HASHERS[aid]
     digest = Digest(aid, _apk_digest(apkfile, sb_offset, hasher, chunk_type))
     certificate = Certificate(cert)
-    signed_data_args = (b"", (digest,), (certificate,)) + (v3 or ()) + ((),)
-    signed_data = (V3SignedData if v3 else V2SignedData)(*signed_data_args)
+    signed_data: Union[V2SignedData, V3SignedData]
+    if v3:
+        signed_data = V3SignedData(b"", (digest,), (certificate,), *v3, ())
+    else:
+        signed_data = V2SignedData(b"", (digest,), (certificate,), ())
     signed_data_raw = signed_data.dump(expect_raw_data=False, verify_raw_data=False)
     signed_data = dataclasses.replace(signed_data, raw_data=signed_data_raw)
     signature = Signature(aid, create_signature(key, signed_data_raw, halgo, pad))
     public_key = PublicKey(X509Cert.load(cert).public_key.dump())
-    signer_args = (signed_data,) + (v3 or ()) + ((signature,), public_key)
-    signer = (V3Signer if v3 else V2Signer)(*signer_args)
+    signer: Union[V2Signer, V3Signer]
+    if v3:
+        signer = V3Signer(cast(V3SignedData, signed_data), *v3, (signature,), public_key)
+    else:
+        signer = V2Signer(cast(V2SignedData, signed_data), (signature,), public_key)
     return APKSignatureSchemeBlock(3 if v3 else 2, (signer,))
 
 
